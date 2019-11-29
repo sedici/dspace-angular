@@ -23,4 +23,7 @@ services:
     stdin_open: true
     tty: true
     volumes:
-    - ./environment.dev.js:/app/config/environment.dev.js
+        # tengo que crear un container para node_modules asi no me pisa los paquetes descargados en el build... Ver https://mherman.org/blog/dockerizing-an-angular-app/.
+        -  /app/node_modules
+        - ..:/app/
+        - ./environment.dev.js:/app/config/environment.dev.js
