@@ -3,7 +3,7 @@ networks:
   dspacenet:
 services:
   dspace-angular:
-    container_name: dspace-angular
+    container_name: dspace-angular_${PROJECT_NAME}
     environment:
       DSPACE_HOST: dspace-angular
       DSPACE_NAMESPACE: /

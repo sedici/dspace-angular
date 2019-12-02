@@ -2,7 +2,7 @@ networks:
   dspacenet:
 services:
   dspace:
-    container_name: dspace
+    container_name: dspace_${PROJECT_NAME}
     depends_on:
     - dspacedb
     image: dspace/dspace:dspace-7_x-jdk8-test
@@ -24,7 +24,7 @@ services:
       /dspace/bin/dspace database migrate
       catalina.sh run
   dspacedb:
-    container_name: dspacedb
+    container_name: dspacedb_${PROJECT_NAME}
     image: dspace/dspace-postgres-pgcrypto
     environment:
       PGDATA: /pgdata
@@ -35,7 +35,7 @@ services:
     volumes:
     - pgdata:/pgdata
   dspacesolr:
-    container_name: dspacesolr
+    container_name: dspacesolr_${PROJECT_NAME}
     image: dspace/dspace-solr
     networks:
       dspacenet:
