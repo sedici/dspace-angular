@@ -31,7 +31,7 @@ bash:
 	@docker exec -i -t 'dspace-angular_${PROJECT_NAME}' /bin/sh
 
 logs:
-	@docker-compose -f docker/docker-compose.yml -f docker/docker-compose-rest.yml logs --follow $(filter-out $@,$(MAKECMDGOALS))
+	@docker-compose -f docker/docker-compose.yml -f docker/docker-compose-rest.yml logs --follow --tail=100 $(filter-out $@,$(MAKECMDGOALS))
 
 # https://stackoverflow.com/a/6273809/1826109
 %:
