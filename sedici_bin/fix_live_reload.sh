@@ -21,6 +21,8 @@ read answer
 if [ "$answer" == "Y" ] || [ "$answer" == "y"  ]; then
     echo "Proceeding to temporary update the limit of 'fs.inotify.max_user_watches' amount to $TARGET_FSINOTIFYMAXUSERWATCHES."
     sudo sysctl fs.inotify.max_user_watches=524288
+    echo "Reloading System properties..."
+    sudo sysctl -p --system
 else
     echo "Canceling operation. Exiting..."
 fi

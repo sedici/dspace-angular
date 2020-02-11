@@ -9,6 +9,7 @@ ADD . /app/
 EXPOSE 3000
 
 RUN yarn install
-CMD yarn run watch
+RUN yarn run build
+CMD yarn run watch:notbuild
 
 VOLUME /app/

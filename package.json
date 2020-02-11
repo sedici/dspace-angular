@@ -48,6 +48,7 @@
     "syncbuilddir": "node ./scripts/sync-build-dir.js",
     "webpack:watch": "node ./scripts/webpack.js -w --mode development --live-reload=true",
     "watch": "yarn run build && npm-run-all -p webpack:watch server:watch",
+    "watch:notbuild": "npm-run-all -p webpack:watch server:watch",
     "watch:debug": "yarn run build && npm-run-all -p webpack:watch server:watch:debug",
     "predebug": "yarn run build",
     "predebug:server": "yarn run build",
