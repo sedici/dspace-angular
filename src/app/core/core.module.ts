@@ -119,8 +119,10 @@ import { MetadatafieldParsingService } from './data/metadatafield-parsing.servic
 import { NormalizedSubmissionUploadsModel } from './config/models/normalized-config-submission-uploads.model';
 import { NormalizedBrowseEntry } from './shared/normalized-browse-entry.model';
 import { BrowseDefinition } from './shared/browse-definition.model';
+import { ContentSourceResponseParsingService } from './data/content-source-response-parsing.service';
 import { MappedCollectionsReponseParsingService } from './data/mapped-collections-reponse-parsing.service';
 import { ObjectSelectService } from '../shared/object-select/object-select.service';
+import {EntityTypeService} from './data/entity-type.service';
 import { SiteDataService } from './data/site-data.service';
 import { NormalizedSite } from './cache/models/normalized-site.model';
 
@@ -136,6 +138,10 @@ import { SearchConfigurationService } from './shared/search/search-configuration
 import { SelectableListService } from '../shared/object-list/selectable-list/selectable-list.service';
 import { RelationshipTypeService } from './data/relationship-type.service';
 import { SidebarService } from '../shared/sidebar/sidebar.service';
+import { NormalizedExternalSource } from './cache/models/normalized-external-source.model';
+import { NormalizedExternalSourceEntry } from './cache/models/normalized-external-source-entry.model';
+import { ExternalSourceService } from './data/external-source.service';
+import { LookupRelationService } from './data/lookup-relation.service';
 
 /**
  * When not in production, endpoint responses can be mocked for testing purposes
@@ -240,6 +246,8 @@ const PROVIDERS = [
   TaskResponseParsingService,
   ClaimedTaskDataService,
   PoolTaskDataService,
+  EntityTypeService,
+  ContentSourceResponseParsingService,
   SearchService,
   SidebarService,
   SearchFilterService,
@@ -247,6 +255,8 @@ const PROVIDERS = [
   SearchConfigurationService,
   SelectableListService,
   RelationshipTypeService,
+  ExternalSourceService,
+  LookupRelationService,
   // register AuthInterceptor as HttpInterceptor
   {
     provide: HTTP_INTERCEPTORS,
@@ -292,7 +302,9 @@ export const normalizedModels =
     NormalizedPoolTask,
     NormalizedRelationship,
     NormalizedRelationshipType,
-    NormalizedItemType
+    NormalizedItemType,
+    NormalizedExternalSource,
+    NormalizedExternalSourceEntry
   ];
 
 @NgModule({
