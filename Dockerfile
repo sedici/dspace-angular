@@ -1,14 +1,16 @@
 # This image will be published as dspace/dspace-angular
 # See https://dspace-labs.github.io/DSpace-Docker-Images/ for usage details
 
-FROM node:8-alpine
+FROM node:12-alpine
 ENV PROJECT_NAME ${PROJECT_NAME:-sedici-angular}
 
 WORKDIR /app
 ADD . /app/
 EXPOSE 3000
 
-RUN yarn install
+# We run yarn install with an increased network timeout (5min) to avoid "ESOCKETTIMEDOUT" errors from hub.docker.com
+# See, for example https://github.com/yarnpkg/yarn/issues/5540
+RUN yarn install --network-timeout 300000
 RUN yarn run build
 CMD yarn run watch:notbuild
 
