@@ -1,6 +1,4 @@
 version: '3.7'
-networks:
-  dspacenet:
 services:
   dspace-angular:
     container_name: dspace-angular_${PROJECT_NAME}
@@ -13,8 +11,6 @@ services:
     build:
       context: ..
       dockerfile: Dockerfile
-    networks:
-      dspacenet:
     ports:
     - published: 3000
       target: 3000
@@ -26,4 +22,9 @@ services:
         # tengo que crear un container para node_modules asi no me pisa los paquetes descargados en el build... Ver https://mherman.org/blog/dockerizing-an-angular-app/.
         -  /app/node_modules
         - ..:/app/
-        - ./environment.dev.js:/app/config/environment.dev.js
+        - ./environment.dev.js:/app/config/environment.default.js
+
+networks: 
+  default:
+    external: 
+      name: 'docker_default'

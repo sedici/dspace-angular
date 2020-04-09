@@ -6,7 +6,7 @@ default: up
 
 up:
 	@echo "Starting up containers for $(PROJECT_NAME)..."
-	@docker-compose -f docker/docker-compose.yml -f docker/docker-compose-rest.yml up -d
+	@docker-compose -f docker/docker-compose.yml up -d
 
 update:
 	@echo "Cleaning containers code, including 'node_modules' libraries, .css files, etc. Then install dependencies again..."
@@ -14,7 +14,7 @@ update:
 
 build:
 	@echo "Building image from Dockerfile..."
-	@docker-compose -f docker/docker-compose.yml -f docker/docker-compose-rest.yml build
+	@docker-compose -f docker/docker-compose.yml build
 
 dsbin:
 	@echo "[HELP!] Define \"COMMAND\" variable if wants to pass specifics command to 'bin/dspace' DSpace's CLI... In example 'make COMMAND=\"dsprop -p dspace.dir\" dsbin'"...
@@ -26,11 +26,11 @@ start: up
 
 stop:
 	@echo "Stopping containers for $(PROJECT_NAME)..."
-	@docker-compose -f docker/docker-compose.yml -f docker/docker-compose-rest.yml stop
+	@docker-compose -f docker/docker-compose.yml stop
 
 prune:
 	@echo "Removing containers for $(PROJECT_NAME)..."
-	@docker-compose -f docker/docker-compose.yml -f docker/docker-compose-rest.yml down -v
+	@docker-compose -f docker/docker-compose.yml down -v
 
 ps:
 	@docker ps --filter name='$(PROJECT_NAME)*'
@@ -39,7 +39,7 @@ bash:
 	@docker exec -i -t 'dspace-angular_${PROJECT_NAME}' /bin/sh
 
 logs:
-	@docker-compose -f docker/docker-compose.yml -f docker/docker-compose-rest.yml logs --follow --tail=100 $(filter-out $@,$(MAKECMDGOALS))
+	@docker-compose -f docker/docker-compose.yml logs --follow --tail=100 $(filter-out $@,$(MAKECMDGOALS))
 
 # https://stackoverflow.com/a/6273809/1826109
 %:
