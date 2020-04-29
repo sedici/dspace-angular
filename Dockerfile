@@ -2,7 +2,6 @@
 # See https://dspace-labs.github.io/DSpace-Docker-Images/ for usage details
 
 FROM node:12-alpine
-ENV PROJECT_NAME ${PROJECT_NAME:-sedici-angular}
 
 WORKDIR /app
 ADD . /app/
