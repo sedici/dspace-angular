@@ -1,6 +1,7 @@
 import { APP_BASE_HREF, CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { ModuleWithProviders } from '@angular/core';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EffectsModule } from '@ngrx/effects';
@@ -40,6 +41,7 @@ import { SharedModule } from './shared/shared.module';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { environment } from '../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
+import { HeaderSediciComponent } from './sedici/header-sedici/header-sedici.component';
 
 export function getBase() {
   return environment.ui.nameSpace;
@@ -95,7 +97,7 @@ const PROVIDERS = [
 
 const DECLARATIONS = [
   AppComponent,
-  HeaderComponent,
+  HeaderSediciComponent,
   HeaderNavbarWrapperComponent,
   AdminSidebarComponent,
   AdminSidebarSectionComponent,
@@ -123,6 +125,7 @@ const EXPORTS = [
   declarations: [
     ...DECLARATIONS,
     BreadcrumbsComponent,
+    HeaderSediciComponent,
   ],
   exports: [
     ...EXPORTS
