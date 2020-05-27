@@ -41,7 +41,7 @@ import { SharedModule } from './shared/shared.module';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { environment } from '../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
-import { HeaderSediciComponent } from './sedici/header-sedici/header-sedici.component';
+import { HeaderSEDICIComponent } from './sedici/header-sedici/header-sedici.component';
 
 export function getBase() {
   return environment.ui.nameSpace;
@@ -97,7 +97,7 @@ const PROVIDERS = [
 
 const DECLARATIONS = [
   AppComponent,
-  HeaderSediciComponent,
+  HeaderSEDICIComponent,
   HeaderNavbarWrapperComponent,
   AdminSidebarComponent,
   AdminSidebarSectionComponent,
@@ -125,7 +125,7 @@ const EXPORTS = [
   declarations: [
     ...DECLARATIONS,
     BreadcrumbsComponent,
-    HeaderSediciComponent,
+    HeaderSEDICIComponent,
   ],
   exports: [
     ...EXPORTS

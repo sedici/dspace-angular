@@ -1,1 +1,21 @@
-<p>header-sedici works!</p>
+<header>
+    <div class="container">
+      <a class="navbar-brand my-2" routerLink="/home">
+        <img src="assets/images/dspace-logo.svg"/>
+      </a>
+  
+      <nav class="navbar navbar-light navbar-expand-md float-right px-0">
+        <ds-search-navbar></ds-search-navbar>
+        <ds-lang-switch></ds-lang-switch>
+        <ds-auth-nav-menu></ds-auth-nav-menu>
+        <div class="pl-2">
+          <button class="navbar-toggler" type="button" (click)="toggleNavbar()"
+                  aria-controls="collapsingNav"
+                  aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon fas fa-bars fa-fw" aria-hidden="true"></span>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+  

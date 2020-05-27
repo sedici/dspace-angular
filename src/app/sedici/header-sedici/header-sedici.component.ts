@@ -5,5 +5,5 @@ import { HeaderComponent } from '../../header/header.component';
   templateUrl: './header-sedici.component.html',
   styleUrls: ['./header-sedici.component.scss']
 })
-export class HeaderSediciComponent extends HeaderComponent {
+export class HeaderSEDICIComponent extends HeaderComponent {
 }
