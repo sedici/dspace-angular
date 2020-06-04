@@ -212,6 +212,7 @@ import { FileDownloadLinkComponent } from './file-download-link/file-download-li
 import { CollectionDropdownComponent } from './collection-dropdown/collection-dropdown.component';
 import { DsSelectComponent } from './ds-select/ds-select.component';
 import { CurationFormComponent } from '../curation-form/curation-form.component';
+import { ClaimedTaskActionsSelectCollectionComponent } from './mydspace-actions/claimed-task/select-collection/select-collection.component';
 
 const MODULES = [
   // Do NOT include UniversalModule, HttpModule, or JsonpModule here
@@ -481,7 +482,8 @@ const ENTRY_COMPONENTS = [
   FileDownloadLinkComponent,
   CurationFormComponent,
   ExportMetadataSelectorComponent,
-  ConfirmationModalComponent
+  ConfirmationModalComponent,
+  ClaimedTaskActionsSelectCollectionComponent
 ];
 
 const SHARED_ITEM_PAGE_COMPONENTS = [
@@ -529,7 +531,9 @@ const DIRECTIVES = [
     ...COMPONENTS,
     ...DIRECTIVES,
     ...ENTRY_COMPONENTS,
-    ...SHARED_ITEM_PAGE_COMPONENTS
+    ...SHARED_ITEM_PAGE_COMPONENTS,
+    ClaimedTaskActionsSelectCollectionComponent,
+
   ],
   providers: [
     ...PROVIDERS
