@@ -11,3 +11,5 @@ EXPOSE 4000
 # See, for example https://github.com/yarnpkg/yarn/issues/5540
 RUN yarn install --network-timeout 300000
 CMD yarn run start:dev
+
+VOLUME /app/
