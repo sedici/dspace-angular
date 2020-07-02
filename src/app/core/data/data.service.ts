@@ -45,13 +45,15 @@ import {
   FindListOptions,
   FindListRequest,
   GetRequest,
-  PatchRequest
+  PatchRequest, PutRequest
 } from './request.models';
 import { RequestEntry } from './request.reducer';
 import { RequestService } from './request.service';
 import { RestRequestMethod } from './rest-request-method';
+import { UpdateDataService } from './update-data.service';
+import { GenericConstructor } from '../shared/generic-constructor';
 
-export abstract class DataService<T extends CacheableObject> {
+export abstract class DataService<T extends CacheableObject> implements UpdateDataService<T> {
   protected abstract requestService: RequestService;
   protected abstract rdbService: RemoteDataBuildService;
   protected abstract store: Store<CoreState>;
@@ -74,6 +76,13 @@ export abstract class DataService<T extends CacheableObject> {
    * @returns {Observable<string>}
    */
   getBrowseEndpoint(options: FindListOptions = {}, linkPath?: string): Observable<string> {
+    return this.getEndpoint();
+  }
+
+  /**
+   * Get the base endpoint for all requests
+   */
+  protected getEndpoint(): Observable<string> {
     return this.halService.getEndpoint(this.linkPath);
   }
 
@@ -259,14 +268,23 @@ export abstract class DataService<T extends CacheableObject> {
   }
 
   /**
+   * Create an observable for the HREF of a specific object based on its identifier
+   * @param resourceID The identifier for the object
+   * @param linksToFollow   List of {@link FollowLinkConfig} that indicate which {@link HALLink}s should be automatically resolved
+   */
+  getIDHrefObs(resourceID: string, ...linksToFollow: Array<FollowLinkConfig<T>>): Observable<string> {
+    return this.getEndpoint().pipe(
+      map((endpoint: string) => this.getIDHref(endpoint, resourceID, ...linksToFollow)));
+  }
+
+  /**
    * Returns an observable of {@link RemoteData} of an object, based on its ID, with a list of {@link FollowLinkConfig},
    * to automatically resolve {@link HALLink}s of the object
    * @param id              ID of object we want to retrieve
    * @param linksToFollow   List of {@link FollowLinkConfig} that indicate which {@link HALLink}s should be automatically resolved
    */
   findById(id: string, ...linksToFollow: Array<FollowLinkConfig<T>>): Observable<RemoteData<T>> {
-    const hrefObs = this.halService.getEndpoint(this.linkPath).pipe(
-      map((endpoint: string) => this.getIDHref(endpoint, encodeURIComponent(id), ...linksToFollow)));
+    const hrefObs = this.getIDHrefObs(encodeURIComponent(id), ...linksToFollow);
 
     hrefObs.pipe(
       find((href: string) => hasValue(href)))
@@ -343,7 +361,9 @@ export abstract class DataService<T extends CacheableObject> {
       tap((href: string) => {
           this.requestService.removeByHrefSubstring(href);
           const request = new FindListRequest(this.requestService.generateRequestId(), href, options);
-          request.responseMsToLive = 10 * 1000;
+          if (hasValue(this.responseMsToLive)) {
+            request.responseMsToLive = this.responseMsToLive;
+          }
 
           this.requestService.configure(request);
         }
@@ -382,6 +402,28 @@ export abstract class DataService<T extends CacheableObject> {
   }
 
   /**
+   * Send a PUT request for the specified object
+   *
+   * @param object The object to send a put request for.
+   */
+  put(object: T): Observable<RemoteData<T>> {
+    const requestId = this.requestService.generateRequestId();
+    const serializedObject = new DSpaceSerializer(object.constructor as GenericConstructor<{}>).serialize(object);
+    const request = new PutRequest(requestId, object._links.self.href, serializedObject);
+
+    if (hasValue(this.responseMsToLive)) {
+      request.responseMsToLive = this.responseMsToLive;
+    }
+
+    this.requestService.configure(request);
+
+    return this.requestService.getByUUID(requestId).pipe(
+      find((re: RequestEntry) => hasValue(re) && re.completed),
+      switchMap(() => this.findByHref(object._links.self.href))
+    );
+  }
+
+  /**
    * Add a new patch to the object cache
    * The patch is derived from the differences between the given object and its version in the object cache
    * @param {DSpaceObject} object The given object
@@ -412,7 +454,7 @@ export abstract class DataService<T extends CacheableObject> {
    */
   create(dso: T, ...params: RequestParam[]): Observable<RemoteData<T>> {
     const requestId = this.requestService.generateRequestId();
-    const endpoint$ = this.halService.getEndpoint(this.linkPath).pipe(
+    const endpoint$ = this.getEndpoint().pipe(
       isNotEmptyOperator(),
       distinctUntilChanged(),
       map((endpoint: string) => this.buildHrefWithParams(endpoint, params))
@@ -538,8 +580,7 @@ export abstract class DataService<T extends CacheableObject> {
   private deleteAndReturnRequestId(dsoID: string, copyVirtualMetadata?: string[]): string {
     const requestId = this.requestService.generateRequestId();
 
-    const hrefObs = this.halService.getEndpoint(this.linkPath).pipe(
-      map((endpoint: string) => this.getIDHref(endpoint, dsoID)));
+    const hrefObs = this.getIDHrefObs(dsoID);
 
     hrefObs.pipe(
       find((href: string) => hasValue(href)),

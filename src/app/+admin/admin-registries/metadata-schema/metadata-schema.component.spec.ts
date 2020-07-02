@@ -22,6 +22,7 @@ import { RestResponse } from '../../../core/cache/response.models';
 import { MetadataSchema } from '../../../core/metadata/metadata-schema.model';
 import { MetadataField } from '../../../core/metadata/metadata-field.model';
 import { createSuccessfulRemoteDataObject$ } from '../../../shared/remote-data.utils';
+import { VarDirective } from '../../../shared/utils/var.directive';
 
 describe('MetadataSchemaComponent', () => {
   let comp: MetadataSchemaComponent;
@@ -60,7 +61,7 @@ describe('MetadataSchemaComponent', () => {
       element: 'contributor',
       qualifier: 'advisor',
       scopeNote: null,
-      schema: mockSchemasList[0]
+      schema: createSuccessfulRemoteDataObject$(mockSchemasList[0])
     },
     {
       id: 2,
@@ -72,7 +73,7 @@ describe('MetadataSchemaComponent', () => {
       element: 'contributor',
       qualifier: 'author',
       scopeNote: null,
-      schema: mockSchemasList[0]
+      schema: createSuccessfulRemoteDataObject$(mockSchemasList[0])
     },
     {
       id: 3,
@@ -84,7 +85,7 @@ describe('MetadataSchemaComponent', () => {
       element: 'contributor',
       qualifier: 'editor',
       scopeNote: 'test scope note',
-      schema: mockSchemasList[1]
+      schema: createSuccessfulRemoteDataObject$(mockSchemasList[1])
     },
     {
       id: 4,
@@ -96,15 +97,15 @@ describe('MetadataSchemaComponent', () => {
       element: 'contributor',
       qualifier: 'illustrator',
       scopeNote: null,
-      schema: mockSchemasList[1]
+      schema: createSuccessfulRemoteDataObject$(mockSchemasList[1])
     }
   ];
   const mockSchemas = createSuccessfulRemoteDataObject$(new PaginatedList(null, mockSchemasList));
   /* tslint:disable:no-empty */
   const registryServiceStub = {
     getMetadataSchemas: () => mockSchemas,
-    getMetadataFieldsBySchema: (schema: MetadataSchema) => createSuccessfulRemoteDataObject$(new PaginatedList(null, mockFieldsList.filter((value) => value.schema === schema))),
-    getMetadataSchemaByName: (schemaName: string) => createSuccessfulRemoteDataObject$(mockSchemasList.filter((value) => value.prefix === schemaName)[0]),
+    getMetadataFieldsBySchema: (schema: MetadataSchema) => createSuccessfulRemoteDataObject$(new PaginatedList(null, mockFieldsList.filter((value) => value.id === 3 || value.id === 4))),
+    getMetadataSchemaByPrefix: (schemaName: string) => createSuccessfulRemoteDataObject$(mockSchemasList.filter((value) => value.prefix === schemaName)[0]),
     getActiveMetadataField: () => observableOf(undefined),
     getSelectedMetadataFields: () => observableOf([]),
     editMetadataField: (schema) => {},
@@ -124,7 +125,7 @@ describe('MetadataSchemaComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
-      declarations: [MetadataSchemaComponent, PaginationComponent, EnumKeysPipe],
+      declarations: [MetadataSchemaComponent, PaginationComponent, EnumKeysPipe, VarDirective],
       providers: [
         { provide: RegistryService, useValue: registryServiceStub },
         { provide: ActivatedRoute, useValue: activatedRouteStub },

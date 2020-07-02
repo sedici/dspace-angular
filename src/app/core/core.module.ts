@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
-
 import { DynamicFormLayoutService, DynamicFormService, DynamicFormValidationService } from '@ng-dynamic-forms/core';
 import { EffectsModule } from '@ngrx/effects';
 
@@ -69,13 +68,8 @@ import { ItemDataService } from './data/item-data.service';
 import { LicenseDataService } from './data/license-data.service';
 import { LookupRelationService } from './data/lookup-relation.service';
 import { MappedCollectionsReponseParsingService } from './data/mapped-collections-reponse-parsing.service';
-import { MetadatafieldParsingService } from './data/metadatafield-parsing.service';
-import { MetadataschemaParsingService } from './data/metadataschema-parsing.service';
 import { MyDSpaceResponseParsingService } from './data/mydspace-response-parsing.service';
 import { ObjectUpdatesService } from './data/object-updates/object-updates.service';
-import { RegistryBitstreamformatsResponseParsingService } from './data/registry-bitstreamformats-response-parsing.service';
-import { RegistryMetadatafieldsResponseParsingService } from './data/registry-metadatafields-response-parsing.service';
-import { RegistryMetadataschemasResponseParsingService } from './data/registry-metadataschemas-response-parsing.service';
 import { RelationshipTypeService } from './data/relationship-type.service';
 import { RelationshipService } from './data/relationship.service';
 import { ResourcePolicyService } from './resource-policy/resource-policy.service';
@@ -143,8 +137,23 @@ import { VersionDataService } from './data/version-data.service';
 import { VersionHistoryDataService } from './data/version-history-data.service';
 import { Version } from './shared/version.model';
 import { VersionHistory } from './shared/version-history.model';
+import { Script } from '../process-page/scripts/script.model';
+import { Process } from '../process-page/processes/process.model';
+import { ProcessDataService } from './data/processes/process-data.service';
+import { ScriptDataService } from './data/processes/script-data.service';
+import { ProcessFilesResponseParsingService } from './data/process-files-response-parsing.service';
 import { WorkflowActionDataService } from './data/workflow-action-data.service';
 import { WorkflowAction } from './tasks/models/workflow-action-object.model';
+import { ItemTemplateDataService } from './data/item-template-data.service';
+import { TemplateItem } from './shared/template-item.model';
+import { Registration } from './shared/registration.model';
+import { MetadataSchemaDataService } from './data/metadata-schema-data.service';
+import { MetadataFieldDataService } from './data/metadata-field-data.service';
+import { TokenResponseParsingService } from './auth/token-response-parsing.service';
+import { SubmissionCcLicenseDataService } from './submission/submission-cc-license-data.service';
+import { SubmissionCcLicence } from './submission/models/submission-cc-license.model';
+import { SubmissionCcLicenceUrl } from './submission/models/submission-cc-license-url.model';
+import { SubmissionCcLicenseUrlDataService } from './submission/submission-cc-license-url-data.service';
 
 /**
  * When not in production, endpoint responses can be mocked for testing purposes
@@ -201,9 +210,6 @@ const PROVIDERS = [
   FacetValueResponseParsingService,
   FacetValueMapResponseParsingService,
   FacetConfigResponseParsingService,
-  RegistryMetadataschemasResponseParsingService,
-  RegistryMetadatafieldsResponseParsingService,
-  RegistryBitstreamformatsResponseParsingService,
   MappedCollectionsReponseParsingService,
   DebugResponseParsingService,
   SearchResponseParsingService,
@@ -214,6 +220,8 @@ const PROVIDERS = [
   BrowseItemsResponseParsingService,
   BrowseService,
   ConfigResponseParsingService,
+  SubmissionCcLicenseDataService,
+  SubmissionCcLicenseUrlDataService,
   SubmissionDefinitionsConfigService,
   SubmissionFormsConfigService,
   SubmissionRestService,
@@ -223,8 +231,6 @@ const PROVIDERS = [
   JsonPatchOperationsBuilder,
   AuthorityService,
   IntegrationResponseParsingService,
-  MetadataschemaParsingService,
-  MetadatafieldParsingService,
   UploaderService,
   UUIDService,
   NotificationsService,
@@ -250,6 +256,7 @@ const PROVIDERS = [
   BitstreamDataService,
   EntityTypeService,
   ContentSourceResponseParsingService,
+  ItemTemplateDataService,
   SearchService,
   SidebarService,
   SearchFilterService,
@@ -264,6 +271,12 @@ const PROVIDERS = [
   LicenseDataService,
   ItemTypeDataService,
   WorkflowActionDataService,
+  ProcessDataService,
+  ScriptDataService,
+  ProcessFilesResponseParsingService,
+  MetadataSchemaDataService,
+  MetadataFieldDataService,
+  TokenResponseParsingService,
   // register AuthInterceptor as HttpInterceptor
   {
     provide: HTTP_INTERCEPTORS,
@@ -296,6 +309,8 @@ export const models =
     License,
     WorkflowItem,
     WorkspaceItem,
+    SubmissionCcLicence,
+    SubmissionCcLicenceUrl,
     SubmissionDefinitionsModel,
     SubmissionFormsModel,
     SubmissionSectionModel,
@@ -312,9 +327,13 @@ export const models =
     ItemType,
     ExternalSource,
     ExternalSourceEntry,
+    Script,
+    Process,
     Version,
     VersionHistory,
-    WorkflowAction
+    WorkflowAction,
+    TemplateItem,
+    Registration
   ];
 
 @NgModule({
