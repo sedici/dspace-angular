@@ -144,8 +144,14 @@ import { ScriptDataService } from './data/processes/script-data.service';
 import { ProcessFilesResponseParsingService } from './data/process-files-response-parsing.service';
 import { WorkflowActionDataService } from './data/workflow-action-data.service';
 import { WorkflowAction } from './tasks/models/workflow-action-object.model';
+import { LocaleInterceptor } from './locale/locale.interceptor';
 import { ItemTemplateDataService } from './data/item-template-data.service';
 import { TemplateItem } from './shared/template-item.model';
+import { Feature } from './shared/feature.model';
+import { Authorization } from './shared/authorization.model';
+import { FeatureDataService } from './data/feature-authorization/feature-data.service';
+import { AuthorizationDataService } from './data/feature-authorization/authorization-data.service';
+import { SiteAdministratorGuard } from './data/feature-authorization/feature-authorization-guard/site-administrator.guard';
 import { Registration } from './shared/registration.model';
 import { MetadataSchemaDataService } from './data/metadata-schema-data.service';
 import { MetadataFieldDataService } from './data/metadata-field-data.service';
@@ -154,6 +160,8 @@ import { SubmissionCcLicenseDataService } from './submission/submission-cc-licen
 import { SubmissionCcLicence } from './submission/models/submission-cc-license.model';
 import { SubmissionCcLicenceUrl } from './submission/models/submission-cc-license-url.model';
 import { SubmissionCcLicenseUrlDataService } from './submission/submission-cc-license-url-data.service';
+import { ConfigurationDataService } from './data/configuration-data.service';
+import { ConfigurationProperty } from './shared/configuration-property.model';
 
 /**
  * When not in production, endpoint responses can be mocked for testing purposes
@@ -239,6 +247,7 @@ const PROVIDERS = [
   UploaderService,
   FileService,
   DSpaceObjectDataService,
+  ConfigurationDataService,
   DSOChangeAnalyzer,
   DefaultChangeAnalyzer,
   ArrayMoveChangeAnalyzer,
@@ -274,6 +283,9 @@ const PROVIDERS = [
   ProcessDataService,
   ScriptDataService,
   ProcessFilesResponseParsingService,
+  FeatureDataService,
+  AuthorizationDataService,
+  SiteAdministratorGuard,
   MetadataSchemaDataService,
   MetadataFieldDataService,
   TokenResponseParsingService,
@@ -281,6 +293,12 @@ const PROVIDERS = [
   {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
+    multi: true
+  },
+  // register LocaleInterceptor as HttpInterceptor
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: LocaleInterceptor,
     multi: true
   },
   NotificationsService,
@@ -333,7 +351,10 @@ export const models =
     VersionHistory,
     WorkflowAction,
     TemplateItem,
-    Registration
+    Feature,
+    Authorization,
+    Registration,
+    ConfigurationProperty
   ];
 
 @NgModule({
