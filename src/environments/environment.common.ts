@@ -18,9 +18,9 @@ export const environment: GlobalConfig = {
   // NOTE: these must be "synced" with the 'dspace.server.url' setting in your backend's local.cfg.
   // The 'nameSpace' must always end in "/api" as that's the subpath of the REST API in the backend.
   rest: {
-    ssl: true,
-    host: 'dspace7.4science.cloud',
-    port: 443,
+    ssl: false,
+    host: '163.10.34.151',
+    port: 8080,
     // NOTE: Space is capitalized because 'namespace' is a reserved string in TypeScript
     nameSpace: '/server/api',
   },
@@ -214,6 +214,6 @@ export const environment: GlobalConfig = {
     }
   },
   theme: {
-    name: 'default',
+    name: 'sedici',
   },
 };
