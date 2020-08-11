@@ -1,3 +1,4 @@
+<!-- search-form -->
 <section class="bg-secondary">
   <div class="container">
     <ds-search-form [inPlaceSearch]="false"></ds-search-form>
@@ -21,6 +22,8 @@
     </div>
   </div>
 </section>
+<!-- end search-form -->
+<!-- about-us -->
 <section>
   <div class="container">
     <div class="text-center"><img class="rounded-circle" src="https://via.placeholder.com/100"></div>
@@ -56,6 +59,9 @@
     </div>
   </div>
 </section>
+<!-- end about-us -->
+<!-- end search-form -->
+<!-- collections -->
 <section>
   <div class="container">
     <h2>Colecciones destacadas</h2>
@@ -88,6 +94,8 @@
     </div>
   </div>
 </section>
+<!-- end collections -->
+<!-- help -->
 <section class="bg-secondary">
   <div class="container">
     <div class="row">
@@ -106,17 +114,20 @@
     </div>
   </div>
 </section>
+<!-- end help -->
+<!-- como-llegar -->
 <section>
   <div class="container">
     <h3>Como llegar</h3>
   </div>
 </section>
+<!-- end como-llegar -->
 <section>
   <div class="container">
     <ng-container *ngIf="(site$ | async) as site">
       <ds-view-tracker [object]="site"></ds-view-tracker>
     </ng-container>
-    <ds-top-level-community-list></ds-top-level-community-list>
+    <!-- <ds-top-level-community-list></ds-top-level-community-list> -->
   </div>
   <!-- <ds-home-news></ds-home-news> -->
 </section>

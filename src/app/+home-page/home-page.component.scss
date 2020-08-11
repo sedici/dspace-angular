@@ -1,23 +1,8 @@
 :host {
 }
 
-h2, h5, p, img {
+h2, h5, p {
     text-align: center;
-}
-
-h2 .text-center > span:before, h2 .text-center > span:after{
-    content: '';
-    position: absolute;
-    top: 50%;
-    border-bottom: 1px solid;
-    width: 591px; /* half of limiter*/
-    margin: 0 20px;
-}
-h2 .text-center > span:before{
-    right: 100%;
-}
-h2 .text-center > span:after{
-    left: 100%;
 }
 
 section {
