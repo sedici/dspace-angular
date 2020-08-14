@@ -1,11 +1,22 @@
 <header>
-  <div class="container">
+  <div class="container d-flex align-items-end">
     <a class="navbar-brand my-2" routerLink="/home">
       <img src="assets/images/dspace-logo.svg"/>
     </a>
 
-    <nav class="navbar navbar-light navbar-expand-md float-right px-0">
-      <ds-search-navbar></ds-search-navbar>
+    <nav class="navbar navbar-light navbar-expand-md float-right px-0 push">
+      <!-- <ds-search-navbar></ds-search-navbar> -->
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Institucional</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Preguntas frecuentes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Subir Material</a>
+        </li>
+      </ul>
       <ds-lang-switch></ds-lang-switch>
       <ds-auth-nav-menu></ds-auth-nav-menu>
       <ds-impersonate-navbar></ds-impersonate-navbar>
