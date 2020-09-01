@@ -989,8 +989,6 @@
 
   "dso-selector.export-metadata.dspaceobject.head": "Export metadata from",
 
-  "dso-selector.export-metadata.notValidDSO": "You can only export metadata for collections and communities",
-
   "dso-selector.no-results": "No {{ type }} found",
 
   "dso-selector.placeholder": "Search for a {{ type }}",
@@ -1600,6 +1598,13 @@
 
   "item.page.uri": "URI",
 
+  "item.page.bitstreams.view-more": "Show more",
+
+  "item.page.bitstreams.collapse": "Collapse",
+
+  "item.page.filesection.original.bundle" : "Original bundle",
+
+  "item.page.filesection.license.bundle" : "License bundle",
 
 
   "item.select.confirm": "Confirm selected",
