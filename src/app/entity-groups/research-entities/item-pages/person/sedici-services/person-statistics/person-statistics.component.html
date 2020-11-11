@@ -1,0 +1,4 @@
+<p>Estadísticas:</p>
+  <ng-container *ngVar="(publications | async) as itemsRD">
+    <p>{{itemsRD?.payload?.totalElements}} publicaciones</p>
+  </ng-container>

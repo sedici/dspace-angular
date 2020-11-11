@@ -26,6 +26,7 @@ import { NameVariantModalComponent } from './submission/name-variant-modal/name-
 import { OrgUnitInputSuggestionsComponent } from './submission/item-list-elements/org-unit/org-unit-suggestions/org-unit-input-suggestions.component';
 import { OrgUnitSearchResultListSubmissionElementComponent } from './submission/item-list-elements/org-unit/org-unit-search-result-list-submission-element.component';
 import { ExternalSourceEntryListSubmissionElementComponent } from './submission/item-list-elements/external-source-entry/external-source-entry-list-submission-element.component';
+import { PersonStatisticsComponent } from './item-pages/person/sedici-services/person-statistics/person-statistics.component';
 
 const ENTRY_COMPONENTS = [
   OrgUnitComponent,
@@ -62,6 +63,7 @@ const ENTRY_COMPONENTS = [
   ],
   declarations: [
     ...ENTRY_COMPONENTS,
+    PersonStatisticsComponent,
   ],
   entryComponents: [
     ...ENTRY_COMPONENTS
