@@ -27,6 +27,7 @@ import { OrgUnitInputSuggestionsComponent } from './submission/item-list-element
 import { OrgUnitSearchResultListSubmissionElementComponent } from './submission/item-list-elements/org-unit/org-unit-search-result-list-submission-element.component';
 import { ExternalSourceEntryListSubmissionElementComponent } from './submission/item-list-elements/external-source-entry/external-source-entry-list-submission-element.component';
 import { PersonStatisticsComponent } from './item-pages/person/sedici-services/person-statistics/person-statistics.component';
+import { PublicationTypesChartComponent } from './item-pages/person/sedici-services/person-statistics/publication-types-chart/publication-types-chart.component';
 
 const ENTRY_COMPONENTS = [
   OrgUnitComponent,
@@ -64,6 +65,7 @@ const ENTRY_COMPONENTS = [
   declarations: [
     ...ENTRY_COMPONENTS,
     PersonStatisticsComponent,
+    PublicationTypesChartComponent,
   ],
   entryComponents: [
     ...ENTRY_COMPONENTS

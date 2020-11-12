@@ -1,9 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
-import { RemoteData } from '../../../../../../core/data/remote-data';
 import { Item } from '../../../../../../core/shared/item.model';
 import { RelationshipService } from '../../../../../../core/data/relationship.service';
-import { PaginatedList } from '../../../../../../core/data/paginated-list';
 import { FindListOptions } from '../../../../../../core/data/request.models';
 import { map } from 'rxjs/operators';
 
@@ -27,14 +25,16 @@ export class PersonStatisticsComponent implements OnInit {
 
   options = new FindListOptions();
 
-  publications: Observable<RemoteData<PaginatedList<Item>>>;
+  publications: Observable<Item[]>;
 
   ngOnInit(): void {
     this.setPublications()
   }
 
   setPublications(){
-    this.publications =  this.relationshipService.getRelatedItemsByLabel(this.item, 'isPublicationOfAuthor');
+    this.publications =  this.relationshipService.getRelatedItemsByLabel(this.item, 'isPublicationOfAuthor').pipe(
+      map(value => value.payload.page)
+    );
   }
 
 }
