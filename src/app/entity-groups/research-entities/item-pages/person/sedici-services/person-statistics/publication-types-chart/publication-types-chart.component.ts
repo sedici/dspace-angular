@@ -11,17 +11,10 @@ export class PublicationTypesChartComponent implements OnInit {
 
   @Input() publications:Item[];
 
-  private data2 = [];
+  private data = [];
 
-  private data = [
-     {"Publication_type": "Article", "Number": "129"},
-     {"Publication_type": "Dataset", "Number": "18"},
-     {"Publication_type": "Thesis", "Number": "1"},
-     {"Publication_type": "Conference object", "Number": "15"},
-     {"Publication_type": "Image", "Number": "2"},
-   ];
   private svg;
-  private margin = 40;
+  private margin = 150;
   private width = 450;
   private height = 450;
   // The radius of the pie chart is half the smallest side
@@ -29,19 +22,23 @@ export class PublicationTypesChartComponent implements OnInit {
   private colors;
 
   ngOnInit(): void {
-    //this.setData();
+    this.setData();
     this.createSvg();
     this.createColors();
     this.drawChart();
   }
 
   setData() {
+    // Extract the type of the publications
     var types = this.publications.map(
       publication => (publication.firstMetadataValue("dc.type") === undefined)?
-        undefined : publication.firstMetadataValue("dc.type")
-    )
+        "Undefined" : publication.firstMetadataValue("dc.type")
+    );
+
+    // Count the amount of each type
     var types_dict = {};
-    for (var pub_type in types) {
+    for (var type_index in types) {
+      var pub_type = types[type_index]
       if (types_dict[pub_type] === undefined){
         types_dict[pub_type] = 0
       }
@@ -49,13 +46,14 @@ export class PublicationTypesChartComponent implements OnInit {
         types_dict[pub_type] += 1
       }
     }
+
+    // Create a dictionary with the types and the number of types
     var types_set = new Set(types);
-    for (var diff_types in types_set){
-      this.data2.push(
+    types_set.forEach(function(diff_types){
+      this.data.push(
         {"Publication_type": diff_types , "Number": types_dict[diff_types]}
       )
-    }
-    console.log(this.data2)
+    }, this);
 
   }
   private createSvg(): void {
@@ -73,7 +71,7 @@ export class PublicationTypesChartComponent implements OnInit {
   private createColors(): void {
     this.colors = d3.scaleOrdinal()
     .domain(this.data.map(d => d.Number.toString()))
-    .range(["#466cb0", "#304978", "#1f304e", "#7b97ca", "#cfd9ec"]);
+    .range(d3.schemeDark2)
   }
 
   private drawChart(): void {
@@ -81,7 +79,7 @@ export class PublicationTypesChartComponent implements OnInit {
     const pie = d3.pie<any>().value((d: any) => Number(d.Number));
 
     var arc = d3.arc()
-      .innerRadius(this.radius * 0.5)         // This is the size of the donut hole
+      .innerRadius(this.radius * 0.4)         // This is the size of the donut hole
       .outerRadius(this.radius * 0.8)
 
     // Build the pie chart
@@ -95,25 +93,10 @@ export class PublicationTypesChartComponent implements OnInit {
     .attr("stroke", "white")
     .style("stroke-width", "1px");
 
-    // // Add labels
-    // const labelLocation = d3.arc()
-    //  .innerRadius(this.radius * 0.2)
-    //  .outerRadius(this.radius);
-
-    // this.svg
-    //  .selectAll('pieces')
-    //  .data(pie(this.data))
-    //  .enter()
-    //  .append('text')
-    //  .text(d => d.data.Number)
-    //  .attr("transform", d => "translate(" + labelLocation.centroid(d) + ")")
-    //  //.style("text-anchor", "middle")
-    //  .style("font-size", 9);
-
     // Another arc that won't be drawn. Just for labels positioning
     var outerArc = d3.arc()
-    .innerRadius(this.radius)
-    .outerRadius(this.radius)
+    .innerRadius(this.radius * 0.9)
+    .outerRadius(this.radius * 0.9)
 
     // Add the polylines between chart and labels:
     this.svg
@@ -141,7 +124,7 @@ export class PublicationTypesChartComponent implements OnInit {
       .append('text')
         .text( function(d) { return d.data.Publication_type  } )
         .attr('transform', function(d) {
-            var pos = arc.centroid(d);
+            var pos = outerArc.centroid(d);
             // var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
             // pos[0] = this.radius * 0.99 * (midangle < Math.PI ? 1 : -1);
             return 'translate(' + pos + ')';
@@ -150,5 +133,6 @@ export class PublicationTypesChartComponent implements OnInit {
             var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
             return (midangle < Math.PI ? 'start' : 'end')
         })
+        .style("font-size", 7);
   }
 }

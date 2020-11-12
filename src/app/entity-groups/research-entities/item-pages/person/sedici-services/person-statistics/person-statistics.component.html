@@ -1,4 +1,4 @@
 <p>Estadísticas:</p>
-<ng-container *ngVar="(publications | async) as itemsRD">
-  <ds-publication-types-chart  [publications]="itemsRD"></ds-publication-types-chart>
-</ng-container>
+<div *ngIf="publications$ | async as publications">
+  <ds-publication-types-chart  [publications]="publications"></ds-publication-types-chart>
+</div>

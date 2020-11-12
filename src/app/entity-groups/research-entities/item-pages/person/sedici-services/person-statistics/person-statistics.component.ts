@@ -25,14 +25,14 @@ export class PersonStatisticsComponent implements OnInit {
 
   options = new FindListOptions();
 
-  publications: Observable<Item[]>;
+  publications$: Observable<Item[]>;
 
   ngOnInit(): void {
     this.setPublications()
   }
 
   setPublications(){
-    this.publications =  this.relationshipService.getRelatedItemsByLabel(this.item, 'isPublicationOfAuthor').pipe(
+    this.publications$ = this.relationshipService.getRelatedItemsByLabel(this.item, 'isPublicationOfAuthor').pipe(
       map(value => value.payload.page)
     );
   }
