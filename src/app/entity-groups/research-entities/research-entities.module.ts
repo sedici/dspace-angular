@@ -28,6 +28,9 @@ import { OrgUnitSearchResultListSubmissionElementComponent } from './submission/
 import { ExternalSourceEntryListSubmissionElementComponent } from './submission/item-list-elements/external-source-entry/external-source-entry-list-submission-element.component';
 import { PersonStatisticsComponent } from './item-pages/person/sedici-services/person-statistics/person-statistics.component';
 import { PublicationTypesChartComponent } from './item-pages/person/sedici-services/person-statistics/publication-types-chart/publication-types-chart.component';
+import { CoauthorsNetworkComponent } from './item-pages/person/sedici-services/person-statistics/coauthors-network/coauthors-network.component';
+import { NgxEchartsModule } from 'ngx-echarts';
+import * as echarts from 'echarts';
 
 const ENTRY_COMPONENTS = [
   OrgUnitComponent,
@@ -60,12 +63,16 @@ const ENTRY_COMPONENTS = [
     CommonModule,
     SharedModule,
     TooltipModule.forRoot(),
-    ItemPageModule
+    ItemPageModule,
+    NgxEchartsModule.forRoot({
+      echarts
+    })
   ],
   declarations: [
     ...ENTRY_COMPONENTS,
     PersonStatisticsComponent,
     PublicationTypesChartComponent,
+    CoauthorsNetworkComponent,
   ],
   entryComponents: [
     ...ENTRY_COMPONENTS
