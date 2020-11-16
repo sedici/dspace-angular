@@ -14,9 +14,10 @@ export class PublicationTypesChartComponent implements OnInit {
   private data = [];
 
   ngOnInit(): void {
+    this.setData()
   }
 
-  setData() {
+  private setData() {
     // Extract the type of the publications
     var types = this.publications.map(
       publication => (publication.firstMetadataValue("dc.type") === undefined)?
@@ -28,7 +29,7 @@ export class PublicationTypesChartComponent implements OnInit {
     for (var type_index in types) {
       var pub_type = types[type_index]
       if (types_dict[pub_type] === undefined){
-        types_dict[pub_type] = 0
+        types_dict[pub_type] = 1
       }
       else{
         types_dict[pub_type] += 1
