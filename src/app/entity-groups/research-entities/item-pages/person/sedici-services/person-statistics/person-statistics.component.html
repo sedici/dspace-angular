@@ -1,8 +1,7 @@
-<p>Estadísticas:</p>
 <div *ngIf="publications$ | async as publications">
   <ds-publication-types-chart  [publications]="publications"></ds-publication-types-chart>
 </div>
-<!-- </div> -->
+
 <div style="margin-top: 100px;">
   <ds-coauthors-network></ds-coauthors-network>
 </div>
