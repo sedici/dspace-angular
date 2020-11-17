@@ -83,9 +83,7 @@ export class CoauthorsNetworkComponent implements OnInit {
     });
     this.graphData = {
       title: {
-        text: 'Red de Coautores',
-        subtext: '',
-        x: 'center',
+        text: 'Red de Coautores'
       },
       tooltip: {},
       legend: [

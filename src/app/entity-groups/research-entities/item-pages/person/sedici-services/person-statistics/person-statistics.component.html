@@ -5,6 +5,9 @@
   <div class="graphicComponent">
     <ds-coauthors-network [publications]="publications"></ds-coauthors-network>
   </div>
+  <div class="graphicComponent">
+    <ds-publications-time-chart [publications]="publications"></ds-publications-time-chart>
+  </div>
 </div>
 <ds-loading *ngIf="publications$?.isLoading" message="{{'loading.item' | translate}}"></ds-loading>
 

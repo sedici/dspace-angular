@@ -31,6 +31,7 @@ import { PublicationTypesChartComponent } from './item-pages/person/sedici-servi
 import { CoauthorsNetworkComponent } from './item-pages/person/sedici-services/person-statistics/coauthors-network/coauthors-network.component';
 import { NgxEchartsModule } from 'ngx-echarts';
 import * as echarts from 'echarts';
+import { PublicationsTimeChartComponent } from './item-pages/person/sedici-services/person-statistics/publications-time-chart/publications-time-chart.component';
 
 const ENTRY_COMPONENTS = [
   OrgUnitComponent,
@@ -73,6 +74,7 @@ const ENTRY_COMPONENTS = [
     PersonStatisticsComponent,
     PublicationTypesChartComponent,
     CoauthorsNetworkComponent,
+    PublicationsTimeChartComponent,
   ],
   entryComponents: [
     ...ENTRY_COMPONENTS

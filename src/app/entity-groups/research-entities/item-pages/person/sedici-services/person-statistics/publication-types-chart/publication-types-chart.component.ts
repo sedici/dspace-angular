@@ -51,9 +51,7 @@ export class PublicationTypesChartComponent implements OnInit {
   private setGraphData() {
     this.graphData = {
       title: {
-        text: 'Publications per type',
-        subtext: '',
-        x: 'center'
+        text: 'Publications per type'
       },
       tooltip: {
         trigger: 'item',
