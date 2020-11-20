@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Item } from '../../../../../../../core/shared/item.model';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -14,6 +15,8 @@ export class PublicationTypesChartComponent implements OnInit {
   private pubTypes = [];
 
   private graphData: object;
+
+  constructor(private translateService: TranslateService) {}
 
   ngOnInit(): void {
     this.setPubTypes();
@@ -51,7 +54,7 @@ export class PublicationTypesChartComponent implements OnInit {
   private setGraphData() {
     this.graphData = {
       title: {
-        text: 'Publications per type'
+        text: this.translateService.instant('person.statistics.publicationsType.title')
       },
       tooltip: {
         trigger: 'item',
@@ -65,7 +68,7 @@ export class PublicationTypesChartComponent implements OnInit {
       calculable: true,
       series: [
         {
-          name: 'area',
+          name: this.translateService.instant('person.statistics.publicationsType.label'),
           type: 'pie',
           radius: [30, 110],
           roseType: 'area',

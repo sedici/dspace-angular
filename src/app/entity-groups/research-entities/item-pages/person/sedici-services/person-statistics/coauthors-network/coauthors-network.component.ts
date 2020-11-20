@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Item } from '../../../../../../../core/shared/item.model';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -24,12 +25,12 @@ export class CoauthorsNetworkComponent implements OnInit {
     'dc.contributor'
   ];
 
+  constructor(private translateService: TranslateService) {}
+
   ngOnInit(): void {
     this.setCoauthors()
     this.setGraphData()
   }
-
-  constructor() {}
 
   private setCoauthors(){
     // Extract the type of the publications
@@ -83,7 +84,7 @@ export class CoauthorsNetworkComponent implements OnInit {
     });
     this.graphData = {
       title: {
-        text: 'Red de Coautores'
+        text: this.translateService.instant('person.statistics.coauthors.title')
       },
       tooltip: {},
       legend: [
@@ -96,7 +97,7 @@ export class CoauthorsNetworkComponent implements OnInit {
       animation: false,
       series: [
         {
-          name: 'Coautores',
+          name: this.translateService.instant('person.statistics.coauthors.label'),
           type: 'graph',
           layout: 'force',
           data: this.coAuthors.nodes,

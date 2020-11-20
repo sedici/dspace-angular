@@ -2899,6 +2899,24 @@
   // "person.statistics": "Statistics",
   "person.statistics": "Estadísticas",
 
+  // "person.statistics.coauthors.title": "Coauthors Network",
+  "person.statistics.coauthors.title": "Red de coautores",
+
+  // "person.statistics.coauthors.label": "Coauthors",
+  "person.statistics.coauthors.label": "Coautores",
+
+  // "person.statistics.publicationsTime.title": "Publications per time",
+  "person.statistics.publicationsTime.title": "Publicaciones por año",
+
+  // "person.statistics.publicationsTime.label": "Publications",
+  "person.statistics.publicationsTime.label": "Publicaciones",
+
+  // "person.statistics.publicationsType.title": "Publications per type",
+  "person.statistics.publicationsType.title": "Publicaciones por tipo",
+
+  // "person.statistics.publicationsType.label": "Publication type",
+  "person.statistics.publicationsType.label": "Tipo de publicación",
+
   // "person.publications": "Publications",
   "person.publications": "Publicaciones",
 

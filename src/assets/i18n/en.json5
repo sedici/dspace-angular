@@ -2218,6 +2218,18 @@
 
   "person.statistics": "Statistics",
 
+  "person.statistics.coauthors.title": "Coauthors Network",
+
+  "person.statistics.coauthors.label": "Coauthors",
+
+  "person.statistics.publicationsTime.title": "Publications per time",
+
+  "person.statistics.publicationsTime.label": "Publications",
+
+  "person.statistics.publicationsType.title": "Publications per type",
+
+  "person.statistics.publicationsType.label": "Publication type",
+
   "person.publications": "Publications",
 
   "person.search.results.head": "Person Search Results",

@@ -138,6 +138,10 @@ export const environment: GlobalConfig = {
     code: 'en',
     label: 'English',
     active: true,
+  },{
+    code: 'es',
+    label: 'Español',
+    active: true,
   }, {
     code: 'de',
     label: 'Deutsch',
