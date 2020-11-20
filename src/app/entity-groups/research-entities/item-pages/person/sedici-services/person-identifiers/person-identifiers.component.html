@@ -1,0 +1,11 @@
+<h4>{{'person.page.identifiers' | translate}}</h4>
+<div *ngFor="let metadataKeys of identifiersMetadata">
+    <div *ngIf="item.firstMetadata(metadataKeys.identifierMetadata)" class="identifier-element">
+        <p>{{metadataKeys.name}}</p>
+        <a href="{{item.firstMetadata(metadataKeys.urlMetadata).value}}" target="_blank">
+            <ds-metadata-values [mdValues]="
+            [item.firstMetadata(metadataKeys.identifierMetadata)]">
+            </ds-metadata-values>
+        </a>
+    </div>
+</div>

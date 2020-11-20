@@ -2866,11 +2866,17 @@
   // "person.page.birthdate": "Birth Date",
   "person.page.birthdate": "Fecha de Nacimiento",
 
+  // "person.page.dni": "DNI",
+  "person.page.dni": "DNI",
+
   // "person.page.email": "Email Address",
   "person.page.email": "Dirección de correo electrónico",
 
   // "person.page.firstname": "First Name",
   "person.page.firstname": "Nombre",
+
+  // "person.page.identifiers": "Identifiers",
+  "person.page.identifiers": "Identificadores persistentes",
 
   // "person.page.jobtitle": "Job Title",
   "person.page.jobtitle": "Título profesional",
@@ -2889,6 +2895,12 @@
 
   // "person.page.titleprefix": "Person: ",
   "person.page.titleprefix": "Persona: ",
+
+  // "person.statistics": "Statistics",
+  "person.statistics": "Estadísticas",
+
+  // "person.publications": "Publications",
+  "person.publications": "Publicaciones",
 
   // "person.search.results.head": "Person Search Results",
   "person.search.results.head": "Resultados de búsqueda de personas",

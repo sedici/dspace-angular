@@ -6,6 +6,7 @@
     <ds-metadata-field-wrapper>
       <ds-thumbnail [thumbnail]="getThumbnail() | async" [defaultImage]="'assets/images/person-placeholder.svg'"></ds-thumbnail>
     </ds-metadata-field-wrapper>
+    <ds-person-identifiers [item]="object"></ds-person-identifiers>
     <ds-generic-item-page-field [item]="object"
       [fields]="['person.email']"
       [label]="'person.page.email'">
@@ -33,14 +34,18 @@
       [label]="'person.page.firstname'">
     </ds-generic-item-page-field>
     <ds-generic-item-page-field [item]="object"
+      [fields]="['person.dni']"
+      [label]="'person.page.dni'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
       [fields]="['person.jobTitle']"
       [label]="'person.page.jobtitle'">
     </ds-generic-item-page-field>
-    <ds-related-items
+    <!-- <ds-related-items
       [parentItem]="object"
       [relationType]="'isProjectOfPerson'"
       [label]="'relationships.isProjectOf' | translate">
-    </ds-related-items>
+    </ds-related-items> -->
     <ds-related-items
       [parentItem]="object"
       [relationType]="'isOrgUnitOfPerson'"
@@ -55,7 +60,7 @@
   <div id="personMenu">
     <ul ngbNav #nav="ngbNav" class="nav-tabs">
       <li ngbNavItem>
-        <a ngbNavLink>Publicaciones</a>
+        <a ngbNavLink>{{"person.publications" | translate}}</a>
         <ng-template ngbNavContent>
           <div class="mt-5 w-100">
             <ds-tabbed-related-entities-search  [item]="object"
@@ -68,7 +73,7 @@
         </ng-template>
       </li>
       <li ngbNavItem>
-        <a ngbNavLink>Estadísticas</a>
+        <a ngbNavLink>{{"person.statistics" | translate}}</a>
         <ng-template ngbNavContent>
           <ds-person-statistics [item]="object"></ds-person-statistics>
         </ng-template>

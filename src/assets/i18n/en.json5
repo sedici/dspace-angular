@@ -2196,9 +2196,13 @@
 
   "person.page.birthdate": "Birth Date",
 
+  "person.page.dni": "DNI",
+
   "person.page.email": "Email Address",
 
   "person.page.firstname": "First Name",
+
+  "person.page.identifiers": "Identifiers",
 
   "person.page.jobtitle": "Job Title",
 
@@ -2211,6 +2215,10 @@
   "person.page.staffid": "Staff ID",
 
   "person.page.titleprefix": "Person: ",
+
+  "person.statistics": "Statistics",
+
+  "person.publications": "Publications",
 
   "person.search.results.head": "Person Search Results",
 
