@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Item } from 'src/app/core/shared/item.model';
+import { TranslateService } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'ds-person-identifiers',
@@ -14,23 +16,26 @@ export class PersonIdentifiersComponent {
     {
       urlMetadata: "person.orcid.url",
       identifierMetadata: "person.identifier.orcid",
-      name: "OrcId:"
+      name: this.translateService.instant("person.page.orcid")
     },
     {
       urlMetadata:"person.scopus-author-id.url",
       identifierMetadata: "person.scopus-author-id.url",
-      name: "Scopus id:"
+      name: this.translateService.instant("person.page.scopusid")
     },
     {
       urlMetadata: "person.rid.url",
       identifierMetadata: "person.identifier.rid",
-      name: "Researcher ID:"
+      name: this.translateService.instant("person.page.rid")
     },
     {
       urlMetadata: "person.identifier.gsid",
       identifierMetadata: "person.identifier.gsid",
-      name: "Google Scholar ID:"
+      name: this.translateService.instant("person.page.gsid")
     }
   ]
+
+  constructor(private translateService: TranslateService) {}
+
 
 }

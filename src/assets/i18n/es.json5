@@ -2863,6 +2863,9 @@
   // "person.listelement.badge": "Person",
   "person.listelement.badge": "Persona",
 
+  // "person.page.biography": "Biography",
+  "person.page.biography": "Biografía",
+
   // "person.page.birthdate": "Birth Date",
   "person.page.birthdate": "Fecha de Nacimiento",
 
@@ -2877,6 +2880,12 @@
 
   // "person.page.identifiers": "Identifiers",
   "person.page.identifiers": "Identificadores persistentes",
+
+  // "person.page.keywords": "Keywords",
+  "person.page.keywords": "Palabras clave",
+
+  // "person.page.knowslanguage": "Languages",
+  "person.page.knowslanguage": "Idiomas",
 
   // "person.page.jobtitle": "Job Title",
   "person.page.jobtitle": "Título profesional",
@@ -2895,6 +2904,9 @@
 
   // "person.page.titleprefix": "Person: ",
   "person.page.titleprefix": "Persona: ",
+
+  // "person.page.webpages": "Webpages",
+  "person.page.webpages": "Paginas web",
 
   // "person.statistics": "Statistics",
   "person.statistics": "Estadísticas",

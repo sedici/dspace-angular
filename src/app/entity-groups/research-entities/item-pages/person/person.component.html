@@ -11,18 +11,10 @@
       [fields]="['person.email']"
       [label]="'person.page.email'">
     </ds-generic-item-page-field>
-    <!--<ds-generic-item-page-field [item]="object"-->
-      <!--[fields]="['person.identifier.orcid']"-->
-      <!--[label]="'person.page.orcid'">-->
-    <!--</ds-generic-item-page-field>-->
     <ds-generic-item-page-field [item]="object"
       [fields]="['person.birthDate']"
       [label]="'person.page.birthdate'">
     </ds-generic-item-page-field>
-    <!--<ds-generic-item-page-field [item]="object"-->
-      <!--[fields]="['person.identifier.staffid']"-->
-      <!--[label]="'person.page.staffid'">-->
-    <!--</ds-generic-item-page-field>-->
   </div>
   <div class="col-xs-12 col-md-6">
     <ds-generic-item-page-field [item]="object"
@@ -41,8 +33,20 @@
       [fields]="['person.jobTitle']"
       [label]="'person.page.jobtitle'">
     </ds-generic-item-page-field>
-    <!-- <ds-related-items
-      [parentItem]="object"
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['person.keyword']"
+      [label]="'person.page.keywords'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+     [fields]="['person.knowsLanguage']"
+     [label]="'person.page.knowslanguage'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['person.webpage']"
+      [label]="'person.page.webpages'">
+    </ds-generic-item-page-field>
+<!-- <ds-related-items
+  [parentItem]="object"
       [relationType]="'isProjectOfPerson'"
       [label]="'relationships.isProjectOf' | translate">
     </ds-related-items> -->
@@ -51,6 +55,10 @@
       [relationType]="'isOrgUnitOfPerson'"
       [label]="'relationships.isOrgUnitOf' | translate">
     </ds-related-items>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['person.biography']"
+      [label]="'person.page.biography'">
+    </ds-generic-item-page-field>
     <div>
       <a class="btn btn-outline-primary" [routerLink]="['/items/' + object.id + '/full']">
         {{"item.page.link.full" | translate}}

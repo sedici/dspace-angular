@@ -2194,6 +2194,8 @@
 
   "person.listelement.badge": "Person",
 
+  "person.page.biography": "Biography",
+
   "person.page.birthdate": "Birth Date",
 
   "person.page.dni": "DNI",
@@ -2202,15 +2204,25 @@
 
   "person.page.firstname": "First Name",
 
+  "person.page.gsid": "Google Scholar URL",
+
   "person.page.identifiers": "Identifiers",
 
   "person.page.jobtitle": "Job Title",
+
+  "person.page.keywords": "Keywords",
+
+  "person.page.knowslanguage": "Languages",
 
   "person.page.lastname": "Last Name",
 
   "person.page.link.full": "Show all metadata",
 
   "person.page.orcid": "ORCID",
+
+  "person.page.rid": "Researcher ID",
+
+  "person.page.scopusid": "Scopus ID",
 
   "person.page.staffid": "Staff ID",
 
