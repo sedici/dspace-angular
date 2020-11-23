@@ -162,7 +162,7 @@
     universal-analytics "^0.4.20"
     uuid "^3.3.2"
 
-"@angular/common@~8.2.14":
+"@angular/common@>= 8.0.0 < 9.0.0", "@angular/common@~8.2.14":
   version "8.2.14"
   resolved "https://registry.yarnpkg.com/@angular/common/-/common-8.2.14.tgz#027e52b2951c14082d6e3af1a4ffa1356220e439"
   integrity sha512-Qmt+aX2quUW54kaNT7QH7WGXnFxr/cC2C6sf5SW5SdkZfDQSiz8IaItvieZfXVQUbBOQKFRJ7TlSkt0jI/yjvw==
@@ -1784,6 +1784,15 @@ angulartics2@7.5.2:
   resolved "https://registry.yarnpkg.com/angulartics2/-/angulartics2-7.5.2.tgz#58ea8eca811581350f5067ddedecd9f070d82598"
   integrity sha512-gfQ/kRtrKD0fLOGZsWlcD8obIWTAJGSdiVRp6lH+LxLD8shKnl1/StWlUJeOioUkU0ps4QGRb0tCSlCdnI5DAw==
   dependencies:
+    tslib "^1.9.0"
+
+angularx-qrcode@~2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/angularx-qrcode/-/angularx-qrcode-2.1.4.tgz#2aa1d44dac27409ea73aab134df720b90895a739"
+  integrity sha512-Szun1RVl5l/S87y+hFl3qSTn1Xafi8QsP4brIa1OluU2TwXwRvC3bb7WWIFT9+KKfFxA3AqYjYbB2MjNEHDQzA==
+  dependencies:
+    "@angular/common" ">= 8.0.0 < 9.0.0"
+    qrcode "1.4.2"
     tslib "^1.9.0"
 
 ansi-align@^2.0.0:
@@ -4113,6 +4122,11 @@ diffie-hellman@^5.0.0:
     miller-rabin "^4.0.0"
     randombytes "^2.0.0"
 
+dijkstrajs@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/dijkstrajs/-/dijkstrajs-1.0.1.tgz#d3cd81221e3ea40742cfcde556d4e99e98ddc71b"
+  integrity sha1-082BIh4+pAdCz83lVtTpnpjdxxs=
+
 dir-glob@^2.0.0, dir-glob@^2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/dir-glob/-/dir-glob-2.2.2.tgz#fa09f0694153c8918b18ba0deafae94769fc50c4"
@@ -6275,6 +6289,11 @@ isarray@2.0.1:
   resolved "https://registry.yarnpkg.com/isarray/-/isarray-2.0.1.tgz#a37d94ed9cda2d59865c9f76fe596ee1f338741e"
   integrity sha1-o32U7ZzaLVmGXJ92/llu4fM4dB4=
 
+isarray@^2.0.1:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/isarray/-/isarray-2.0.5.tgz#8af1e4c1221244cc62459faf38940d4e644a5723"
+  integrity sha512-xHjhDr3cNBK0BzdUJSPXZntQUx/mwMS5Rw4A7lPJ90XGAO6ISP/ePDNuo0vhqOZU+UD5JoodwCAAoZQd3FeAKw==
+
 isbinaryfile@^4.0.6:
   version "4.0.6"
   resolved "https://registry.yarnpkg.com/isbinaryfile/-/isbinaryfile-4.0.6.tgz#edcb62b224e2b4710830b67498c8e4e5a4d2610b"
@@ -8238,6 +8257,11 @@ pleeease-filters@^4.0.0:
     onecolor "^3.0.4"
     postcss "^6.0.1"
 
+pngjs@^3.3.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/pngjs/-/pngjs-3.4.0.tgz#99ca7d725965fb655814eaf65f38f12bbdbf555f"
+  integrity sha512-NCrCHhWmnQklfH4MtJMRjZ2a8c80qXeMlQMv2uVp9ISJMTt562SbGd6n2oq0PaPgKm7Z6pL9E2UlLIhC+SHL3w==
+
 portfinder@^1.0.25:
   version "1.0.25"
   resolved "https://registry.yarnpkg.com/portfinder/-/portfinder-1.0.25.tgz#254fd337ffba869f4b9d37edc298059cb4d35eca"
@@ -9114,6 +9138,16 @@ qjobs@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/qjobs/-/qjobs-1.2.0.tgz#c45e9c61800bd087ef88d7e256423bdd49e5d071"
   integrity sha512-8YOJEHtxpySA3fFDyCRxA+UUV+fA+rTWnuWvylOK/NCjhY+b4ocCtmu8TtsWb+mYeU+GCHf/S66KZF/AsteKHg==
+
+qrcode@1.4.2:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/qrcode/-/qrcode-1.4.2.tgz#e7c82a60140916d666541043bd2b0b72ee4e38a6"
+  integrity sha512-eR6RgxFYPDFH+zFLTJKtoNP/RlsHANQb52AUmQ2bGDPMuUw7jJb0F+DNEgx7qQGIElrbFxWYMc0/B91zLZPF9Q==
+  dependencies:
+    dijkstrajs "^1.0.1"
+    isarray "^2.0.1"
+    pngjs "^3.3.0"
+    yargs "^13.2.4"
 
 qs@6.5.1:
   version "6.5.1"
@@ -11749,6 +11783,14 @@ yargs-parser@^13.0.0, yargs-parser@^13.1.0:
     camelcase "^5.0.0"
     decamelize "^1.2.0"
 
+yargs-parser@^13.1.2:
+  version "13.1.2"
+  resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-13.1.2.tgz#130f09702ebaeef2650d54ce6e3e5706f7a4fb38"
+  integrity sha512-3lbsNRf/j+A4QuSZfDRA7HRSfWrzO0YjqTJd5kjAq37Zep1CEgaYmrH9Q3GwPiB9cHyd1Y1UwggGhJGoxipbzg==
+  dependencies:
+    camelcase "^5.0.0"
+    decamelize "^1.2.0"
+
 yargs-parser@^18.1.1:
   version "18.1.3"
   resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-18.1.3.tgz#be68c4975c6b2abf469236b0c870362fab09a7b0"
@@ -11808,6 +11850,22 @@ yargs@13.2.4:
     which-module "^2.0.0"
     y18n "^4.0.0"
     yargs-parser "^13.1.0"
+
+yargs@^13.2.4:
+  version "13.3.2"
+  resolved "https://registry.yarnpkg.com/yargs/-/yargs-13.3.2.tgz#ad7ffefec1aa59565ac915f82dccb38a9c31a2dd"
+  integrity sha512-AX3Zw5iPruN5ie6xGRIDgqkT+ZhnRlZMLMHAs8tg7nRruy2Nb+i5o9bwghAogtM08q1dpr2LVoS8KSTMYpWXUw==
+  dependencies:
+    cliui "^5.0.0"
+    find-up "^3.0.0"
+    get-caller-file "^2.0.1"
+    require-directory "^2.1.1"
+    require-main-filename "^2.0.0"
+    set-blocking "^2.0.0"
+    string-width "^3.0.0"
+    which-module "^2.0.0"
+    y18n "^4.0.0"
+    yargs-parser "^13.1.2"
 
 yargs@^15.3.1:
   version "15.3.1"

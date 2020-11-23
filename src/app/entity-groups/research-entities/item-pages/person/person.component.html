@@ -16,7 +16,7 @@
       [label]="'person.page.birthdate'">
     </ds-generic-item-page-field>
   </div>
-  <div class="col-xs-12 col-md-6">
+  <div class="col-xs-12 col-md-5">
     <ds-generic-item-page-field [item]="object"
       [fields]="['person.familyName']"
       [label]="'person.page.lastname'">
@@ -64,6 +64,9 @@
         {{"item.page.link.full" | translate}}
       </a>
     </div>
+  </div>
+  <div class="col-xs-12 col-md-3">
+    <ds-person-page-qr></ds-person-page-qr>
   </div>
   <div id="personMenu">
     <ul ngbNav #nav="ngbNav" class="nav-tabs">

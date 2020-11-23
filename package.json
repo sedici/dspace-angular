@@ -79,6 +79,7 @@
     "angular-idle-preload": "3.0.0",
     "angular2-text-mask": "9.0.0",
     "angulartics2": "7.5.2",
+    "angularx-qrcode": "~2.1.4",
     "bootstrap": "4.3.1",
     "caniuse-lite": "^1.0.30000697",
     "cerialize": "0.1.18",
