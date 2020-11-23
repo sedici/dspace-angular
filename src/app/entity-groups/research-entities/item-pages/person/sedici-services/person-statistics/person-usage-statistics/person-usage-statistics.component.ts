@@ -6,7 +6,7 @@ import { DSpaceObject } from 'src/app/core/shared/dspace-object.model';
 
 @Component({
   selector: 'ds-person-usage-statistics',
-  templateUrl: '../../../../../../../statistics-page/statistics-page/statistics-page.component.html',
+  templateUrl: './person-usage-statistics.component.html',
   styleUrls: ['./person-usage-statistics.component.scss']
 })
 export class PersonUsageStatisticsComponent extends ItemStatisticsPageComponent implements OnInit {

@@ -1,1 +1,17 @@
-<p>person-usage-statistics works!</p>
+<ng-container *ngVar="reports$ | async as reports">
+
+    <ng-container *ngIf="!reports">
+      <ds-loading></ds-loading>
+    </ng-container>
+
+    <ng-container *ngIf="reports">
+      <ds-statistics-table *ngFor="let report of reports"
+                           [report]="report"
+                           class="m-2 {{ report.id }}">
+      </ds-statistics-table>
+      <div *ngIf="!(hasData$ | async)">
+        {{ 'statistics.page.no-data' | translate }}
+      </div>
+    </ng-container>
+
+</ng-container>
