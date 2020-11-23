@@ -35,6 +35,8 @@ import { PublicationsTimeChartComponent } from './item-pages/person/sedici-servi
 import { PersonIdentifiersComponent } from './item-pages/person/sedici-services/person-identifiers/person-identifiers.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { PersonPageQrComponent } from './item-pages/person/sedici-services/person-page-qr/person-page-qr.component';
+import { PersonUsageStatisticsComponent } from './item-pages/person/sedici-services/person-statistics/person-usage-statistics/person-usage-statistics.component';
+import { StatisticsPageModule } from '../../statistics-page/statistics-page.module';
 
 const ENTRY_COMPONENTS = [
   OrgUnitComponent,
@@ -71,7 +73,8 @@ const ENTRY_COMPONENTS = [
     NgxEchartsModule.forRoot({
       echarts
     }),
-    QRCodeModule
+    QRCodeModule,
+    StatisticsPageModule
   ],
   declarations: [
     ...ENTRY_COMPONENTS,
@@ -81,6 +84,7 @@ const ENTRY_COMPONENTS = [
     PublicationsTimeChartComponent,
     PersonIdentifiersComponent,
     PersonPageQrComponent,
+    PersonUsageStatisticsComponent,
   ],
   entryComponents: [
     ...ENTRY_COMPONENTS
