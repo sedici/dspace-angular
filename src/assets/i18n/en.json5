@@ -2194,6 +2194,8 @@
 
   "person.listelement.badge": "Person",
 
+  "person.page.address": "Address",
+
   "person.page.biography": "Biography",
 
   "person.page.birthdate": "Birth Date",
@@ -2225,6 +2227,8 @@
   "person.page.scopusid": "Scopus ID",
 
   "person.page.staffid": "Staff ID",
+
+  "person.page.telephone": "Telephone: ",
 
   "person.page.titleprefix": "Person: ",
 

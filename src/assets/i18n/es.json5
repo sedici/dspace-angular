@@ -2863,6 +2863,9 @@
   // "person.listelement.badge": "Person",
   "person.listelement.badge": "Persona",
 
+  // "person.page.address": "Address",
+  "person.page.address": "Dirección",
+
   // "person.page.biography": "Biography",
   "person.page.biography": "Biografía",
 
@@ -2901,6 +2904,9 @@
 
   // "person.page.staffid": "Staff ID",
   "person.page.staffid": "Identificación del personal",
+
+  // "person.page.telephone": "Telephone: ",
+  "person.page.telephone": "Teléfono: ",
 
   // "person.page.titleprefix": "Person: ",
   "person.page.titleprefix": "Persona: ",

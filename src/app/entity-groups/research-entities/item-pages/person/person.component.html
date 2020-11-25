@@ -15,6 +15,10 @@
       [fields]="['person.birthDate']"
       [label]="'person.page.birthdate'">
     </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['person.address']"
+      [label]="'person.page.address'">
+    </ds-generic-item-page-field>
   </div>
   <div class="col-xs-12 col-md-5">
     <ds-generic-item-page-field [item]="object"
@@ -28,6 +32,14 @@
     <ds-generic-item-page-field [item]="object"
       [fields]="['person.dni']"
       [label]="'person.page.dni'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['person.cuit']"
+      [label]="'person.page.cuit'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['person.telephone']"
+      [label]="'person.page.telephone'">
     </ds-generic-item-page-field>
     <ds-generic-item-page-field [item]="object"
       [fields]="['person.jobTitle']"
