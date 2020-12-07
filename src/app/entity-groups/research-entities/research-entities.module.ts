@@ -37,6 +37,7 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { PersonPageQrComponent } from './item-pages/person/sedici-services/person-page-qr/person-page-qr.component';
 import { PersonUsageStatisticsComponent } from './item-pages/person/sedici-services/person-statistics/person-usage-statistics/person-usage-statistics.component';
 import { StatisticsPageModule } from '../../statistics-page/statistics-page.module';
+import { KeywordsBadgesComponent } from './item-pages/person/sedici-services/keywords-badges/keywords-badges.component';
 
 const ENTRY_COMPONENTS = [
   OrgUnitComponent,
@@ -85,6 +86,7 @@ const ENTRY_COMPONENTS = [
     PersonIdentifiersComponent,
     PersonPageQrComponent,
     PersonUsageStatisticsComponent,
+    KeywordsBadgesComponent,
   ],
   entryComponents: [
     ...ENTRY_COMPONENTS

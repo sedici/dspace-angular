@@ -6,7 +6,6 @@
     <ds-metadata-field-wrapper>
       <ds-thumbnail [thumbnail]="getThumbnail() | async" [defaultImage]="'assets/images/person-placeholder.svg'"></ds-thumbnail>
     </ds-metadata-field-wrapper>
-    <ds-person-identifiers [item]="object"></ds-person-identifiers>
     <ds-generic-item-page-field [item]="object"
       [fields]="['person.email']"
       [label]="'person.page.email'">
@@ -19,6 +18,11 @@
       [fields]="['person.address']"
       [label]="'person.page.address'">
     </ds-generic-item-page-field>
+    <ds-keywords-badges
+      [item]="object"
+      [metadataField]="'person.keyword'"
+      [label]="'person.page.keywords'">
+    </ds-keywords-badges>
   </div>
   <div class="col-xs-12 col-md-5">
     <ds-generic-item-page-field [item]="object"
@@ -46,27 +50,19 @@
       [label]="'person.page.jobtitle'">
     </ds-generic-item-page-field>
     <ds-generic-item-page-field [item]="object"
-      [fields]="['person.keyword']"
-      [label]="'person.page.keywords'">
-    </ds-generic-item-page-field>
-    <ds-generic-item-page-field [item]="object"
      [fields]="['person.knowsLanguage']"
      [label]="'person.page.knowslanguage'">
     </ds-generic-item-page-field>
-    <ds-generic-item-page-field [item]="object"
-      [fields]="['person.webpage']"
-      [label]="'person.page.webpages'">
-    </ds-generic-item-page-field>
-<!-- <ds-related-items
-  [parentItem]="object"
-      [relationType]="'isProjectOfPerson'"
-      [label]="'relationships.isProjectOf' | translate">
-    </ds-related-items> -->
     <ds-related-items
       [parentItem]="object"
       [relationType]="'isOrgUnitOfPerson'"
       [label]="'relationships.isOrgUnitOf' | translate">
     </ds-related-items>
+<!-- <ds-related-items
+  [parentItem]="object"
+      [relationType]="'isProjectOfPerson'"
+      [label]="'relationships.isProjectOf' | translate">
+    </ds-related-items> -->
     <ds-generic-item-page-field [item]="object"
       [fields]="['person.biography']"
       [label]="'person.page.biography'">
@@ -79,6 +75,11 @@
   </div>
   <div class="col-xs-12 col-md-3">
     <ds-person-page-qr></ds-person-page-qr>
+    <ds-person-identifiers [item]="object"></ds-person-identifiers>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['person.webpage']"
+      [label]="'person.page.webpages'">
+    </ds-generic-item-page-field>
   </div>
   <div id="personMenu">
     <ul ngbNav #nav="ngbNav" class="nav-tabs">
