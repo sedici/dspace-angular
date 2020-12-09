@@ -1,6 +1,8 @@
 <div *ngIf="keywords.length > 0">
     <h5>{{label | translate}}</h5>
     <div *ngFor="let keyword of keywords">
-        <a routerLink="?query={{keyword}}" class="badge badge-secondary">{{keyword}}</a>
+        <a routerLink="/search" [queryParams]="{page: 1, query: keyword}" class="badge badge-secondary">
+            {{keyword}}
+        </a>
     </div>
 </div>

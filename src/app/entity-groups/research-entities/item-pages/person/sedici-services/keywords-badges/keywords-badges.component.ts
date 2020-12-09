@@ -17,7 +17,6 @@ export class KeywordsBadgesComponent implements OnInit {
 
   ngOnInit(): void {
     this.setKeywords()
-    console.log(this.keywords)
   }
 
   private setKeywords(){
