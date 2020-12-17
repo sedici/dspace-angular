@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Item } from '../../../../../../../core/shared/item.model';
+import { Observable } from 'rxjs/internal/Observable';
 import { TranslateService } from '@ngx-translate/core';
+import { PersonStatisticsService } from '../../person-statistics.service';
 
 
 @Component({
@@ -10,59 +12,33 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class CoauthorsNetworkComponent implements OnInit {
 
-  @Input() publications:Item[];
+  @Input() item: Item;
 
   private coAuthors = {
     "nodes": [],
     "links": []
   };
 
+  private coAuthors$: Observable<any[]>;
+
   private graphData: object;
 
-  fields: string[] = [
-    'dc.contributor.author',
-    'dc.creator',
-    'dc.contributor'
-  ];
-
-  constructor(private translateService: TranslateService) {}
+  constructor(private translateService: TranslateService, private personStatisticsService: PersonStatisticsService) { }
 
   ngOnInit(): void {
     this.setCoauthors()
-    this.setGraphData()
   }
 
-  private setCoauthors(){
-    // Extract the type of the publications
-    var coauthorsLists = this.publications.map(
-      publication => publication.allMetadata(this.fields)
-    );
-    var authors = new Set();
-    for (var coauthors of coauthorsLists){
-      var processed_coauthors = new Set()
-      for (var coauthor of coauthors){
-        var author = coauthor.value
-        authors.add(author)
-        processed_coauthors.add(author)
-        for (var related_coauthor of coauthors){
-          if (!processed_coauthors.has(related_coauthor.value)){
-            this.coAuthors.links.push(
-              {
-                "source": author,
-                "target": related_coauthor.value
-              }
-            )
-          }
-        }
+  private setCoauthors() {
+    // call statistics service
+    this.coAuthors$ = this.personStatisticsService.getCoauthorsNetwork(this.item);
+    this.coAuthors$.subscribe(
+      (coauthorsData) => {
+        this.coAuthors = coauthorsData[0];
+        console.log(this.coAuthors);
+        this.setGraphData();
       }
-    }
-    authors.forEach(
-      author => this.coAuthors.nodes.push({
-        "id": author,
-        "name": author
-      })
-    )
-
+    );
   }
 
   private setGraphData(): void {
@@ -71,11 +47,11 @@ export class CoauthorsNetworkComponent implements OnInit {
     var index = 0;
     this.coAuthors.nodes.forEach((node) => {
       node['itemStyle'] = null;
-      node['symbolSize']  = 20;
+      node['symbolSize'] = 20;
       categories[index] = {
         name: node.id,
       };
-      node['value'] = this.coAuthors.links.filter( link => (link.target === node.id) || (link.source === node.id)).length;
+      node['value'] = this.coAuthors.links.filter(link => (link.target === node.id) || (link.source === node.id)).length;
       node['category'] = index;
       index += 1;
       // Use random x, y

@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Item } from '../../../../../../../core/shared/item.model';
+import { Observable } from 'rxjs/internal/Observable';
 import { TranslateService } from '@ngx-translate/core';
+import { PersonStatisticsService } from '../../person-statistics.service';
 
 
 @Component({
@@ -10,45 +12,29 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class PublicationTypesChartComponent implements OnInit {
 
-  @Input() publications:Item[];
+  @Input() item: Item;
 
   private pubTypes = [];
 
+  private pubTypes$: Observable<any[]>;
+
   private graphData: object;
 
-  constructor(private translateService: TranslateService) {}
+  constructor(private translateService: TranslateService, private personStatisticsService: PersonStatisticsService) { }
 
   ngOnInit(): void {
     this.setPubTypes();
-    this.setGraphData();
   }
 
   private setPubTypes() {
-    // Extract the type of the publications
-    var types = this.publications.map(
-      publication => (publication.firstMetadataValue("dc.type") === undefined)?
-        "Undefined" : publication.firstMetadataValue("dc.type")
+    //Call statistics service
+    this.pubTypes$ = this.personStatisticsService.getPublicationsPerType(this.item);
+    this.pubTypes$.subscribe(
+      (pubsArray) => {
+        this.pubTypes = pubsArray;
+        this.setGraphData();
+      }
     );
-
-    // Count the amount of each type
-    var types_dict = {};
-    for (var pub_type of types) {
-      if (types_dict[pub_type] === undefined){
-        types_dict[pub_type] = 1
-      }
-      else{
-        types_dict[pub_type] += 1
-      }
-    }
-
-    // Create a dictionary with the types and the number of types
-    var types_set = new Set(types);
-    types_set.forEach(function(diff_types){
-      this.pubTypes.push(
-        {"name": diff_types , "value": types_dict[diff_types]}
-      )
-    }, this);
-
   }
 
   private setGraphData() {

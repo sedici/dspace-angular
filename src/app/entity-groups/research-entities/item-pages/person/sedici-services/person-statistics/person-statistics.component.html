@@ -1,16 +1,13 @@
-<div *ngIf="publications$ | async as publications">
-  <div class="graphicComponent">
-    <ds-publication-types-chart  [publications]="publications"></ds-publication-types-chart>
-  </div>
-  <div class="graphicComponent">
-    <ds-coauthors-network [publications]="publications"></ds-coauthors-network>
-  </div>
-  <div class="graphicComponent">
-    <ds-publications-time-chart [publications]="publications"></ds-publications-time-chart>
-  </div>
-  <div class="graphicComponent">
-    <ds-person-usage-statistics [item]="item"></ds-person-usage-statistics>
-  </div>
+<div class="graphicComponent">
+  <ds-publication-types-chart  [item]="item"></ds-publication-types-chart>
 </div>
-<ds-loading *ngIf="publications$?.isLoading" message="{{'loading.item' | translate}}"></ds-loading>
+<div class="graphicComponent">
+  <ds-coauthors-network [item]="item"></ds-coauthors-network>
+</div>
+<div class="graphicComponent">
+  <ds-publications-time-chart [item]="item"></ds-publications-time-chart>
+</div>
+<div class="graphicComponent">
+  <ds-person-usage-statistics [item]="item"></ds-person-usage-statistics>
+</div>
 

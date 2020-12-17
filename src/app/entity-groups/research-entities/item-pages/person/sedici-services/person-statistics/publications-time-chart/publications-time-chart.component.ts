@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Item } from '../../../../../../../core/shared/item.model';
+import { Observable } from 'rxjs/internal/Observable';
 import { TranslateService } from '@ngx-translate/core';
+import { PersonStatisticsService } from '../../person-statistics.service';
 
 
 @Component({
@@ -11,58 +13,50 @@ import { TranslateService } from '@ngx-translate/core';
 
 export class PublicationsTimeChartComponent implements OnInit {
 
-  @Input() publications:Item[];
+  @Input() item: Item;
 
   private graphData: object;
 
-  private pubsPerTime = [];
+  private pubsPerTime$: Observable<any[]>;
+  private pubsPerTime: any[];
 
-  constructor(private translateService: TranslateService) {}
+  constructor(private translateService: TranslateService, private personStatisticsService: PersonStatisticsService) { }
 
   ngOnInit(): void {
-    this.setPubPerTime();
-    this.setGraphData()
+    this.getPubPerTime();
   }
 
-  private setPubPerTime() {
-    var years = this.publications.map(
-      publication => (publication.firstMetadataValue("dc.date.issued") === undefined)?
-        undefined : publication.firstMetadataValue("dc.date.issued").split("-", 1)[0]
-    ).filter( year => year);
-
-    // Count the amount of each year
-    var years_dict = {};
-    for (var year of years) {
-      if (years_dict[year] === undefined){
-        years_dict[year] = 1
+  private getPubPerTime() {
+    // Call statistics service
+    this.pubsPerTime$ = this.personStatisticsService.getPublicationsPerTime(this.item);
+    this.pubsPerTime$.subscribe(
+      (pubsArray) => {
+        this.pubsPerTime = pubsArray;
+        this.setPubsPerTime();
+        this.setGraphData();
       }
-      else{
-        years_dict[year] += 1
-      }
-    }
+    );
 
+  }
+
+  setPubsPerTime() {
     // Fill with 0 years that are have not publications
+    const years = this.pubsPerTime.map((year_dict) => year_dict.name);
     var max_year = Math.max.apply(Math, years);
     var min_year = Math.min.apply(Math, years);
     for (let year = min_year + 1; year < max_year; year++) {
-      if (years_dict[year] === undefined){
-        years_dict[year] = 0
+      if (!years.includes(year)) {
+        this.pubsPerTime.push({
+          'name': year,
+          'value': 0
+        })
       }
-      years.push(year)
     }
-    years.sort()
-
-    // Create a dictionary with the years and the number of publications
-    var years_set = new Set(years);
-    years_set.forEach(function(year){
-      this.pubsPerTime.push(
-        {"year": year , "value": years_dict[year]}
-      )
-    }, this);
+    this.pubsPerTime = this.pubsPerTime.sort((year_dict1, year_dict2) => parseInt(year_dict1.name) - parseInt(year_dict2.name));
 
   }
 
-  private setGraphData (){
+  private setGraphData() {
     this.graphData = {
       title: {
         text: this.translateService.instant('person.statistics.publicationsTime.title')
@@ -83,7 +77,7 @@ export class PublicationsTimeChartComponent implements OnInit {
       xAxis: [
         {
           type: 'category',
-          data: this.pubsPerTime.map( x => x.year),
+          data: this.pubsPerTime.map(x => x.name),
           axisTick: {
             alignWithLabel: true
           }
@@ -96,7 +90,7 @@ export class PublicationsTimeChartComponent implements OnInit {
         name: this.translateService.instant('person.statistics.publicationsTime.label'),
         type: 'bar',
         barWidth: '60%',
-        data: this.pubsPerTime.map( x => x.value)
+        data: this.pubsPerTime.map(x => x.value)
       }]
     };
   }

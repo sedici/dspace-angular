@@ -1,1 +1,4 @@
-<div echarts [options]="graphData" class="demo-chart-600"></div>
+<div *ngIf="coAuthors$ | async as pubsPerTime">
+    <div echarts [options]="graphData" class="demo-chart-600"></div>
+</div>
+<ds-loading *ngIf="coAuthors$?.isLoading" message="{{'loading.item' | translate}}"></ds-loading>
