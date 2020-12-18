@@ -1,4 +1,8 @@
-<div *ngIf="pubTypes$ | async as pubsPerTime">
-    <div echarts [options]="graphData"  class="demo-chart"></div>
+<div *ngVar="pubTypes$ | async as pubsPerType">
+    <ng-container *ngIf="pubsPerType">
+        <div echarts [options]="graphData"  class="demo-chart"></div>
+    </ng-container>
+    <ng-container *ngIf="!pubsPerType">
+        <ds-loading></ds-loading>
+    </ng-container>
 </div>
-<ds-loading *ngIf="pubTypes$?.isLoading" message="{{'loading.item' | translate}}"></ds-loading>

@@ -35,7 +35,6 @@ export class CoauthorsNetworkComponent implements OnInit {
     this.coAuthors$.subscribe(
       (coauthorsData) => {
         this.coAuthors = coauthorsData[0];
-        console.log(this.coAuthors);
         this.setGraphData();
       }
     );
@@ -45,18 +44,25 @@ export class CoauthorsNetworkComponent implements OnInit {
 
     const categories = [];
     var index = 0;
+    const nodes = []
     this.coAuthors.nodes.forEach((node) => {
-      node['itemStyle'] = null;
-      node['symbolSize'] = 20;
       categories[index] = {
         name: node.id,
       };
-      node['value'] = this.coAuthors.links.filter(link => (link.target === node.id) || (link.source === node.id)).length;
-      node['category'] = index;
-      index += 1;
-      // Use random x, y
-      node['x'] = node['y'] = null;
-      node['draggable'] = true;
+      const newNode = {
+        'id': node.id,
+        'name': node.name,
+        'itemStyle': null,
+        'symbolSize': 20,
+        'value': this.coAuthors.links.filter(link => (link.target === node.id) || (link.source === node.id)).length,
+        'category': index,
+        // Use random x, y
+        'x': null,
+        'y': null,
+        'draggable': true
+      };
+      index +=1;
+      nodes.push(newNode);
     });
     this.graphData = {
       title: {
@@ -76,7 +82,7 @@ export class CoauthorsNetworkComponent implements OnInit {
           name: this.translateService.instant('person.statistics.coauthors.label'),
           type: 'graph',
           layout: 'force',
-          data: this.coAuthors.nodes,
+          data: nodes,
           links: this.coAuthors.links,
           categories,
           roam: true,
