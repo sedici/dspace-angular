@@ -1,0 +1,9 @@
+
+
+<div *ngIf="publications$ | async as publicatios; else loading ">
+  <button  (click)="generatePdf()">Exportar perfil  pdf</button>
+
+</div>
+<ng-template #loading>
+  Loading stuff...
+</ng-template>

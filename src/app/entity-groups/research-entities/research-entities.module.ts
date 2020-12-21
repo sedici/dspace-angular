@@ -38,6 +38,7 @@ import { PersonPageQrComponent } from './item-pages/person/sedici-services/perso
 import { PersonUsageStatisticsComponent } from './item-pages/person/sedici-services/person-statistics/person-usage-statistics/person-usage-statistics.component';
 import { StatisticsPageModule } from '../../statistics-page/statistics-page.module';
 import { KeywordsBadgesComponent } from './item-pages/person/sedici-services/keywords-badges/keywords-badges.component';
+import { PersonExportProfileComponent } from './item-pages/person/sedici-services/person-export-profile/person-export-profile.component';
 
 const ENTRY_COMPONENTS = [
   OrgUnitComponent,
@@ -87,6 +88,7 @@ const ENTRY_COMPONENTS = [
     PersonPageQrComponent,
     PersonUsageStatisticsComponent,
     KeywordsBadgesComponent,
+    PersonExportProfileComponent,
   ],
   entryComponents: [
     ...ENTRY_COMPONENTS

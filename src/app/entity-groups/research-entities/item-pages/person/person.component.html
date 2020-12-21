@@ -1,7 +1,8 @@
 <h2 class="item-page-title-field">
   {{'person.page.titleprefix' | translate}}<ds-metadata-values [mdValues]="[object?.firstMetadata('person.familyName'), object?.firstMetadata('person.givenName')]" [separator]="', '"></ds-metadata-values>
 </h2>
-<div class="row">
+
+<div class="row" >
   <div class="col-xs-12 col-md-4">
     <ds-metadata-field-wrapper>
       <ds-thumbnail [thumbnail]="getThumbnail() | async" [defaultImage]="'assets/images/person-placeholder.svg'"></ds-thumbnail>
@@ -74,6 +75,7 @@
     </div>
   </div>
   <div class="col-xs-12 col-md-3">
+    <ds-person-export-profile [item]="object"></ds-person-export-profile>
     <ds-person-page-qr></ds-person-page-qr>
     <ds-person-identifiers [item]="object"></ds-person-identifiers>
     <ds-generic-item-page-field [item]="object"
