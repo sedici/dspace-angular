@@ -36,7 +36,7 @@ ps:
 	@docker ps --filter name='$(COMPOSE_PROJECT_NAME)*'
 
 bash:
-	@docker-compose exec dspace-angular /bin/sh
+	@docker-compose -f docker/docker-compose.yml exec dspace-angular /bin/sh
 
 logs:
 	@docker-compose -f docker/docker-compose.yml -f docker/docker-compose-rest.yml logs --follow --tail=100 $(filter-out $@,$(MAKECMDGOALS))
