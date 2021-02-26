@@ -13,7 +13,10 @@ import { FormFieldMetadataValueObject } from '../../../models/form-field-metadat
 import { VocabularyEntry } from '../../../../../../core/submission/vocabularies/models/vocabulary-entry.model';
 import { DynamicLookupNameModel } from './dynamic-lookup-name.model';
 import { ConfidenceType } from '../../../../../../core/shared/confidence-type';
-import { PaginatedList } from '../../../../../../core/data/paginated-list';
+import {
+  PaginatedList,
+  buildPaginatedList
+} from '../../../../../../core/data/paginated-list.model';
 import { getFirstSucceededRemoteDataPayload } from '../../../../../../core/shared/operators';
 import { DsDynamicVocabularyComponent } from '../dynamic-vocabulary.component';
 
@@ -26,7 +29,7 @@ import { DsDynamicVocabularyComponent } from '../dynamic-vocabulary.component';
   templateUrl: './dynamic-lookup.component.html'
 })
 export class DsDynamicLookupComponent extends DsDynamicVocabularyComponent implements OnDestroy, OnInit {
-  @Input() bindId = true;
+
   @Input() group: FormGroup;
   @Input() model: any;
 
@@ -56,7 +59,7 @@ export class DsDynamicLookupComponent extends DsDynamicVocabularyComponent imple
    */
   inputFormatter = (x: { display: string }, y: number) => {
     return y === 1 ? this.firstInputValue : this.secondInputValue;
-  };
+  }
 
   /**
    * Initialize the component, setting up the init form value
@@ -66,7 +69,7 @@ export class DsDynamicLookupComponent extends DsDynamicVocabularyComponent imple
       this.setCurrentValue(this.model.value, true);
     }
 
-    this.subs.push(this.model.valueUpdates
+    this.subs.push(this.model.valueChanges
       .subscribe((value) => {
         if (isEmpty(value)) {
           this.resetFields();
@@ -186,7 +189,7 @@ export class DsDynamicLookupComponent extends DsDynamicVocabularyComponent imple
    */
   public remove() {
     this.group.markAsPristine();
-    this.dispatchUpdate(null)
+    this.dispatchUpdate(null);
   }
 
   /**
@@ -222,7 +225,7 @@ export class DsDynamicLookupComponent extends DsDynamicVocabularyComponent imple
     ).pipe(
       getFirstSucceededRemoteDataPayload(),
       catchError(() =>
-        observableOf(new PaginatedList(
+        observableOf(buildPaginatedList(
           new PageInfo(),
           []
         ))

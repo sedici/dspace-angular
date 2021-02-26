@@ -1,25 +1,23 @@
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
 import { compare, Operation } from 'fast-json-patch';
 import { getTestScheduler } from 'jasmine-marbles';
-import { of as observableOf } from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { Observable } from 'rxjs/internal/Observable';
 import { TestScheduler } from 'rxjs/testing';
-import { EPeopleRegistryCancelEPersonAction, EPeopleRegistryEditEPersonAction } from '../../+admin/admin-access-control/epeople-registry/epeople-registry.actions';
+import {
+  EPeopleRegistryCancelEPersonAction,
+  EPeopleRegistryEditEPersonAction
+} from '../../+admin/admin-access-control/epeople-registry/epeople-registry.actions';
 import { RequestParam } from '../cache/models/request-param.model';
 import { CoreState } from '../core.reducers';
 import { ChangeAnalyzer } from '../data/change-analyzer';
-import { PaginatedList } from '../data/paginated-list';
-import { RemoteData } from '../data/remote-data';
-import { DeleteByIDRequest, FindListOptions, PatchRequest, PostRequest } from '../data/request.models';
-import { RequestEntry } from '../data/request.reducer';
+import { DeleteRequest, FindListOptions, PatchRequest, PostRequest } from '../data/request.models';
 import { RequestService } from '../data/request.service';
 import { HALEndpointService } from '../shared/hal-endpoint.service';
 import { Item } from '../shared/item.model';
-import { PageInfo } from '../shared/page-info.model';
 import { EPersonDataService } from './eperson-data.service';
 import { EPerson } from './models/eperson.model';
 import { EPersonMock, EPersonMock2 } from '../../shared/testing/eperson.mock';
@@ -28,6 +26,7 @@ import { createSuccessfulRemoteDataObject$ } from '../../shared/remote-data.util
 import { getMockRemoteDataBuildServiceHrefMap } from '../../shared/mocks/remote-data-build.service.mock';
 import { TranslateLoaderMock } from '../../shared/mocks/translate-loader.mock';
 import { getMockRequestService } from '../../shared/mocks/request.service.mock';
+import { createPaginatedList, createRequestEntry$ } from '../../shared/testing/utils.test';
 
 describe('EPersonDataService', () => {
   let service: EPersonDataService;
@@ -43,8 +42,6 @@ describe('EPersonDataService', () => {
   let epeople$;
   let rdbService;
 
-  let getRequestEntry$;
-
   function initTestService() {
     return new EPersonDataService(
       requestService,
@@ -59,16 +56,10 @@ describe('EPersonDataService', () => {
   }
 
   function init() {
-    getRequestEntry$ = (successful: boolean) => {
-      return observableOf({
-        completed: true,
-        response: { isSuccessful: successful, payload: epeople } as any
-      } as RequestEntry)
-    };
     restEndpointURL = 'https://dspace.4science.it/dspace-spring-rest/api/eperson';
     epersonsEndpoint = `${restEndpointURL}/epersons`;
     epeople = [EPersonMock, EPersonMock2];
-    epeople$ = createSuccessfulRemoteDataObject$(new PaginatedList(new PageInfo(), [epeople]));
+    epeople$ = createSuccessfulRemoteDataObject$(createPaginatedList([epeople]));
     rdbService = getMockRemoteDataBuildServiceHrefMap(undefined, { 'https://dspace.4science.it/dspace-spring-rest/api/eperson/epersons': epeople$ });
     halService = new HALEndpointServiceStub(restEndpointURL);
 
@@ -79,7 +70,7 @@ describe('EPersonDataService', () => {
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-          useClass: TranslateLoaderMock
+            useClass: TranslateLoaderMock
           }
         }),
       ],
@@ -91,7 +82,7 @@ describe('EPersonDataService', () => {
 
   beforeEach(() => {
     init();
-    requestService = getMockRequestService(getRequestEntry$(true));
+    requestService = getMockRequestService(createRequestEntry$(epeople));
     store = new Store<CoreState>(undefined, undefined, undefined);
     service = initTestService();
     spyOn(store, 'dispatch');
@@ -105,33 +96,47 @@ describe('EPersonDataService', () => {
     it('search by default scope (byMetadata) and no query', () => {
       service.searchByScope(null, '');
       const options = Object.assign(new FindListOptions(), {
-        searchParams: [Object.assign(new RequestParam('query', ''))]
+        searchParams: [Object.assign(new RequestParam('query', encodeURIComponent('')))]
       });
-      expect(service.searchBy).toHaveBeenCalledWith('byMetadata', options);
+      expect(service.searchBy).toHaveBeenCalledWith('byMetadata', options, true, true);
     });
 
     it('search metadata scope and no query', () => {
       service.searchByScope('metadata', '');
       const options = Object.assign(new FindListOptions(), {
-        searchParams: [Object.assign(new RequestParam('query', ''))]
+        searchParams: [Object.assign(new RequestParam('query', encodeURIComponent('')))]
       });
-      expect(service.searchBy).toHaveBeenCalledWith('byMetadata', options);
+      expect(service.searchBy).toHaveBeenCalledWith('byMetadata', options, true, true);
     });
 
     it('search metadata scope and with query', () => {
       service.searchByScope('metadata', 'test');
       const options = Object.assign(new FindListOptions(), {
-        searchParams: [Object.assign(new RequestParam('query', 'test'))]
+        searchParams: [Object.assign(new RequestParam('query', encodeURIComponent('test')))]
       });
-      expect(service.searchBy).toHaveBeenCalledWith('byMetadata', options);
+      expect(service.searchBy).toHaveBeenCalledWith('byMetadata', options, true, true);
     });
 
     it('search email scope and no query', () => {
+      spyOn(service, 'getSearchByHref').and.returnValue(epersonsEndpoint);
+      spyOn(service, 'findByHref').and.returnValue(createSuccessfulRemoteDataObject$(null));
       service.searchByScope('email', '');
       const options = Object.assign(new FindListOptions(), {
-        searchParams: [Object.assign(new RequestParam('email', ''))]
+        searchParams: [Object.assign(new RequestParam('email', encodeURIComponent('')))]
       });
-      expect(service.searchBy).toHaveBeenCalledWith('byEmail', options);
+      expect(service.getSearchByHref).toHaveBeenCalledWith('byEmail', options);
+      expect(service.findByHref).toHaveBeenCalledWith(epersonsEndpoint, true, true);
+    });
+
+    it('search email scope with a query', () => {
+      spyOn(service, 'getSearchByHref').and.returnValue(epersonsEndpoint);
+      spyOn(service, 'findByHref').and.returnValue(createSuccessfulRemoteDataObject$(EPersonMock));
+      service.searchByScope('email', EPersonMock.email);
+      const options = Object.assign(new FindListOptions(), {
+        searchParams: [Object.assign(new RequestParam('email', encodeURIComponent(EPersonMock.email)))]
+      });
+      expect(service.getSearchByHref).toHaveBeenCalledWith('byEmail', options);
+      expect(service.findByHref).toHaveBeenCalledWith(epersonsEndpoint, true, true);
     });
   });
 
@@ -156,7 +161,7 @@ describe('EPersonDataService', () => {
       it('should send PatchRequest with replace email operation', () => {
         const operations = [{ op: 'replace', path: '/email', value: newEmail }];
         const expected = new PatchRequest(requestService.generateRequestId(), epersonsEndpoint + '/' + EPersonMock.uuid, operations);
-        expect(requestService.configure).toHaveBeenCalledWith(expected);
+        expect(requestService.send).toHaveBeenCalledWith(expected);
       });
     });
 
@@ -175,7 +180,7 @@ describe('EPersonDataService', () => {
       it('should send PatchRequest with replace certificate operation', () => {
         const operations = [{ op: 'replace', path: '/certificate', value: !EPersonMock.requireCertificate }];
         const expected = new PatchRequest(requestService.generateRequestId(), epersonsEndpoint + '/' + EPersonMock.uuid, operations);
-        expect(requestService.configure).toHaveBeenCalledWith(expected);
+        expect(requestService.send).toHaveBeenCalledWith(expected);
       });
     });
 
@@ -194,7 +199,7 @@ describe('EPersonDataService', () => {
       it('should send PatchRequest with replace canLogIn operation', () => {
         const operations = [{ op: 'replace', path: '/canLogIn', value: !EPersonMock.canLogIn }];
         const expected = new PatchRequest(requestService.generateRequestId(), epersonsEndpoint + '/' + EPersonMock.uuid, operations);
-        expect(requestService.configure).toHaveBeenCalledWith(expected);
+        expect(requestService.send).toHaveBeenCalledWith(expected);
       });
     });
 
@@ -228,13 +233,13 @@ describe('EPersonDataService', () => {
           { op: 'replace', path: '/eperson.lastname/0/value', value: newLastName },
           { op: 'replace', path: '/eperson.firstname/0/value', value: newFirstName }];
         const expected = new PatchRequest(requestService.generateRequestId(), epersonsEndpoint + '/' + EPersonMock.uuid, operations);
-        expect(requestService.configure).toHaveBeenCalledWith(expected);
+        expect(requestService.send).toHaveBeenCalledWith(expected);
       });
     });
   });
 
   describe('clearEPersonRequests', () => {
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
       scheduler = getTestScheduler();
       halService = {
         getEndpoint(linkPath: string): Observable<string> {
@@ -255,14 +260,14 @@ describe('EPersonDataService', () => {
 
       service.getActiveEPerson().subscribe((activeEPerson: EPerson) => {
         expect(activeEPerson).toEqual(EPersonMock);
-      })
+      });
     });
 
     it('should retrieve the ePerson currently getting edited, null if none being edited', () => {
       service.getActiveEPerson().subscribe((activeEPerson: EPerson) => {
         expect(activeEPerson).toEqual(null);
-      })
-    })
+      });
+    });
   });
 
   describe('cancelEditEPerson', () => {
@@ -281,13 +286,13 @@ describe('EPersonDataService', () => {
 
   describe('deleteEPerson', () => {
     beforeEach(() => {
-      spyOn(service, 'findById').and.returnValue(getRemotedataObservable(EPersonMock));
+      spyOn(service, 'findById').and.returnValue(createSuccessfulRemoteDataObject$(EPersonMock));
       service.deleteEPerson(EPersonMock).subscribe();
     });
 
     it('should send DeleteRequest', () => {
-      const expected = new DeleteByIDRequest(requestService.generateRequestId(), epersonsEndpoint + '/' + EPersonMock.uuid, EPersonMock.uuid);
-      expect(requestService.configure).toHaveBeenCalledWith(expected);
+      const expected = new DeleteRequest(requestService.generateRequestId(), epersonsEndpoint + '/' + EPersonMock.uuid);
+      expect(requestService.send).toHaveBeenCalledWith(expected);
     });
   });
 
@@ -296,25 +301,21 @@ describe('EPersonDataService', () => {
       service.createEPersonForToken(EPersonMock, 'test-token');
 
       const expected = new PostRequest(requestService.generateRequestId(), epersonsEndpoint + '?token=test-token', EPersonMock);
-      expect(requestService.configure).toHaveBeenCalledWith(expected);
+      expect(requestService.send).toHaveBeenCalledWith(expected);
     });
   });
   describe('patchPasswordWithToken', () => {
     it('should sent a patch request with an uuid, token and new password to the epersons endpoint', () => {
-      service.patchPasswordWithToken('test-uuid', 'test-token','test-password');
+      service.patchPasswordWithToken('test-uuid', 'test-token', 'test-password');
 
-      const operation = Object.assign({ op: 'replace', path: '/password', value: 'test-password' });
+      const operation = Object.assign({ op: 'add', path: '/password', value: 'test-password' });
       const expected = new PatchRequest(requestService.generateRequestId(), epersonsEndpoint + '/test-uuid?token=test-token', [operation]);
 
-      expect(requestService.configure).toHaveBeenCalledWith(expected);
+      expect(requestService.send).toHaveBeenCalledWith(expected);
     });
   });
 
 });
-
-function getRemotedataObservable(obj: any): Observable<RemoteData<any>> {
-  return observableOf(new RemoteData(false, false, true, undefined, obj));
-}
 
 class DummyChangeAnalyzer implements ChangeAnalyzer<Item> {
   diff(object1: Item, object2: Item): Operation[] {

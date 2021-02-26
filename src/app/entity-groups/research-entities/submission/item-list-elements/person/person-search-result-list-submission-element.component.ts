@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/internal/Observable';
+import { Observable } from 'rxjs';
 import { BitstreamDataService } from '../../../../../core/data/bitstream-data.service';
 import { Bitstream } from '../../../../../core/shared/bitstream.model';
 import { getFirstSucceededRemoteDataPayload } from '../../../../../core/shared/operators';
@@ -61,6 +61,7 @@ export class PersonSearchResultListSubmissionElementComponent extends SearchResu
   }
 
   select(value) {
+    this.relationshipService.setNameVariant(this.listID, this.dso.uuid, value);
     this.selectableListService.isObjectSelected(this.listID, this.object)
       .pipe(take(1))
       .subscribe((selected) => {
@@ -68,7 +69,6 @@ export class PersonSearchResultListSubmissionElementComponent extends SearchResu
           this.selectableListService.selectSingle(this.listID, this.object);
         }
       });
-    this.relationshipService.setNameVariant(this.listID, this.dso.uuid, value);
   }
 
   selectCustom(value) {
@@ -94,7 +94,7 @@ export class PersonSearchResultListSubmissionElementComponent extends SearchResu
         // user clicked cancel: use the name variant only for this relation, no further action required
       }).finally(() => {
         this.select(value);
-      })
+      });
     }
   }
 

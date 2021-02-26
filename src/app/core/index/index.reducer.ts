@@ -17,18 +17,18 @@ export enum IndexName {
   REQUEST = 'get-request/href-to-uuid',
 
   /**
-   * Contains the UUIDs of requests that were sent to the server and
-   * have their responses cached, indexed by the UUIDs of requests that
-   * weren't sent because the response they requested was already cached
+   * Contains the alternative link for an objects
+   * Maps these link on to their matching self link in the object cache
+   * Eg. /workspaceitems/12/item --> /items/12345
    */
-  UUID_MAPPING = 'get-request/configured-to-cache-uuid'
+  ALTERNATIVE_OBJECT_LINK = 'object/alt-link-to-self-link'
 }
 
 /**
  * The state of a single index
  */
 export interface IndexState {
-  [key: string]: string
+  [key: string]: any;
 }
 
 /**
@@ -36,7 +36,7 @@ export interface IndexState {
  */
 export type MetaIndexState = {
   [name in IndexName]: IndexState
-}
+};
 
 // Object.create(null) ensures the object has no default js properties (e.g. `__proto__`)
 const initialState: MetaIndexState = Object.create(null);
@@ -59,11 +59,11 @@ export function indexReducer(state = initialState, action: IndexAction): MetaInd
     }
 
     case IndexActionTypes.REMOVE_BY_VALUE: {
-      return removeFromIndexByValue(state, action as RemoveFromIndexByValueAction)
+      return removeFromIndexByValue(state, action as RemoveFromIndexByValueAction);
     }
 
     case IndexActionTypes.REMOVE_BY_SUBSTRING: {
-      return removeFromIndexBySubstring(state, action as RemoveFromIndexBySubstringAction)
+      return removeFromIndexBySubstring(state, action as RemoveFromIndexBySubstringAction);
     }
 
     default: {

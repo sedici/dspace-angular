@@ -72,14 +72,14 @@ export const requestIndexSelector: MemoizedSelector<CoreState, IndexState> = cre
 );
 
 /**
- * Return the request UUID mapping index based on the MetaIndexState
+ * Return the alternative link index based on the MetaIndexState
  *
  * @returns
- *    a MemoizedSelector to select the request UUID mapping
+ *    a MemoizedSelector to select the alternative link index
  */
-export const requestUUIDIndexSelector: MemoizedSelector<CoreState, IndexState> = createSelector(
+export const alternativeLinkIndexSelector: MemoizedSelector<CoreState, IndexState> = createSelector(
   metaIndexSelector,
-  (state: MetaIndexState) => state[IndexName.UUID_MAPPING]
+  (state: MetaIndexState) => state[IndexName.ALTERNATIVE_OBJECT_LINK]
 );
 
 /**
@@ -111,16 +111,15 @@ export const uuidFromHrefSelector =
   );
 
 /**
- * Return the UUID of a cached request based on the UUID of a request
- * that wasn't sent because the response was already cached
+ * Return the self link of an object based on its alternative link
  *
- * @param uuid
- *    The UUID of the new request
+ * @param altLink
+ *    the alternative link of an object
  * @returns
- *    a MemoizedSelector to select the UUID of the cached request
+ *    a MemoizedSelector to select the object self link
  */
-export const originalRequestUUIDFromRequestUUIDSelector =
-  (uuid: string): MemoizedSelector<CoreState, string> => createSelector(
-    requestUUIDIndexSelector,
-    (state: IndexState) => hasValue(state) ? state[uuid] : undefined
+export const selfLinkFromAlternativeLinkSelector =
+  (altLink: string): MemoizedSelector<CoreState, string> => createSelector(
+    alternativeLinkIndexSelector,
+    (state: IndexState) => hasValue(state) ? state[altLink] : undefined
   );

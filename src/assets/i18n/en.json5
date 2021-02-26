@@ -8,6 +8,14 @@
 
 
 
+  "403.help": "You don't have permission to access this page. You can use the button below to get back to the home page.",
+
+  "403.link.home-page": "Take me to the home page",
+
+  "403.forbidden": "forbidden",
+
+
+
   "404.help": "We can't find the page you're looking for. The page may have been moved or deleted. You can use the button below to get back to the home page. ",
 
   "404.link.home-page": "Take me to the home page",
@@ -280,6 +288,10 @@
 
   "admin.access-control.groups.title": "DSpace Angular :: Groups",
 
+  "admin.access-control.groups.title.singleGroup": "DSpace Angular :: Edit Group",
+
+  "admin.access-control.groups.title.addGroup": "DSpace Angular :: New Group",
+
   "admin.access-control.groups.head": "Groups",
 
   "admin.access-control.groups.button.add": "Add group",
@@ -296,8 +308,6 @@
 
   "admin.access-control.groups.table.members": "Members",
 
-  "admin.access-control.groups.table.comcol": "Community / Collection",
-
   "admin.access-control.groups.table.edit": "Edit",
 
   "admin.access-control.groups.table.edit.buttons.edit": "Edit \"{{name}}\"",
@@ -308,8 +318,15 @@
 
   "admin.access-control.groups.notification.deleted.success": "Successfully deleted group \"{{name}}\"",
 
-  "admin.access-control.groups.notification.deleted.failure": "Failed to delete group \"{{name}}\"",
+  "admin.access-control.groups.notification.deleted.failure.title": "Failed to delete group \"{{name}}\"",
 
+  "admin.access-control.groups.notification.deleted.failure.content": "Cause: \"{{cause}}\"",
+
+
+
+  "admin.access-control.groups.form.alert.permanent": "This group is permanent, so it can't be edited or deleted. You can still add and remove group members using this page.",
+
+  "admin.access-control.groups.form.alert.workflowGroup": "This group can’t be modified or deleted because it corresponds to a role in the submission and workflow process in the \"{{name}}\" {{comcol}}. You can delete it from the <a href='{{comcolEditRolesRoute}}'>\"assign roles\"</a> tab on the edit {{comcol}} page. You can still add and remove group members using this page.",
 
   "admin.access-control.groups.form.head.create": "Create group",
 
@@ -324,6 +341,28 @@
   "admin.access-control.groups.form.notification.created.failure": "Failed to create Group \"{{name}}\"",
 
   "admin.access-control.groups.form.notification.created.failure.groupNameInUse": "Failed to create Group with name: \"{{name}}\", make sure the name is not already in use.",
+
+  "admin.access-control.groups.form.notification.edited.failure": "Failed to edit Group \"{{name}}\"",
+
+  "admin.access-control.groups.form.notification.edited.failure.groupNameInUse": "Name \"{{name}}\" already in use!",
+
+  "admin.access-control.groups.form.notification.edited.success": "Successfully edited Group \"{{name}}\"",
+
+  "admin.access-control.groups.form.actions.delete": "Delete Group",
+
+  "admin.access-control.groups.form.delete-group.modal.header": "Delete Group \"{{ dsoName }}\"",
+
+  "admin.access-control.groups.form.delete-group.modal.info": "Are you sure you want to delete Group \"{{ dsoName }}\"",
+
+  "admin.access-control.groups.form.delete-group.modal.cancel": "Cancel",
+
+  "admin.access-control.groups.form.delete-group.modal.confirm": "Delete",
+
+  "admin.access-control.groups.form.notification.deleted.success": "Successfully deleted group \"{{ name }}\"",
+
+  "admin.access-control.groups.form.notification.deleted.failure.title": "Failed to delete group \"{{ name }}\"",
+
+  "admin.access-control.groups.form.notification.deleted.failure.content": "Cause: \"{{ cause }}\"",
 
   "admin.access-control.groups.form.members-list.head": "EPeople",
 
@@ -362,6 +401,8 @@
   "admin.access-control.groups.form.members-list.no-members-yet": "No members in group yet, search and add.",
 
   "admin.access-control.groups.form.members-list.no-items": "No EPeople found in that search",
+
+  "admin.access-control.groups.form.subgroups-list.notification.failure": "Something went wrong: \"{{cause}}\"",
 
   "admin.access-control.groups.form.subgroups-list.head": "Groups",
 
@@ -421,15 +462,13 @@
 
   "admin.search.item.move": "Move",
 
-  "admin.search.item.private": "Private",
-
   "admin.search.item.reinstate": "Reinstate",
 
   "admin.search.item.withdraw": "Withdraw",
 
-  "admin.search.item.withdrawn": "Withdrawn",
-
   "admin.search.title": "Administrative Search",
+
+  "administrativeView.search.results.head": "Administrative Search",
 
 
 
@@ -612,6 +651,10 @@
 
 
 
+  "collection.edit.tabs.mapper.head": "Item Mapper",
+
+  "collection.edit.tabs.item-mapper.title": "Collection Edit - Item Mapper",
+
   "collection.edit.item-mapper.cancel": "Cancel",
 
   "collection.edit.item-mapper.collection": "Collection: \"<b>{{name}}</b>\"",
@@ -673,6 +716,10 @@
   "collection.edit.tabs.curate.head": "Curate",
 
   "collection.edit.tabs.curate.title": "Collection Edit - Curate",
+
+  "collection.edit.tabs.authorizations.head": "Authorizations",
+
+  "collection.edit.tabs.authorizations.title": "Collection Edit - Authorizations",
 
   "collection.edit.tabs.metadata.head": "Edit Metadata",
 
@@ -760,9 +807,15 @@
 
 
 
+  "collection.listelement.badge": "Collection",
+
+
+
   "collection.page.browse.recent.head": "Recent Submissions",
 
   "collection.page.browse.recent.empty": "No items to show",
+
+  "collection.page.edit": "Edit this collection",
 
   "collection.page.handle": "Permanent URI for this collection",
 
@@ -859,6 +912,14 @@
 
   "community.edit.tabs.roles.title": "Community Edit - Roles",
 
+  "community.edit.tabs.authorizations.head": "Authorizations",
+
+  "community.edit.tabs.authorizations.title": "Community Edit - Authorizations",
+
+
+
+  "community.listelement.badge": "Community",
+
 
 
   "comcol-role.edit.no-group": "None",
@@ -926,6 +987,8 @@
   "community.form.tableofcontents": "News (HTML)",
 
   "community.form.title": "Name",
+
+  "community.page.edit": "Edit this community",
 
   "community.page.handle": "Permanent URI for this community",
 
@@ -1037,6 +1100,8 @@
 
   "dso-selector.create.collection.head": "New collection",
 
+  "dso-selector.create.collection.sub-level": "Create a new collection in",
+
   "dso-selector.create.community.head": "New community",
 
   "dso-selector.create.community.sub-level": "Create a new community in",
@@ -1044,6 +1109,8 @@
   "dso-selector.create.community.top-level": "Create a new top-level community",
 
   "dso-selector.create.item.head": "New item",
+
+  "dso-selector.create.item.sub-level": "Create a new item in",
 
   "dso-selector.create.submission.head": "New submission",
 
@@ -1246,6 +1313,8 @@
 
   "home.description": "",
 
+  "home.breadcrumbs": "Home",
+
   "home.title": "DSpace Angular :: Home",
 
   "home.top-level-communities.head": "Communities in DSpace",
@@ -1278,9 +1347,21 @@
 
 
 
+  "item.alerts.private": "This item is private",
+
+  "item.alerts.withdrawn": "This item has been withdrawn",
+
+
+
   "item.edit.authorizations.heading": "With this editor you can view and alter the policies of an item, plus alter policies of individual item components: bundles and bitstreams. Briefly, an item is a container of bundles, and bundles are containers of bitstreams. Containers usually have ADD/REMOVE/READ/WRITE policies, while bitstreams only have READ/WRITE policies.",
 
   "item.edit.authorizations.title": "Edit item's Policies",
+
+
+
+  "item.badge.private": "Private",
+
+  "item.badge.withdrawn": "Withdrawn",
 
 
 
@@ -1387,6 +1468,9 @@
   "item.edit.breadcrumbs": "Edit Item",
 
 
+  "item.edit.tabs.mapper.head": "Collection Mapper",
+
+  "item.edit.tabs.item-mapper.title": "Item Edit - Collection Mapper",
 
   "item.edit.item-mapper.buttons.add": "Map item to selected collections",
 
@@ -1548,15 +1632,19 @@
 
   "item.edit.relationships.discard-button": "Discard",
 
+  "item.edit.relationships.edit.buttons.add": "Add",
+
   "item.edit.relationships.edit.buttons.remove": "Remove",
 
   "item.edit.relationships.edit.buttons.undo": "Undo changes",
+
+  "item.edit.relationships.no-relationships": "No relationships",
 
   "item.edit.relationships.notifications.discarded.content": "Your changes were discarded. To reinstate your changes click the 'Undo' button",
 
   "item.edit.relationships.notifications.discarded.title": "Changes discarded",
 
-  "item.edit.relationships.notifications.failed.title": "Error deleting relationship",
+  "item.edit.relationships.notifications.failed.title": "Error editing relationships",
 
   "item.edit.relationships.notifications.outdated.content": "The item you're currently working on has been changed by another user. Your current changes are discarded to prevent conflicts",
 
@@ -1662,6 +1750,28 @@
 
 
 
+  "item.listelement.badge": "Item",
+
+  "item.page.description": "Description",
+
+  "item.page.edit": "Edit this item",
+
+  "item.page.journal-issn": "Journal ISSN",
+
+  "item.page.journal-title": "Journal Title",
+
+  "item.page.publisher": "Publisher",
+
+  "item.page.titleprefix": "Item: ",
+
+  "item.page.volume-title": "Volume Title",
+
+  "item.search.results.head": "Item Search Results",
+
+  "item.search.title": "DSpace Angular :: Item Search",
+
+
+
   "item.page.abstract": "Abstract",
 
   "item.page.author": "Authors",
@@ -1671,6 +1781,8 @@
   "item.page.collections": "Collections",
 
   "item.page.date": "Date",
+
+  "item.page.edit": "Edit this item",
 
   "item.page.files": "Files",
 
@@ -1778,6 +1890,8 @@
 
   "journal.page.description": "Description",
 
+  "journal.page.edit": "Edit this item",
+
   "journal.page.editor": "Editor-in-Chief",
 
   "journal.page.issn": "ISSN",
@@ -1796,6 +1910,8 @@
 
   "journalissue.page.description": "Description",
 
+  "journalissue.page.edit": "Edit this item",
+
   "journalissue.page.issuedate": "Issue Date",
 
   "journalissue.page.journal-issn": "Journal ISSN",
@@ -1813,6 +1929,8 @@
   "journalvolume.listelement.badge": "Journal Volume",
 
   "journalvolume.page.description": "Description",
+
+  "journalvolume.page.edit": "Edit this item",
 
   "journalvolume.page.issuedate": "Issue Date",
 
@@ -2176,6 +2294,8 @@
 
   "orgunit.page.description": "Description",
 
+  "orgunit.page.edit": "Edit this item",
+
   "orgunit.page.id": "ID",
 
   "orgunit.page.titleprefix": "Organizational Unit: ",
@@ -2194,7 +2314,11 @@
 
   "person.listelement.badge": "Person",
 
+  "person.listelement.no-title": "No name found",
+
   "person.page.birthdate": "Birth Date",
+
+  "person.page.edit": "Edit this item",
 
   "person.page.email": "Email Address",
 
@@ -2266,7 +2390,11 @@
 
   "process.detail.output" : "Process Output",
 
-  "process.detail.output.alert" : "Work in progress - Process output is not available yet",
+  "process.detail.logs.button": "Retrieve process output",
+
+  "process.detail.logs.loading": "Retrieving",
+
+  "process.detail.logs.none": "This process has no output",
 
   "process.detail.output-files" : "Output Files",
 
@@ -2363,69 +2491,13 @@
 
 
 
-  "profile.breadcrumbs": "Update Profile",
-
-  "profile.card.identify": "Identify",
-
-  "profile.card.security": "Security",
-
-  "profile.form.submit": "Update Profile",
-
-  "profile.groups.head": "Authorization groups you belong to",
-
-  "profile.head": "Update Profile",
-
-  "profile.metadata.form.error.firstname.required": "First Name is required",
-
-  "profile.metadata.form.error.lastname.required": "Last Name is required",
-
-  "profile.metadata.form.label.email": "Email Address",
-
-  "profile.metadata.form.label.firstname": "First Name",
-
-  "profile.metadata.form.label.language": "Language",
-
-  "profile.metadata.form.label.lastname": "Last Name",
-
-  "profile.metadata.form.label.phone": "Contact Telephone",
-
-  "profile.metadata.form.notifications.success.content": "Your changes to the profile were saved.",
-
-  "profile.metadata.form.notifications.success.title": "Profile saved",
-
-  "profile.notifications.warning.no-changes.content": "No changes were made to the Profile.",
-
-  "profile.notifications.warning.no-changes.title": "No changes",
-
-  "profile.security.form.error.matching-passwords": "The passwords do not match.",
-
-  "profile.security.form.error.password-length": "The password should be at least 6 characters long.",
-
-  "profile.security.form.info": "Optionally, you can enter a new password in the box below, and confirm it by typing it again into the second box. It should be at least six characters long.",
-
-  "profile.security.form.label.password": "Password",
-
-  "profile.security.form.label.passwordrepeat": "Retype to confirm",
-
-  "profile.security.form.notifications.success.content": "Your changes to the password were saved.",
-
-  "profile.security.form.notifications.success.title": "Password saved",
-
-  "profile.security.form.notifications.error.title": "Error changing passwords",
-
-  "profile.security.form.notifications.error.not-long-enough": "The password has to be at least 6 characters long.",
-
-  "profile.security.form.notifications.error.not-same": "The provided passwords are not the same.",
-
-  "profile.title": "Update Profile",
-
-
-
   "project.listelement.badge": "Research Project",
 
   "project.page.contributor": "Contributors",
 
   "project.page.description": "Description",
+
+  "project.page.edit": "Edit this item",
 
   "project.page.expectedcompletion": "Expected Completion",
 
@@ -2446,6 +2518,8 @@
   "publication.listelement.badge": "Publication",
 
   "publication.page.description": "Description",
+
+  "publication.page.edit": "Edit this item",
 
   "publication.page.journal-issn": "Journal ISSN",
 
@@ -2531,7 +2605,17 @@
 
 
 
+  "relationships.add.error.relationship-type.content": "No suitable match could be found for relationship type {{ type }} between the two items",
+
+  "relationships.add.error.server.content": "The server returned an error",
+
+  "relationships.add.error.title": "Unable to add relationship",
+
   "relationships.isAuthorOf": "Authors",
+
+  "relationships.isAuthorOf.Person": "Authors (persons)",
+
+  "relationships.isAuthorOf.OrgUnit": "Authors (organizational units)",
 
   "relationships.isIssueOf": "Journal Issues",
 
@@ -2569,6 +2653,10 @@
 
   "resource-policies.add.for.item": "Add a new Item policy",
 
+  "resource-policies.add.for.community": "Add a new Community policy",
+
+  "resource-policies.add.for.collection": "Add a new Collection policy",
+
   "resource-policies.create.page.heading": "Create new resource policy for ",
 
   "resource-policies.create.page.failure.content": "An error occurred while creating the resource policy.",
@@ -2597,7 +2685,7 @@
 
   "resource-policies.form.action-type.required": "You must select the resource policy action.",
 
-  "resource-policies.form.eperson-group-list.label": "The eperson or group that will be grant of the permission",
+  "resource-policies.form.eperson-group-list.label": "The eperson or group that will be granted the permission",
 
   "resource-policies.form.eperson-group-list.select.btn": "Select",
 
@@ -2650,6 +2738,10 @@
   "resource-policies.table.headers.title.for.bundle": "Policies for Bundle",
 
   "resource-policies.table.headers.title.for.item": "Policies for Item",
+
+  "resource-policies.table.headers.title.for.community": "Policies for Community",
+
+  "resource-policies.table.headers.title.for.collection": "Policies for Collection",
 
 
 
@@ -2855,6 +2947,10 @@
 
 
 
+  "sorting.ASC": "Ascending",
+
+  "sorting.DESC": "Descending",
+
   "sorting.dc.title.ASC": "Title Ascending",
 
   "sorting.dc.title.DESC": "Title Descending",
@@ -2924,13 +3020,15 @@
 
   "submission.import-external.search.source.hint": "Pick an external source",
 
+  "submission.import-external.source.arxiv": "arXiv",
+
   "submission.import-external.source.loading": "Loading ...",
 
   "submission.import-external.source.sherpaJournal": "SHERPA Journals",
 
   "submission.import-external.source.sherpaPublisher": "SHERPA Publishers",
 
-  "submission.import-external.source.orcidV2": "ORCID",
+  "submission.import-external.source.orcid": "ORCID",
 
   "submission.import-external.source.pubmed": "Pubmed",
 
@@ -2950,7 +3048,7 @@
 
   "submission.sections.describe.relationship-lookup.external-source.added": "Successfully added local entry to the selection",
 
-  "submission.sections.describe.relationship-lookup.external-source.import-button-title.Author": "Import remote author",
+  "submission.sections.describe.relationship-lookup.external-source.import-button-title.isAuthorOfPublication": "Import remote author",
 
   "submission.sections.describe.relationship-lookup.external-source.import-button-title.Journal": "Import remote journal",
 
@@ -2958,11 +3056,11 @@
 
   "submission.sections.describe.relationship-lookup.external-source.import-button-title.Journal Volume": "Import remote journal volume",
 
-  "submission.sections.describe.relationship-lookup.external-source.import-modal.Author.title": "Import Remote Author",
+  "submission.sections.describe.relationship-lookup.external-source.import-modal.isAuthorOfPublication.title": "Import Remote Author",
 
-  "submission.sections.describe.relationship-lookup.external-source.import-modal.Author.added.local-entity": "Successfully added local author to the selection",
+  "submission.sections.describe.relationship-lookup.external-source.import-modal.isAuthorOfPublication.added.local-entity": "Successfully added local author to the selection",
 
-  "submission.sections.describe.relationship-lookup.external-source.import-modal.Author.added.new-entity": "Successfully imported and added external author to the selection",
+  "submission.sections.describe.relationship-lookup.external-source.import-modal.isAuthorOfPublication.added.new-entity": "Successfully imported and added external author to the selection",
 
   "submission.sections.describe.relationship-lookup.external-source.import-modal.authority": "Authority",
 
@@ -2978,11 +3076,15 @@
 
   "submission.sections.describe.relationship-lookup.external-source.import-modal.head.lcname": "Importing from LC Name",
 
-  "submission.sections.describe.relationship-lookup.external-source.import-modal.head.orcidV2": "Importing from ORCID",
+  "submission.sections.describe.relationship-lookup.external-source.import-modal.head.orcid": "Importing from ORCID",
 
   "submission.sections.describe.relationship-lookup.external-source.import-modal.head.sherpaJournal": "Importing from Sherpa Journal",
 
   "submission.sections.describe.relationship-lookup.external-source.import-modal.head.sherpaPublisher": "Importing from Sherpa Publisher",
+
+  "submission.sections.describe.relationship-lookup.external-source.import-modal.head.pubmed": "Importing from PubMed",
+
+  "submission.sections.describe.relationship-lookup.external-source.import-modal.head.arxiv": "Importing from arXiv",
 
   "submission.sections.describe.relationship-lookup.external-source.import-modal.import": "Import",
 
@@ -3025,18 +3127,37 @@
   "submission.sections.describe.relationship-lookup.search-tab.tab-title.isAuthorOfPublication": "Local Authors ({{ count }})",
 
   "submission.sections.describe.relationship-lookup.search-tab.tab-title.isJournalOfPublication": "Local Journals ({{ count }})",
+  "submission.sections.describe.relationship-lookup.search-tab.tab-title.Project": "Local Projects ({{ count }})",
+
+  "submission.sections.describe.relationship-lookup.search-tab.tab-title.Publication": "Local Publications ({{ count }})",
+
+  "submission.sections.describe.relationship-lookup.search-tab.tab-title.Person": "Local Authors ({{ count }})",
+
+  "submission.sections.describe.relationship-lookup.search-tab.tab-title.OrgUnit": "Local Organizational Units ({{ count }})",
+
+  "submission.sections.describe.relationship-lookup.search-tab.tab-title.DataPackage": "Local Data Packages ({{ count }})",
+
+  "submission.sections.describe.relationship-lookup.search-tab.tab-title.DataFile": "Local Data Files ({{ count }})",
+
+  "submission.sections.describe.relationship-lookup.search-tab.tab-title.Journal": "Local Journals ({{ count }})",
 
   "submission.sections.describe.relationship-lookup.search-tab.tab-title.isJournalIssueOfPublication": "Local Journal Issues ({{ count }})",
+  "submission.sections.describe.relationship-lookup.search-tab.tab-title.JournalIssue": "Local Journal Issues ({{ count }})",
 
   "submission.sections.describe.relationship-lookup.search-tab.tab-title.isJournalVolumeOfPublication": "Local Journal Volumes ({{ count }})",
+  "submission.sections.describe.relationship-lookup.search-tab.tab-title.JournalVolume": "Local Journal Volumes ({{ count }})",
 
   "submission.sections.describe.relationship-lookup.search-tab.tab-title.sherpaJournal": "Sherpa Journals ({{ count }})",
 
   "submission.sections.describe.relationship-lookup.search-tab.tab-title.sherpaPublisher": "Sherpa Publishers ({{ count }})",
 
-  "submission.sections.describe.relationship-lookup.search-tab.tab-title.orcidV2": "ORCID ({{ count }})",
+  "submission.sections.describe.relationship-lookup.search-tab.tab-title.orcid": "ORCID ({{ count }})",
 
   "submission.sections.describe.relationship-lookup.search-tab.tab-title.lcname": "LC Names ({{ count }})",
+
+  "submission.sections.describe.relationship-lookup.search-tab.tab-title.pubmed": "PubMed ({{ count }})",
+
+  "submission.sections.describe.relationship-lookup.search-tab.tab-title.arxiv": "arXiv ({{ count }})",
 
   "submission.sections.describe.relationship-lookup.search-tab.tab-title.isFundingAgencyOfPublication": "Search for Funding Agencies",
 
@@ -3047,14 +3168,29 @@
   "submission.sections.describe.relationship-lookup.selection-tab.tab-title": "Current Selection ({{ count }})",
 
   "submission.sections.describe.relationship-lookup.title.isJournalIssueOfPublication": "Journal Issues",
+  "submission.sections.describe.relationship-lookup.title.JournalIssue": "Journal Issues",
 
   "submission.sections.describe.relationship-lookup.title.isJournalVolumeOfPublication": "Journal Volumes",
+  "submission.sections.describe.relationship-lookup.title.JournalVolume": "Journal Volumes",
 
   "submission.sections.describe.relationship-lookup.title.isJournalOfPublication": "Journals",
 
   "submission.sections.describe.relationship-lookup.title.isAuthorOfPublication": "Authors",
 
   "submission.sections.describe.relationship-lookup.title.isFundingAgencyOfPublication": "Funding Agency",
+  "submission.sections.describe.relationship-lookup.title.Project": "Projects",
+
+  "submission.sections.describe.relationship-lookup.title.Publication": "Publications",
+
+  "submission.sections.describe.relationship-lookup.title.Person": "Authors",
+
+  "submission.sections.describe.relationship-lookup.title.OrgUnit": "Organizational Units",
+
+  "submission.sections.describe.relationship-lookup.title.DataPackage": "Data Packages",
+
+  "submission.sections.describe.relationship-lookup.title.DataFile": "Data Files",
+
+  "submission.sections.describe.relationship-lookup.title.Funding Agency": "Funding Agency",
 
   "submission.sections.describe.relationship-lookup.title.isFundingOfPublication": "Funding",
 
@@ -3071,12 +3207,27 @@
   "submission.sections.describe.relationship-lookup.selection-tab.title.isJournalOfPublication": "Selected Journals",
 
   "submission.sections.describe.relationship-lookup.selection-tab.title.isJournalVolumeOfPublication": "Selected Journal Volume",
+  "submission.sections.describe.relationship-lookup.selection-tab.title.Project": "Selected Projects",
+
+  "submission.sections.describe.relationship-lookup.selection-tab.title.Publication": "Selected Publications",
+
+  "submission.sections.describe.relationship-lookup.selection-tab.title.Person": "Selected Authors",
+
+  "submission.sections.describe.relationship-lookup.selection-tab.title.OrgUnit": "Selected Organizational Units",
+
+  "submission.sections.describe.relationship-lookup.selection-tab.title.DataPackage": "Selected Data Packages",
+
+  "submission.sections.describe.relationship-lookup.selection-tab.title.DataFile": "Selected Data Files",
+
+  "submission.sections.describe.relationship-lookup.selection-tab.title.Journal": "Selected Journals",
 
   "submission.sections.describe.relationship-lookup.selection-tab.title.isJournalIssueOfPublication": "Selected Issue",
+  "submission.sections.describe.relationship-lookup.selection-tab.title.JournalVolume": "Selected Journal Volume",
 
   "submission.sections.describe.relationship-lookup.selection-tab.title.isFundingAgencyOfPublication": "Selected Funding Agency",
 
   "submission.sections.describe.relationship-lookup.selection-tab.title.isFundingOfPublication": "Selected Funding",
+  "submission.sections.describe.relationship-lookup.selection-tab.title.JournalIssue": "Selected Issue",
 
   "submission.sections.describe.relationship-lookup.selection-tab.title.isChildOrgUnitOf": "Selected Organizational Unit",
 
@@ -3084,13 +3235,15 @@
 
   "submission.sections.describe.relationship-lookup.selection-tab.title.sherpaPublisher": "Search Results",
 
-  "submission.sections.describe.relationship-lookup.selection-tab.title.orcidV2": "Search Results",
+  "submission.sections.describe.relationship-lookup.selection-tab.title.orcid": "Search Results",
 
   "submission.sections.describe.relationship-lookup.selection-tab.title.orcidv2": "Search Results",
 
   "submission.sections.describe.relationship-lookup.selection-tab.title.lcname": "Search Results",
 
   "submission.sections.describe.relationship-lookup.selection-tab.title.pubmed": "Search Results",
+
+  "submission.sections.describe.relationship-lookup.selection-tab.title.arxiv": "Search Results",
 
   "submission.sections.describe.relationship-lookup.name-variant.notification.content": "Would you like to save \"{{ value }}\" as a name variant for this person so you and others can reuse it for future submissions? If you don\'t you can still use it for this submission.",
 
@@ -3276,7 +3429,6 @@
 
 
 
-
   "vocabulary-treeview.header": "Hierarchical tree view",
 
   "vocabulary-treeview.load-more": "Load more",
@@ -3293,17 +3445,11 @@
 
 
 
-  "administrativeView.search.results.head": "Administrative Search",
-
-  "menu.section.admin_search": "Admin Search",
-
-
-
   "uploader.browse": "browse",
 
   "uploader.drag-message": "Drag & Drop your files here",
 
-  "uploader.or": ", or",
+  "uploader.or": ", or ",
 
   "uploader.processing": "Processing",
 
@@ -3354,4 +3500,3 @@
 
   "workflow-item.send-back.button.confirm": "Send back"
 }
-

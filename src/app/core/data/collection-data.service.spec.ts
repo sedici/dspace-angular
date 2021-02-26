@@ -6,19 +6,23 @@ import { HALEndpointServiceStub } from '../../shared/testing/hal-endpoint-servic
 import { NotificationsServiceStub } from '../../shared/testing/notifications-service.stub';
 import { getMockTranslateService } from '../../shared/mocks/translate.service.mock';
 import { fakeAsync, tick } from '@angular/core/testing';
-import { ContentSourceRequest, GetRequest, UpdateContentSourceRequest } from './request.models';
+import { ContentSourceRequest, UpdateContentSourceRequest } from './request.models';
 import { ContentSource } from '../shared/content-source.model';
-import { of as observableOf } from 'rxjs/internal/observable/of';
-import { RequestEntry } from './request.reducer';
-import { ErrorResponse } from '../cache/response.models';
 import { ObjectCacheService } from '../cache/object-cache.service';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
 import { Collection } from '../shared/collection.model';
 import { PageInfo } from '../shared/page-info.model';
-import { PaginatedList } from './paginated-list';
-import { createSuccessfulRemoteDataObject } from 'src/app/shared/remote-data.utils';
+import { buildPaginatedList } from './paginated-list.model';
+import {
+  createFailedRemoteDataObject$,
+  createSuccessfulRemoteDataObject,
+  createSuccessfulRemoteDataObject$
+} from 'src/app/shared/remote-data.utils';
 import { cold, getTestScheduler, hot } from 'jasmine-marbles';
 import { TestScheduler } from 'rxjs/testing';
+import { Observable } from 'rxjs';
+import { RemoteData } from './remote-data';
+import { hasNoValue } from '../../shared/empty.util';
 
 const url = 'fake-url';
 const collectionId = 'fake-collection-id';
@@ -68,17 +72,12 @@ describe('CollectionDataService', () => {
 
   const pageInfo = new PageInfo();
   const array = [mockCollection1, mockCollection2, mockCollection3];
-  const paginatedList = new PaginatedList(pageInfo, array);
+  const paginatedList = buildPaginatedList(pageInfo, array);
   const paginatedListRD = createSuccessfulRemoteDataObject(paginatedList);
 
   describe('when the requests are successful', () => {
     beforeEach(() => {
-      createService(observableOf({
-        request: {
-          href: 'https://rest.api/request'
-        },
-        completed: true
-      }));
+      createService();
     });
 
     describe('when calling getContentSource', () => {
@@ -88,10 +87,10 @@ describe('CollectionDataService', () => {
         contentSource$ = service.getContentSource(collectionId);
       });
 
-      it('should configure a new ContentSourceRequest', fakeAsync(() => {
+      it('should send a new ContentSourceRequest', fakeAsync(() => {
         contentSource$.subscribe();
         tick();
-        expect(requestService.configure).toHaveBeenCalledWith(jasmine.any(ContentSourceRequest));
+        expect(requestService.send).toHaveBeenCalledWith(jasmine.any(ContentSourceRequest), true);
       }));
     });
 
@@ -104,23 +103,11 @@ describe('CollectionDataService', () => {
         returnedContentSource$ = service.updateContentSource(collectionId, contentSource);
       });
 
-      it('should configure a new UpdateContentSourceRequest', fakeAsync(() => {
+      it('should send a new UpdateContentSourceRequest', fakeAsync(() => {
         returnedContentSource$.subscribe();
         tick();
-        expect(requestService.configure).toHaveBeenCalledWith(jasmine.any(UpdateContentSourceRequest));
+        expect(requestService.send).toHaveBeenCalledWith(jasmine.any(UpdateContentSourceRequest));
       }));
-    });
-
-    describe('getMappedItems', () => {
-      let result;
-
-      beforeEach(() => {
-        result = service.getMappedItems('collection-id');
-      });
-
-      it('should configure a GET request', () => {
-        expect(requestService.configure).toHaveBeenCalledWith(jasmine.any(GetRequest));
-      });
     });
 
     describe('when calling getAuthorizedCollection', () => {
@@ -164,13 +151,7 @@ describe('CollectionDataService', () => {
 
   describe('when the requests are unsuccessful', () => {
     beforeEach(() => {
-      createService(observableOf(Object.assign(new RequestEntry(), {
-        response: new ErrorResponse(Object.assign({
-          statusCode: 422,
-          statusText: 'Unprocessable Entity',
-          message: 'Error message'
-        }))
-      })));
+      createService(createFailedRemoteDataObject$('Error', 500));
     });
 
     describe('when calling updateContentSource', () => {
@@ -182,10 +163,10 @@ describe('CollectionDataService', () => {
         returnedContentSource$ = service.updateContentSource(collectionId, contentSource);
       });
 
-      it('should configure a new UpdateContentSourceRequest', fakeAsync(() => {
+      it('should send a new UpdateContentSourceRequest', fakeAsync(() => {
         returnedContentSource$.subscribe();
         tick();
-        expect(requestService.configure).toHaveBeenCalledWith(jasmine.any(UpdateContentSourceRequest));
+        expect(requestService.send).toHaveBeenCalledWith(jasmine.any(UpdateContentSourceRequest));
       }));
 
       it('should display an error notification', fakeAsync(() => {
@@ -198,14 +179,20 @@ describe('CollectionDataService', () => {
 
   /**
    * Create a CollectionDataService used for testing
-   * @param requestEntry$   Supply a requestEntry to be returned by the REST API (optional)
+   * @param reponse$   Supply a RemoteData to be returned by the REST API (optional)
    */
-  function createService(requestEntry$?) {
-    requestService = getMockRequestService(requestEntry$);
+  function createService(reponse$?: Observable<RemoteData<any>>) {
+    requestService = getMockRequestService();
+    let buildResponse$ = reponse$;
+    if (hasNoValue(reponse$)) {
+      buildResponse$ = createSuccessfulRemoteDataObject$({});
+    }
     rdbService = jasmine.createSpyObj('rdbService', {
       buildList: hot('a|', {
         a: paginatedListRD
-      })
+      }),
+      buildFromRequestUUID: buildResponse$,
+      buildSingle: buildResponse$
     });
     objectCache = jasmine.createSpyObj('objectCache', {
       remove: jasmine.createSpy('remove')
@@ -214,7 +201,7 @@ describe('CollectionDataService', () => {
     notificationsService = new NotificationsServiceStub();
     translate = getMockTranslateService();
 
-    service = new CollectionDataService(requestService, rdbService, null, null, objectCache, halService, notificationsService, null, null, translate);
+    service = new CollectionDataService(requestService, rdbService, null, null, objectCache, halService, notificationsService, null, null, null, translate);
   }
 
 });

@@ -1,5 +1,5 @@
 import { APP_BASE_HREF, CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -25,8 +25,6 @@ import { CheckAuthenticationTokenAction } from './core/auth/auth.actions';
 
 import { CoreModule } from './core/core.module';
 import { ClientCookieService } from './core/services/client-cookie.service';
-import { JournalEntitiesModule } from './entity-groups/journal-entities/journal-entities.module';
-import { ResearchEntitiesModule } from './entity-groups/research-entities/research-entities.module';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderNavbarWrapperComponent } from './header-nav-wrapper/header-navbar-wrapper.component';
 import { HeaderComponent } from './header/header.component';
@@ -41,13 +39,16 @@ import { SharedModule } from './shared/shared.module';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { environment } from '../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
-import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { ForbiddenComponent } from './forbidden/forbidden.component';
+import { AuthInterceptor } from './core/auth/auth.interceptor';
+import { LocaleInterceptor } from './core/locale/locale.interceptor';
+import { XsrfInterceptor } from './core/xsrf/xsrf.interceptor';
 
 export function getBase() {
   return environment.ui.nameSpace;
 }
 
-export function getMetaReducers(): Array<MetaReducer<AppState>> {
+export function getMetaReducers(): MetaReducer<AppState>[] {
   return environment.debug ? [...appMetaReducers, ...debugMetaReducers] : appMetaReducers;
 }
 
@@ -64,11 +65,6 @@ const IMPORTS = [
   EffectsModule.forRoot(appEffects),
   StoreModule.forRoot(appReducers, storeModuleConfig),
   StoreRouterConnectingModule.forRoot(),
-];
-
-const ENTITY_IMPORTS = [
-  JournalEntitiesModule,
-  ResearchEntitiesModule
 ];
 
 IMPORTS.push(
@@ -101,6 +97,24 @@ const PROVIDERS = [
     deps: [ Store ],
     multi: true
   },
+  // register AuthInterceptor as HttpInterceptor
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  },
+  // register LocaleInterceptor as HttpInterceptor
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: LocaleInterceptor,
+    multi: true
+  },
+  // register XsrfInterceptor as HttpInterceptor
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: XsrfInterceptor,
+    multi: true
+  },
   ...DYNAMIC_MATCHER_PROVIDERS,
 ];
 
@@ -116,6 +130,8 @@ const DECLARATIONS = [
   NotificationComponent,
   NotificationsBoardComponent,
   SearchNavbarComponent,
+  BreadcrumbsComponent,
+  ForbiddenComponent,
 ];
 
 const EXPORTS = [
@@ -125,23 +141,16 @@ const EXPORTS = [
 @NgModule({
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
-    ...IMPORTS,
-    ...ENTITY_IMPORTS
+    ...IMPORTS
   ],
   providers: [
     ...PROVIDERS
   ],
   declarations: [
     ...DECLARATIONS,
-    BreadcrumbsComponent,
-    UnauthorizedComponent,
   ],
   exports: [
     ...EXPORTS
-  ],
-  entryComponents: [
-    AdminSidebarSectionComponent,
-    ExpandableAdminSidebarSectionComponent
   ]
 })
 export class AppModule {

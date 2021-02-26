@@ -11,9 +11,10 @@ import { ItemPageConfig } from './item-page-config.interface';
 import { CollectionPageConfig } from './collection-page-config.interface';
 import { Theme } from './theme.inferface';
 import {AuthConfig} from './auth-config.interfaces';
+import { UIServerConfig } from './ui-server-config.interface';
 
 export interface GlobalConfig extends Config {
-  ui: ServerConfig;
+  ui: UIServerConfig;
   rest: ServerConfig;
   production: boolean;
   cache: CacheConfig;
@@ -22,7 +23,6 @@ export interface GlobalConfig extends Config {
   notifications: INotificationBoardOptions;
   submission: SubmissionConfig;
   universal: UniversalConfig;
-  gaTrackingId: string;
   logDirectory: string;
   debug: boolean;
   defaultLanguage: string;

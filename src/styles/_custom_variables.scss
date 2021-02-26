@@ -1,4 +1,4 @@
-@import '_themed_custom_variables.scss';
+// @import '_themed_custom_variables.scss';
 
 $content-spacing: $spacer * 1.5 !default;
 
@@ -37,3 +37,7 @@ $edit-item-metadata-field-width: 190px !default;
 $edit-item-language-field-width: 43px !default;
 
 $thumbnail-max-width: 175px !default;
+
+$dso-selector-list-max-height: 475px !default;
+$dso-selector-current-background-color: #eeeeee;
+$dso-selector-current-background-hover-color: darken($dso-selector-current-background-color, 10%);

@@ -1,8 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 
-import { DynamicFormLayoutService, DynamicFormService, DynamicFormValidationService } from '@ng-dynamic-forms/core';
+import {
+  DynamicFormLayoutService,
+  DynamicFormService,
+  DynamicFormValidationService
+} from '@ng-dynamic-forms/core';
 import { EffectsModule } from '@ngrx/effects';
 
 import { Action, StoreConfig, StoreModule } from '@ngrx/store';
@@ -13,12 +17,12 @@ import { FormBuilderService } from '../shared/form/builder/form-builder.service'
 import { FormService } from '../shared/form/form.service';
 import { HostWindowService } from '../shared/host-window.service';
 import { MenuService } from '../shared/menu/menu.service';
-import { EndpointMockingRestService } from '../shared/mocks/dspace-rest-v2/endpoint-mocking-rest.service';
+import { EndpointMockingRestService } from '../shared/mocks/dspace-rest/endpoint-mocking-rest.service';
 import {
   MOCK_RESPONSE_MAP,
   mockResponseMap,
   ResponseMapMock
-} from '../shared/mocks/dspace-rest-v2/mocks/response-map.mock';
+} from '../shared/mocks/dspace-rest/mocks/response-map.mock';
 import { NotificationsService } from '../shared/notifications/notifications.service';
 import { SelectableListService } from '../shared/object-list/selectable-list/selectable-list.service';
 import { ObjectSelectService } from '../shared/object-select/object-select.service';
@@ -28,27 +32,19 @@ import { SidebarService } from '../shared/sidebar/sidebar.service';
 import { UploaderService } from '../shared/uploader/uploader.service';
 import { SectionFormOperationsService } from '../submission/sections/form/section-form-operations.service';
 import { AuthRequestService } from './auth/auth-request.service';
-import { AuthResponseParsingService } from './auth/auth-response-parsing.service';
-import { AuthInterceptor } from './auth/auth.interceptor';
 import { AuthenticatedGuard } from './auth/authenticated.guard';
 import { AuthStatus } from './auth/models/auth-status.model';
 import { BrowseService } from './browse/browse.service';
 import { RemoteDataBuildService } from './cache/builders/remote-data-build.service';
 import { ObjectCacheService } from './cache/object-cache.service';
-import { ConfigResponseParsingService } from './config/config-response-parsing.service';
 import { SubmissionDefinitionsModel } from './config/models/config-submission-definitions.model';
 import { SubmissionFormsModel } from './config/models/config-submission-forms.model';
 import { SubmissionSectionModel } from './config/models/config-submission-section.model';
 import { SubmissionUploadsModel } from './config/models/config-submission-uploads.model';
-import { SubmissionDefinitionsConfigService } from './config/submission-definitions-config.service';
 import { SubmissionFormsConfigService } from './config/submission-forms-config.service';
-import { SubmissionSectionsConfigService } from './config/submission-sections-config.service';
 import { coreEffects } from './core.effects';
 import { coreReducers, CoreState } from './core.reducers';
 import { BitstreamFormatDataService } from './data/bitstream-format-data.service';
-import { BrowseEntriesResponseParsingService } from './data/browse-entries-response-parsing.service';
-import { BrowseItemsResponseParsingService } from './data/browse-items-response-parsing-service';
-import { BrowseResponseParsingService } from './data/browse-response-parsing.service';
 import { CollectionDataService } from './data/collection-data.service';
 import { CommunityDataService } from './data/community-data.service';
 import { ContentSourceResponseParsingService } from './data/content-source-response-parsing.service';
@@ -58,17 +54,13 @@ import { DSOChangeAnalyzer } from './data/dso-change-analyzer.service';
 import { DSOResponseParsingService } from './data/dso-response-parsing.service';
 import { DSpaceObjectDataService } from './data/dspace-object-data.service';
 import { EndpointMapResponseParsingService } from './data/endpoint-map-response-parsing.service';
-import { ItemTypeDataService } from './data/entity-type-data.service';
 import { EntityTypeService } from './data/entity-type.service';
 import { ExternalSourceService } from './data/external-source.service';
 import { FacetConfigResponseParsingService } from './data/facet-config-response-parsing.service';
-import { FacetValueMapResponseParsingService } from './data/facet-value-map-response-parsing.service';
 import { FacetValueResponseParsingService } from './data/facet-value-response-parsing.service';
 import { FilteredDiscoveryPageResponseParsingService } from './data/filtered-discovery-page-response-parsing.service';
 import { ItemDataService } from './data/item-data.service';
-import { LicenseDataService } from './data/license-data.service';
 import { LookupRelationService } from './data/lookup-relation.service';
-import { MappedCollectionsReponseParsingService } from './data/mapped-collections-reponse-parsing.service';
 import { MyDSpaceResponseParsingService } from './data/mydspace-response-parsing.service';
 import { ObjectUpdatesService } from './data/object-updates/object-updates.service';
 import { RelationshipTypeService } from './data/relationship-type.service';
@@ -76,9 +68,8 @@ import { RelationshipService } from './data/relationship.service';
 import { ResourcePolicyService } from './resource-policy/resource-policy.service';
 import { SearchResponseParsingService } from './data/search-response-parsing.service';
 import { SiteDataService } from './data/site-data.service';
-import { DSpaceRESTv2Service } from './dspace-rest-v2/dspace-rest-v2.service';
+import { DspaceRestService } from './dspace-rest/dspace-rest.service';
 import { EPersonDataService } from './eperson/eperson-data.service';
-import { EpersonResponseParsingService } from './eperson/eperson-response-parsing.service';
 import { EPerson } from './eperson/models/eperson.model';
 import { Group } from './eperson/models/group.model';
 import { JsonPatchOperationsBuilder } from './json-patch/builder/json-patch-operations-builder';
@@ -101,7 +92,6 @@ import { Community } from './shared/community.model';
 import { DSpaceObject } from './shared/dspace-object.model';
 import { ExternalSourceEntry } from './shared/external-source-entry.model';
 import { ExternalSource } from './shared/external-source.model';
-import { FileService } from './shared/file.service';
 import { HALEndpointService } from './shared/hal-endpoint.service';
 import { ItemType } from './shared/item-relationships/item-type.model';
 import { RelationshipType } from './shared/item-relationships/relationship-type.model';
@@ -139,10 +129,8 @@ import { Script } from '../process-page/scripts/script.model';
 import { Process } from '../process-page/processes/process.model';
 import { ProcessDataService } from './data/processes/process-data.service';
 import { ScriptDataService } from './data/processes/script-data.service';
-import { ProcessFilesResponseParsingService } from './data/process-files-response-parsing.service';
 import { WorkflowActionDataService } from './data/workflow-action-data.service';
 import { WorkflowAction } from './tasks/models/workflow-action-object.model';
-import { LocaleInterceptor } from './locale/locale.interceptor';
 import { ItemTemplateDataService } from './data/item-template-data.service';
 import { TemplateItem } from './shared/template-item.model';
 import { Feature } from './shared/feature.model';
@@ -160,7 +148,6 @@ import { SubmissionCcLicenceUrl } from './submission/models/submission-cc-licens
 import { SubmissionCcLicenseUrlDataService } from './submission/submission-cc-license-url-data.service';
 import { VocabularyEntry } from './submission/vocabularies/models/vocabulary-entry.model';
 import { Vocabulary } from './submission/vocabularies/models/vocabulary.model';
-import { VocabularyEntriesResponseParsingService } from './submission/vocabularies/vocabulary-entries-response-parsing.service';
 import { VocabularyEntryDetail } from './submission/vocabularies/models/vocabulary-entry-detail.model';
 import { VocabularyService } from './submission/vocabularies/vocabulary.service';
 import { VocabularyTreeviewService } from '../shared/vocabulary-treeview/vocabulary-treeview.service';
@@ -171,7 +158,10 @@ import { EndUserAgreementCurrentUserGuard } from './end-user-agreement/end-user-
 import { EndUserAgreementCookieGuard } from './end-user-agreement/end-user-agreement-cookie.guard';
 import { EndUserAgreementService } from './end-user-agreement/end-user-agreement.service';
 import { SiteRegisterGuard } from './data/feature-authorization/feature-authorization-guard/site-register.guard';
+import { ShortLivedToken } from './auth/models/short-lived-token.model';
 import { UsageReport } from './statistics/models/usage-report.model';
+import { RootDataService } from './data/root-data.service';
+import { Root } from './data/root.model';
 
 /**
  * When not in production, endpoint responses can be mocked for testing purposes
@@ -179,7 +169,7 @@ import { UsageReport } from './statistics/models/usage-report.model';
  */
 export const restServiceFactory = (mocks: ResponseMapMock, http: HttpClient) => {
   if (environment.production) {
-    return new DSpaceRESTv2Service(http);
+    return new DspaceRestService(http);
   } else {
     return new EndpointMockingRestService(mocks, http);
   }
@@ -199,20 +189,18 @@ const PROVIDERS = [
   ApiService,
   AuthenticatedGuard,
   AuthRequestService,
-  AuthResponseParsingService,
   CommunityDataService,
   CollectionDataService,
   SiteDataService,
   DSOResponseParsingService,
   { provide: MOCK_RESPONSE_MAP, useValue: mockResponseMap },
-  { provide: DSpaceRESTv2Service, useFactory: restServiceFactory, deps: [MOCK_RESPONSE_MAP, HttpClient] },
+  { provide: DspaceRestService, useFactory: restServiceFactory, deps: [MOCK_RESPONSE_MAP, HttpClient] },
   DynamicFormLayoutService,
   DynamicFormService,
   DynamicFormValidationService,
   FormBuilderService,
   SectionFormOperationsService,
   FormService,
-  EpersonResponseParsingService,
   EPersonDataService,
   HALEndpointService,
   HostWindowService,
@@ -226,24 +214,16 @@ const PROVIDERS = [
   RemoteDataBuildService,
   EndpointMapResponseParsingService,
   FacetValueResponseParsingService,
-  FacetValueMapResponseParsingService,
   FacetConfigResponseParsingService,
-  MappedCollectionsReponseParsingService,
   DebugResponseParsingService,
   SearchResponseParsingService,
   MyDSpaceResponseParsingService,
   ServerResponseService,
-  BrowseResponseParsingService,
-  BrowseEntriesResponseParsingService,
-  BrowseItemsResponseParsingService,
   BrowseService,
-  ConfigResponseParsingService,
   SubmissionCcLicenseDataService,
   SubmissionCcLicenseUrlDataService,
-  SubmissionDefinitionsConfigService,
   SubmissionFormsConfigService,
   SubmissionRestService,
-  SubmissionSectionsConfigService,
   SubmissionResponseParsingService,
   SubmissionJsonPatchOperationsService,
   JsonPatchOperationsBuilder,
@@ -253,7 +233,6 @@ const PROVIDERS = [
   WorkspaceitemDataService,
   WorkflowItemDataService,
   UploaderService,
-  FileService,
   DSpaceObjectDataService,
   ConfigurationDataService,
   DSOChangeAnalyzer,
@@ -285,12 +264,9 @@ const PROVIDERS = [
   LookupRelationService,
   VersionDataService,
   VersionHistoryDataService,
-  LicenseDataService,
-  ItemTypeDataService,
   WorkflowActionDataService,
   ProcessDataService,
   ScriptDataService,
-  ProcessFilesResponseParsingService,
   FeatureDataService,
   AuthorizationDataService,
   SiteAdministratorGuard,
@@ -302,23 +278,11 @@ const PROVIDERS = [
   EndUserAgreementCurrentUserGuard,
   EndUserAgreementCookieGuard,
   EndUserAgreementService,
-  // register AuthInterceptor as HttpInterceptor
-  {
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptor,
-    multi: true
-  },
-  // register LocaleInterceptor as HttpInterceptor
-  {
-    provide: HTTP_INTERCEPTORS,
-    useClass: LocaleInterceptor,
-    multi: true
-  },
+  RootDataService,
   NotificationsService,
   FilteredDiscoveryPageResponseParsingService,
   { provide: NativeWindowService, useFactory: NativeWindowFactory },
   VocabularyService,
-  VocabularyEntriesResponseParsingService,
   VocabularyTreeviewService
 ];
 
@@ -327,6 +291,7 @@ const PROVIDERS = [
  */
 export const models =
   [
+    Root,
     DSpaceObject,
     Bundle,
     Bitstream,
@@ -373,7 +338,10 @@ export const models =
     VocabularyEntry,
     VocabularyEntryDetail,
     ConfigurationProperty,
+    ShortLivedToken,
+    Registration,
     UsageReport,
+    Root,
   ];
 
 @NgModule({
@@ -392,7 +360,7 @@ export const models =
 })
 
 export class CoreModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<CoreModule> {
     return {
       ngModule: CoreModule,
       providers: [

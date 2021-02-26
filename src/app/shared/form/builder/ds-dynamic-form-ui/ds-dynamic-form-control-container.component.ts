@@ -94,7 +94,7 @@ import {
   getFirstSucceededRemoteDataPayload,
   getPaginatedListPayload,
   getRemoteDataPayload,
-  getSucceededRemoteData
+  getFirstSucceededRemoteData
 } from '../../../../core/shared/operators';
 import { RemoteData } from '../../../../core/data/remote-data';
 import { Item } from '../../../../core/shared/item.model';
@@ -103,7 +103,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../../app.reducer';
 import { SubmissionObjectDataService } from '../../../../core/submission/submission-object-data.service';
 import { SubmissionObject } from '../../../../core/submission/models/submission-object.model';
-import { PaginatedList } from '../../../../core/data/paginated-list';
+import { PaginatedList } from '../../../../core/data/paginated-list.model';
 import { ItemSearchResult } from '../../../object-collection/shared/item-search-result.model';
 import { Relationship } from '../../../../core/shared/item-relationships/relationship.model';
 import { Collection } from '../../../../core/shared/collection.model';
@@ -200,6 +200,7 @@ export class DsDynamicFormControlContainerComponent extends DynamicFormControlCo
   @Input() bindId = true;
   @Input() context: any | null = null;
   @Input() group: FormGroup;
+  @Input() hostClass: string[];
   @Input() hasErrorMessaging = false;
   @Input() layout = null as DynamicFormLayout;
   @Input() model: any;
@@ -250,7 +251,7 @@ export class DsDynamicFormControlContainerComponent extends DynamicFormControlCo
     private formBuilderService: FormBuilderService,
     private submissionService: SubmissionService
   ) {
-    super(componentFactoryResolver, layoutService, validationService, dynamicFormComponentService, relationService);
+    super(ref, componentFactoryResolver, layoutService, validationService, dynamicFormComponentService, relationService);
   }
 
   /**
@@ -274,6 +275,8 @@ export class DsDynamicFormControlContainerComponent extends DynamicFormControlCo
             const relationshipsRD$ = this.relationshipService.getItemRelationshipsByLabel(item,
               relationshipOptions.relationshipType,
               undefined,
+              true,
+              true,
               followLink('leftItem'),
               followLink('rightItem'),
               followLink('relationshipType')
@@ -295,11 +298,11 @@ export class DsDynamicFormControlContainerComponent extends DynamicFormControlCo
 
             return relationshipsRD$.pipe(
               paginatedRelationsToItems(item.uuid),
-              getSucceededRemoteData(),
+              getFirstSucceededRemoteData(),
               map((items: RemoteData<PaginatedList<Item>>) => items.payload.page.map((i) => Object.assign(new ItemSearchResult(), { indexableObject: i }))),
-            )
+            );
           })
-        ).subscribe((relatedItems: Array<SearchResult<Item>>) => this.selectableListService.select(this.listId, relatedItems));
+        ).subscribe((relatedItems: SearchResult<Item>[]) => this.selectableListService.select(this.listId, relatedItems));
         this.subs.push(subscription);
       }
 
@@ -310,7 +313,7 @@ export class DsDynamicFormControlContainerComponent extends DynamicFormControlCo
       }
 
       if (hasValue(this.value) && this.value.isVirtual) {
-        const relationship$ = this.relationshipService.findById(this.value.virtualValue, followLink('leftItem'), followLink('rightItem'), followLink('relationshipType'))
+        const relationship$ = this.relationshipService.findById(this.value.virtualValue, true, true, followLink('leftItem'), followLink('rightItem'), followLink('relationshipType'))
           .pipe(
             getAllSucceededRemoteData(),
             getRemoteDataPayload());
@@ -320,7 +323,7 @@ export class DsDynamicFormControlContainerComponent extends DynamicFormControlCo
               getAllSucceededRemoteData(),
               getRemoteDataPayload(),
               map((leftItem: Item) => {
-                return new ReorderableRelationship(relationship, leftItem.uuid !== item.uuid, this.relationshipService, this.store, this.model.submissionId)
+                return new ReorderableRelationship(relationship, leftItem.uuid !== item.uuid, this.relationshipService, this.store, this.model.submissionId);
               }),
             )
           ),
@@ -372,7 +375,7 @@ export class DsDynamicFormControlContainerComponent extends DynamicFormControlCo
   }
 
   public hasResultsSelected(): Observable<boolean> {
-    return this.model.value.pipe(map((list: Array<SearchResult<DSpaceObject>>) => isNotEmpty(list)));
+    return this.model.value.pipe(map((list: SearchResult<DSpaceObject>[]) => isNotEmpty(list)));
   }
 
   /**
@@ -407,7 +410,7 @@ export class DsDynamicFormControlContainerComponent extends DynamicFormControlCo
     modalComp.repeatable = this.model.repeatable;
     modalComp.listId = this.listId;
     modalComp.relationshipOptions = this.model.relationship;
-    modalComp.label = this.model.label;
+    modalComp.label = this.model.relationship.relationshipType;
     modalComp.metadataFields = this.model.metadataFields;
     modalComp.item = this.item;
     modalComp.collection = this.collection;
@@ -439,7 +442,7 @@ export class DsDynamicFormControlContainerComponent extends DynamicFormControlCo
    */
   private setItem() {
     const submissionObject$ = this.submissionObjectService
-      .findById(this.model.submissionId, followLink('item'), followLink('collection')).pipe(
+      .findById(this.model.submissionId, true, true, followLink('item'), followLink('collection')).pipe(
         getAllSucceededRemoteData(),
         getRemoteDataPayload()
       );

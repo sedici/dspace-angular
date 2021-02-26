@@ -22,10 +22,10 @@ describe('SubmissionObjectDataService', () => {
     workspaceitemDataService = jasmine.createSpyObj('WorkspaceitemDataService', {
       findById: wsiResult
     });
-    workflowItemDataService  = jasmine.createSpyObj('WorkflowItemDataService', {
+    workflowItemDataService = jasmine.createSpyObj('WorkflowItemDataService', {
       findById: wfiResult
     });
-    halService  = jasmine.createSpyObj('HALEndpointService', {
+    halService = jasmine.createSpyObj('HALEndpointService', {
       getEndpoint: '/workspaceItem'
     });
   });
@@ -50,7 +50,7 @@ describe('SubmissionObjectDataService', () => {
 
       it('should forward the result of WorkspaceitemDataService.findByIdAndIDType()', () => {
         const result = service.findById(submissionId);
-        expect(workspaceitemDataService.findById).toHaveBeenCalledWith(submissionId);
+        expect(workspaceitemDataService.findById).toHaveBeenCalledWith(submissionId, true, true);
         expect(result).toBe(wsiResult);
       });
     });
@@ -65,7 +65,7 @@ describe('SubmissionObjectDataService', () => {
 
       it('should forward the result of WorkflowItemDataService.findByIdAndIDType()', () => {
         const result = service.findById(submissionId);
-        expect(workflowItemDataService.findById).toHaveBeenCalledWith(submissionId);
+        expect(workflowItemDataService.findById).toHaveBeenCalledWith(submissionId, true, true);
         expect(result).toBe(wfiResult);
       });
     });
@@ -88,9 +88,9 @@ describe('SubmissionObjectDataService', () => {
         const result = service.findById(submissionId);
         result.subscribe((rd: RemoteData<SubmissionObject>) => {
           expect(rd.hasFailed).toBe(true);
-          expect(rd.error).toBeDefined();
+          expect(rd.errorMessage).toBeDefined();
           done();
-        })
+        });
       });
     });
 

@@ -19,6 +19,7 @@ export const environment: Partial<GlobalConfig> = {
     port: 80,
     // NOTE: Space is capitalized because 'namespace' is a reserved string in TypeScript
     nameSpace: '/angular-dspace',
+    rateLimiter: undefined
   },
     // Caching settings
   cache: {
@@ -109,8 +110,6 @@ export const environment: Partial<GlobalConfig> = {
     async: true,
     time: false
   },
-  // Google Analytics tracking id
-  gaTrackingId: '',
   // Log directory
   logDirectory: '.',
   // NOTE: will log all redux actions and transfers in console

@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractTrackableComponent } from '../../../shared/trackable/abstract-trackable.component';
 import {
   DynamicFormControlModel,
@@ -18,16 +18,15 @@ import { NotificationsService } from '../../../shared/notifications/notification
 import { FormGroup } from '@angular/forms';
 import { hasNoValue, hasValue, isNotEmpty } from '../../../shared/empty.util';
 import { ContentSource, ContentSourceHarvestType } from '../../../core/shared/content-source.model';
-import { Observable } from 'rxjs/internal/Observable';
+import { Observable, Subscription } from 'rxjs';
 import { RemoteData } from '../../../core/data/remote-data';
 import { Collection } from '../../../core/shared/collection.model';
 import { first, map, switchMap, take } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FieldUpdate, FieldUpdates } from '../../../core/data/object-updates/object-updates.reducer';
-import { Subscription } from 'rxjs/internal/Subscription';
 import { cloneDeep } from 'lodash';
 import { CollectionDataService } from '../../../core/data/collection-data.service';
-import { getSucceededRemoteData } from '../../../core/shared/operators';
+import { getFirstSucceededRemoteData, getFirstCompletedRemoteData } from '../../../core/shared/operators';
 import { MetadataConfig } from '../../../core/shared/metadata-config.model';
 import { INotification } from '../../../shared/notifications/models/notification.model';
 import { RequestService } from '../../../core/data/request.service';
@@ -255,12 +254,12 @@ export class CollectionSourceComponent extends AbstractTrackableComponent implem
     this.collectionRD$ = this.route.parent.data.pipe(first(), map((data) => data.dso));
 
     this.collectionRD$.pipe(
-      getSucceededRemoteData(),
+      getFirstSucceededRemoteData(),
       map((col) => col.payload.uuid),
       switchMap((uuid) => this.collectionService.getContentSource(uuid)),
-      take(1)
-    ).subscribe((contentSource: ContentSource) => {
-      this.initializeOriginalContentSource(contentSource);
+      getFirstCompletedRemoteData(),
+    ).subscribe((rd: RemoteData<ContentSource>) => {
+      this.initializeOriginalContentSource(rd.payload);
     });
 
     this.updateFieldTranslations();
@@ -376,7 +375,7 @@ export class CollectionSourceComponent extends AbstractTrackableComponent implem
   onSubmit() {
     // Remove cached harvester request to allow for latest harvester to be displayed when switching tabs
     this.collectionRD$.pipe(
-      getSucceededRemoteData(),
+      getFirstSucceededRemoteData(),
       map((col) => col.payload.uuid),
       switchMap((uuid) => this.collectionService.getHarvesterEndpoint(uuid)),
       take(1)
@@ -384,7 +383,7 @@ export class CollectionSourceComponent extends AbstractTrackableComponent implem
 
     // Update harvester
     this.collectionRD$.pipe(
-      getSucceededRemoteData(),
+      getFirstSucceededRemoteData(),
       map((col) => col.payload.uuid),
       switchMap((uuid) => this.collectionService.updateContentSource(uuid, this.contentSource)),
       take(1)
@@ -433,7 +432,7 @@ export class CollectionSourceComponent extends AbstractTrackableComponent implem
   updateContentSource(updateHarvestType: boolean) {
     this.inputModels.forEach(
       (fieldModel: DynamicInputModel) => {
-        this.updateContentSourceField(fieldModel, updateHarvestType)
+        this.updateContentSourceField(fieldModel, updateHarvestType);
       }
     );
     this.saveFieldUpdate();

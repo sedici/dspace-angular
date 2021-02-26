@@ -1,9 +1,14 @@
 import { Component, Input } from '@angular/core';
 import { MetadataRepresentation } from '../../../core/shared/metadata-representation/metadata-representation.model';
-import { combineLatest as observableCombineLatest, Observable, of as observableOf, zip as observableZip } from 'rxjs';
+import {
+  combineLatest as observableCombineLatest,
+  Observable,
+  of as observableOf,
+  zip as observableZip
+} from 'rxjs';
 import { RelationshipService } from '../../../core/data/relationship.service';
 import { MetadataValue } from '../../../core/shared/metadata.models';
-import { getSucceededRemoteData } from '../../../core/shared/operators';
+import { getFirstSucceededRemoteData } from '../../../core/shared/operators';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { RemoteData } from '../../../core/data/remote-data';
 import { Relationship } from '../../../core/shared/item-relationships/relationship.model';
@@ -82,8 +87,8 @@ export class MetadataRepresentationListComponent extends AbstractIncrementalList
         .map((metadatum: any) => Object.assign(new MetadataValue(), metadatum))
         .map((metadatum: MetadataValue) => {
           if (metadatum.isVirtual) {
-            return this.relationshipService.findById(metadatum.virtualValue, followLink('leftItem'), followLink('rightItem')).pipe(
-              getSucceededRemoteData(),
+            return this.relationshipService.findById(metadatum.virtualValue, true, false, followLink('leftItem'), followLink('rightItem')).pipe(
+              getFirstSucceededRemoteData(),
               switchMap((relRD: RemoteData<Relationship>) =>
                 observableCombineLatest(relRD.payload.leftItem, relRD.payload.rightItem).pipe(
                   filter(([leftItem, rightItem]) => leftItem.hasSucceeded && rightItem.hasSucceeded),

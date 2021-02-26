@@ -12,14 +12,12 @@ import { DefaultChangeAnalyzer } from '../default-change-analyzer.service';
 import { Process } from '../../../process-page/processes/process.model';
 import { dataService } from '../../cache/builders/build-decorators';
 import { PROCESS } from '../../../process-page/processes/process.resource-type';
-import { Observable } from 'rxjs/internal/Observable';
-import { map, switchMap } from 'rxjs/operators';
-import { ProcessFilesRequest, RestRequest } from '../request.models';
-import { configureRequest, filterSuccessfulResponses } from '../../shared/operators';
-import { GenericSuccessResponse } from '../../cache/response.models';
-import { PaginatedList } from '../paginated-list';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { PaginatedList } from '../paginated-list.model';
 import { Bitstream } from '../../shared/bitstream.model';
 import { RemoteData } from '../remote-data';
+import { BitstreamDataService } from '../bitstream-data.service';
 
 @Injectable()
 @dataService(PROCESS)
@@ -33,6 +31,7 @@ export class ProcessDataService extends DataService<Process> {
     protected objectCache: ObjectCacheService,
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
+    protected bitstreamDataService: BitstreamDataService,
     protected http: HttpClient,
     protected comparator: DefaultChangeAnalyzer<Process>) {
     super();
@@ -49,22 +48,11 @@ export class ProcessDataService extends DataService<Process> {
   }
 
   /**
-   * Get a process his output files
+   * Get a process' output files
    * @param processId The ID of the process
    */
   getFiles(processId: string): Observable<RemoteData<PaginatedList<Bitstream>>> {
-    const request$ = this.getFilesEndpoint(processId).pipe(
-      map((href) => new ProcessFilesRequest(this.requestService.generateRequestId(), href)),
-      configureRequest(this.requestService)
-    );
-    const requestEntry$ = request$.pipe(
-      switchMap((request: RestRequest) => this.requestService.getByHref(request.href))
-    );
-    const payload$ = requestEntry$.pipe(
-      filterSuccessfulResponses(),
-      map((response: GenericSuccessResponse<PaginatedList<Bitstream>>) => response.payload)
-    );
-
-    return this.rdbService.toRemoteDataObservable(requestEntry$, payload$);
+    const href$ = this.getFilesEndpoint(processId);
+    return this.bitstreamDataService.findAllByHref(href$);
   }
 }

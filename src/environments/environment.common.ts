@@ -13,12 +13,17 @@ export const environment: GlobalConfig = {
     port: 4000,
     // NOTE: Space is capitalized because 'namespace' is a reserved string in TypeScript
     nameSpace: '/',
+    // The rateLimiter settings limit each IP to a "max" of 500 requests per "windowMs" (1 minute).
+    rateLimiter: {
+      windowMs: 1 * 60 * 1000,   // 1 minute
+      max: 500 // limit each IP to 500 requests per windowMs
+    }
   },
   // The REST API server settings.
   // NOTE: these must be "synced" with the 'dspace.server.url' setting in your backend's local.cfg.
   rest: {
     ssl: true,
-    host: 'dspace7.4science.cloud',
+    host: 'api7.dspace.org',
     port: 443,
     // NOTE: Space is capitalized because 'namespace' is a reserved string in TypeScript
     nameSpace: '/server',
@@ -60,9 +65,12 @@ export const environment: GlobalConfig = {
   submission: {
     autosave: {
       // NOTE: which metadata trigger an autosave
-      metadata: ['dc.title', 'dc.identifier.doi', 'dc.identifier.pmid', 'dc.identifier.arxiv'],
-      // NOTE: every how many minutes submission is saved automatically
-      timer: 5
+      metadata: [],
+      /**
+       * NOTE: after how many time (milliseconds) submission is saved automatically
+       * eg. timer: 5 * (1000 * 60); // 5 minutes
+       */
+      timer: 0
     },
     icons: {
       metadata: [
@@ -124,8 +132,6 @@ export const environment: GlobalConfig = {
     async: true,
     time: false
   },
-  // Google Analytics tracking id
-  gaTrackingId: '',
   // Log directory
   logDirectory: '.',
   // NOTE: will log all redux actions and transfers in console
@@ -165,6 +171,10 @@ export const environment: GlobalConfig = {
   },{
     code: 'fi',
     label: 'Suomi',
+    active: true,
+  },{
+    code: 'hu',
+    label: 'magyar',
     active: true,
   }],
   // Browse-By Pages
