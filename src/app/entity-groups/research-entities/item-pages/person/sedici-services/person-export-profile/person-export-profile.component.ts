@@ -12,8 +12,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'ds-person-export-profile',
-  templateUrl: './person-export-profile.component.html',
-  styleUrls: ['./person-export-profile.component.css']
+  templateUrl: './person-export-profile.component.html'
 })
 export class PersonExportProfileComponent implements OnInit {
 
