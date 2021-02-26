@@ -518,9 +518,6 @@ const ENTRY_COMPONENTS = [
   PublicationSidebarSearchListElementComponent,
   CollectionSidebarSearchListElementComponent,
   CommunitySidebarSearchListElementComponent,
-  LinkMenuItemComponent,
-  OnClickMenuItemComponent,
-  TextMenuItemComponent
 ];
 
 const SHARED_SEARCH_PAGE_COMPONENTS = [
