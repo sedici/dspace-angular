@@ -1,6 +1,9 @@
-import { Component, ComponentFactoryResolver, Input, OnInit, ViewChild } from '@angular/core';
-import { MetadataRepresentation } from '../../core/shared/metadata-representation/metadata-representation.model';
-import { getMetadataRepresentationComponent } from './metadata-representation.decorator';
+import { Component, ComponentFactoryResolver, Inject, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  MetadataRepresentation,
+  MetadataRepresentationType
+} from '../../core/shared/metadata-representation/metadata-representation.model';
+import { METADATA_REPRESENTATION_COMPONENT_FACTORY } from './metadata-representation.decorator';
 import { Context } from '../../core/shared/context.model';
 import { GenericConstructor } from '../../core/shared/generic-constructor';
 import { MetadataRepresentationListElementComponent } from '../object-list/metadata-representation-list-element/metadata-representation-list-element.component';
@@ -14,7 +17,7 @@ import { ThemeService } from '../theme-support/theme.service';
   templateUrl: './metadata-representation-loader.component.html'
 })
 /**
- * Component for determining what component to use depending on the item's relationship type (relationship.type), its metadata representation and, optionally, its context
+ * Component for determining what component to use depending on the item's entity type (dspace.entity.type), its metadata representation and, optionally, its context
  */
 export class MetadataRepresentationLoaderComponent implements OnInit {
   private componentRefInstance: MetadataRepresentationListElementComponent;
@@ -45,7 +48,8 @@ export class MetadataRepresentationLoaderComponent implements OnInit {
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    @Inject(METADATA_REPRESENTATION_COMPONENT_FACTORY) private getMetadataRepresentationComponent: (entityType: string, mdRepresentationType: MetadataRepresentationType, context: Context, theme: string) => GenericConstructor<any>,
   ) {
   }
 
@@ -64,10 +68,10 @@ export class MetadataRepresentationLoaderComponent implements OnInit {
   }
 
   /**
-   * Fetch the component depending on the item's relationship type, metadata representation type and context
+   * Fetch the component depending on the item's entity type, metadata representation type and context
    * @returns {string}
    */
   private getComponent(): GenericConstructor<MetadataRepresentationListElementComponent> {
-    return getMetadataRepresentationComponent(this.mdRepresentation.itemType, this.mdRepresentation.representationType, this.context, this.themeService.getThemeName());
+    return this.getMetadataRepresentationComponent(this.mdRepresentation.itemType, this.mdRepresentation.representationType, this.context, this.themeService.getThemeName());
   }
 }

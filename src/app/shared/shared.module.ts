@@ -224,6 +224,7 @@ import { SearchObjects } from './search/search-objects.model';
 import { SearchResult } from './search/search-result.model';
 import { FacetConfigResponse } from './search/facet-config-response.model';
 import { FacetValues } from './search/facet-values.model';
+import { BitstreamDownloadPageComponent } from './bitstream-download-page/bitstream-download-page.component';
 import { GenericItemPageFieldComponent } from '../+item-page/simple/field-components/specific-field/generic/generic-item-page-field.component';
 import { MetadataRepresentationListComponent } from '../+item-page/simple/metadata-representation-list/metadata-representation-list.component';
 import { RelatedItemsComponent } from '../+item-page/simple/related-items/related-items-component';
@@ -233,6 +234,8 @@ import { ConfigurationSearchPageComponent } from '../+search-page/configuration-
 import { LinkMenuItemComponent } from './menu/menu-item/link-menu-item.component';
 import { OnClickMenuItemComponent } from './menu/menu-item/onclick-menu-item.component';
 import { TextMenuItemComponent } from './menu/menu-item/text-menu-item.component';
+import { ThemedConfigurationSearchPageComponent } from '../+search-page/themed-configuration-search-page.component';
+import { SearchNavbarComponent } from '../search-navbar/search-navbar.component';
 
 /**
  * Declaration needed to make sure all decorator functions are called in time
@@ -431,6 +434,7 @@ const COMPONENTS = [
   EpersonSearchBoxComponent,
   GroupSearchBoxComponent,
   FileDownloadLinkComponent,
+  BitstreamDownloadPageComponent,
   CollectionDropdownComponent,
   ExportMetadataSelectorComponent,
   ConfirmationModalComponent,
@@ -458,6 +462,7 @@ const COMPONENTS = [
   PublicationSidebarSearchListElementComponent,
   CollectionSidebarSearchListElementComponent,
   CommunitySidebarSearchListElementComponent,
+  SearchNavbarComponent
 ];
 
 const ENTRY_COMPONENTS = [
@@ -510,18 +515,20 @@ const ENTRY_COMPONENTS = [
   ClaimedTaskActionsEditMetadataComponent,
   CollectionDropdownComponent,
   FileDownloadLinkComponent,
+  BitstreamDownloadPageComponent,
   CurationFormComponent,
   ExportMetadataSelectorComponent,
   ConfirmationModalComponent,
-  ClaimedTaskActionsSelectCollectionComponent,
   VocabularyTreeviewComponent,
+  SidebarSearchListElementComponent,
   PublicationSidebarSearchListElementComponent,
   CollectionSidebarSearchListElementComponent,
   CommunitySidebarSearchListElementComponent,
 ];
 
 const SHARED_SEARCH_PAGE_COMPONENTS = [
-  ConfigurationSearchPageComponent
+  ConfigurationSearchPageComponent,
+  ThemedConfigurationSearchPageComponent
 ];
 
 const SHARED_ITEM_PAGE_COMPONENTS = [

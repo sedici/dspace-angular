@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { debounceTime, filter, map, mergeMap, switchMap, take } from 'rxjs/operators';
+import { filter, map, mergeMap, switchMap, take } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { RelationshipService } from '../../../../../core/data/relationship.service';
 import {
   getRemoteDataPayload,
-  getFirstSucceededRemoteData
+  getFirstSucceededRemoteData, DEBOUNCE_TIME_OPERATOR
 } from '../../../../../core/shared/operators';
 import {
   AddRelationshipAction,
@@ -71,7 +71,7 @@ export class RelationshipEffects {
             this.initialActionMap[identifier] = action.type;
             this.debounceMap[identifier] = new BehaviorSubject<string>(action.type);
             this.debounceMap[identifier].pipe(
-              debounceTime(DEBOUNCE_TIME),
+              this.debounceTime(DEBOUNCE_TIME),
               take(1)
             ).subscribe(
               (type) => {
@@ -159,6 +159,7 @@ export class RelationshipEffects {
               private notificationsService: NotificationsService,
               private translateService: TranslateService,
               private selectableListService: SelectableListService,
+              @Inject(DEBOUNCE_TIME_OPERATOR) private debounceTime: <T>(dueTime: number) => (source: Observable<T>) => Observable<T>,
   ) {
   }
 
@@ -167,8 +168,8 @@ export class RelationshipEffects {
   }
 
   private addRelationship(item1: Item, item2: Item, relationshipType: string, submissionId: string, nameVariant?: string) {
-    const type1: string = item1.firstMetadataValue('relationship.type');
-    const type2: string = item2.firstMetadataValue('relationship.type');
+    const type1: string = item1.firstMetadataValue('dspace.entity.type');
+    const type2: string = item2.firstMetadataValue('dspace.entity.type');
     return this.relationshipTypeService.getRelationshipTypeByLabelAndTypes(relationshipType, type1, type2)
       .pipe(
         mergeMap((type: RelationshipType) => {

@@ -32,7 +32,7 @@
     "lint": "ng lint",
     "lint-fix": "ng lint --fix=true",
     "e2e": "ng e2e",
-    "e2e:ci": "ng e2e --protractor-config=./e2e/protractor-ci.conf.js",
+    "e2e:ci": "ng e2e --webdriver-update=false --protractor-config=./e2e/protractor-ci.conf.js",
     "compile:server": "webpack --config webpack.server.config.js --progress --color",
     "serve:ssr": "node dist/server",
     "clean:coverage": "rimraf coverage",
@@ -119,10 +119,11 @@
     "rxjs": "^6.6.3",
     "rxjs-spy": "^7.5.3",
     "sass-resources-loader": "^2.1.1",
-    "sortablejs": "1.10.1",
+    "sortablejs": "1.13.0",
     "tslib": "^2.0.0",
     "webfontloader": "1.6.28",
-    "zone.js": "^0.10.3"
+    "zone.js": "^0.10.3",
+    "@kolkov/ngx-gallery": "^1.2.3"
   },
   "devDependencies": {
     "@angular-builders/custom-webpack": "10.0.1",
