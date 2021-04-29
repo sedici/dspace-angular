@@ -1,6 +1,6 @@
 include .env
 
-.PHONY: up update build dsbin down start stop prune ps bash logs
+.PHONY: up update build dsbin down start stop prune ps bash logs cli
 
 default: up
 
@@ -41,6 +41,9 @@ bash:
 logs:
 	@docker-compose -f docker/docker-compose.yml -f docker/docker-compose-rest.yml logs --follow --tail=100 $(filter-out $@,$(MAKECMDGOALS))
 
+cli:
+	@docker-compose -f docker/cli.yml run --rm dspace-cli $(filter-out $@,$(MAKECMDGOALS))
+	
 # https://stackoverflow.com/a/6273809/1826109
 %:
 	@:
