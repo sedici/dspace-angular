@@ -17,8 +17,8 @@ import {
   Subscription
 } from 'rxjs';
 import { catchError, map, switchMap, take } from 'rxjs/operators';
-import { getCollectionEditRolesRoute } from '../../../+collection-page/collection-page-routing-paths';
-import { getCommunityEditRolesRoute } from '../../../+community-page/community-page-routing-paths';
+import { getCollectionEditRolesRoute } from '../../../collection-page/collection-page-routing-paths';
+import { getCommunityEditRolesRoute } from '../../../community-page/community-page-routing-paths';
 import { DSpaceObjectDataService } from '../../../core/data/dspace-object-data.service';
 import { AuthorizationDataService } from '../../../core/data/feature-authorization/authorization-data.service';
 import { FeatureID } from '../../../core/data/feature-authorization/feature-id';
@@ -405,7 +405,7 @@ export class GroupFormComponent implements OnInit, OnDestroy {
    */
   @HostListener('window:beforeunload')
   ngOnDestroy(): void {
-    this.onCancel();
+    this.groupDataService.cancelEditGroup();
     this.subs.filter((sub) => hasValue(sub)).forEach((sub) => sub.unsubscribe());
   }
 
