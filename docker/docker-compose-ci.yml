@@ -60,16 +60,13 @@ services:
     - pgdata:/pgdata
   # DSpace Solr container
   dspacesolr:
-<<<<<<< HEAD
     image: dspace/dspace-solr
-=======
     container_name: dspacesolr
     # Uses official Solr image at https://hub.docker.com/_/solr/
     image: solr:8.8
     # Needs main 'dspace' container to start first to guarantee access to solr_configs
     depends_on:
     - dspace
->>>>>>> 8cade4fbf5635ff7fc2cce6e126ba008ebf30692
     networks:
       dspacenet:
     ports:
