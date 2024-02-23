@@ -14,7 +14,7 @@ networks:
   dspacenet:
 services:
   dspace-angular:
-    container_name: dspace-angular
+    container_name: dspace-angular_${COMPOSE_PROJECT_NAME}
     environment:
       DSPACE_UI_SSL: 'false'
       DSPACE_UI_HOST: dspace-angular
@@ -24,7 +24,8 @@ services:
       DSPACE_REST_HOST: localhost
       DSPACE_REST_PORT: 8080
       DSPACE_REST_NAMESPACE: /server
-    image: dspace/dspace-angular:${DSPACE_VER:-latest}
+      NODE_ENV: development
+    image: dspace:dspace-angular_${COMPOSE_PROJECT_NAME}_latest
     build:
       context: ..
       dockerfile: Dockerfile
@@ -37,3 +38,9 @@ services:
       target: 9876
     stdin_open: true
     tty: true
+    volumes:
+      - ../:/app/
+      - node_modules:/app/node_modules
+ 
+volumes:
+  node_modules:
