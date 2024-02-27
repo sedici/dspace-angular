@@ -15,10 +15,10 @@ import {
 @listableObjectComponent(Item, ViewMode.StandalonePage, Context.Any, 'custom')
 @Component({
   selector: 'ds-untyped-item',
-  // styleUrls: ['./untyped-item.component.scss'],
-  styleUrls: ['../../../../../../../app/item-page/simple/item-types/untyped-item/untyped-item.component.scss'],
-  // templateUrl: './untyped-item.component.html',
-  templateUrl: '../../../../../../../app/item-page/simple/item-types/untyped-item/untyped-item.component.html',
+  styleUrls: ['./untyped-item.component.scss'],
+  // styleUrls: ['../../../../../../../app/item-page/simple/item-types/untyped-item/untyped-item.component.scss'],
+  templateUrl: './untyped-item.component.html',
+  // templateUrl: '../../../../../../../app/item-page/simple/item-types/untyped-item/untyped-item.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UntypedItemComponent extends BaseComponent {

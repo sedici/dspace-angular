@@ -1,0 +1,238 @@
+<ds-themed-results-back-button *ngIf="showBackButton | async" [back]="back"></ds-themed-results-back-button>
+<div class="row" *ngIf="iiifEnabled">
+  <div class="col-12">
+    <ds-mirador-viewer id="iiif-viewer"
+                   [object]="object"
+                   [searchable]="iiifSearchEnabled"
+                   [query]="iiifQuery$ | async">
+    </ds-mirador-viewer>
+  </div>
+</div>
+
+<h4 class="mr-auto font-weight-bold">
+  <ds-metadata-values [mdValues]="object?.allMetadata(['dc.title'])"></ds-metadata-values>
+</h4>
+<h5 class="mr-auto">
+  <ds-metadata-values [mdValues]="object?.allMetadata(['sedici.title.subtitle'])"></ds-metadata-values>
+  <ds-metadata-values 
+    [mdValues]="object?.allMetadata(['sedici.relation.bookTitle'])"
+    [label]="'Pertenece al libro: '">
+  </ds-metadata-values>
+</h5>
+<div class="row">
+  <div class="col-xs-12 col-md-4">
+    <ng-container *ngIf="!(mediaViewer.image || mediaViewer.video)">
+      <ds-metadata-field-wrapper [hideIfNoTextContent]="false">
+        <ds-themed-thumbnail [thumbnail]="object?.thumbnail | async"></ds-themed-thumbnail>
+      </ds-metadata-field-wrapper>
+    </ng-container>
+    <div *ngIf="mediaViewer.image || mediaViewer.video" class="mb-2">
+      <ds-themed-media-viewer [item]="object"></ds-themed-media-viewer>
+    </div>
+    <ds-themed-item-page-file-section [item]="object"></ds-themed-item-page-file-section>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['sedici.description.note']"
+      [label]="'Notas'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['sedici.subtype']"
+      [label]="'Tipo de documento'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['sedici.relation.ciclo']"
+      [label]="'Ciclo'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['dc.title.alternative']"
+      [label]="'Título alternativo'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['thesis.degree.name']"
+      [label]="'Grado alcanzado'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['thesis.degree.grantor']"
+      [label]="'Institución otorgante'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['sedici.contributor.compiler']"
+      [label]="'Compiladores'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['sedici.contributor.translator']"
+      [label]="'Traductores'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['sedici.contributor.juror']"
+      [label]="'Jurados'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['sedici.contributor.inscriber']"
+      [label]="'Firmantes'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['sedici.contributor.colaborator']"
+      [label]="'Colaboradores'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['sedici.identifier.expediente']"
+      [label]="'N° de expediente'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['dc.language']"
+      [label]="'Idioma del documento'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['sedici.relation.journalTitle', 'sedici.relation.journalVolumeAndIssue']"
+      [separator]="'; '"
+      [label]="'Revista'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['sedici.relation.event']"
+      [label]="'Evento'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['mods.originInfo.place']"
+      [label]="'Institución de origen'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['mods.location']"
+      [label]="'Ubicación física'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['dc.format.medium']"
+      [label]="'Materiales/Técnicas'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['dc.audience']"
+      [label]="'Contexto de uso'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['dc.coverage.spatial']"
+      [label]="'Alcance geográfico'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['dc.coverage.temporal']"
+      [label]="'Alcance temporal'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['dc.format']"
+      [separator]="'; '"
+      [label]="'Descripción física'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['sedici.subject.ford']"
+      [label]="'Clasificación FORD'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['sedici.identifier.other']"
+      [label]="'Otros identificadores'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['sedici.identifier.issn']"
+      [label]="'ISSN'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['sedici.identifier.isbn']"
+      [label]="'ISBN'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['dc.format.extent']"
+      [label]="'Páginas'">
+    </ds-generic-item-page-field>
+
+    <!-- sedici.date.exposure -->
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['sedici.date.exposure']"
+      [label]="'Fecha de exposición'">
+    </ds-generic-item-page-field>
+    <!-- dc.date.issued -->
+    <ds-item-page-date-field [item]="object"></ds-item-page-date-field>
+
+    <!-- Ejemplo de componente NO personalizado para listar campos -->
+    <ds-themed-metadata-representation-list class="ds-item-page-mixed-author-field"
+      [parentItem]="object"
+      [itemType]="'Person'"
+      [metadataFields]="['sedici.creator.person', 'sedici.creator.corporate']"
+      [label]="'relationships.isAuthorOf' | translate">
+    </ds-themed-metadata-representation-list>
+
+    <!-- Ejemplo de componente personalizado para usar algún campo en específico -->
+    <!-- <ds-item-page-author-field [item]="object"></ds-item-page-author-field> -->
+
+    <ds-themed-metadata-representation-list class="ds-item-page-mixed-author-field"
+      [parentItem]="object"
+      [itemType]="'Person'"
+      [metadataFields]="['sedici.contributor.director']"
+      [label]="'Directores'">
+    </ds-themed-metadata-representation-list>
+    <ds-themed-metadata-representation-list class="ds-item-page-mixed-author-field"
+      [parentItem]="object"
+      [itemType]="'Person'"
+      [metadataFields]="['sedici.contributor.codirector']"
+      [label]="'Co-directores'">
+    </ds-themed-metadata-representation-list>
+    <ds-themed-metadata-representation-list class="ds-item-page-mixed-author-field"
+      [parentItem]="object"
+      [itemType]="'Person'"
+      [metadataFields]="['sedici.creator.interprete']"
+      [label]="'Intérpretes'">
+    </ds-themed-metadata-representation-list>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['dc.publisher']"
+      [label]="'Editorial'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['sedici.contributor.editor']"
+      [label]="'Editores'">
+    </ds-generic-item-page-field>
+  </div>
+  <div class="col-xs-12 col-md-6">
+    <ds-item-page-abstract-field [item]="object"></ds-item-page-abstract-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['dc.description']"
+      [label]="'item.page.description'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['dc.subject']"
+      [separator]="', '"
+      [label]="'item.page.subject'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['sedici.subject.materias']"
+      [separator]="', '"
+      [label]="'Materias'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['dc.relation.ispartof']"
+      [label]="'item.preview.dc.relation.ispartof'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['dc.identifier.citation']"
+      [label]="'item.page.citation'">
+    </ds-generic-item-page-field>
+    <ds-item-page-uri-field [item]="object"
+      [fields]="['dc.identifier.uri']"
+      [label]="'item.page.uri'">
+    </ds-item-page-uri-field>
+    <ds-item-page-uri-field [item]="object"
+      [fields]="['sedici.identifier.uri']"
+      [label]="'Enlaces externos'">
+    </ds-item-page-uri-field>
+    <ds-item-page-uri-field [item]="object"
+      [fields]="['sedici.relation.isRelatedWith']"
+      [label]="'Documentos relacionados'">
+    </ds-item-page-uri-field>
+    <ds-item-page-collections [item]="object"></ds-item-page-collections>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['sedici.rights.license']"
+      [label]="'Licencia'">
+    </ds-generic-item-page-field>
+    <div>
+      <a class="btn btn-outline-primary" [routerLink]="[itemPageRoute + '/full']" role="button">
+        <i class="fas fa-info-circle"></i> {{"item.page.link.full" | translate}}
+      </a>
+    </div>
+  </div>
+</div>
+
