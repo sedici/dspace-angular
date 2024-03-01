@@ -5431,6 +5431,9 @@
   // "search.search-form.placeholder": "Search the repository ...",
   "search.search-form.placeholder": "Buscar en el repositorio ...",
 
+  // "search.filters.applied.f.keywords": "Keyword",
+  "search.filters.applied.f.keywords": "Palabra clave",
+
   // "search.filters.applied.f.author": "Author",
   "search.filters.applied.f.author": "Autor",
 
@@ -5598,6 +5601,15 @@
 
   // "search.filters.filter.jobTitle.label": "Search job title",
   "search.filters.filter.jobTitle.label": "Buscar por puesto de trabajo",
+
+  // "search.filters.filter.keywords.head": "Keywords",
+  "search.filters.filter.keywords.head": "Palabras clave",
+
+  // "search.filters.filter.keywords.placeholder": "Keywords",
+  "search.filters.filter.keywords.placeholder": "Palabras clave",
+
+  // "search.filters.filter.keywords.label": "Search keywords",
+  "search.filters.filter.keywords.label": "Buscar por palabras clave",
 
   // "search.filters.filter.knowsLanguage.head": "Known language",
   "search.filters.filter.knowsLanguage.head": "Idioma conocido",

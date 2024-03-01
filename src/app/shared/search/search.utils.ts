@@ -16,9 +16,9 @@ export function getFacetValueForType(facetValue: FacetValue, searchFilterConfig:
       return decodeURIComponent(values[1]);
     }
   }
-  if (facetValue.authorityKey) {
-    return addOperatorToFilterValue(facetValue.authorityKey, 'authority');
-  }
+  // if (facetValue.authorityKey) {
+  //   return addOperatorToFilterValue(facetValue.authorityKey, 'authority');
+  // }
 
   return addOperatorToFilterValue(facetValue.value, 'equals');
 }
