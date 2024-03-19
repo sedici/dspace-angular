@@ -7,7 +7,7 @@ import { CommunityPageSubCollectionListComponent as BaseComponent } from '../../
   // styleUrls: ['./community-page-sub-collection-list.component.scss'],
   styleUrls: ['../../../../../app/community-page/sections/sub-com-col-section/sub-collection-list/community-page-sub-collection-list.component.scss'],
   // templateUrl: './community-page-sub-collection-list.component.html',
-  templateUrl: '../../../../../app/community-page/sections/sub-com-col-section/sub-collection-list/community-page-sub-collection-list.component.html',
+  templateUrl: '../../../../../../../app/community-page/sections/sub-com-col-section/sub-collection-list/community-page-sub-collection-list.component.html',
 })
 export class CommunityPageSubCollectionListComponent extends BaseComponent {
 }
