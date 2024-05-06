@@ -51,6 +51,12 @@
               (click)="deposit($event)">
         <span><i class="fas fa-plus"></i> {{'submission.general.deposit' | translate}}</span>
       </button>
+      <button *ngIf="(showDepositAndDiscard | async) !== true"
+          ngbTooltip="{{ 'accept-and-select-collection-help' | translate }}"
+          class="selectCollectionAction btn btn-primary"
+          (click)="redirect()">
+        {{'accept-and-select-collection' | translate}}
+      </button>
     </div>
   </div>
 </div>

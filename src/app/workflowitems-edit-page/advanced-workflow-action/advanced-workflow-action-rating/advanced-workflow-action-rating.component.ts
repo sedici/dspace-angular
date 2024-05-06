@@ -23,7 +23,7 @@ import { VarDirective } from '../../../shared/utils/var.directive';
 import { AdvancedWorkflowActionComponent } from '../advanced-workflow-action/advanced-workflow-action.component';
 
 export const ADVANCED_WORKFLOW_TASK_OPTION_RATING = 'submit_score';
-export const ADVANCED_WORKFLOW_ACTION_RATING = 'scorereviewaction';
+export const ADVANCED_WORKFLOW_ACTION_RATING = 'editaction';
 
 /**
  * The page on which reviewers can rate submitted items.
