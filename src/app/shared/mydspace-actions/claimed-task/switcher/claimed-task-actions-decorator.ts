@@ -1,4 +1,14 @@
 import {
+  ADVANCED_WORKFLOW_TASK_OPTION_SELECT_COLLECTION,
+  WorkflowSelectCollectionComponent,
+} from './../../../../workflowitems-edit-page/advanced-workflow-action/sedici-advanced-workflow-select-collection/workflow-select-collection.component';
+import { ClaimedTaskActionsSelectCollectionComponent } from './../sedici-select-collection/claimed-task-actions-select-collection.component';
+import {
+  ADVANCED_WORKFLOW_TASK_OPTION_APPROVE_AND_SELECT,
+  WorkflowApproveAndSelectComponent,
+  } from './../../../../workflowitems-edit-page/advanced-workflow-action/sedici-advanced-approve-and-select/advanced-approve-and-select.component';
+import { ClaimedTaskActionsApproveAndSelectComponent } from './../sedici-approve-and-select/claimed-task-actions-approve-and-select.component';
+  import {
   ADVANCED_WORKFLOW_TASK_OPTION_RATING,
   AdvancedWorkflowActionRatingComponent,
 } from '../../../../workflowitems-edit-page/advanced-workflow-action/advanced-workflow-action-rating/advanced-workflow-action-rating.component';
@@ -37,11 +47,15 @@ export type WorkflowTaskOptionComponent =
   typeof AdvancedClaimedTaskActionRatingComponent |
   typeof ClaimedTaskActionsRejectComponent |
   typeof ClaimedTaskActionsReturnToPoolComponent |
-  typeof AdvancedClaimedTaskActionSelectReviewerComponent;
+  typeof AdvancedClaimedTaskActionSelectReviewerComponent|
+  typeof ClaimedTaskActionsSelectCollectionComponent |
+  typeof ClaimedTaskActionsApproveAndSelectComponent;
 
 export type AdvancedWorkflowTaskOptionComponent =
   typeof AdvancedWorkflowActionRatingComponent |
-  typeof AdvancedWorkflowActionSelectReviewerComponent;
+  typeof AdvancedWorkflowActionSelectReviewerComponent |
+  typeof WorkflowApproveAndSelectComponent |
+  typeof WorkflowSelectCollectionComponent;
 
 export const WORKFLOW_TASK_OPTION_DECORATOR_MAP = new Map<string, WorkflowTaskOptionComponent>([
   [WORKFLOW_TASK_OPTION_APPROVE, ClaimedTaskActionsApproveComponent],
@@ -51,11 +65,15 @@ export const WORKFLOW_TASK_OPTION_DECORATOR_MAP = new Map<string, WorkflowTaskOp
   [WORKFLOW_TASK_OPTION_REJECT, ClaimedTaskActionsRejectComponent],
   [WORKFLOW_TASK_OPTION_RETURN_TO_POOL, ClaimedTaskActionsReturnToPoolComponent],
   [ADVANCED_WORKFLOW_TASK_OPTION_SELECT_REVIEWER, AdvancedClaimedTaskActionSelectReviewerComponent],
+  [ADVANCED_WORKFLOW_TASK_OPTION_APPROVE_AND_SELECT, ClaimedTaskActionsApproveAndSelectComponent],
+  [ADVANCED_WORKFLOW_TASK_OPTION_SELECT_COLLECTION, ClaimedTaskActionsSelectCollectionComponent],
 ]);
 
 export const ADVANCED_WORKFLOW_TASK_OPTION_DECORATOR_MAP = new Map<string, AdvancedWorkflowTaskOptionComponent>([
   [ADVANCED_WORKFLOW_TASK_OPTION_RATING, AdvancedWorkflowActionRatingComponent],
   [ADVANCED_WORKFLOW_TASK_OPTION_SELECT_REVIEWER, AdvancedWorkflowActionSelectReviewerComponent],
+  [ADVANCED_WORKFLOW_TASK_OPTION_APPROVE_AND_SELECT, WorkflowApproveAndSelectComponent],
+  [ADVANCED_WORKFLOW_TASK_OPTION_SELECT_COLLECTION, WorkflowSelectCollectionComponent],
 ]);
 
 /**
