@@ -18,7 +18,7 @@ import { WorkflowItemDeleteComponent } from './workflow-item-delete/workflow-ite
 import { ThemedWorkflowItemSendBackComponent } from './workflow-item-send-back/themed-workflow-item-send-back.component';
 import { WorkflowItemSendBackComponent } from './workflow-item-send-back/workflow-item-send-back.component';
 import { WorkflowItemsEditPageRoutingModule } from './workflowitems-edit-page-routing.module';
-
+import { WorkflowSelectCollectionComponent } from './advanced-workflow-action/sedici-advanced-workflow-select-collection/workflow-select-collection.component';
 @NgModule({
   imports: [
     WorkflowItemsEditPageRoutingModule,
@@ -41,6 +41,7 @@ import { WorkflowItemsEditPageRoutingModule } from './workflowitems-edit-page-ro
     AdvancedWorkflowActionSelectReviewerComponent,
     AdvancedWorkflowActionPageComponent,
     ReviewersListComponent,
+    WorkflowSelectCollectionComponent,
   ],
 })
 /**

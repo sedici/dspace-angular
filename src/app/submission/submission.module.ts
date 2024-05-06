@@ -69,6 +69,7 @@ import {
 } from './submission.reducers';
 import { SubmissionSubmitComponent } from './submit/submission-submit.component';
 import { ThemedSubmissionSubmitComponent } from './submit/themed-submission-submit.component';
+import { MyDSpaceActionsModule } from '../shared/mydspace-actions/mydspace-actions.module';
 
 const ENTRY_COMPONENTS = [
   // put only entry components that use custom decorator
@@ -129,6 +130,7 @@ const DECLARATIONS = [
     NgbAccordionModule,
     UploadModule,
     NgOptimizedImage,
+    MyDSpaceActionsModule,
   ],
   declarations: DECLARATIONS,
   exports: [

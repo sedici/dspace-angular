@@ -8263,6 +8263,21 @@
   // "access-control-option-end-date-note": "Select the date until which the related access condition is applied",
   "access-control-option-end-date-note": "Escoja la fecha hasta la cuál se aplicarán las condiciones de acceso especificadas",
 
+  "submission.workflow.tasks.claimed.select-collection": "Seleccionar colección",
+
+  "submission.workflow.generic.approve-and-select-help": "Aprueba la publicacion y pasa a la seleccion de coleccion",
+
+  "submission.workflow.generic.approve-and-select": "Aprobar y elegir coleccion",
+
+  "accept-and-select-collection-help": "Aprueba la publicacion y pasa a la seleccion de coleccion",
+
+  "accept-and-select-collection": "Aprobar y elegir coleccion",
+
+  "publish-and-workflow": "Publicar",
+
+  "workflow-item.editaction.header": "Aprobando...",
+
+  "workflow-item.selectCollection.header": "Elegir Coleccion",
 
 
 }

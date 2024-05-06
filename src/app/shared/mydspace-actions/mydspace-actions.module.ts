@@ -15,6 +15,8 @@ import { ClaimedTaskActionsEditMetadataComponent } from './claimed-task/edit-met
 import { ClaimedTaskActionsRejectComponent } from './claimed-task/reject/claimed-task-actions-reject.component';
 import { ClaimedTaskActionsReturnToPoolComponent } from './claimed-task/return-to-pool/claimed-task-actions-return-to-pool.component';
 import { ClaimedTaskActionsLoaderComponent } from './claimed-task/switcher/claimed-task-actions-loader.component';
+import { ClaimedTaskActionsSelectCollectionComponent } from './claimed-task/sedici-select-collection/claimed-task-actions-select-collection.component';
+import { ClaimedTaskActionsApproveAndSelectComponent } from './claimed-task/sedici-approve-and-select/claimed-task-actions-approve-and-select.component';
 import { ItemActionsComponent } from './item/item-actions.component';
 import { PoolTaskActionsComponent } from './pool-task/pool-task-actions.component';
 import { WorkflowitemActionsComponent } from './workflowitem/workflowitem-actions.component';
@@ -25,6 +27,8 @@ const ENTRY_COMPONENTS = [
   ClaimedTaskActionsRejectComponent,
   ClaimedTaskActionsReturnToPoolComponent,
   ClaimedTaskActionsEditMetadataComponent,
+  ClaimedTaskActionsSelectCollectionComponent,
+  ClaimedTaskActionsApproveAndSelectComponent,
 ];
 
 const DECLARATIONS = [
