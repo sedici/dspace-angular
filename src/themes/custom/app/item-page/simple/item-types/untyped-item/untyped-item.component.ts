@@ -30,6 +30,11 @@ import { listableObjectComponent } from '../../../../../../../app/shared/object-
 import { ThemedResultsBackButtonComponent } from '../../../../../../../app/shared/results-back-button/themed-results-back-button.component';
 import { ThemedThumbnailComponent } from '../../../../../../../app/thumbnail/themed-thumbnail.component';
 import { MetadataValuesComponent } from 'src/app/item-page/field-components/metadata-values/metadata-values.component';
+import { MetadataRepresentationListComponent } from '../../metadata-representation-list/metadata-representation-list.component';
+import { FileSectionComponent } from '../../field-components/file-section/file-section.component';
+import { MediaViewerComponent } from '../../../media-viewer/media-viewer.component';
+import { ThumbnailComponent } from 'src/themes/custom/app/thumbnail/thumbnail.component';
+import { ResultsBackButtonComponent } from 'src/themes/custom/app/shared/results-back-button/results-back-button.component';
 /**
  * Component that represents an untyped Item page
  */
@@ -62,6 +67,12 @@ import { MetadataValuesComponent } from 'src/app/item-page/field-components/meta
     AsyncPipe,
     TranslateModule,
     ItemPageCcLicenseFieldComponent,
+    MetadataValuesComponent,
+    MetadataRepresentationListComponent,
+    FileSectionComponent,
+    MediaViewerComponent,
+    ThumbnailComponent,
+    ResultsBackButtonComponent,
   ],
 })
 export class UntypedItemComponent extends BaseComponent {}
