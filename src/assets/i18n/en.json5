@@ -1682,6 +1682,10 @@
 
   "deny-request-copy.success": "Successfully denied item request",
 
+  "dropdown.clear": "Clear selection",
+
+  "dropdown.clear.tooltip": "Clear the selected option",
+
   "dso.name.untitled": "Untitled",
 
   "dso.name.unnamed": "Unnamed",
@@ -1721,6 +1725,12 @@
   "dso-selector.no-results": "No {{ type }} found",
 
   "dso-selector.placeholder": "Search for a {{ type }}",
+
+  "dso-selector.placeholder.type.community": "community",
+
+  "dso-selector.placeholder.type.collection": "collection",
+
+  "dso-selector.placeholder.type.item": "item",
 
   "dso-selector.select.collection.head": "Select a collection",
 
@@ -3836,6 +3846,8 @@
 
   "process.overview.delete.header": "Delete processes",
 
+  "process.overview.unknown.user": "Unknown",
+
   "process.bulk.delete.error.head": "Error on deleteing process",
 
   "process.bulk.delete.error.body": "The process with ID {{processId}} could not be deleted. The remaining processes will continue being deleted. ",
@@ -4292,6 +4304,8 @@
 
   "search.filters.remove": "Remove filter of type {{ type }} with value {{ value }}",
 
+  "search.filters.applied.f.title": "Title",
+
   "search.filters.applied.f.author": "Author",
 
   "search.filters.applied.f.dateIssued.max": "End date",
@@ -4305,6 +4319,10 @@
   "search.filters.applied.f.entityType": "Item Type",
 
   "search.filters.applied.f.has_content_in_original_bundle": "Has files",
+
+  "search.filters.applied.f.original_bundle_filenames": "File name",
+
+  "search.filters.applied.f.original_bundle_descriptions": "File description",
 
   "search.filters.applied.f.itemtype": "Type",
 
@@ -4323,6 +4341,26 @@
   "search.filters.applied.f.supervisedBy": "Supervised by",
 
   "search.filters.applied.f.withdrawn": "Withdrawn",
+
+  "search.filters.applied.operator.equals": "",
+
+  "search.filters.applied.operator.notequals": " not equals",
+
+  "search.filters.applied.operator.authority": "",
+
+  "search.filters.applied.operator.notauthority": " not authority",
+
+  "search.filters.applied.operator.contains": " contains",
+
+  "search.filters.applied.operator.notcontains": " not contains",
+
+  "search.filters.applied.operator.query": "",
+
+  "search.filters.filter.title.head": "Title",
+
+  "search.filters.filter.title.placeholder": "Title",
+
+  "search.filters.filter.title.label": "Search Title",
 
   "search.filters.filter.author.head": "Author",
 
@@ -4391,6 +4429,18 @@
   "search.filters.filter.expand": "Expand filter",
 
   "search.filters.filter.has_content_in_original_bundle.head": "Has files",
+
+  "search.filters.filter.original_bundle_filenames.head": "File name",
+
+  "search.filters.filter.original_bundle_filenames.placeholder": "File name",
+
+  "search.filters.filter.original_bundle_filenames.label": "Search File name",
+
+  "search.filters.filter.original_bundle_descriptions.head": "File description",
+
+  "search.filters.filter.original_bundle_descriptions.placeholder": "File description",
+
+  "search.filters.filter.original_bundle_descriptions.label": "Search File description",
 
   "search.filters.filter.itemtype.head": "Type",
 
@@ -4514,6 +4564,20 @@
 
   "search.filters.search.submit": "Submit",
 
+  "search.filters.operator.equals.text": "Equals",
+
+  "search.filters.operator.notequals.text": "Not Equals",
+
+  "search.filters.operator.authority.text": "Authority",
+
+  "search.filters.operator.notauthority.text": "Not Authority",
+
+  "search.filters.operator.contains.text": "Contains",
+
+  "search.filters.operator.notcontains.text": "Not Contains",
+
+  "search.filters.operator.query.text": "Query",
+
   "search.form.search": "Search",
 
   "search.form.search_dspace": "All repository",
@@ -4547,6 +4611,16 @@
   "search.sidebar.settings.rpp": "Results per page",
 
   "search.sidebar.settings.sort-by": "Sort By",
+
+  "search.sidebar.advanced-search.title": "Advanced Search",
+
+  "search.sidebar.advanced-search.filter-by": "Filter by",
+
+  "search.sidebar.advanced-search.filters": "Filters",
+
+  "search.sidebar.advanced-search.operators": "Operators",
+
+  "search.sidebar.advanced-search.add": "Add",
 
   "search.sidebar.settings.title": "Settings",
 
@@ -4714,7 +4788,11 @@
 
   "submission.import-external.source.sherpaPublisher": "SHERPA Publishers",
 
-  "submission.import-external.source.openAIREFunding": "Funding OpenAIRE API",
+  "submission.import-external.source.openaire": "OpenAIRE Authors",
+
+  "submission.import-external.source.openaireTitle": "OpenAIRE Titles",
+
+  "submission.import-external.source.openaireFunding": "OpenAIRE Funding",
 
   "submission.import-external.source.orcid": "ORCID",
 
@@ -4786,8 +4864,6 @@
 
   "submission.sections.describe.relationship-lookup.external-source.import-modal.isProjectOfPublication.title": "Project",
 
-  "submission.sections.describe.relationship-lookup.external-source.import-modal.head.openAIREFunding": "Funding OpenAIRE API",
-
   "submission.sections.describe.relationship-lookup.external-source.import-modal.isAuthorOfPublication.title": "Import Remote Author",
 
   "submission.sections.describe.relationship-lookup.external-source.import-modal.isAuthorOfPublication.added.local-entity": "Successfully added local author to the selection",
@@ -4809,6 +4885,12 @@
   "submission.sections.describe.relationship-lookup.external-source.import-modal.head.lcname": "Importing from LC Name",
 
   "submission.sections.describe.relationship-lookup.external-source.import-modal.head.orcid": "Importing from ORCID",
+
+  "submission.sections.describe.relationship-lookup.external-source.import-modal.head.openaire": "Importing from OpenAIRE Authors",
+
+  "submission.sections.describe.relationship-lookup.external-source.import-modal.head.openaireTitle": "Importing from OpenAIRE Titles",
+
+  "submission.sections.describe.relationship-lookup.external-source.import-modal.head.openaireFunding": "Importing from OpenAIRE Funding",
 
   "submission.sections.describe.relationship-lookup.external-source.import-modal.head.sherpaJournal": "Importing from Sherpa Journal",
 
@@ -4912,7 +4994,11 @@
 
   "submission.sections.describe.relationship-lookup.search-tab.tab-title.scopus": "Scopus ({{ count }})",
 
-  "submission.sections.describe.relationship-lookup.search-tab.tab-title.openaireFunding": "Funding OpenAIRE ({{ count }})",
+  "submission.sections.describe.relationship-lookup.search-tab.tab-title.openaire": "OpenAIRE Authors ({{ count }})",
+
+  "submission.sections.describe.relationship-lookup.search-tab.tab-title.openaireTitle": "OpenAIRE Titles ({{ count }})",
+
+  "submission.sections.describe.relationship-lookup.search-tab.tab-title.openaireFunding": "OpenAIRE Funding ({{ count }})",
 
   "submission.sections.describe.relationship-lookup.search-tab.tab-title.sherpaJournalIssn": "Sherpa Journals by ISSN ({{ count }})",
 
@@ -4922,8 +5008,6 @@
 
   "submission.sections.describe.relationship-lookup.search-tab.tab-title.isChildOrgUnitOf": "Search for Organizational Units",
 
-  "submission.sections.describe.relationship-lookup.search-tab.tab-title.openAIREFunding": "Funding OpenAIRE API",
-
   "submission.sections.describe.relationship-lookup.search-tab.tab-title.isProjectOfPublication": "Projects",
 
   "submission.sections.describe.relationship-lookup.search-tab.tab-title.isFundingAgencyOfProject": "Funder of the Project",
@@ -4931,8 +5015,6 @@
   "submission.sections.describe.relationship-lookup.search-tab.tab-title.isPublicationOfAuthor": "Publication of the Author",
 
   "submission.sections.describe.relationship-lookup.search-tab.tab-title.isOrgUnitOfProject": "OrgUnit of the Project",
-
-  "submission.sections.describe.relationship-lookup.selection-tab.title.openAIREFunding": "Funding OpenAIRE API",
 
   "submission.sections.describe.relationship-lookup.selection-tab.title.isProjectOfPublication": "Project",
 
@@ -5027,6 +5109,12 @@
   "submission.sections.describe.relationship-lookup.selection-tab.title.orcid": "Search Results",
 
   "submission.sections.describe.relationship-lookup.selection-tab.title.orcidv2": "Search Results",
+
+  "submission.sections.describe.relationship-lookup.selection-tab.title.openaire": "Search Results",
+
+  "submission.sections.describe.relationship-lookup.selection-tab.title.openaireTitle": "Search Results",
+
+  "submission.sections.describe.relationship-lookup.selection-tab.title.openaireFundin": "Search Results",
 
   "submission.sections.describe.relationship-lookup.selection-tab.title.lcname": "Search Results",
 
@@ -6000,24 +6088,6 @@
 
   "admin.notifications.publicationclaim.page.title": "Publication Claim",
 
-  "filter.search.operator.placeholder": "Operator",
-
-  "search.filters.filter.entityType.text": "Item Type",
-
-  "search.filters.operator.equals.text": "Equals",
-
-  "search.filters.operator.notequals.text": "Not Equals",
-
-  "search.filters.operator.notcontains.text": "Not Contains",
-
-  "search.filters.operator.contains.text": "Contains",
-
-  "search.filters.filter.title.text": "Title",
-
-  "search.filters.applied.f.title": "Title",
-
-  "search.filters.filter.author.text": "Author",
-
   "coar-notify-support.title": "COAR Notify Protocol",
 
   "coar-notify-support-title.content": "Here, we fully support the COAR Notify protocol, which is designed to enhance the communication between repositories. To learn more about the COAR Notify protocol, visit the <a href=\\\"https://notify.coar-repositories.org/\\\">COAR Notify website</a>.",
@@ -6311,14 +6381,6 @@
   "type-equals-dataset_condition.label": "Type equals Dataset",
 
   "type-equals-journal-article_condition.label": "Type equals Journal Article",
-
-  "search.filters.filter.subject.text": "Subject",
-
-  "search.advanced.filters.head": "Advanced Search",
-
-  "filter.search.text.placeholder": "Search text",
-
-  "advancesearch.form.submit": "Add",
 
   "ldn.no-filter.label": "None",
 
@@ -6653,4 +6715,8 @@
   "search.filters.filter.notifyEndorsement.placeholder": "Notify Endorsement",
 
   "search.filters.filter.notifyEndorsement.label": "Search Notify Endorsement",
+
+  "item.page.cc.license.title": "Creative Commons license",
+
+  "item.page.cc.license.disclaimer": "Except where otherwised noted, this item's license is described as",
 }

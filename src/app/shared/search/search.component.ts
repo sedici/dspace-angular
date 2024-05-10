@@ -82,7 +82,7 @@ import { ThemedSearchSidebarComponent } from './search-sidebar/themed-search-sid
 import { SearchConfigurationOption } from './search-switch-configuration/search-configuration-option.model';
 
 @Component({
-  selector: 'ds-search',
+  selector: 'ds-base-search',
   styleUrls: ['./search.component.scss'],
   templateUrl: './search.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -356,7 +356,7 @@ export class SearchComponent implements OnDestroy, OnInit {
     }
 
     this.currentScope$ = this.routeService.getQueryParameterValue('scope').pipe(
-      map((routeValue: string) => hasValue(routeValue) ? routeValue : this.scope),
+      map((routeValue: string) => hasValue(routeValue) ? routeValue : this.scope ?? ''),
     );
 
     this.isSidebarCollapsed$ = this.isSidebarCollapsed();
@@ -477,7 +477,6 @@ export class SearchComponent implements OnDestroy, OnInit {
    * @private
    */
   private retrieveFilters(searchOptions: PaginatedSearchOptions) {
-    this.filtersRD$.next(null);
     this.searchConfigService.getConfig(searchOptions.scope, searchOptions.configuration).pipe(
       getFirstCompletedRemoteData(),
     ).subscribe((filtersRD: RemoteData<SearchFilterConfig[]>) => {
