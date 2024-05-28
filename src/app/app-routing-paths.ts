@@ -1,3 +1,4 @@
+import { Observable, from } from 'rxjs';
 import { getCollectionPageRoute } from './collection-page/collection-page-routing-paths';
 import { getCommunityPageRoute } from './community-page/community-page-routing-paths';
 import { Collection } from './core/shared/collection.model';
@@ -20,6 +21,12 @@ export const LEGACY_BITSTREAM_MODULE_PATH = 'bitstream';
 
 export function getBitstreamModuleRoute() {
   return `/${BITSTREAM_MODULE_PATH}`;
+}
+
+export function getBitstreamRoute(item, bitstream): Observable<string> {
+  return from(fetch(bitstream._links.self.href)
+    .then(response => response.json())
+    .then(data => `/${LEGACY_BITSTREAM_MODULE_PATH}/handle/${item.handle}/${bitstream.name}?sequence=${data.sequenceId}`));
 }
 
 export function getBitstreamDownloadRoute(bitstream): string {

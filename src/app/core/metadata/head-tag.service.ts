@@ -93,7 +93,7 @@ const tagsInUseSelector =
 })
 export class HeadTagService {
 
-  private currentObject: BehaviorSubject<DSpaceObject> = new BehaviorSubject<DSpaceObject>(undefined);
+  protected currentObject: BehaviorSubject<DSpaceObject> = new BehaviorSubject<DSpaceObject>(undefined);
 
   /**
    * When generating the citation_pdf_url meta tag for Items with more than one Bitstream (and no primary Bitstream),
