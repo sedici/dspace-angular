@@ -1034,7 +1034,11 @@
 
   "browse.metadata.srsc.breadcrumbs": "Browse by Subject Category",
 
+  "browse.metadata.srsc.tree.descrption": "Select a subject to add as search filter",
+
   "browse.metadata.nsi.breadcrumbs": "Browse by Norwegian Science Index",
+
+  "browse.metadata.nsi.tree.descrption": "Select an index to add as search filter",
 
   "browse.metadata.title.breadcrumbs": "Browse by Title",
 
@@ -1432,7 +1436,11 @@
 
   "community.edit.logo.delete.title": "Delete logo",
 
+  "community-collection.edit.logo.delete.title": "Confirm deletion",
+
   "community.edit.logo.delete-undo.title": "Undo delete",
+
+  "community-collection.edit.logo.delete-undo.title": "Undo delete",
 
   "community.edit.logo.label": "Community logo",
 
@@ -1801,6 +1809,8 @@
   "confirmation-modal.delete-eperson.cancel": "Cancel",
 
   "confirmation-modal.delete-eperson.confirm": "Delete",
+
+  "confirmation-modal.delete-community-collection-logo.info": "Are you sure you want to delete the logo?",
 
   "confirmation-modal.delete-profile.header": "Delete Profile",
 
@@ -3552,7 +3562,7 @@
 
   "quality-assurance.event.action.ignore": "Ignore suggestion",
 
-  "quality-assurance.event.action.undo": "DELETE",
+  "quality-assurance.event.action.undo": "Delete",
 
   "quality-assurance.event.action.reject": "Reject suggestion",
 
@@ -4245,6 +4255,8 @@
   "resource-policies.form.description.label": "Description",
 
   "resource-policies.form.name.label": "Name",
+
+  "resource-policies.form.name.hint": "Max 30 characters",
 
   "resource-policies.form.policy-type.label": "Select the policy type",
 
@@ -6090,11 +6102,11 @@
 
   "coar-notify-support.title": "COAR Notify Protocol",
 
-  "coar-notify-support-title.content": "Here, we fully support the COAR Notify protocol, which is designed to enhance the communication between repositories. To learn more about the COAR Notify protocol, visit the <a href=\\\"https://notify.coar-repositories.org/\\\">COAR Notify website</a>.",
+  "coar-notify-support-title.content": "Here, we fully support the COAR Notify protocol, which is designed to enhance the communication between repositories. To learn more about the COAR Notify protocol, visit the <a href=\"https://notify.coar-repositories.org/\" rel=\"noopener noreferrer\">COAR Notify website</a>.",
 
   "coar-notify-support.ldn-inbox.title": "LDN InBox",
 
-  "coar-notify-support.ldn-inbox.content": "For your convenience, our LDN (Linked Data Notifications) InBox is easily accessible at {ldnInboxUrl}. The LDN InBox enables seamless communication and data exchange, ensuring efficient and effective collaboration.",
+  "coar-notify-support.ldn-inbox.content": "For your convenience, our LDN (Linked Data Notifications) InBox is easily accessible at {{ ldnInboxUrl }}. The LDN InBox enables seamless communication and data exchange, ensuring efficient and effective collaboration.",
 
   "coar-notify-support.message-moderation.title": "Message Moderation",
 
