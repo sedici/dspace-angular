@@ -392,7 +392,7 @@ export class HeadTagSEDICIService extends HeadTagService {
   }
 
   protected setFormatTags(): void {
-    this.setMetaTags('DC.format', ['dc.format']);
+    this.setMetaTags('DC.format', ['dc.format', 'dc.format.medium']);
   }
 
   protected setExtentTags(): void {
