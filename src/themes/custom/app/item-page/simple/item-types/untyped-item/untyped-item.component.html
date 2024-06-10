@@ -224,10 +224,8 @@
       [label]="'Documentos relacionados'">
     </ds-item-page-uri-field>
     <ds-item-page-collections [item]="object"></ds-item-page-collections>
-    <ds-generic-item-page-field [item]="object"
-      [fields]="['sedici.rights.license']"
-      [label]="'Licencia'">
-    </ds-generic-item-page-field>
+    <ds-item-page-cc-license-field [item]="object" [variant]="'full'">
+    </ds-item-page-cc-license-field>
     <div>
       <a class="btn btn-outline-primary" [routerLink]="[itemPageRoute + '/full']" role="button">
         <i class="fas fa-info-circle"></i> {{"item.page.link.full" | translate}}

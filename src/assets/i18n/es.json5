@@ -8266,6 +8266,10 @@
   // "access-control-option-end-date-note": "Select the date until which the related access condition is applied",
   "access-control-option-end-date-note": "Escoja la fecha hasta la cuál se aplicarán las condiciones de acceso especificadas",
 
+  // "item.page.cc.license.title": "Creative Commons license",
+  "item.page.cc.license.title": "Licencia Creative Commons",
 
+  // "item.page.cc.license.disclaimer": "Except where otherwised noted, this item's license is described as",
+  "item.page.cc.license.disclaimer": "Excepto donde se diga explícitamente, este item se publica bajo la siguiente licencia",
 
 }
