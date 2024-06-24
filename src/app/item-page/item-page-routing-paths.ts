@@ -51,3 +51,4 @@ export const ITEM_EDIT_VERSIONHISTORY_PATH = 'versionhistory';
 export const ITEM_VERSION_PATH = 'version';
 export const UPLOAD_BITSTREAM_PATH = 'bitstreams/new';
 export const ORCID_PATH = 'orcid';
+export const ITEM_EDIT_LIKE_SUBMISSION = 'item-edit'

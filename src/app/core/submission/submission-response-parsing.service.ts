@@ -18,6 +18,7 @@ import { RawRestResponse } from '../dspace-rest/raw-rest-response.model';
 import { SubmissionObject } from './models/submission-object.model';
 import { WorkflowItem } from './models/workflowitem.model';
 import { WorkspaceItem } from './models/workspaceitem.model';
+import { EditItem } from './models/edititem.model';
 
 /**
  * Export a function to check if object has same properties of FormFieldMetadataValueObject
@@ -135,7 +136,8 @@ export class SubmissionResponseParsingService extends BaseResponseParsingService
       // item = Object.assign({}, item);
       // In case data is an Instance of WorkspaceItem normalize field value of all the section of type form
       if (item instanceof WorkspaceItem
-        || item instanceof WorkflowItem) {
+        || item instanceof WorkflowItem
+        || item instanceof EditItem) {
         if (item.sections) {
           const precessedSection = Object.create({});
           // Iterate over all workspaceitem's sections

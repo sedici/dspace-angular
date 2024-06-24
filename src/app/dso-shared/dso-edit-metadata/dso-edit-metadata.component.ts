@@ -60,13 +60,14 @@ import { DsoEditMetadataHeadersComponent } from './dso-edit-metadata-headers/dso
 import { DsoEditMetadataValueComponent } from './dso-edit-metadata-value/dso-edit-metadata-value.component';
 import { DsoEditMetadataValueHeadersComponent } from './dso-edit-metadata-value-headers/dso-edit-metadata-value-headers.component';
 import { MetadataFieldSelectorComponent } from './metadata-field-selector/metadata-field-selector.component';
+import { EditItemMenuComponent } from '../../shared/edit-item-menu/edit-item-menu.component';
 
 @Component({
   selector: 'ds-base-dso-edit-metadata',
   styleUrls: ['./dso-edit-metadata.component.scss'],
   templateUrl: './dso-edit-metadata.component.html',
   standalone: true,
-  imports: [NgIf, DsoEditMetadataHeadersComponent, MetadataFieldSelectorComponent, DsoEditMetadataValueHeadersComponent, DsoEditMetadataValueComponent, NgFor, DsoEditMetadataFieldValuesComponent, AlertComponent, ThemedLoadingComponent, AsyncPipe, TranslateModule],
+  imports: [EditItemMenuComponent, NgIf, DsoEditMetadataHeadersComponent, MetadataFieldSelectorComponent, DsoEditMetadataValueHeadersComponent, DsoEditMetadataValueComponent, NgFor, DsoEditMetadataFieldValuesComponent, AlertComponent, ThemedLoadingComponent, AsyncPipe, TranslateModule],
 })
 /**
  * Component showing a table of all metadata on a DSpaceObject and options to modify them

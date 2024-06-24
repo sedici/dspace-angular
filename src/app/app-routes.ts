@@ -21,6 +21,7 @@ import {
   REGISTER_PATH,
   REQUEST_COPY_MODULE_PATH,
   WORKFLOW_ITEM_MODULE_PATH,
+  EDIT_ITEM_PATH,
 } from './app-routing-paths';
 import { COLLECTION_MODULE_PATH } from './collection-page/collection-page-routing-paths';
 import { COMMUNITY_MODULE_PATH } from './community-page/community-page-routing-paths';
@@ -257,6 +258,11 @@ export const APP_ROUTES: Route[] = [
         loadChildren: () => import('./subscriptions-page/subscriptions-page-routes')
           .then((m) => m.ROUTES),
         canActivate: [authenticatedGuard],
+      },
+      {
+        path: EDIT_ITEM_PATH,
+        loadChildren: () => import('./edit-item/edit-item-routing.module').then((m) => m.ROUTES),
+        canActivate: [EndUserAgreementCurrentUserGuard]
       },
       { path: '**', pathMatch: 'full', component: ThemedPageNotFoundComponent },
     ],

@@ -16,6 +16,7 @@ import { SubmissionObject } from './models/submission-object.model';
 import { SubmissionScopeType } from './submission-scope-type';
 import { WorkflowItemDataService } from './workflowitem-data.service';
 import { WorkspaceitemDataService } from './workspaceitem-data.service';
+import { EditItemDataService } from './edititem-data.service';
 
 /**
  * A service to retrieve submission objects (WorkspaceItem/WorkflowItem)
@@ -28,6 +29,7 @@ export class SubmissionObjectDataService {
   constructor(
     private workspaceitemDataService: WorkspaceitemDataService,
     private workflowItemDataService: WorkflowItemDataService,
+    private editItemDataService: EditItemDataService,
     private submissionService: SubmissionService,
     private halService: HALEndpointService,
   ) {
@@ -38,7 +40,17 @@ export class SubmissionObjectDataService {
    * @param id The identifier for the object
    */
   getHrefByID(id): Observable<string> {
-    const dataService: IdentifiableDataService<SubmissionObject> = this.submissionService.getSubmissionScope() === SubmissionScopeType.WorkspaceItem ? this.workspaceitemDataService : this.workflowItemDataService;
+    let dataService: IdentifiableDataService<SubmissionObject> = this.submissionService.getSubmissionScope() === SubmissionScopeType.WorkspaceItem ? this.workspaceitemDataService : this.workflowItemDataService;    switch (this.submissionService.getSubmissionScope()) {
+      case SubmissionScopeType.WorkspaceItem:
+        dataService = this.workspaceitemDataService;
+        break;
+      case SubmissionScopeType.WorkflowItem:
+        dataService = this.workflowItemDataService;
+        break;
+      case SubmissionScopeType.EditItem:
+        dataService = this.editItemDataService;
+        break;
+    }
 
     return this.halService.getEndpoint(dataService.getLinkPath()).pipe(
       map((endpoint: string) => dataService.getIDHref(endpoint, encodeURIComponent(id))));
@@ -61,7 +73,9 @@ export class SubmissionObjectDataService {
         return this.workspaceitemDataService.findById(id, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
       case SubmissionScopeType.WorkflowItem:
         return this.workflowItemDataService.findById(id, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
-      default: {
+        case SubmissionScopeType.EditItem:
+          return this.editItemDataService.findById(id, useCachedVersionIfAvailable, reRequestOnStale,...linksToFollow);
+        default: {
         const now = new Date().getTime();
         return observableOf(new RemoteData(
           now,
