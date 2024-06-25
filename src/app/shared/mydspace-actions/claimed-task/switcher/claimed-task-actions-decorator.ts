@@ -54,6 +54,9 @@ export type WorkflowTaskOptionComponent =
   typeof AdvancedClaimedTaskActionSelectReviewerComponent|
   typeof ClaimedTaskActionsSelectCollectionComponent |
   typeof ClaimedTaskActionsApproveAndSelectComponent;
+  typeof AdvancedClaimedTaskActionSelectReviewerComponent|
+  typeof ClaimedTaskActionsSelectCollectionComponent |
+  typeof ClaimedTaskActionsApproveAndSelectComponent;
 
 export type AdvancedWorkflowTaskOptionComponent =
   typeof AdvancedWorkflowActionRatingComponent |
@@ -69,6 +72,8 @@ export const WORKFLOW_TASK_OPTION_DECORATOR_MAP = new Map<string, WorkflowTaskOp
   [WORKFLOW_TASK_OPTION_REJECT, ClaimedTaskActionsRejectComponent],
   [WORKFLOW_TASK_OPTION_RETURN_TO_POOL, ClaimedTaskActionsReturnToPoolComponent],
   [ADVANCED_WORKFLOW_TASK_OPTION_SELECT_REVIEWER, AdvancedClaimedTaskActionSelectReviewerComponent],
+  [ADVANCED_WORKFLOW_TASK_OPTION_APPROVE_AND_SELECT, ClaimedTaskActionsApproveAndSelectComponent],
+  [ADVANCED_WORKFLOW_TASK_OPTION_SELECT_COLLECTION, ClaimedTaskActionsSelectCollectionComponent],
   [ADVANCED_WORKFLOW_TASK_OPTION_APPROVE_AND_SELECT, ClaimedTaskActionsApproveAndSelectComponent],
   [ADVANCED_WORKFLOW_TASK_OPTION_SELECT_COLLECTION, ClaimedTaskActionsSelectCollectionComponent],
 ]);
