@@ -54,9 +54,6 @@ export type WorkflowTaskOptionComponent =
   typeof AdvancedClaimedTaskActionSelectReviewerComponent|
   typeof ClaimedTaskActionsSelectCollectionComponent |
   typeof ClaimedTaskActionsApproveAndSelectComponent;
-  typeof AdvancedClaimedTaskActionSelectReviewerComponent|
-  typeof ClaimedTaskActionsSelectCollectionComponent |
-  typeof ClaimedTaskActionsApproveAndSelectComponent;
 
 export type AdvancedWorkflowTaskOptionComponent =
   typeof AdvancedWorkflowActionRatingComponent |
