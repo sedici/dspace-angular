@@ -71,8 +71,6 @@ export const WORKFLOW_TASK_OPTION_DECORATOR_MAP = new Map<string, WorkflowTaskOp
   [ADVANCED_WORKFLOW_TASK_OPTION_SELECT_REVIEWER, AdvancedClaimedTaskActionSelectReviewerComponent],
   [ADVANCED_WORKFLOW_TASK_OPTION_APPROVE_AND_SELECT, ClaimedTaskActionsApproveAndSelectComponent],
   [ADVANCED_WORKFLOW_TASK_OPTION_SELECT_COLLECTION, ClaimedTaskActionsSelectCollectionComponent],
-  [ADVANCED_WORKFLOW_TASK_OPTION_APPROVE_AND_SELECT, ClaimedTaskActionsApproveAndSelectComponent],
-  [ADVANCED_WORKFLOW_TASK_OPTION_SELECT_COLLECTION, ClaimedTaskActionsSelectCollectionComponent],
 ]);
 
 export const ADVANCED_WORKFLOW_TASK_OPTION_DECORATOR_MAP = new Map<string, AdvancedWorkflowTaskOptionComponent>([

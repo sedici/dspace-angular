@@ -4,7 +4,7 @@
       <div class="row">
           <div class="col-12">
             <div class="card mb-3">
-              <div class="card-header">{{'dso-selector.placeholder' | translate: { type: 'collection' } }}</div>
+              <div class="card-header">{{'dso-selector.placeholder' | translate: { type: 'dso-selector.placeholder.type.collection' | translate } }}}</div>
               <div class="card-body">
                 <ds-authorized-collection-selector [types]="COLLECTIONS"
                   (onSelect)="selectDso($event)">
