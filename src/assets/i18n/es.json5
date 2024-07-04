@@ -1062,6 +1062,21 @@
   // "admin.access-control.groups.form.return": "Back",
   "admin.access-control.groups.form.return": "Atrás",
 
+  // "admin.quality-assurance.breadcrumbs": "Quality Assurance",
+  "admin.quality-assurance.breadcrumbs": "Control de calidad",
+
+  // "admin.notifications.event.breadcrumbs": "Quality Assurance Suggestions",
+  "admin.notifications.event.breadcrumbs": "Sugerencias de control de calidad",
+
+  // "admin.notifications.event.page.title": "Quality Assurance Suggestions",
+  "admin.notifications.event.page.title": "Sugerencias de control de calidad",
+
+  // "admin.quality-assurance.page.title": "Quality Assurance",
+  "admin.quality-assurance.page.title": "Control de calidad",
+
+  // "admin.notifications.source.breadcrumbs": "Quality Assurance",
+  "admin.notifications.source.breadcrumbs": "Control de calidad",
+
   // "admin.access-control.groups.form.tooltip.editGroupPage": "On this page, you can modify the properties and members of a group. In the top section, you can edit the group name and description, unless this is an admin group for a collection or community, in which case the group name and description are auto-generated and cannot be edited. In the following sections, you can edit group membership. See [the wiki](https://wiki.lyrasis.org/display/DSDOC7x/Create+or+manage+a+user+group) for more details.",
   "admin.access-control.groups.form.tooltip.editGroupPage": "En esta página, puede modificar las propiedades y miembros de un grupo. En la sección superior, puede editar el nombre del grupo y la descripción, a menos que este sea un grupo de administración de una colección o comunidad, en cuyo caso el nombre y descripción del grupo fueron auto-generadas y no podrán ser editadas. En las secciones siguientes, puede editar la afiliación al grupo. Para más detalles ver [la wiki](https://wiki.lyrasis.org/display/DSDOC7x/Create+or+manage+a+user+group).",
 
@@ -1617,6 +1632,12 @@
   // "claimed-declined-task-search-result-list-element.title": "Declined, sent back to Review Manager's workflow",
   "claimed-declined-task-search-result-list-element.title": "Declinado, enviar de vuelta al Administrador de Revisión del flujo de trabajo",
 
+  // "collection.create.breadcrumbs": "Create collection",
+  "collection.create.breadcrumbs": "Crear colección",
+
+  // "collection.browse.logo": "Browse for a collection logo",
+  "collection.browse.logo": "Buscar un logotipo de colección",
+  
   // "collection.create.head": "Create a Collection",
   "collection.create.head": "Crear una colección",
 
@@ -1929,6 +1950,9 @@
   // "collection.page.news": "News",
   "collection.page.news": "Noticias",
 
+  // "collection.search.results.head": "Search Results",
+  "collection.search.results.head": "Resultados de la búsqueda",
+
   // "collection.select.confirm": "Confirm selected",
   "collection.select.confirm": "Confirmar seleccionado",
 
@@ -2024,6 +2048,21 @@
 
   // "communityList.showMore": "Show More",
   "communityList.showMore": "Mostrar más",
+
+  // "communityList.expand": "Expand {{ name }}",
+  "communityList.expand": "Expandir {{ name }}",
+
+  // "communityList.collapse": "Collapse {{ name }}",
+  "communityList.collapse": "Contraer {{ name }}",
+
+  // "community.browse.logo": "Browse for a community logo",
+  "community.browse.logo": "Buscar un logotipo de comunidad",
+
+  // "community.subcoms-cols.breadcrumbs": "Subcommunities and Collections",
+  "community.subcoms-cols.breadcrumbs": "Subcomunidades y colecciones",
+
+  // "community.create.breadcrumbs": "Create Community",
+  "community.create.breadcrumbs": "Crear comunidad",
 
   // "community.create.head": "Create a Community",
   "community.create.head": "Crear una comunidad",
@@ -2249,6 +2288,9 @@
 
   // "community.all-lists.head": "Subcommunities and Collections",
   "community.all-lists.head": "Subcomunidades y colecciones",
+
+  // "community.search.results.head": "Search Results",
+  "community.search.results.head": "Resultados de la búsqueda",
 
   // "community.sub-collection-list.head": "Collections in this Community",
   "community.sub-collection-list.head": "Colecciones de esta comunidad",
@@ -3155,6 +3197,12 @@
   // "item.alerts.withdrawn": "This item has been withdrawn",
   "item.alerts.withdrawn": "Este ítem ha sido retirado",
 
+  // "item.alerts.reinstate-request": "Request reinstate",
+  "item.alerts.reinstate-request": "Solicitar restablecimiento",
+
+  // "quality-assurance.event.table.person-who-requested": "Requested by",
+  "quality-assurance.event.table.person-who-requested": "Solicitado por",
+
   // "item.edit.authorizations.heading": "With this editor you can view and alter the policies of an item, plus alter policies of individual item components: bundles and bitstreams. Briefly, an item is a container of bundles, and bundles are containers of bitstreams. Containers usually have ADD/REMOVE/READ/WRITE policies, while bitstreams only have READ/WRITE policies.",
   "item.edit.authorizations.heading": "Con este editor puede ver y modificar las políticas de un ítem, además de modificar las políticas de los componentes individuales del ítem: paquetes y archivos. Brevemente, un ítem es un contenedor de paquetes y los paquetes son contenedores de archivos. Los contenedores suelen tener políticas AGREGAR/ELIMINAR/LEER/ESCRIBIR, mientras que los archivos solo tienen políticas LEER/ESCRIBIR.",
 
@@ -3848,6 +3896,18 @@
   // "item.truncatable-part.show-less": "Collapse",
   "item.truncatable-part.show-less": "Contraer",
 
+  // "item.qa-event-notification.check.notification-info": "There are {{num}} pending suggestions related to your account",
+  "item.qa-event-notification.check.notification-info": "Hay {{ num }} sugerencias pendientes relacionadas con su cuenta",
+
+  // "item.qa-event-notification-info.check.button": "View",
+  "item.qa-event-notification-info.check.button": "Ver",
+
+  // "mydspace.qa-event-notification.check.notification-info": "There are {{num}} pending suggestions related to your account",
+  "mydspace.qa-event-notification.check.notification-info": "Hay {{ num }} sugerencias pendientes relacionadas con su cuenta",
+
+  // "mydspace.qa-event-notification-info.check.button": "View",
+  "mydspace.qa-event-notification-info.check.button": "Ver",
+
   // "workflow-item.search.result.delete-supervision.modal.header": "Delete Supervision Order",
   "workflow-item.search.result.delete-supervision.modal.header": "Borrar Orden de Supervisión",
 
@@ -3985,6 +4045,12 @@
 
   // "item.page.version.create": "Create new version",
   "item.page.version.create": "Crear una nueva version",
+
+  // "item.page.withdrawn": "Request a withdrawal for this item",
+  "item.page.withdrawn": "Solicitar la retirada de este ítem",
+
+  // "item.page.reinstate": "Request reinstatement",
+  "item.page.reinstate": "Solicitar el restablecimiento",
 
   // "item.page.version.hasDraft": "A new version cannot be created because there is an in-progress submission in the version history",
   "item.page.version.hasDraft": "No se puede crear una nueva versión porque en el historial de versiones hay un envío en curso",
@@ -4154,6 +4220,15 @@
   // "item.version.create.modal.header": "New version",
   "item.version.create.modal.header": "Nueva versión",
 
+  // "item.qa.withdrawn.modal.header": "Request withdrawal",
+  "item.qa.withdrawn.modal.header": "Solicitar retirada",
+
+  // "item.qa.reinstate.modal.header": "Request reinstate",
+  "item.qa.reinstate.modal.header": "Solicitar restablecimiento",
+
+  // "item.qa.reinstate.create.modal.header": "New version",
+  "item.qa.reinstate.create.modal.header": "Nueva versión",
+
   // "item.version.create.modal.text": "Create a new version for this item",
   "item.version.create.modal.text": "Crear una nueva versión de este ítem",
 
@@ -4166,8 +4241,20 @@
   // "item.version.create.modal.button.confirm.tooltip": "Create new version",
   "item.version.create.modal.button.confirm.tooltip": "Crear nueva versión",
 
+  // "item.qa.withdrawn-reinstate.modal.button.confirm.tooltip": "Send request",
+  "item.qa.withdrawn-reinstate.modal.button.confirm.tooltip": "Enviar solicitud",
+
+  // "qa-withdrown.create.modal.button.confirm": "Withdraw",
+  "qa-withdrown.create.modal.button.confirm": "Retirar",
+
+  // "qa-reinstate.create.modal.button.confirm": "Reinstate",
+  "qa-reinstate.create.modal.button.confirm": "Reintegrar",
+
   // "item.version.create.modal.button.cancel": "Cancel",
   "item.version.create.modal.button.cancel": "Cancelar",
+
+  // "item.qa.withdrawn-reinstate.create.modal.button.cancel": "Cancel",
+  "item.qa.withdrawn-reinstate.create.modal.button.cancel": "Cancelar",
 
   // "item.version.create.modal.button.cancel.tooltip": "Do not create new version",
   "item.version.create.modal.button.cancel.tooltip": "No crear una nueva versión",
@@ -4175,11 +4262,38 @@
   // "item.version.create.modal.form.summary.label": "Summary",
   "item.version.create.modal.form.summary.label": "Resumen",
 
+  // "qa-withdrawn.create.modal.form.summary.label": "You are requesting to withdraw this item",
+  "qa-withdrawn.create.modal.form.summary.label": "Está solicitando retirar este ítem",
+
+  // "qa-withdrawn.create.modal.form.summary2.label": "Please enter the reason for the withdrawal",
+  "qa-withdrawn.create.modal.form.summary2.label": "Por favor, introduzca la razón para la retirada",
+
+  // "qa-reinstate.create.modal.form.summary.label": "You are requesting to reinstate this item",
+  "qa-reinstate.create.modal.form.summary.label": "Está solicitando reintegrar este ítem",
+
+  // "qa-reinstate.create.modal.form.summary2.label": "Please enter the reason for the reinstatment",
+  "qa-reinstate.create.modal.form.summary2.label": "Por favor, introduzca la razón para el restablecimiento",
+
   // "item.version.create.modal.form.summary.placeholder": "Insert the summary for the new version",
   "item.version.create.modal.form.summary.placeholder": "Introduzca el resumen de esta nueva versión",
 
+  // "qa-withdrown.modal.form.summary.placeholder": "Enter the reason for the withdrawal",
+  "qa-withdrown.modal.form.summary.placeholder": "Introduzca la razón para la retirada",
+
+  // "qa-reinstate.modal.form.summary.placeholder": "Enter the reason for the reinstatement",
+  "qa-reinstate.modal.form.summary.placeholder": "Introduzca la razón para el restablecimiento",
+
   // "item.version.create.modal.submitted.header": "Creating new version...",
   "item.version.create.modal.submitted.header": "Creando nueva versión...",
+
+  // "item.qa.withdrawn.modal.submitted.header": "Sending withdrawn request...",
+  "item.qa.withdrawn.modal.submitted.header": "Enviando solicitud de retirada...",
+
+  // "correction-type.manage-relation.action.notification.reinstate": "Reinstate request sent.",
+  "correction-type.manage-relation.action.notification.reinstate": "Solicitud de restablecimiento enviada.",
+
+  // "correction-type.manage-relation.action.notification.withdrawn": "Withdraw request sent.",
+  "correction-type.manage-relation.action.notification.withdrawn": "Solicitud de retirada enviada.",
 
   // "item.version.create.modal.submitted.text": "The new version is being created. This may take some time if the item has a lot of relationships.",
   "item.version.create.modal.submitted.text": "Se está creando la nueva versión. Si el ítem tiene muchas relaciones, este proceso podría tardar.",
@@ -4685,6 +4799,15 @@
   // "menu.section.new_process": "Process",
   "menu.section.new_process": "Proceso",
 
+  // "menu.section.notifications": "Notifications",
+  "menu.section.notifications": "Notificaciones",
+
+  // "menu.section.quality-assurance": "Quality Assurance",
+  "menu.section.quality-assurance": "Control de calidad",
+
+  // "menu.section.notifications_publication-claim": "Publication Claim",
+  "menu.section.notifications_publication-claim": "Reclamación de publicación",
+
   // "menu.section.pin": "Pin sidebar",
   "menu.section.pin": "Anclar barra lateral",
 
@@ -4936,6 +5059,231 @@
 
   // "none.listelement.badge": "Item",
   "none.listelement.badge": "Ítem",
+
+  // "quality-assurance.title": "Quality Assurance",
+  "quality-assurance.title": "Control de calidad",
+
+  // "quality-assurance.topics.description": "Below you can see all the topics received from the subscriptions to {{source}}.",
+  "quality-assurance.topics.description": "A continuación, puede ver todos los temas recibidos de las suscripciones a {{source}}.",
+
+  // "quality-assurance.source.description": "Below you can see all the notification's sources.",
+  "quality-assurance.source.description": "A continuación, puede ver todas las fuentes de notificación.",
+
+  // "quality-assurance.topics": "Current Topics",
+  "quality-assurance.topics": "Temas actuales",
+
+  // "quality-assurance.source": "Current Sources",
+  "quality-assurance.source": "Fuentes actuales",
+
+  // "quality-assurance.table.topic": "Topic",
+  "quality-assurance.table.topic": "Tema",
+
+  // "quality-assurance.table.source": "Source",
+  "quality-assurance.table.source": "Fuente",
+
+  // "quality-assurance.table.last-event": "Last Event",
+  "quality-assurance.table.last-event": "Último evento",
+
+  // "quality-assurance.table.actions": "Actions",
+  "quality-assurance.table.actions": "Acciones",
+
+  // "quality-assurance.source-list.button.detail": "Show topics for {{param}}",
+  "quality-assurance.source-list.button.detail": "Mostrar temas para {{param}}",
+
+  // "quality-assurance.topics-list.button.detail": "Show suggestions for {{param}}",
+  "quality-assurance.topics-list.button.detail": "Mostrar sugerencias para {{param}}",
+
+  // "quality-assurance.noTopics": "No topics found.",
+  "quality-assurance.noTopics": "No se encontraron temas.",
+
+  // "quality-assurance.noSource": "No sources found.",
+  "quality-assurance.noSource": "No se encontraron fuentes.",
+
+  // "notifications.events.title": "Quality Assurance Suggestions",
+  "notifications.events.title": "Sugerencias de control de calidad",
+
+  // "quality-assurance.topic.error.service.retrieve": "An error occurred while loading the Quality Assurance topics",
+  "quality-assurance.topic.error.service.retrieve": "Se produjo un error al cargar los temas de control de calidad",
+
+  // "quality-assurance.source.error.service.retrieve": "An error occurred while loading the Quality Assurance source",
+  "quality-assurance.source.error.service.retrieve": "Se produjo un error al cargar la fuente de control de calidad",
+
+  // "quality-assurance.loading": "Loading ...",
+  "quality-assurance.loading": "Cargando ...",
+
+  // "quality-assurance.events.topic": "Topic:",
+  "quality-assurance.events.topic": "Tema:",
+
+  // "quality-assurance.noEvents": "No suggestions found.",
+  "quality-assurance.noEvents": "No se encontraron sugerencias.",
+ 
+  // "quality-assurance.event.table.trust": "Trust"
+  "quality-assurance.event.table.trust": "Confianza",
+
+  // "quality-assurance.event.table.publication": "Publication",
+  "quality-assurance.event.table.publication": "Publicación",
+
+  // "quality-assurance.event.table.details": "Details",
+  "quality-assurance.event.table.details": "Detalles",
+
+  // "quality-assurance.event.table.project-details": "Project details",
+  "quality-assurance.event.table.project-details": "Detalles del proyecto",
+
+  // "quality-assurance.event.table.reasons": "Reasons",
+  "quality-assurance.event.table.reasons": "Razones",
+
+  // "quality-assurance.event.table.actions": "Actions",
+  "quality-assurance.event.table.actions": "Acciones",
+
+  // "quality-assurance.event.action.accept": "Accept suggestion",
+  "quality-assurance.event.action.accept": "Aceptar sugerencia",
+
+  // "quality-assurance.event.action.ignore": "Ignore suggestion",
+  "quality-assurance.event.action.ignore": "Ignorar sugerencia",
+
+  // "quality-assurance.event.action.undo": "Delete",
+  "quality-assurance.event.action.undo": "Eliminar",
+
+  // "quality-assurance.event.action.reject": "Reject suggestion",
+  "quality-assurance.event.action.reject": "Rechazar sugerencia",
+
+  // "quality-assurance.event.action.import": "Import project and accept suggestion",
+  "quality-assurance.event.action.import": "Importar proyecto y aceptar sugerencia",
+
+  // "quality-assurance.event.table.pidtype": "PID Type:",
+  "quality-assurance.event.table.pidtype": "Tipo de PID:",
+
+  // "quality-assurance.event.table.pidvalue": "PID Value:",
+  "quality-assurance.event.table.pidvalue": "Valor de PID:",
+
+  // "quality-assurance.event.table.subjectValue": "Subject Value:",
+  "quality-assurance.event.table.subjectValue": "Valor del tema:",
+
+  // "quality-assurance.event.table.abstract": "Abstract:",
+  "quality-assurance.event.table.abstract": "Resumen:",
+
+  // "quality-assurance.event.table.suggestedProject": "OpenAIRE Suggested Project data",
+  "quality-assurance.event.table.suggestedProject": "Datos del proyecto sugerido por OpenAIRE",
+
+  // "quality-assurance.event.table.project": "Project title:",
+  "quality-assurance.event.table.project": "Título del proyecto:",
+
+  // "quality-assurance.event.table.acronym": "Acronym:",
+  "quality-assurance.event.table.acronym": "Acrónimo:",
+
+  // "quality-assurance.event.table.code": "Code:",
+  "quality-assurance.event.table.code": "Código:",
+
+  // "quality-assurance.event.table.funder": "Funder:",
+  "quality-assurance.event.table.funder": "Financiador:",
+
+  // "quality-assurance.event.table.fundingProgram": "Funding program:",
+  "quality-assurance.event.table.fundingProgram": "Programa de financiamiento:",
+
+  // "quality-assurance.event.table.jurisdiction": "Jurisdiction:",
+  "quality-assurance.event.table.jurisdiction": "Jurisdicción:",
+
+  // "quality-assurance.events.back": "Back to topics",
+  "quality-assurance.events.back": "Volver a los temas",
+
+  // "quality-assurance.events.back-to-sources": "Back to sources",
+  "quality-assurance.events.back-to-sources": "Volver a las fuentes",
+
+  // "quality-assurance.event.table.less": "Show less",
+  "quality-assurance.event.table.less": "Mostrar menos",
+
+  // "quality-assurance.event.table.more": "Show more",
+  "quality-assurance.event.table.more": "Mostrar más",
+
+  // "quality-assurance.event.project.found": "Bound to the local record:",
+  "quality-assurance.event.project.found": "Vinculado al registro local:",
+
+  // "quality-assurance.event.project.notFound": "No local record found",
+  "quality-assurance.event.project.notFound": "No se encontró registro local",
+
+  // "quality-assurance.event.sure": "Are you sure?",
+  "quality-assurance.event.sure": "¿Estás seguro?",
+
+  // "quality-assurance.event.ignore.description": "This operation can't be undone. Ignore this suggestion?",
+  "quality-assurance.event.ignore.description": "Esta operación no se puede deshacer. ¿Ignorar esta sugerencia?",
+
+  // "quality-assurance.event.undo.description": "This operation can't be undone!",
+  "quality-assurance.event.undo.description": "¡Esta operación no se puede deshacer!",
+
+  // "quality-assurance.event.reject.description": "This operation can't be undone. Reject this suggestion?",
+  "quality-assurance.event.reject.description": "Esta operación no se puede deshacer. ¿Rechazar esta sugerencia?",
+
+  // "quality-assurance.event.accept.description": "No DSpace project selected. A new project will be created based on the suggestion data.",
+  "quality-assurance.event.accept.description": "No se ha seleccionado un proyecto de DSpace. Se creará un nuevo proyecto basado en los datos de la sugerencia.",
+
+  // "quality-assurance.event.action.cancel": "Cancel",
+  "quality-assurance.event.action.cancel": "Cancelar",
+
+  // "quality-assurance.event.action.saved": "Your decision has been saved successfully.",
+  "quality-assurance.event.action.saved": "Tu decisión se ha guardado correctamente.",
+
+  // "quality-assurance.event.action.error": "An error has occurred. Your decision has not been saved.",
+  "quality-assurance.event.action.error": "Se ha producido un error. Tu decisión no se ha guardado.",
+
+  // "quality-assurance.event.modal.project.title": "Choose a project to bound",
+  "quality-assurance.event.modal.project.title": "Elija un proyecto para vincular",
+
+  // "quality-assurance.event.modal.project.publication": "Publication:",
+  "quality-assurance.event.modal.project.publication": "Publicación:",
+
+  // "quality-assurance.event.modal.project.bountToLocal": "Bound to the local record:",
+  "quality-assurance.event.modal.project.bountToLocal": "Vinculado al registro local",
+
+  // "quality-assurance.event.modal.project.select": "Project search",
+  "quality-assurance.event.modal.project.select": "Búsqueda de proyecto",
+
+  // "quality-assurance.event.modal.project.search": "Search",
+  "quality-assurance.event.modal.project.search": "Buscar",
+
+  // "quality-assurance.event.modal.project.clear": "Clear",
+  "quality-assurance.event.modal.project.clear": "Limpiar",
+
+  // "quality-assurance.event.modal.project.cancel": "Cancel",
+  "quality-assurance.event.modal.project.cancel": "Cancelar",
+
+  // "quality-assurance.event.modal.project.bound": "Bound project",
+  "quality-assurance.event.modal.project.bound": "Proyecto vinculado",
+
+  // "quality-assurance.event.modal.project.remove": "Remove",
+  "quality-assurance.event.modal.project.remove": "Eliminar",
+
+  // "quality-assurance.event.modal.project.placeholder": "Enter a project name",
+  "quality-assurance.event.modal.project.placeholder": "Introduzca un nombre de proyecto",
+
+  // "quality-assurance.event.modal.project.notFound": "No project found.",
+  "quality-assurance.event.modal.project.notFound": "No se encontró ningún proyecto.",
+
+  // "quality-assurance.event.project.bounded": "The project has been linked successfully.",
+  "quality-assurance.event.project.bounded": "El proyecto se ha vinculado correctamente.",
+
+  // "quality-assurance.event.project.removed": "The project has been successfully unlinked.",
+  "quality-assurance.event.project.removed": "El proyecto se ha desvinculado correctamente.",
+
+  // "quality-assurance.event.project.error": "An error has occurred. No operation performed.",
+  "quality-assurance.event.project.error": "Se ha producido un error. No se realizó ninguna operación.",
+
+  // "quality-assurance.event.reason": "Reason",
+  "quality-assurance.event.reason": "Razón",
+
+  // "quality-assurance.topics.description-with-target": "Below you can see all the topics received from the subscriptions to {{source}} in regards to the",
+  "quality-assurance.topics.description-with-target": "A continuación, puedes ver todos los temas recibidos de las suscripciones a {{source}} en relación con",
+
+  // "quality-assurance.events.description": "Below the list of all the suggestions for the selected topic <b>{{topic}}</b>, related to <b>{{source}}</b>.",
+  "quality-assurance.events.description": "A continuación, la lista de todas las sugerencias para el tema seleccionado <b>{{topic}}</b>, relacionadas con <b>{{source}}</b>.",
+
+  // "quality-assurance.events.description-with-topic-and-target": "Below the list of all the suggestions for the selected topic <b>{{topic}}</b>, related to <b>{{source}}</b> and ",
+  "quality-assurance.events.description-with-topic-and-target": "A continuación, la lista de todas las sugerencias para el tema seleccionado <b>{{topic}}</b>, relacionadas con <b>{{source}}</b> y ",
+
+  // "quality-assurance.event.table.event.message.serviceUrl": "Service URL:",
+  "quality-assurance.event.table.event.message.serviceUrl": "URL del servicio:",
+
+  // "quality-assurance.event.table.event.message.link": "Link:",
+  "quality-assurance.event.table.event.message.link": "Enlace:",
 
   // "orgunit.listelement.badge": "Organizational Unit",
   "orgunit.listelement.badge": "Unidad organizativa",
@@ -8272,7 +8620,4 @@
 
   // "collection.page.browse.search.head": "Search",
   "collection.page.browse.search.head": "Buscar",
-
-  // "community.search.results.head": "Search Results",
-  "community.search.results.head": "Resultados de la búsqueda",
 }
