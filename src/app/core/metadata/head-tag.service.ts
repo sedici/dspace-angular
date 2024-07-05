@@ -101,7 +101,7 @@ export class HeadTagService {
    * See {@linkcode getFirstAllowedFormatBitstreamLink}
    * @private
    */
-  private readonly CITATION_PDF_URL_MIMETYPES = [
+  protected readonly CITATION_PDF_URL_MIMETYPES = [
     'application/pdf',                                                          // .pdf
     'application/postscript',                                                   // .ps
     'application/msword',                                                       // .doc

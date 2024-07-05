@@ -89,7 +89,7 @@ export class HeadTagSEDICIService extends HeadTagService {
     this.setTypeTags();
     this.setLicenseTags();
     this.setRightsTags();
-    this.setProvenanceTags();
+    // this.setProvenanceTags();
     this.setContributorTags();
     this.setIsVersionOfTags();
     this.setPublisherTags();
@@ -129,21 +129,33 @@ export class HeadTagSEDICIService extends HeadTagService {
     this.addMetaTag('citation_title', value);
   }
 
+  /**
+   * Add <meta name="citation_author" ... >  to the <head>
+   */
   protected setCitationAuthorTags(): void {
     const values: string[] = this.getMetaTagValues(['sedici.creator.person', 'sedici.creator.corporate', 'sedici.contributor.compiler', 'sedici.creator.interprete', 'sedici.contributor.editor']);
     this.addMetaTags('citation_author', values);
   }
 
+  /**
+   * Add <meta name="citation_publication_date" ... >  to the <head>
+   */
   protected setCitationPublicationDateTag(): void {
     const value = this.getFirstMetaTagValue(['dc.date.issued', 'sedici.date.exposure', 'dc.date.created']);
     this.addMetaTag('citation_publication_date', value);
   }
 
+  /**
+   * Add <meta name="citation_issn" ... >  to the <head>
+   */
   protected setCitationISSNTag(): void {
     const value = this.getMetaTagValue('sedici.identifier.issn');
     this.addMetaTag('citation_issn', value);
   }
 
+  /**
+   * Add <meta name="citation_isbn" ... >  to the <head>
+   */
   protected setCitationISBNTag(): void {
     const value = this.getMetaTagValue('sedici.identifier.isbn');
     this.addMetaTag('citation_isbn', value);
@@ -166,131 +178,134 @@ export class HeadTagSEDICIService extends HeadTagService {
   }
 
   /**
-   * Add dc.publisher to the <head>. The tag name depends on the item type.
+   * Add <meta name="citation_publisher" ... >  to the <head>
    */
   protected setCitationPublisherTag(): void {
     const value = this.getMetaTagValue('dc.publisher');
     this.addMetaTag('citation_publisher', value);
   }
 
+  /**
+   * Add <meta name="citation_keywords" ... >  to the <head>
+   */
   protected setCitationKeywordsTag(): void {
     const value = this.getMultipleMetaTagValuesAndCombine(['dc.subject', 'sedici.subject.materias']);
     this.addMetaTag('citation_keywords', value);
   }
 
   // PARCHE PDF
-  // setCitationPdfUrlTag(): void {
-  //   if (this.currentObject.value instanceof Item) {
-  //     const item = this.currentObject.value as Item;
+  setCitationPdfUrlTag(): void {
+    if (this.currentObject.value instanceof Item) {
+      const item = this.currentObject.value as Item;
 
-  //     // Retrieve the ORIGINAL bundle for the item
-  //     this.bundleDataService.findByItemAndName(
-  //       item,
-  //       'ORIGINAL',
-  //       true,
-  //       true,
-  //       followLink('primaryBitstream'),
-  //       followLink('bitstreams', {
-  //         findListOptions: {
-  //           // limit the number of bitstreams used to find the citation pdf url to the number
-  //           // shown by default on an item page
-  //           elementsPerPage: this.appConfig.item.bitstream.pageSize,
-  //         },
-  //       }, followLink('format')),
-  //     ).pipe(
-  //       getFirstSucceededRemoteDataPayload(),
-  //       switchMap((bundle: Bundle) =>
-  //         // First try the primary bitstream
-  //         bundle.primaryBitstream.pipe(
-  //           getFirstCompletedRemoteData(),
-  //           map((rd: RemoteData<Bitstream>) => {
-  //             if (hasValue(rd.payload)) {
-  //               return rd.payload;
-  //             } else {
-  //               return null;
-  //             }
-  //           }),
-  //           getDownloadableBitstream(this.authorizationService),
-  //           // return the bundle as well so we can use it again if there's no primary bitstream
-  //           map((bitstream: Bitstream) => [bundle, bitstream]),
-  //         ),
-  //       ),
-  //       switchMap(([bundle, primaryBitstream]: [Bundle, Bitstream]) => {
-  //         if (hasValue(primaryBitstream)) {
-  //           // If there was a downloadable primary bitstream, emit its link
-  //           return getBitstreamRoute(item, primaryBitstream);
-  //         } else {
-  //           // Otherwise consider the regular bitstreams in the bundle
-  //           return bundle.bitstreams.pipe(
-  //             getFirstCompletedRemoteData(),
-  //             switchMap((bitstreamRd: RemoteData<PaginatedList<Bitstream>>) => {
-  //               if (hasValue(bitstreamRd.payload) && bitstreamRd.payload.totalElements === 1) {
-  //                 // If there's only one bitstream in the bundle, emit its link if its downloadable
-  //                 return this.getBitLinkIfDownloadable(bitstreamRd.payload.page[0], bitstreamRd);
-  //               } else {
-  //                 // Otherwise check all bitstreams to see if one matches the format whitelist
-  //                 return this.getFirstAllowedFormatBitstreamLink(bitstreamRd);
-  //               }
-  //             }),
-  //           );
-  //         }
-  //       }),
-  //       take(1),
-  //     ).subscribe((link: string) => {
-  //       // Use the found link to set the <meta> tag
-  //       this.addMetaTag(
-  //         'citation_pdf_url',
-  //         new URLCombiner(this.hardRedirectService.getCurrentOrigin(), link).toString(),
-  //       );
-  //     });
-  //   }
-  // }
+      // Retrieve the ORIGINAL bundle for the item
+      this.bundleDataService.findByItemAndName(
+        item,
+        'ORIGINAL',
+        true,
+        true,
+        followLink('primaryBitstream'),
+        followLink('bitstreams', {
+          findListOptions: {
+            // limit the number of bitstreams used to find the citation pdf url to the number
+            // shown by default on an item page
+            elementsPerPage: this.appConfig.item.bitstream.pageSize,
+          },
+        }, followLink('format')),
+      ).pipe(
+        getFirstSucceededRemoteDataPayload(),
+        switchMap((bundle: Bundle) =>
+          // First try the primary bitstream
+          bundle.primaryBitstream.pipe(
+            getFirstCompletedRemoteData(),
+            map((rd: RemoteData<Bitstream>) => {
+              if (hasValue(rd.payload)) {
+                return rd.payload;
+              } else {
+                return null;
+              }
+            }),
+            getDownloadableBitstream(this.authorizationService),
+            // return the bundle as well so we can use it again if there's no primary bitstream
+            map((bitstream: Bitstream) => [bundle, bitstream]),
+          ),
+        ),
+        switchMap(([bundle, primaryBitstream]: [Bundle, Bitstream]) => {
+          if (hasValue(primaryBitstream)) {
+            // If there was a downloadable primary bitstream, emit its link
+            return getBitstreamRoute(item, primaryBitstream);
+          } else {
+            // Otherwise consider the regular bitstreams in the bundle
+            return bundle.bitstreams.pipe(
+              getFirstCompletedRemoteData(),
+              switchMap((bitstreamRd: RemoteData<PaginatedList<Bitstream>>) => {
+                if (hasValue(bitstreamRd.payload) && bitstreamRd.payload.totalElements === 1) {
+                  // If there's only one bitstream in the bundle, emit its link if its downloadable
+                  return this.getBitLinkIfDownloadable(bitstreamRd.payload.page[0], bitstreamRd);
+                } else {
+                  // Otherwise check all bitstreams to see if one matches the format whitelist
+                  return this.getFirstAllowedFormatBitstreamLink(bitstreamRd);
+                }
+              }),
+            );
+          }
+        }),
+        take(1),
+      ).subscribe((link: string) => {
+        // Use the found link to set the <meta> tag
+        this.addMetaTag(
+          'citation_pdf_url',
+          new URLCombiner(this.hardRedirectService.getCurrentOrigin(), link).toString(),
+        );
+      });
+    }
+  }
 
-  // getBitLinkIfDownloadable(bitstream: Bitstream, bitstreamRd: RemoteData<PaginatedList<Bitstream>>): Observable<string> {
-  //   return observableOf(bitstream).pipe(
-  //     getDownloadableBitstream(this.authorizationService),
-  //     switchMap((bit: Bitstream) => {
-  //       if (hasValue(bit)) {
-  //         const item = this.currentObject.value as Item;
-  //         return getBitstreamRoute(item, bit);
-  //       } else {
-  //         // Otherwise check all bitstreams to see if one matches the format whitelist
-  //         return this.getFirstAllowedFormatBitstreamLink(bitstreamRd);
-  //       }
-  //     }),
-  //   );
-  // }
+  getBitLinkIfDownloadable(bitstream: Bitstream, bitstreamRd: RemoteData<PaginatedList<Bitstream>>): Observable<string> {
+    return observableOf(bitstream).pipe(
+      getDownloadableBitstream(this.authorizationService),
+      switchMap((bit: Bitstream) => {
+        if (hasValue(bit)) {
+          const item = this.currentObject.value as Item;
+          return getBitstreamRoute(item, bit);
+        } else {
+          // Otherwise check all bitstreams to see if one matches the format whitelist
+          return this.getFirstAllowedFormatBitstreamLink(bitstreamRd);
+        }
+      }),
+    );
+  }
 
-  // protected getFirstAllowedFormatBitstreamLink(bitstreamRd: RemoteData<PaginatedList<Bitstream>>): Observable<string> {
-  //   const item = this.currentObject.value as Item;
-  //   if (hasValue(bitstreamRd.payload) && isNotEmpty(bitstreamRd.payload.page)) {
-  //     // Retrieve the formats of all bitstreams in the page sequentially
-  //     return observableConcat(
-  //       ...bitstreamRd.payload.page.map((bitstream: Bitstream) => bitstream.format.pipe(
-  //         getFirstSucceededRemoteDataPayload(),
-  //         // Keep the original bitstream, because it, not the format, is what we'll need
-  //         // for the link at the end
-  //         map((format: BitstreamFormat) => [bitstream, format]),
-  //       )),
-  //     ).pipe(
-  //       // Verify that the bitstream is downloadable
-  //       mergeMap(([bitstream, format]: [Bitstream, BitstreamFormat]) => observableOf(bitstream).pipe(
-  //         getDownloadableBitstream(this.authorizationService),
-  //         map((bit: Bitstream) => [bit, format]),
-  //       )),
-  //       // Filter out only pairs with whitelisted formats and non-null bitstreams, null from download check
-  //       filter(([bitstream, format]: [Bitstream, BitstreamFormat]) =>
-  //         hasValue(format) && hasValue(bitstream) && this.CITATION_PDF_URL_MIMETYPES.includes(format.mimetype)),
-  //       // We only need 1
-  //       take(1),
-  //       // Emit the link of the match
-  //       // tap((v) => console.log('result', v)),
-  //       mergeMap(([bitstream ]: [Bitstream, BitstreamFormat]) => getBitstreamRoute(item, bitstream)),
-  //     );
-  //   } else {
-  //     return EMPTY;
-  //   }
-  // }
+  protected getFirstAllowedFormatBitstreamLink(bitstreamRd: RemoteData<PaginatedList<Bitstream>>): Observable<string> {
+    const item = this.currentObject.value as Item;
+    if (hasValue(bitstreamRd.payload) && isNotEmpty(bitstreamRd.payload.page)) {
+      // Retrieve the formats of all bitstreams in the page sequentially
+      return observableConcat(
+        ...bitstreamRd.payload.page.map((bitstream: Bitstream) => bitstream.format.pipe(
+          getFirstSucceededRemoteDataPayload(),
+          // Keep the original bitstream, because it, not the format, is what we'll need
+          // for the link at the end
+          map((format: BitstreamFormat) => [bitstream, format]),
+        )),
+      ).pipe(
+        // Verify that the bitstream is downloadable
+        mergeMap(([bitstream, format]: [Bitstream, BitstreamFormat]) => observableOf(bitstream).pipe(
+          getDownloadableBitstream(this.authorizationService),
+          map((bit: Bitstream) => [bit, format]),
+        )),
+        // Filter out only pairs with whitelisted formats and non-null bitstreams, null from download check
+        filter(([bitstream, format]: [Bitstream, BitstreamFormat]) =>
+          hasValue(format) && hasValue(bitstream) && this.CITATION_PDF_URL_MIMETYPES.includes(format.mimetype)),
+        // We only need 1
+        take(1),
+        // Emit the link of the match
+        // tap((v) => console.log('result', v)),
+        mergeMap(([bitstream ]: [Bitstream, BitstreamFormat]) => getBitstreamRoute(item, bitstream)),
+      );
+    } else {
+      return EMPTY;
+    }
+  }
 
   /**
    * Add <meta name="citation_conference_title" ... >  to the <head>
@@ -420,9 +435,9 @@ export class HeadTagSEDICIService extends HeadTagService {
     this.setMetaTags('DC.rights', ['sedici.rights.uri'], 'DCTERMS.URI');
   }
 
-  protected setProvenanceTags(): void {
-    this.setMetaTags('DCTERMS.provenance', ['dc.description.provenance']);
-  }
+  // protected setProvenanceTags(): void {
+  //   this.setMetaTags('DCTERMS.provenance', ['dc.description.provenance']);
+  // }
 
   protected setContributorTags(): void {
     this.setMetaTags('DC.contributor', ['sedici.contributor.director', 'sedici.contributor.codirector', 'sedici.contributor.colaborator', 'sedici.contributor.translator', 'sedici.contributor.juror', 'sedici.contributor.inscriber']);

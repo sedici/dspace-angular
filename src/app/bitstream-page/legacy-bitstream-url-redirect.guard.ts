@@ -37,7 +37,7 @@ export const legacyBitstreamURLRedirectGuard: CanActivateFn = (
   const filename = route.params.filename;
   let sequenceId = route.params.sequence_id;
   if (hasNoValue(sequenceId)) {
-    sequenceId = route.queryParams.sequenceId;
+    sequenceId = route.queryParams.sequence;
   }
   return bitstreamDataService.findByItemHandle(
     `${prefix}/${suffix}`,
