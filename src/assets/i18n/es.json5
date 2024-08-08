@@ -6738,6 +6738,9 @@
   // "submission.import-external.source.datacite": "DataCite",
   "submission.import-external.source.datacite": "DataCite",
 
+  // "submission.import-external.source.doi": "DOI",
+  "submission.import-external.source.doi": "DOI",
+
   // "submission.import-external.source.scielo": "SciELO",
   "submission.import-external.source.scielo": "SciELO",
 
@@ -6770,6 +6773,15 @@
 
   // "submission.import-external.source.openAIREFunding": "Funding OpenAIRE API",
   "submission.import-external.source.openAIREFunding": "API de Financiamiento de OpenAIRE",
+
+  // "submission.import-external.source.openaire": "OpenAIRE Search by Authors",
+  "submission.import-external.source.openaire": "Búsqueda de OpenAIRE por autores",
+
+  // "submission.import-external.source.openaireTitle": "OpenAIRE Search by Title",
+  "submission.import-external.source.openaireTitle": "Búsqueda de OpenAIRE por título",
+
+  // "submission.import-external.source.openaireFunding": "OpenAIRE Search by Funder",
+  "submission.import-external.source.openaireFunding": "Búsqueda de OpenAIRE por financiador",
 
   // "submission.import-external.source.orcid": "ORCID",
   "submission.import-external.source.orcid": "ORCID",
@@ -7254,6 +7266,15 @@
   // "submission.sections.ccLicense.confirmation": "I grant the license above",
   "submission.sections.ccLicense.confirmation": "Otorgo la licencia de arriba",
 
+  // "submission.sections.ccLicense.option.answer.Yes": "Yes",
+  "submission.sections.ccLicense.option.answer.Yes": "Si",
+
+  // "submission.sections.ccLicense.option.answer.ShareAlike": "ShareAlike",
+  "submission.sections.ccLicense.option.answer.ShareAlike": "Compartir Igual",
+
+  // "submission.sections.ccLicense.option.answer.No": "No",
+  "submission.sections.ccLicense.option.answer.No": "No",
+
   // "submission.sections.general.add-more": "Add more",
   "submission.sections.general.add-more": "Añadir más",
 
@@ -7335,8 +7356,8 @@
   // "submission.sections.submit.progressbar.describe.steptwo": "Describe",
   "submission.sections.submit.progressbar.describe.steptwo": "Describir",
 
-  // "submission.sections.submit.progressbar.detect-duplicate": "Potential duplicates",
-  "submission.sections.submit.progressbar.detect-duplicate": "Posibles duplicados",
+  // "submission.sections.submit.progressbar.duplicates": "Potential duplicates",
+  "submission.sections.submit.progressbar.duplicates": "Posibles duplicados",
 
   // "submission.sections.submit.progressbar.identifiers": "Identifiers",
   "submission.sections.submit.progressbar.identifiers": "Identificadores",
