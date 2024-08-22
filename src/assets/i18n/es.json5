@@ -1637,7 +1637,7 @@
 
   // "collection.browse.logo": "Browse for a collection logo",
   "collection.browse.logo": "Buscar un logotipo de colección",
-  
+
   // "collection.create.head": "Create a Collection",
   "collection.create.head": "Crear una colección",
 
@@ -5116,7 +5116,7 @@
 
   // "quality-assurance.noEvents": "No suggestions found.",
   "quality-assurance.noEvents": "No se encontraron sugerencias.",
- 
+
   // "quality-assurance.event.table.trust": "Trust"
   "quality-assurance.event.table.trust": "Confianza",
 
@@ -8614,7 +8614,7 @@
 
   "submission.workflow.generic.approve-and-select-help": "Aprueba la publicacion y pasa a la seleccion de coleccion",
 
-  "submission.workflow.generic.approve-and-select": "Aprobar y elegir coleccion",
+  "submission.workflow.generic.submit_approve_and_select": "Aprobar y elegir coleccion",
 
   "accept-and-select-collection-help": "Aprueba la publicacion y pasa a la seleccion de coleccion",
 
@@ -8625,6 +8625,8 @@
   "workflow-item.editaction.header": "Aprobando...",
 
   "workflow-item.selectCollection.header": "Elegir Coleccion",
+
+  "submission.workflow.tasks.claimed.approve_not_select": "Aprobar y publicar",
 
 
   //"browse.search-form.placeholder": "Search the repository",
