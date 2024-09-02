@@ -1,0 +1,28 @@
+<div class="tab-container">
+  <div class="tab-header">
+    <div 
+      class="tab" 
+      *ngFor="let tab of tabs; let i = index" 
+      [class.active]="selectedTabIndex === i"
+      (click)="selectTab(i)">
+      {{ tab.label }}
+    </div>
+  </div>
+  <div class="tab-content">
+    <ng-container [ngSwitch]="selectedTabIndex">
+      <div *ngSwitchCase="0">
+        <content-files [object]="object"></content-files>
+      </div>
+      <div *ngSwitchCase="1">
+        <ds-item-page-cc-license-field [item]="object" [variant]="'full'"></ds-item-page-cc-license-field>
+      </div>
+      <div *ngSwitchCase="2">
+        <full-item [object]="object"></full-item>
+      </div>
+      <div *ngSwitchDefault>
+        Selecciona una solapa.
+      </div>
+    </ng-container>
+  </div>
+</div>
+  

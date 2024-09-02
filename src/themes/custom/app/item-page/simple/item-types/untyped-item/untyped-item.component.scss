@@ -1,0 +1,50 @@
+.badge-title-container {
+  display: flex;
+  align-items: center;
+}
+  
+.badge-title-content {
+  display: flex;
+  flex-direction: column;
+
+  h4 {
+    font-size: 1.75rem;
+    color: #999;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.edit-menu {
+  margin-left: auto;
+}
+
+.subtitle-content {
+  font-style: italic;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.divider {
+  border-top: 1px solid #999;
+  margin: 0.5rem 0;
+}
+
+.section-divider {
+  border-bottom: 1px solid #D8E8Eb;
+}
+
+.item-identifiers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2em;
+
+  div {
+    display: inline-block;
+    padding-right: 0.2em;
+  }
+}
+
+.reference-image {
+  max-width: 100%;
+  height: auto;
+}

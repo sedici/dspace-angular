@@ -1,0 +1,41 @@
+.badge-label {
+    border-top-right-radius: unset;
+    border-bottom-right-radius: unset;
+    display: inline-block;
+}
+
+.badge-content {
+    border-top-left-radius: unset;
+    border-bottom-left-radius: unset;
+    display: inline-block;
+}
+
+.badge-group {
+    display: inline-block;
+}
+
+.badge-group::after {
+    white-space: pre;
+    content: " ";
+}
+
+.badge-identifier {
+    color: #505050;
+    background-color: #c3c3c3;
+    font-weight: inherit;
+}
+
+.group-inline-block {
+    display: inline-block;
+}
+
+::ng-deep .badge-group span {
+    padding: 0.4em;
+    padding-right: 0.5em;
+}
+
+.copyButton {
+    color: #fff;
+    cursor: pointer;
+    margin-left: 5px;
+}

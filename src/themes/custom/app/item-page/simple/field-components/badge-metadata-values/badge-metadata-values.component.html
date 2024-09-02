@@ -1,0 +1,21 @@
+<ds-metadata-field-wrapper [label]="label | translate" [inlineLabel]="false">
+    <a href="{{ badgeUrl }}" target="_blank" *ngIf="badgeUrl else badge">
+        <ng-container *ngTemplateOutlet="badge"></ng-container>
+    </a>
+</ds-metadata-field-wrapper>
+
+<ng-template #badge>
+    <div class="badge-group" [ngClass]="{'group-inline-block': badgeLabel}" *ngFor="let mdValue of mdValues">
+        <span class="badge badge-label" [ngClass]="badgeLabelType" *ngIf="badgeLabel">
+            {{badgeLabel}}
+        </span>
+        <span class="badge {{badgeType}}" [ngClass]="{'badge-content': badgeLabel}">
+            {{mdValue.value}}
+            <ng-container *ngIf="copyToClipboardButton">
+                <span class="d-none" #elementContentToCopy>{{mdValue.value}}</span>
+                <i id="copyButton-{{mdValue.value}}" class="copyButton fa fa-copy" aria-hidden="true" (click)="copyToClipboard(elementContentToCopy, 'copyButton-' + mdValue.value )"></i>
+            </ng-container>
+        </span>
+    </div>
+</ng-template>
+

@@ -1,0 +1,12 @@
+<div class="apa-citation-container" [class.expanded]="isExpanded">
+  <div class="toggle-button-container" *ngIf="showToggleButton">
+    <i class="toggleButton fa" [ngClass]="{'fa-chevron-down': !isExpanded, 'fa-chevron-up': isExpanded}" (click)="toggleExpand()"></i>
+  </div>
+  <div class="apa-citation" #elementContentToCopy>
+    {{ citation }}
+  </div>
+</div>
+<div class="copy-button-container">
+  <span class="copy-text">Copiar al portapapeles</span>
+  <i id="copyButton" class="copyButton fa fa-copy" aria-hidden="true" (click)="copyToClipboard(elementContentToCopy, 'copyButton')"></i>
+</div>

@@ -24,6 +24,7 @@ import { Item } from '../../../../../core/shared/item.model';
 import { ITEM } from '../../../../../core/shared/item.resource-type';
 import { hasValue } from '../../../../empty.util';
 import { AccessStatusObject } from './access-status.model';
+import { RemoteData } from 'src/app/core/data/remote-data';
 
 @Component({
   selector: 'ds-base-access-status-badge',
@@ -70,12 +71,17 @@ export class AccessStatusBadgeComponent {
     }
 
     const item = this.object as Item;
+    let accessStatus$;
+
     if (item.accessStatus == null) {
       // In case the access status has not been loaded, do it individually.
-      item.accessStatus = this.accessStatusDataService.findAccessStatusFor(item);
+      accessStatus$ = this.accessStatusDataService.findAccessStatusFor(item);
+    } else {
+      accessStatus$ = item.accessStatus;
     }
-    this.accessStatus$ = item.accessStatus.pipe(
-      map((accessStatusRD) => {
+
+    this.accessStatus$ = accessStatus$.pipe(
+      map((accessStatusRD: RemoteData<AccessStatusObject>) => {
         if (accessStatusRD.statusCode !== 401 && hasValue(accessStatusRD.payload)) {
           return accessStatusRD.payload;
         } else {

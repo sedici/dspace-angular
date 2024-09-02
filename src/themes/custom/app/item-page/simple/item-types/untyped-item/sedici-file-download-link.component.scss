@@ -1,0 +1,20 @@
+.download-btn {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 3px 8px; // Reducir el padding para achicar el botón
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px; // Reducir el tamaño de la letra
+
+  &:hover {
+    background-color: #e0e0e0;
+  }
+
+  .pr-1 {
+    padding-right: 5px; // Ajustar el padding del icono si es necesario
+  }
+
+  i {
+    font-size: 12px; // Ajustar el tamaño del icono si es necesario
+  }
+}

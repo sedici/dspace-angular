@@ -36,7 +36,7 @@
 
 <!-- Render simple value in a span  -->
 <ng-template #simple let-value="value">
-  <span class="dont-break-out preserve-line-breaks">{{value}}</span>
+  <span [innerHTML]="value" class="dont-break-out preserve-line-breaks"></span>
 </ng-template>
 
 <!-- Render value as a link to browse index -->

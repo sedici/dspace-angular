@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+import { NgIf, NgClass } from '@angular/common';
 import {
   Component,
   Input,
@@ -13,7 +13,7 @@ import {
   styleUrls: ['./metadata-field-wrapper.component.scss'],
   templateUrl: './metadata-field-wrapper.component.html',
   standalone: true,
-  imports: [NgIf],
+  imports: [NgIf, NgClass],
 })
 export class MetadataFieldWrapperComponent {
 
@@ -23,4 +23,12 @@ export class MetadataFieldWrapperComponent {
   @Input() label: string;
 
   @Input() hideIfNoTextContent = true;
+
+  @Input() inlineLabel: boolean;
+
+  ngOnInit() {
+    if (this.inlineLabel === undefined) {
+      this.inlineLabel = true;
+    }
+  }
 }

@@ -1,0 +1,17 @@
+.container {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+button {
+  margin-right: 5px;
+}
+  
+button.active {
+  font-weight: bold;
+}
+
+.abstract-text {
+  white-space: pre-wrap;
+  text-align: justify;
+}

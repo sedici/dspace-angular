@@ -1,0 +1,48 @@
+<!-- <div class="table-responsive">
+  <table class="table table-striped">
+    <tbody>
+      <ng-container *ngFor="let mdEntry of getMetadataEntries()">
+        <tr *ngFor="let mdValue of mdEntry.value">
+          <td>{{mdEntry.key}}</td>
+          <td>{{mdValue.value}}</td>
+          <td>{{mdValue.language}}</td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div> -->
+
+<div>
+  <ds-sedici-date-metadata-values
+    [mdValues]="object?.allMetadata(['dc.date.issued'])"
+    [label]="'Fecha de publicación'">
+  </ds-sedici-date-metadata-values>
+
+  <ds-sedici-date-metadata-values
+    [mdValues]="object?.allMetadata(['dc.date.created'])"
+    [label]="'Fecha de creación'">
+  </ds-sedici-date-metadata-values>
+
+  <ds-sedici-date-metadata-values
+    [mdValues]="object?.allMetadata(['sedici.date.exposure'])"
+    [label]="'Fecha de exposición'">
+  </ds-sedici-date-metadata-values>
+
+  <ds-sedici-language-metadata-values
+    [mdValues]="object?.allMetadata(['dc.language'])"
+    [label]="'Idioma el documento'">
+  </ds-sedici-language-metadata-values>
+
+  <ds-generic-item-page-field [item]="object"
+    [fields]="['dc.format.extent']"
+    [label]="'Páginas'">
+  </ds-generic-item-page-field>
+
+  <ds-item-page-collections [item]="object"></ds-item-page-collections>
+</div>
+
+<div>
+  <a class="btn btn-outline-primary" [routerLink]="[itemPageRoute + '/full']" role="button">
+    <i class="fas fa-info-circle"></i> {{"item.page.link.full" | translate}}
+  </a>
+</div>
