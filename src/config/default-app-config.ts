@@ -591,4 +591,21 @@ export class DefaultAppConfig implements AppConfig {
       ],
     },
   ];
+
+  highlightCollections = [
+    { id: "3ea6678e-f073-4ecc-9b58-857824b9102f", type: "com" },
+    { id: "c080da2b-38b4-4238-971d-d68498f1ddb1", type: "com" },
+    { id: "ca781749-741d-49e7-9465-1a0000feb78a", type: "com" },
+    { id: "c080da2b-38b4-4238-971d-d68498f1ddb1", type: "com" },
+    { id: "d07ae08a-2831-4235-8931-5afbf4daa9c8", type: "com" },
+    { id: "c080da2b-38b4-4238-971d-d68498f1ddb1", type: "com" },
+    { id: "ca781749-741d-49e7-9465-1a0000feb78a", type: "com" },
+    { id: "c080da2b-38b4-4238-971d-d68498f1ddb1", type: "com" },
+    { id: "3ea6678e-f073-4ecc-9b58-857824b9102f", type: "com" },
+    { id: "c080da2b-38b4-4238-971d-d68498f1ddb1", type: "com" },
+    { id: "c080da2b-38b4-4238-971d-d68498f1ddb1", type: "com" },
+    { id: "ca781749-741d-49e7-9465-1a0000feb78a", type: "com" },
+    { id: "a2d47058-1d76-4530-b1ff-461ec6ce94b5", type: "col" }
+  ]
+
 }

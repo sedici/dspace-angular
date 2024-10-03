@@ -1,0 +1,97 @@
+:host {
+  footer {
+    background-color: #000000;
+    padding: var(--ds-footer-padding);
+    z-index: var(--ds-footer-z-index);
+    border-top: var(--ds-footer-border);
+    padding-top: 1%;
+    padding-right: 2%;
+
+    p {
+      margin: 0;
+    }
+
+    .bottom-footer {
+      display: flex;
+      justify-content: space-between;
+      //align-items: center;
+
+      .footer-left {
+        flex: 1;
+        text-align: left;
+        flex-direction: column;
+
+        .footer-title {
+          font-size: 1.3rem;
+          margin-bottom: 5px;
+        }
+
+        .footer-text {
+          font-size: 1rem;
+          margin: 0;
+        }
+
+      }
+
+      .footer-left img{
+        padding: 20px 0px;
+        height: 150px;
+      }
+
+      .footer-divider {
+        width: 1px; /* Ancho de la franja */
+        background-color: #fff; /* Color de la franja */
+        align-self: stretch; /* Alinea la franja para que ocupe toda la altura disponible */
+        margin: 0 20px; /* Espacio alrededor de la franja */
+      }
+
+      .footer-right {
+        flex: 2;
+        display: flex;
+        justify-content: space-between;
+        text-align: left;
+
+        .footer-icons {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-left: 1%;
+        }
+
+        .footer-icons i {
+          font-size: 3rem; /* Mantiene la proporción de la imagen */
+          margin-bottom: 15px; /* Espacio entre las imágenes */
+        }
+
+        .footer-icons a {
+          color: inherit; /* Hereda el color del elemento padre */
+          text-decoration: none; /* Elimina el subrayado predeterminado */
+        }
+
+        .footer-section {
+          margin-left: 10px;
+
+          .footer-subtitle {
+            font-size: 1.2rem;
+            text-decoration: underline;
+            text-underline-offset: 5px;
+            text-decoration-thickness: 2px;
+            margin-bottom: 10px;
+          }
+
+          a {
+            display: block;
+            color: #fff;
+            text-decoration: none;
+            margin-bottom: 5px;
+          }
+
+          a:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+}
+
