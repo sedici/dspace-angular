@@ -1,0 +1,45 @@
+<header>
+  <div class="container-fluid d-flex align-items-center">
+    <a class="navbar-brand p-2" routerLink="/home">
+      <img [src]="'assets/custom/images/SEDICI_2024.svg'" [attr.alt]="'menu.header.image.logo' | translate"/>
+    </a>
+
+    <nav role="navigation" [attr.aria-label]="'nav.user.description' | translate" class="navbar navbar-light navbar-expand-md flex-grow-1 d-flex justify-content-end">
+      <!-- Aquí van los elementos del menú de navegación -->
+      <div ngbDropdown class="botones-header align-self-center">
+        <button class="btn" id="dropdownMenuButton" ngbDropdownToggle>Institucional</button>
+        <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
+          <button ngbDropdownItem>Politicas</button>
+          <button ngbDropdownItem>Blog</button>
+          <button ngbDropdownItem>Acerca de</button>
+        </div>
+      </div>
+
+      <div ngbDropdown class="botones-header align-self-center">
+        <button class="btn" id="dropdownMenuButton2" ngbDropdownToggle>Preguntas frecuentes</button>
+        <div ngbDropdownMenu aria-labelledby="dropdownMenuButton2">
+          <button ngbDropdownItem>Que hacemos en SEDICI?</button>
+          <button ngbDropdownItem>Como agregar trabajos</button>
+          <button ngbDropdownItem>Mas preguntas</button>
+        </div>
+      </div>
+
+      <div ngbDropdown class="botones-header align-self-center">
+        <button class="btn"><i class="fa-solid fa-arrow-up-from-bracket"></i> Subir material</button>
+      </div>
+
+      <ds-context-help-toggle></ds-context-help-toggle>
+      <ds-auth-nav-menu></ds-auth-nav-menu>
+      <ds-impersonate-navbar></ds-impersonate-navbar>
+      <div *ngIf="isMobile$ | async" class="pl-2">
+        <button class="navbar-toggler px-0" type="button" (click)="toggleNavbar()"
+                aria-controls="collapsingNav"
+                aria-expanded="false" [attr.aria-label]="'nav.toggle' | translate">
+          <span class="fas fa-bars fa-fw toggler-icon" aria-hidden="true"></span>
+        </button>
+      </div>
+      <ds-lang-switch></ds-lang-switch>
+    </nav>
+  </div>
+</header>
+

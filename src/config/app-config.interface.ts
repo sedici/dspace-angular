@@ -63,6 +63,7 @@ interface AppConfig extends Config {
   qualityAssuranceConfig: QualityAssuranceConfig;
   search: SearchConfig;
   notifyMetrics: AdminNotifyMetricsRow[];
+  highlightCollections: { id: string, type: string }[];
 }
 
 /**

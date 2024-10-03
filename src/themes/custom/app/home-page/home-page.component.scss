@@ -1,0 +1,95 @@
+.main-title {
+  position: relative;
+  text-align: center;
+  color: #666; /* Color grisáceo */
+  margin: 20px 0; /* Espacio arriba y abajo del título */
+}
+
+.destacado {
+  display: flex;
+  justify-content: space-around; /* Espacio igual entre las secciones */
+  align-items: center; /* Centra verticalmente las secciones */
+  flex-wrap: wrap; /* Permite que las secciones se ajusten si no caben en una fila */
+  text-align: center; /* Centra el texto dentro de cada sección */
+
+  .section {
+    flex: 1 1 20%; /* Ajusta la flexibilidad de las secciones */
+    padding: 10px; /* Espaciado interno */
+    margin: 10px; /* Espaciado entre las secciones */
+    display: flex;
+    align-items: center; /* Centra verticalmente la imagen y el texto */
+    flex-direction: column;
+
+    img {
+      width: 120px; /* Anchura de la imagen */
+      height: 120px; /* Altura de la imagen */
+      margin-bottom: 10px; /* Espacio entre la imagen y el texto */
+    }
+
+    .text-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* Centra el texto horizontalmente */
+    }
+
+    h4 {
+      margin-bottom: 10px; /* Espacio debajo del título */
+      font-size: 1.1rem; /* Tamaño del título */
+    }
+
+    p {
+      font-size: 1rem; /* Tamaño del texto pequeño */
+    }
+  }
+
+}
+
+.help {
+  margin-top: 20px;
+  padding: 20px 10%;
+  height: 300px;
+  background-color: #cecece; /* Color de fondo similar al de la imagen */
+
+  i{
+    font-size: 9rem;
+    color:#777777;
+    margin-bottom: 4.5%;
+  }
+}
+
+h5 {
+  font-weight: normal;
+  color: #6c757d; /* Color del texto similar al gris de la imagen */
+}
+
+.aliados-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 300px;
+
+  .aliados-title {
+    flex: 1;
+    text-align: right;
+    background: linear-gradient(to left, #d1d1d1, #f7f7f7 2%,#fdfdfd 5%);
+    height: 100%;
+    padding-right: 2%;
+
+    h2 {
+      font-size: 2rem;
+      color: #777; /* Ajusta el color según tu diseño */
+    }
+  }
+
+  .aliados-logos {
+    flex: 3;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    img {
+      max-width: 150px; /* Ajusta el tamaño de las imágenes */
+      margin: 0 10px;
+    }
+  }
+}

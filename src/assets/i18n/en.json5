@@ -1896,7 +1896,7 @@
 
   "file-section.error.header": "Error obtaining files for this item",
 
-  "footer.copyright": "copyright © 2002-{{ year }}",
+  "footer.copyright": "copyright © 2003-{{ year }}",
 
   "footer.link.dspace": "DSpace software",
 
