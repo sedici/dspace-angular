@@ -1,73 +1,123 @@
+<!-- Jumbotron en full width -->
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <div class="badge-title-container">
+      <div class="badge-title-content">
+        <div>
+          <ds-sedici-context-badge *ngIf="showLabel" [object]="object" [showAccessStatus]="true"></ds-sedici-context-badge>
+        </div>
+        <h1 class="mr-auto">
+          <ds-generic-item-page-field [item]="object"
+            [fields]="['dc.title']">
+          </ds-generic-item-page-field>
+        </h1>
+      </div>
+      <ds-dso-edit-menu class="edit-menu"></ds-dso-edit-menu>
+    </div>
+    <div class="subtitle-container">
+      <h2 class="subtitle-content mr-auto">
+        <ds-generic-item-page-field [item]="object"
+          [fields]="['sedici.title.subtitle']">
+        </ds-generic-item-page-field>
+      </h2>
+    </div>
+    <hr class="divider">
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['sedici.creator.person']"
+      [separator]="' | '">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['sedici.creator.corporate']"
+      [separator]="' | '"
+      [label]="'Autor institucional:'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['sedici.creator.interprete']"
+      [separator]="' | '"
+      [label]="'Intérprete:'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['sedici.contributor.compiler']"
+      [separator]="' | '"
+      [label]="'Compilador:'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['sedici.contributor.translator']"
+      [separator]="' | '"
+      [label]="'Traductor:'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['sedici.contributor.editor']"
+      [separator]="' | '"
+      [label]="'Editor:'">
+    </ds-generic-item-page-field>
+    <ds-generic-item-page-field [item]="object"
+      [fields]="['sedici.contributor.inscriber']"
+      [separator]="' | '"
+      [label]="'Firmantes'">
+    </ds-generic-item-page-field>
+    <div>
+      <!-- ELEGIR FORMATO -->
+      <ds-generic-item-page-field [item]="object"
+        [fields]="['dc.coverage.spatial']"
+        [label]="'Alcance geográfico'">
+      </ds-generic-item-page-field>
+      <ds-generic-item-page-field [item]="object"
+        [fields]="['dc.coverage.temporal']"
+        [label]="'Alcance temporal'">
+      </ds-generic-item-page-field>
+      <ds-generic-item-page-field [item]="object"
+        [fields]="['dc.coverage.spatial', 'dc.coverage.temporal']"
+        [separator]="', '">
+      </ds-generic-item-page-field>
+      <ds-generic-item-page-field [item]="object"
+        [fields]="['dc.coverage.spatial', 'dc.coverage.temporal']"
+        [separator]="', '"
+        [label]="'Alcance geográfico y temporal'">
+      </ds-generic-item-page-field>
+    </div>
+    <div>
+      <ds-generic-item-page-field [item]="object"
+      [fields]="['dc.subject']"
+      [separator]="'; '"
+      [label]="'item.page.subject'">
+    </ds-generic-item-page-field>
+    </div>
+    <div class="item-identifiers">
+      <ng-container *ngFor="let idValue of itemIdentifiers">
+        <ds-badge-metadata-values
+          [mdValues]="[idValue.mdValue]"
+          [badgeType]="'badge-identifier'"
+          [badgeLabelType]="'badge-dark'"
+          [badgeLabel]="idValue.label"
+          [copyToClipboardButton]="true"
+          [url]="[idValue.url]">
+        </ds-badge-metadata-values>
+      </ng-container>
+      <ds-badge-metadata-values
+        [mdValues]="object?.allMetadata(['sedici.identifier.issn'])"
+        [badgeType]="'badge-identifier'"
+        [badgeLabelType]="'badge-dark'"
+        [badgeLabel]="'ISSN'"
+        [copyToClipboardButton]="true">
+      </ds-badge-metadata-values>
+      <ds-badge-metadata-values
+        [mdValues]="object?.allMetadata(['sedici.identifier.isbn'])"
+        [badgeType]="'badge-identifier'"
+        [badgeLabelType]="'badge-dark'"
+        [badgeLabel]="'ISBN'"
+        [copyToClipboardButton]="true">
+      </ds-badge-metadata-values>
+    </div>
+  </div>
+</div>
+
 <div class="container">
   <div class="row">
-    <div class="col-9">
-      <div class="badge-title-container">
-        <div class="badge-title-content">
-          <div>
-            <ds-sedici-context-badge *ngIf="showLabel" [object]="object" [showAccessStatus]="true"></ds-sedici-context-badge>
-          </div>
-          <h4 class="mr-auto">
-            <ds-generic-item-page-field [item]="object"
-              [fields]="['dc.title']">
-            </ds-generic-item-page-field>
-          </h4>
-        </div>
-        <ds-dso-edit-menu class="edit-menu"></ds-dso-edit-menu>
-      </div>
-      <div class="subtitle-container">
-        <div class="subtitle-content mr-auto">
-          <ds-generic-item-page-field [item]="object"
-            [fields]="['sedici.title.subtitle']">
-          </ds-generic-item-page-field>
-          <ds-generic-item-page-field [item]="object"
-            [fields]="['dc.title.alternative']"
-            [label]="'Título alternativo:'">
-          </ds-generic-item-page-field>
-          <ds-generic-item-page-field [item]="object"
-            [fields]="['sedici.relation.bookTitle']"
-            [label]="'Pertenece al libro:'">
-          </ds-generic-item-page-field>
-        </div>
-      </div>
-      <hr class="divider">
-      <ds-generic-item-page-field [item]="object"
-        [fields]="['sedici.creator.person']"
-        [separator]="' | '">
-      </ds-generic-item-page-field>
-      <ds-generic-item-page-field [item]="object"
-        [fields]="['sedici.creator.corporate']"
-        [separator]="' | '"
-        [label]="'Autor institucional:'">
-      </ds-generic-item-page-field>
-      <ds-generic-item-page-field [item]="object"
-        [fields]="['sedici.creator.interprete']"
-        [separator]="' | '"
-        [label]="'Intérprete:'">
-      </ds-generic-item-page-field>
-      <ds-generic-item-page-field [item]="object"
-        [fields]="['sedici.contributor.compiler']"
-        [separator]="' | '"
-        [label]="'Compilador:'">
-      </ds-generic-item-page-field>
-      <ds-generic-item-page-field [item]="object"
-        [fields]="['sedici.contributor.translator']"
-        [separator]="' | '"
-        [label]="'Traductor:'">
-      </ds-generic-item-page-field>
-      <ds-generic-item-page-field [item]="object"
-        [fields]="['sedici.contributor.editor']"
-        [separator]="' | '"
-        [label]="'Editor:'">
-      </ds-generic-item-page-field>
-      <language-switcher [item]="object"></language-switcher>
+    <div class="col-lg-9 col-md-12">
       <div class="row">
         <div class="col-12">
-
-          <ds-generic-item-page-field [item]="object"
-            [fields]="['sedici.description.note']"
-            [label]="'Notas'">
-          </ds-generic-item-page-field>
-      
+          <language-switcher [item]="object"></language-switcher>
           <h6 *ngIf="subtype?.startsWith('Tesis')" class="section-divider">Información de la tesis</h6>
           <h6 *ngIf="!subtype?.startsWith('Tesis')" class="section-divider">Información general</h6>
           <ds-generic-item-page-field [item]="object"
@@ -92,56 +142,30 @@
             [fields]="['thesis.degree.grantor']"
             [label]="'Institución otorgante'">
           </ds-generic-item-page-field>
-
-          <h6 *ngIf="subtype?.startsWith('Tesis')" class="section-divider" style="margin-top: 10px;">Información general</h6>
-          <ds-generic-item-page-field [item]="object"
-            [fields]="['sedici.relation.ciclo']"
-            [label]="'Ciclo'">
-          </ds-generic-item-page-field>
           <ds-generic-item-page-field [item]="object"
             [fields]="['sedici.contributor.juror']"
             [separator]="' | '"
             [label]="'Jurados'">
           </ds-generic-item-page-field>
+
+          <h6 *ngIf="subtype?.startsWith('Tesis')" class="section-divider" style="margin-top: 10px;">Información general</h6>
           <ds-generic-item-page-field [item]="object"
-            [fields]="['sedici.contributor.inscriber']"
-            [separator]="' | '"
-            [label]="'Firmantes'">
+            [fields]="['dc.title.alternative']"
+            [label]="'Título alternativo'">
           </ds-generic-item-page-field>
+          <sedici-truncatable-generic-item-page-field [item]="object"
+            [fields]="['sedici.description.note']"
+            [label]="'Notas'">
+          </sedici-truncatable-generic-item-page-field>
           <ds-generic-item-page-field [item]="object"
             [fields]="['sedici.contributor.colaborator']"
             [separator]="' | '"
             [label]="'Colaboradores'">
           </ds-generic-item-page-field>
           <ds-generic-item-page-field [item]="object"
-            [fields]="['sedici.identifier.expediente']"
-            [label]="'N° de expediente'">
-          </ds-generic-item-page-field>
-          <ds-generic-item-page-field [item]="object"
-            [fields]="['sedici.relation.event']"
-            [label]="'Evento'">
-          </ds-generic-item-page-field>
-          <ds-generic-item-page-field [item]="object"
             [fields]="['mods.originInfo.place']"
             [separator]="'; '"
             [label]="'Institución de origen'">
-          </ds-generic-item-page-field>
-          
-          <ds-generic-item-page-field [item]="object"
-            [fields]="['dc.format.medium']"
-            [label]="'Materiales/Técnicas'">
-          </ds-generic-item-page-field>
-          <ds-generic-item-page-field [item]="object"
-            [fields]="['dc.audience']"
-            [label]="'Contexto de uso'">
-          </ds-generic-item-page-field>
-          <ds-generic-item-page-field [item]="object"
-            [fields]="['dc.coverage.spatial']"
-            [label]="'Alcance geográfico'">
-          </ds-generic-item-page-field>
-          <ds-generic-item-page-field [item]="object"
-            [fields]="['dc.coverage.temporal']"
-            [label]="'Alcance temporal'">
           </ds-generic-item-page-field>
           <ds-generic-item-page-field [item]="object"
             [fields]="['dc.format']"
@@ -149,34 +173,25 @@
             [label]="'Descripción física'">
           </ds-generic-item-page-field>
           <ds-generic-item-page-field [item]="object"
-            [fields]="['sedici.subject.ford']"
-            [label]="'Clasificación FORD'">
+            [fields]="['dc.format.extent']"
+            [label]="'Páginas'">
+          </ds-generic-item-page-field>
+          <sedici-truncatable-generic-item-page-field [item]="object"
+            [fields]="['dc.format.medium']"
+            [label]="'Materiales/Técnicas'">
+          </sedici-truncatable-generic-item-page-field>
+          <ds-generic-item-page-field [item]="object"
+            [fields]="['dc.audience']"
+            [label]="'Contexto de uso'">
           </ds-generic-item-page-field>
           <ds-generic-item-page-field [item]="object"
             [fields]="['dc.publisher']"
-            [label]="subtype === 'Discurso' ? 'Producción' : 'Editorial'">
-          </ds-generic-item-page-field>
-          <ds-generic-item-page-field [item]="object"
-            [fields]="['dc.description']"
-            [label]="'item.page.description'">
-          </ds-generic-item-page-field>
-          <ds-generic-item-page-field [item]="object"
-            [fields]="['dc.subject']"
-            [separator]="', '"
-            [label]="'item.page.subject'">
+            [label]="subtype === ('Discurso' || 'Entrevista') ? 'Producción' : 'Editorial'">
           </ds-generic-item-page-field>
           <ds-generic-item-page-field [item]="object"
             [fields]="['sedici.subject.materias']"
             [separator]="', '"
             [label]="'Materias'">
-          </ds-generic-item-page-field>
-          <ds-generic-item-page-field [item]="object"
-            [fields]="['dc.relation.ispartof']"
-            [label]="'item.preview.dc.relation.ispartof'">
-          </ds-generic-item-page-field>
-          <ds-generic-item-page-field [item]="object"
-            [fields]="['dc.identifier.citation']"
-            [label]="'item.page.citation'">
           </ds-generic-item-page-field>
           <ds-item-page-uri-field [item]="object"
             [fields]="['sedici.identifier.uri']"
@@ -186,90 +201,13 @@
             [fields]="['sedici.relation.isRelatedWith']"
             [label]="'Documentos relacionados'">
           </ds-item-page-uri-field>
-
-          <div class="item-identifiers">
-            <ng-container *ngFor="let idValue of itemIdentifiers">
-              <ds-badge-metadata-values
-                [mdValues]="[idValue.mdValue]"
-                [badgeType]="'badge-identifier'"
-                [badgeLabelType]="'badge-dark'"
-                [badgeLabel]="idValue.label"
-                [copyToClipboardButton]="true">
-              </ds-badge-metadata-values>
-            </ng-container>
-            <ds-badge-metadata-values
-              [mdValues]="object?.allMetadata(['sedici.identifier.issn'])"
-              [badgeType]="'badge-identifier'"
-              [badgeLabelType]="'badge-dark'"
-              [badgeLabel]="'ISSN'"
-              [copyToClipboardButton]="true">
-            </ds-badge-metadata-values>
-            <ds-badge-metadata-values
-              [mdValues]="object?.allMetadata(['sedici.identifier.isbn'])"
-              [badgeType]="'badge-identifier'"
-              [badgeLabelType]="'badge-dark'"
-              [badgeLabel]="'ISBN'"
-              [copyToClipboardButton]="true">
-            </ds-badge-metadata-values>
-          </div>
         </div>
       </div>
     </div>
-    <div class="col-3">
+    <div class="col-lg-3 col-md-12">
       <img src="assets/images/LAREFERENCIA.png" alt="LA REFERENCIA" class="reference-image">
-      <ds-apa-citation [item]="object"></ds-apa-citation>
     </div>
   </div>
+  <br>
+  <ds-tabbed-content [object]="object"></ds-tabbed-content>
 </div>
-<br>
-<ds-tabbed-content [object]="object"></ds-tabbed-content>
-
-
-<!-- 
-  METADATOS PARA EL "VER MÁS"
-  
-  <ds-sedici-date-metadata-values
-    [mdValues]="object?.allMetadata(['sedici.date.exposure'])"
-    [label]="'Fecha de exposición'">
-  </ds-sedici-date-metadata-values>
-
-  <ds-sedici-date-metadata-values
-    [mdValues]="object?.allMetadata(['dc.date.issued'])"
-    [label]="'Fecha de publicación'">
-  </ds-sedici-date-metadata-values>
-
-  <ds-sedici-date-metadata-values
-    [mdValues]="object?.allMetadata(['dc.date.created'])"
-    [label]="'Fecha de creación'">
-  </ds-sedici-date-metadata-values>
-
-  <ds-sedici-language-metadata-values
-    [mdValues]="object?.allMetadata(['dc.language'])"
-    [label]="'Idioma el documento'">
-  </ds-sedici-language-metadata-values>
-
-  <ds-generic-item-page-field [item]="object"
-    [fields]="['dc.format.extent']"
-    [label]="'Páginas'">
-  </ds-generic-item-page-field>
-
-  <ds-item-page-collections [item]="object"></ds-item-page-collections>
--->
-
-
-
-<!-- 
-  POSIBLES METADATOS PARA EL "VER MÁS"
-
-  <ds-generic-item-page-field [item]="object"
-            [fields]="['sedici.identifier.expediente']"
-            [label]="'N° de expediente'">
-          </ds-generic-item-page-field>
-  
-  <ds-generic-item-page-field [item]="object"
-    [fields]="['mods.location']"
-    [label]="'Ubicación física'">
-  </ds-generic-item-page-field>
-
-
--->

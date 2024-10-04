@@ -1,13 +1,13 @@
-<ds-truncatable [id]="item?.id" class="container">
+<ds-truncatable [id]="item?.id + 'abstract'" class="container">
   <div *ngIf="availableLanguages.length > 1">
     <span *ngFor="let language of availableLanguages">
-    <button (click)="changeLanguage(language)" [class.active]="language === selectedLanguage">
-        {{ language }}
-    </button>
+      <button (click)="changeLanguage(language)" [class.active]="language === selectedLanguage">
+          {{ language }}
+      </button>
     </span>
   </div>
   <ds-truncatable-part
-    [id]="item?.id"
+    [id]="item?.id + 'abstract'"
     [minLines]="4">
     <p class="abstract-text" [innerHTML]="getAbstract()"></p>
   </ds-truncatable-part>

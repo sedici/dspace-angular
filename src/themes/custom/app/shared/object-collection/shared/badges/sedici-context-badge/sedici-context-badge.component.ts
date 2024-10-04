@@ -27,6 +27,20 @@ export class SediciContextBadgeComponent extends BaseComponent {
     }
   }
 
+  getBookInfo(): string {
+    const bookTitle = this.object.firstMetadataValue('sedici.relation.bookTitle');
+    const isPartOf = this.object.firstMetadataValue('dc.relation.ispartof');
+    
+    if (bookTitle && isPartOf) {
+      return `${bookTitle}; ${isPartOf}`;
+    } else if (bookTitle) {
+      return bookTitle;
+    } else if (isPartOf) {
+      return isPartOf;
+    }
+    return '';
+  }
+
   getJournalInfo(): string {
     const journalTitle = this.object.firstMetadataValue('sedici.relation.journalTitle');
     const journalVolumeAndIssue = this.object.firstMetadataValue('sedici.relation.journalVolumeAndIssue');
@@ -35,35 +49,45 @@ export class SediciContextBadgeComponent extends BaseComponent {
       return `${journalTitle}; ${journalVolumeAndIssue}`;
     } else if (journalTitle) {
       return journalTitle;
-    } else {
-      return '';
     }
-  }
-
-  getOriginInfoPlace(): string {
-    let place = this.object.firstMetadataValue('mods.originInfo.place');
-    if (!place) {
-      return '';
-    }
-    return place;
+    return '';
   }
 
   getEventInfo(): string {
-    let event = this.object.firstMetadataValue('sedici.relation.event');
-    if (!event) {
-      return '';
+    const event = this.object.firstMetadataValue('sedici.relation.event');
+    if (event) {
+      return event;
     }
-    return event;
+    return '';
+  }
+
+  getCicloInfo(): string {
+    const ciclo = this.object.firstMetadataValue('sedici.relation.ciclo');
+    if (ciclo) {
+      return ciclo;
+    }
+    return '';
+  }
+
+  getOriginInfoPlace(): string {
+    let originInfo = this.object.firstMetadataValue('mods.originInfo.place');
+    if (originInfo) {
+      return originInfo;
+    }
+    return '';
   }
 
   getContextInfo(): string {
-    let thesis = this.getThesisInfo();
-    let journal = this.getJournalInfo();
-    let event = this.getEventInfo();
-    let origin = this.getOriginInfoPlace();
+    const thesis = this.getThesisInfo();
     if (thesis) {
       return thesis;
     };
+    const bookTitle = this.getBookInfo();
+    if (bookTitle) {
+      return bookTitle;
+    };
+    const journal = this.getJournalInfo();
+    const event = this.getEventInfo();
     if (journal || event) {
       if (journal && event) {
         return `${journal} | ${event}`;
@@ -73,14 +97,22 @@ export class SediciContextBadgeComponent extends BaseComponent {
         return event;
       };
     };
-    return origin;
+    const ciclo = this.getCicloInfo();
+    if (ciclo) {
+      return ciclo;
+    };
+    const originInfo = this.getOriginInfoPlace();
+    if (originInfo) {
+      return originInfo;
+    };
+    return '';
   }
 
   getYear(): string {
-    let dateString = this.object.firstMetadataValue('dc.date.issued') || this.object.firstMetadataValue('dc.date.created');
-    if (!dateString) {
-      return '';
+    let dateString = this.object.firstMetadataValue('dc.date.issued') || this.object.firstMetadataValue('dc.date.created') || this.object.firstMetadataValue('sedici.date.exposure');
+    if (dateString) {
+      return dateString.split('-')[0];
     }
-    return dateString.split('-')[0];
+    return '';
   }
 }

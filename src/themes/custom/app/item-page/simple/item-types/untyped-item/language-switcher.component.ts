@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NgIf, NgFor } from '@angular/common';
-import { MetadataFieldWrapperComponent } from 'src/app/shared/metadata-field-wrapper/metadata-field-wrapper.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { TruncatableComponent } from 'src/app/shared/truncatable/truncatable.component';
 import { TruncatablePartComponent } from 'src/app/shared/truncatable/truncatable-part/truncatable-part.component';
@@ -14,7 +13,6 @@ import { TruncatablePartComponent } from 'src/app/shared/truncatable/truncatable
   imports: [
     NgIf,
     NgFor,
-    MetadataFieldWrapperComponent,
     TranslateModule,
     TruncatableComponent,
     TruncatablePartComponent,
@@ -34,11 +32,15 @@ export class LanguageSwitcherComponent {
 
   getAbstract(): SafeHtml {
     const abstracts = this.item.metadata['dc.description.abstract'];
-    if (!abstracts) {
-      return this.sanitizer.bypassSecurityTrustHtml('');
+    if (abstracts) {
+      let abstract = abstracts.find((abstract: any) => (abstract.language || 'es') === this.selectedLanguage)?.value || '';
+      if (!abstract) {
+        abstract = abstracts[0].value;
+        this.selectedLanguage = abstracts[0].language;
+      }
+      return this.sanitizer.bypassSecurityTrustHtml(abstract);
     }
-    const abstract = abstracts.find((abstract: any) => (abstract.language || 'es') === this.selectedLanguage)?.value || '';
-    return this.sanitizer.bypassSecurityTrustHtml(abstract);
+    return this.sanitizer.bypassSecurityTrustHtml('');
   }
 
   changeLanguage(language: string) {
@@ -47,9 +49,9 @@ export class LanguageSwitcherComponent {
 
   getAvailableLanguages() {
     const abstracts = this.item.metadata['dc.description.abstract'];
-    if (!abstracts) {
-      return [];
+    if (abstracts) {
+      return [...new Set(abstracts.map((abstract: any) => abstract.language))];
     }
-    return [...new Set(abstracts.map((abstract: any) => abstract.language))];
+    return [];
   }
 }

@@ -18,13 +18,13 @@ import { TranslateModule } from '@ngx-translate/core';
   ],
 })
 export class SediciDateMetadataValuesComponent extends MetadataValuesComponent implements OnInit {
-  @Input() inlineLabel: boolean;
+  @Input() inlineLabel: boolean = true;
   dateString: string;
 
   ngOnInit(): void {
       const date = this.mdValues?.[0]?.value;
       if (date !== undefined) {
-        if (date.length === 10) {
+        if (date.length === 10 || date.includes('T')) {
           this.dateString = new Date(date).toLocaleDateString('es-AR',{ year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
         } else if (date.length === 7) {
           this.dateString = new Date(date).toLocaleDateString('es-AR',{ year: 'numeric', month: 'long', timeZone: 'UTC' });

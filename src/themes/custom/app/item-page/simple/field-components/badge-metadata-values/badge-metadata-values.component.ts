@@ -17,6 +17,7 @@ export class BadgeMetadataValuesComponent extends MetadataValuesComponent {
   @Input() badgeLabel: string;
   @Input() badgeLabelType: string;
   @Input() copyToClipboardButton: boolean = false;
+  @Input() url: string;
 
   copyToClipboard(el: HTMLDivElement, id: string) {
     if (navigator.clipboard) {

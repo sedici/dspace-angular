@@ -18,7 +18,7 @@ import { TranslateModule } from '@ngx-translate/core';
   ],
 })
 export class SediciLanguageMetadataValuesComponent extends MetadataValuesComponent implements OnInit {
-  @Input() inlineLabel: boolean;
+  @Input() inlineLabel: boolean = true;
   languageString: string;
 
   ngOnInit(): void {

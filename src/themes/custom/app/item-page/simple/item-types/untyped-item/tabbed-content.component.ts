@@ -4,11 +4,18 @@ import { Item } from 'src/app/core/shared/item.model';
 import { ItemPageCcLicenseFieldComponent } from 'src/app/item-page/simple/field-components/specific-field/cc-license/item-page-cc-license-field.component';
 import { FullItemComponent } from './full-item.component';
 import { ContentFilesComponent } from './content-files.component';
+import { ApaCitationComponent } from './apa-citation.component';
 
 @Component({
   selector: 'ds-tabbed-content',
   standalone: true,
-  imports: [CommonModule, ItemPageCcLicenseFieldComponent, FullItemComponent, ContentFilesComponent],
+  imports: [
+    CommonModule,
+    ItemPageCcLicenseFieldComponent,
+    FullItemComponent,
+    ContentFilesComponent,
+    ApaCitationComponent,
+  ],
   templateUrl: './tabbed-content.component.html',
   styleUrls: ['./tabbed-content.component.scss']
 })
@@ -20,6 +27,7 @@ export class TabbedContentComponent {
   tabs = [
     { label: 'Contenido' },
     { label: 'Licencia' },
+    { label: 'Cita' },
     { label: 'Registro completo' }
   ];
 

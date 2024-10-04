@@ -17,6 +17,9 @@
         <ds-item-page-cc-license-field [item]="object" [variant]="'full'"></ds-item-page-cc-license-field>
       </div>
       <div *ngSwitchCase="2">
+        <ds-apa-citation [item]="object"></ds-apa-citation>
+      </div>
+      <div *ngSwitchCase="3">
         <full-item [object]="object"></full-item>
       </div>
       <div *ngSwitchDefault>

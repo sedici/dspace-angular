@@ -1,5 +1,5 @@
 import { Component, Input, Inject } from '@angular/core';
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf, NgStyle } from '@angular/common';
 import { Item } from 'src/app/core/shared/item.model';
 import { BitstreamDataService } from 'src/app/core/data/bitstream-data.service';
 import { APP_CONFIG, AppConfig } from 'src/config/app-config.interface';
@@ -16,6 +16,7 @@ import { SediciFileDownloadLinkComponent } from './sedici-file-download-link.com
   imports: [
     NgFor,
     NgIf,
+    NgStyle,
     FileSizePipe,
     SediciFileDownloadLinkComponent,
   ],
@@ -24,6 +25,7 @@ export class ContentFilesComponent {
   @Input() object: Item;
 
   primaryBitsreamId: string;
+  previewUrl: string;
 
   files: Bitstream[] = [];
 
@@ -37,11 +39,37 @@ export class ContentFilesComponent {
 
   selectFile(file: Bitstream) {
     this.selectedFile = file;
+    this.previewUrl = file._links.content.href; // Solo para probar la vista de imágenes
   }
 
   getFileExtension(fileName: string): string {
     const parts = fileName.split('.');
     return parts.length > 1 ? parts.pop() : '';
+  }
+
+  stringToHexColor(str: string): string {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      hash += str.charCodeAt(i);
+      hash += (hash << 10);
+      hash ^= (hash >> 6);
+    }
+    hash += (hash << 3);
+    hash ^= (hash >> 11);
+    hash += (hash << 15);
+    
+    let color = '#';
+    for (let i = 0; i < 3; i++) {
+      const value = (hash >> (i * 8)) & 0xFF;
+      color += ('00' + value.toString(16)).substr(-2);
+    }
+    return color;
+  }
+
+  getBadgeStyle(fileName: string): { [key: string]: string } {
+    const extension = this.getFileExtension(fileName);
+    const color = this.stringToHexColor(extension);
+    return { 'background-color': color };
   }
 
   isImage(file: Bitstream): boolean {

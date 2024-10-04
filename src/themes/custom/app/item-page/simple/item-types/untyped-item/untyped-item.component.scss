@@ -6,16 +6,15 @@
 .badge-title-content {
   display: flex;
   flex-direction: column;
-
-  h4 {
-    font-size: 1.75rem;
-    color: #999;
-    margin-bottom: 0.5rem;
-  }
+  color: #999;
 }
 
 .edit-menu {
   margin-left: auto;
+}
+
+.subtitle-container {
+  margin-top: 10px;
 }
 
 .subtitle-content {
@@ -36,15 +35,11 @@
 .item-identifiers {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.2em;
-
-  div {
-    display: inline-block;
-    padding-right: 0.2em;
-  }
+  gap: 0.2rem;
 }
 
 .reference-image {
   max-width: 100%;
   height: auto;
+  margin-bottom: 10px;
 }

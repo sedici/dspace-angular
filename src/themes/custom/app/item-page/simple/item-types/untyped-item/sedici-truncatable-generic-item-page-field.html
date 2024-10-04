@@ -1,0 +1,11 @@
+<ds-metadata-field-wrapper [label]="label | translate" [inlineLabel]="true">
+  <ds-truncatable [id]="label">
+    <span *ngIf="length > 0">
+      <ds-truncatable-part
+        [id]="label"
+        [minLines]="minLines">
+        <p class="text" [innerHTML]="metadataTextValue"></p>
+      </ds-truncatable-part>
+    </span>
+  </ds-truncatable>
+</ds-metadata-field-wrapper>

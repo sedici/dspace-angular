@@ -9,7 +9,7 @@ import { GenericItemPageFieldComponent } from 'src/app/item-page/simple/field-co
 import { SediciDateMetadataValuesComponent } from '../../field-components/date-metadata-values/sedici-date-metadata-values.component';
 import { SediciLanguageMetadataValuesComponent } from '../../field-components/language-metadata-values/sedici-language-metadata-values.component';
 import { CollectionsComponent } from 'src/app/item-page/field-components/collections/collections.component';
-
+import { ItemPageIdentifierOtherFieldComponent } from '../../field-components/specific-field/identfier-other/item-page-identifier.other-field';
 @Component({
   selector: 'full-item',
   // styleUrls: ['./full-item.component.scss'],
@@ -23,6 +23,7 @@ import { CollectionsComponent } from 'src/app/item-page/field-components/collect
     SediciDateMetadataValuesComponent,
     SediciLanguageMetadataValuesComponent,
     CollectionsComponent,
+    ItemPageIdentifierOtherFieldComponent,
   ],
 })
 export class FullItemComponent {
@@ -32,9 +33,4 @@ export class FullItemComponent {
   ngOnInit(): void {
     this.itemPageRoute = getItemPageRoute(this.object);
   }
-
-  getMetadataEntries() {
-    const metadata = this.object.metadata;
-    return Object.keys(metadata).map(key => ({ key, value: metadata[key] }));
-  }  
 }

@@ -1,14 +1,13 @@
 <div class="content-container row">
-  <div class="file-list col-5">
+  <div class="file-list col-lg-4 col-12">
     <div *ngFor="let file of files" class="file-item row" (click)="selectFile(file)">
-      <div class="file-icon col-1">
-        <span class="file-extension">.{{ getFileExtension(file.name) }}</span>
+      <div class="file-icon col-1" [ngStyle]="getBadgeStyle(file.name)">
+        <span class="file-extension">{{ getFileExtension(file.name) }}</span>
       </div>
       <div class="file-info col-11">
         <div class="row">
-          <span class="file-name col-6">{{ getFileDescription(file) }}</span>
-          <span class="file-size col-3">{{ (file?.sizeBytes) | dsFileSize }}</span>
-          <div class="col-3">
+          <span class="file-name col-8">{{ getFileDescription(file) }}</span>
+          <div class="col-4">
             <ds-sedici-file-download-link [bitstream]="file" [item]="object"></ds-sedici-file-download-link>
           </div>
         </div>
@@ -16,11 +15,15 @@
     </div>
   </div>
 
-  <div class="file-preview col-7">
+  <div class="file-preview col-lg-8 col-12">
     <div *ngIf="selectedFile; else noPreview">
       <ng-container *ngIf="isImage(selectedFile); else fileName">
-        <!-- <img [src]="selectedFile.previewUrl" alt="{{ dsoNameService.getName(selectedFile) }}" class="preview-image"> -->
-        <span class="no-preview">SOY UNA IMAGEN</span>
+        <div *ngIf="previewUrl; else noImagePreview">
+          <img  class="preview-image" [src]="previewUrl" alt="{{ dsoNameService.getName(selectedFile) }}">
+        </div>
+        <ng-template #noImagePreview>
+          <span class="no-preview">SOY UNA IMAGEN {{ dsoNameService.getName(selectedFile) }}</span>
+        </ng-template>
       </ng-container>
       <ng-template #fileName>
         <!-- <span class="preview-title">{{ dsoNameService.getName(selectedFile) }}</span> -->

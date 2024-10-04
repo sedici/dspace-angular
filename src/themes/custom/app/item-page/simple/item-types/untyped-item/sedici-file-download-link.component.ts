@@ -6,7 +6,9 @@ import {
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { FileSizePipe } from 'src/app/shared/utils/file-size-pipe';
 import { FileDownloadLinkComponent } from 'src/app/shared/file-download-link/file-download-link.component';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'ds-sedici-file-download-link',
@@ -19,6 +21,8 @@ import { FileDownloadLinkComponent } from 'src/app/shared/file-download-link/fil
     NgIf,
     RouterLink,
     TranslateModule,
+    FileSizePipe,
+    NgbTooltipModule,
   ],
 })
 export class SediciFileDownloadLinkComponent extends FileDownloadLinkComponent implements OnInit {
