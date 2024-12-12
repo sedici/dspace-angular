@@ -21,8 +21,8 @@ import { SystemWideAlertBannerComponent } from '../../../../app/system-wide-aler
   selector: 'ds-themed-root',
   // styleUrls: ['./root.component.scss'],
   styleUrls: ['../../../../app/root/root.component.scss'],
-  // templateUrl: './root.component.html',
-  templateUrl: '../../../../app/root/root.component.html',
+  templateUrl: './root.component.html',
+  // templateUrl: '../../../../app/root/root.component.html',
   animations: [slideSidebarPadding],
   standalone: true,
   imports: [

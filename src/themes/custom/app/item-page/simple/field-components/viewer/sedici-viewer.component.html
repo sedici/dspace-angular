@@ -1,0 +1,11 @@
+<div class="modal-header">
+  <h4 class="modal-title">Previsualización</h4>
+  <button type="button" class="close" aria-label="Close" (click)="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <ng-container *ngIf="content">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+  </ng-container>
+</div>

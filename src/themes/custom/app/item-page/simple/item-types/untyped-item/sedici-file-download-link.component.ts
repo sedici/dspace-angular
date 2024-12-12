@@ -27,4 +27,23 @@ import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 })
 export class SediciFileDownloadLinkComponent extends FileDownloadLinkComponent implements OnInit {
   
+  adaptFileSize (size: string): string {
+    if (size.includes("KB")) {
+      const kbValue = parseFloat(size.replace("KB", "").trim()); // Extraer el valor numérico en KB
+      const mbValue = kbValue / 1024; // Convertir a MB y formatear a 1 decimal
+      const roundedMbValue = Math.round(mbValue * 10) / 10; // Redondear a 1 decimal
+      const formattedMbValue = roundedMbValue % 1 === 0 ? roundedMbValue.toFixed(0) : roundedMbValue.toFixed(1); // Verificar si es un valor entero
+      return `${formattedMbValue} MB`;
+    } else if (size.includes("MB")) {
+      const mbValue = parseFloat(size.replace("MB", "").trim()); // Extraer el valor numérico en MB
+      if (mbValue >= 1000) { // Si el valor en MB es mayor o igual a 1000, convertir a GB
+        // const gbValue = mbValue / 1000;
+        // const roundedGbValue = Math.round(gbValue * 10) / 10;
+        // const formattedGbValue = roundedGbValue % 1 === 0 ? roundedGbValue.toFixed(0) : roundedGbValue.toFixed(1);
+        // return `${formattedGbValue} GB`;
+        return "1 GB"; // Todavía en SEDICI no hay archivos que superen 1 GB, pero queda plateado a futuro el método
+      }
+    }
+    return size;
+  }
 }

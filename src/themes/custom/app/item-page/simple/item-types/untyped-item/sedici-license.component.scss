@@ -1,0 +1,16 @@
+.licencias {
+  h2 {
+    font-weight: bold;
+  }
+}
+
+.licencia-item {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+
+  i {
+    font-size: 3rem;
+    margin-right: 1rem;
+  }
+}

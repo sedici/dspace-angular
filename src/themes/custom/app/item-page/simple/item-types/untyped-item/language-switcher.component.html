@@ -1,14 +1,16 @@
-<ds-truncatable [id]="item?.id + 'abstract'" class="container">
-  <div *ngIf="availableLanguages.length > 1">
-    <span *ngFor="let language of availableLanguages">
-      <button (click)="changeLanguage(language)" [class.active]="language === selectedLanguage">
-          {{ language }}
-      </button>
-    </span>
+<div class="language-switcher-wrapper">
+  <div class="language-switcher-container">
+    <ds-truncatable [id]="item?.id + 'abstract'">
+      <ds-truncatable-part [id]="item?.id + 'abstract'" [minLines]="5">
+        <p class="abstract-text" [innerHTML]="getAbstract()"></p>
+      </ds-truncatable-part>
+    </ds-truncatable>
   </div>
-  <ds-truncatable-part
-    [id]="item?.id + 'abstract'"
-    [minLines]="4">
-    <p class="abstract-text" [innerHTML]="getAbstract()"></p>
-  </ds-truncatable-part>
-</ds-truncatable>
+  <div *ngIf="availableLanguages.length > 1" class="language-sidebar">
+    <button *ngFor="let language of availableLanguages" 
+            (click)="changeLanguage(language)" 
+            [class.active]="language === selectedLanguage">
+      {{ language.toUpperCase() }}
+    </button>
+  </div>
+</div>

@@ -1,0 +1,156 @@
+<div class="row">
+  <div class="col-lg-6 col-md-12">
+    <ds-item-page-cc-license-field [item]="object" [variant]="'full'"></ds-item-page-cc-license-field>
+  </div>
+  <div class="col-lg-6 col-md-12">            
+    <div *ngIf="license" class="licencias">
+      <div *ngIf="(license.includes('PDM') || license.includes('Creative Public Domain')); else noMark">
+        <h2>No Copyright</h2>
+        
+        <div class="licencia-item">
+          <i class="fa-brands fa-creative-commons-pd"></i>
+          <div>
+            This work has been identified as being free of known restrictions under copyright law, including all related and neighboring rights.
+          </div>
+        </div>
+
+        <div class="licencia-item">
+          <div>
+            You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. See Other Information below.
+          </div>
+        </div>
+
+        <h2>Other Information</h2>
+
+        <div class="licencia-item">
+          <div>
+            The work may not be free of known copyright restrictions in all jurisdictions.
+          </div>
+        </div>
+
+        <div class="licencia-item">
+          <div>
+            Persons may have other rights in or related to the work, such as patent or trademark rights, and others may have rights in how the work is used, such as publicity or privacy rights.
+          </div>
+        </div>
+
+        <div class="licencia-item">
+          <div>
+            In some jurisdictions moral rights of the author may persist beyond the term of copyright. These rights may include the right to be identified as the author and the right to object to derogatory treatments.
+          </div>
+        </div>
+
+        <div class="licencia-item">
+          <div>
+            Unless expressly stated otherwise, the person who identified the work makes no warranties about the work, and disclaims liability for all uses of the work, to the fullest extent permitted by applicable law.
+          </div>
+        </div>
+
+        <div class="licencia-item">
+          <div>
+            When using or citing the work, you should not imply endorsement by the author or the person who identified the work.
+          </div>
+        </div>
+      </div>
+
+      <ng-template #noMark>
+        <div *ngIf="license.includes('Universal'); else noZero">
+          <h2>No Copyright</h2>
+        
+          <div class="licencia-item">
+            <i class="fa-brands fa-creative-commons-zero"></i>
+            <div>
+              The person who associated a work with this deed has dedicated the work to the public domain by waiving all of his or her rights to the work worldwide under copyright law, including all related and neighboring rights, to the extent allowed by law.
+            </div>
+          </div>
+
+          <div class="licencia-item">
+            <div>
+              You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. See Other Information below.
+            </div>
+          </div>
+
+          <h2>Other Information</h2>
+
+          <div class="licencia-item">
+            <div>
+              In no way are the patent or trademark rights of any person affected by CC0, nor are the rights that other persons may have in the work or in how the work is used, such as publicity or privacy rights.
+            </div>
+          </div>
+
+          <div class="licencia-item">
+            <div>
+              Unless expressly stated otherwise, the person who associated a work with this deed makes no warranties about the work, and disclaims liability for all uses of the work, to the fullest extent permitted by applicable law.
+            </div>
+          </div>
+
+          <div class="licencia-item">
+            <div>
+              When using or citing the work, you should not imply endorsement by the author or the affirmer.
+            </div>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template #noZero>
+        <div *ngIf="(license.includes('CC') || license.includes('cc') || license.includes('Attribution')) ">
+          <h2>{{ 'sedici.license.free' | translate }}</h2>
+
+          <div class="licencia-item">
+            <div>
+              <strong>{{ 'sedici.license.share' | translate }}</strong> - {{ 'sedici.license.share.description' | translate }}
+            </div>
+          </div>
+
+          <div *ngIf="!(license.includes('ND') || license.includes('NoDerivs'))" class="licencia-item">
+            <div>
+              <strong>{{ 'sedici.license.adapt' | translate }}</strong> - {{ 'sedici.license.adapt.description' | translate }}
+            </div>
+          </div>
+
+          <div class="licencia-item">
+            <div>
+              {{ 'sedici.license.description' | translate }}
+            </div>
+          </div>
+
+          <h2>{{ 'sedici.license.terms' | translate }}</h2>
+        
+          <div class="licencia-item">
+            <i class="fa-brands fa-creative-commons-by"></i>
+            <div>
+              <strong>{{ 'sedici.license.attribution' | translate }}</strong> - {{ 'sedici.license.attribution.description' | translate }}
+            </div>
+          </div>
+        
+          <div *ngIf="(license.includes('NC') || license.includes('NonCommercial'))" class="licencia-item">
+            <i class="fa-brands fa-creative-commons-nc"></i>
+            <div>
+              <strong>{{ 'sedici.license.nonCommercial' | translate }}</strong> - {{ 'sedici.license.nonCommercial.description' | translate }}
+            </div>
+          </div>
+        
+          <div *ngIf="(license.includes('ND') || license.includes('NoDerivs') || license.includes('NoDerivatives'))" class="licencia-item">
+            <i class="fa-brands fa-creative-commons-nd"></i>
+            <div>
+              <strong>{{ 'sedici.license.noDerivateWorks' | translate }}</strong> - {{ 'sedici.license.noDerivateWorks.description' | translate }}
+            </div>
+          </div>
+        
+          <div *ngIf="(license.includes('SA') || license.includes('shareAlike') || license.includes('ShareAlike'))" class="licencia-item">
+            <i class="fa-brands fa-creative-commons-sa"></i>
+            <div>
+              <strong>{{ 'sedici.license.shareAlike' | translate }}</strong> - {{ 'sedici.license.shareAlike.description' | translate }}
+            </div>
+          </div>
+
+          <div class="licencia-item">
+            <div>
+              <strong>{{ 'sedici.license.restriction' | translate }}</strong> - {{ 'sedici.license.restriction.description' | translate }}
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </div>   
+  </div>
+</div>

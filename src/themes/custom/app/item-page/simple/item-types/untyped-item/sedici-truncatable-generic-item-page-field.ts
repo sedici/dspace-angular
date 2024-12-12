@@ -1,12 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { Item } from 'src/app/core/shared/item.model';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { NgIf, NgFor } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { MetadataFieldWrapperComponent } from 'src/app/shared/metadata-field-wrapper/metadata-field-wrapper.component';
 import { TruncatableComponent } from 'src/app/shared/truncatable/truncatable.component';
-import { TruncatablePartComponent } from 'src/app/shared/truncatable/truncatable-part/truncatable-part.component';
-
+import { SediciTruncatablePartComponent } from 'src/themes/custom/app/shared/truncatable/truncatable-part/sedici-truncatable-part.component';
 @Component({
   selector: 'sedici-truncatable-generic-item-page-field',
   styleUrls: ['./sedici-truncatable-generic-item-page-field.scss'],
@@ -14,11 +12,9 @@ import { TruncatablePartComponent } from 'src/app/shared/truncatable/truncatable
   standalone: true,
   imports: [
     NgIf,
-    NgFor,
     TranslateModule,
-    MetadataFieldWrapperComponent,
     TruncatableComponent,
-    TruncatablePartComponent,
+    SediciTruncatablePartComponent,
   ],
 })
 export class SediciTruncatableGenericItemPageFieldComponent {
@@ -42,7 +38,7 @@ export class SediciTruncatableGenericItemPageFieldComponent {
     metadataArray.forEach((metadata, index) => {
       concat += metadata.value;
       if (index < metadataArray.length - 1) {
-        concat += '\n';
+        concat += '; ';
       }
     });
     if (concat.length > 0) {

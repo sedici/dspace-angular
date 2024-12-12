@@ -1,49 +1,85 @@
 <div>
   <ds-sedici-date-metadata-values
     [mdValues]="object?.allMetadata(['dc.date.issued'])"
-    [label]="'Fecha de publicación'">
+    [label]="'sedici.item.page.dc.date.issued'">
   </ds-sedici-date-metadata-values>
 
   <ds-sedici-date-metadata-values
     [mdValues]="object?.allMetadata(['dc.date.created'])"
-    [label]="'Fecha de creación'">
+    [label]="'sedici.item.page.dc.date.created'">
   </ds-sedici-date-metadata-values>
 
   <ds-sedici-date-metadata-values
     [mdValues]="object?.allMetadata(['sedici.date.exposure'])"
-    [label]="'Fecha de exposición'">
+    [label]="'sedici.item.page.sedici.date.exposure'">
   </ds-sedici-date-metadata-values>
 
   <ds-generic-item-page-field [item]="object"
     [fields]="['dc.description.filiation']"
-    [label]="'Filiación del autor'">
+    [label]="'sedici.item.page.dc.description.filiation'">
   </ds-generic-item-page-field>
 
   <ds-generic-item-page-field [item]="object"
     [fields]="['sedici.identifier.expediente']"
-    [label]="'N° de expediente'">
+    [label]="'sedici.item.page.sedici.identifier.expediente'">
   </ds-generic-item-page-field>
 
   <ds-generic-item-page-field [item]="object"
     [fields]="['mods.location']"
-    [label]="'Ubicación física'">
+    [label]="'sedici.item.page.mods.location'">
   </ds-generic-item-page-field>
 
   <ds-generic-item-page-field [item]="object"
     [fields]="['sedici.subject.ford']"
-    [label]="'Clasificación FORD'">
+    [separator]="'; '"
+    [label]="'sedici.item.page.sedici.subject.ford'">
   </ds-generic-item-page-field>
 
   <ds-sedici-language-metadata-values
     [mdValues]="object?.allMetadata(['dc.language'])"
-    [label]="'Idioma del documento'">
+    [label]="'sedici.item.page.dc.language'">
   </ds-sedici-language-metadata-values>
 
   <ds-item-page-identifier-other-field [item]="object"></ds-item-page-identifier-other-field>
 
+  <ds-generic-item-page-field [item]="object"
+    [fields]="['thesis.degree.name']"
+    [label]="'sedici.item.page.thesis.degree.name'">
+  </ds-generic-item-page-field>
+
+  <ds-generic-item-page-field [item]="object"
+    [fields]="['thesis.degree.grantor']"
+    [label]="'sedici.item.page.thesis.degree.grantor'">
+  </ds-generic-item-page-field>
+
+  <ds-generic-item-page-field [item]="object"
+    [fields]="['sedici.relation.event']"
+    [label]="'sedici.item.page.sedici.relation.event'">
+  </ds-generic-item-page-field>
+
+  <ds-generic-item-page-field [item]="object"
+    [fields]="['sedici.relation.journalTitle']"
+    [label]="'sedici.item.page.sedici.relation.journalTitle'">
+  </ds-generic-item-page-field>
+
+  <ds-generic-item-page-field [item]="object"
+    [fields]="['sedici.relation.journalVolumeAndIssue']"
+    [label]="'sedici.item.page.sedici.relation.journalVolumeAndIssue'">
+  </ds-generic-item-page-field>
+
+  <ds-generic-item-page-field [item]="object"
+    [fields]="['sedici.relation.bookTitle']"
+    [label]="'sedici.item.page.sedici.relation.bookTitle'">
+  </ds-generic-item-page-field>
+
+  <ds-generic-item-page-field [item]="object"
+    [fields]="['sedici.relation.ciclo']"
+    [label]="'sedici.item.page.sedici.relation.ciclo'">
+  </ds-generic-item-page-field>
+
   <ds-sedici-date-metadata-values
     [mdValues]="object?.allMetadata(['dc.date.accessioned'])"
-    [label]="'Creado el'">
+    [label]="'sedici.item.page.dc.date.accessioned'">
   </ds-sedici-date-metadata-values>
 
   <ds-item-page-collections [item]="object"></ds-item-page-collections>

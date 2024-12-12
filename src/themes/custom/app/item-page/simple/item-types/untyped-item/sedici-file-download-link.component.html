@@ -9,7 +9,6 @@
       <span role="img" [attr.aria-label]="'file-download-link.download' | translate" class="pr-1">
         <i class="fas fa-download"></i>
       </span>
-    </ng-template>
-    {{ (bitstream?.sizeBytes) | dsFileSize:0 }}
+    </ng-template>{{ adaptFileSize((bitstream?.sizeBytes) | dsFileSize:0) }}
   </button>
 </a>

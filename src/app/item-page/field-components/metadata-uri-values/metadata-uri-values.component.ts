@@ -53,4 +53,19 @@ export class MetadataUriValuesComponent extends MetadataValuesComponent {
    * The label for this iteration of metadata values
    */
   @Input() label: string;
+
+  /**
+   * Extract the domain from a URL
+   * @param url The full URL
+   * @returns The domain of the URL
+   */
+  getDomain(url: string): string {
+    try {
+      const parsedUrl = new URL(url);
+      return parsedUrl.origin;
+    } catch (e) {
+      console.error('Invalid URL:', url);
+      return url;
+    }
+  }
 }

@@ -1,0 +1,36 @@
+<div class="modal-header">
+  <h4 class="modal-title">Compartir</h4>
+  <button type="button" class="close" aria-label="Close" (click)="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="share-modal-content">
+    <!-- Barra de enlace para copiar -->
+    <div class="link-bar">
+      <input type="text" class="share-link" [value]="link" readonly #elementContentToCopy>
+      <button id="copyButton" (click)="copyToClipboard(elementContentToCopy)">Copiar</button>
+      <span id="copySuccessMessage" class="copy-success-message" *ngIf="copySuccess">✓</span>
+    </div>
+
+    <!-- Botones de redes sociales con iconos de Font Awesome -->
+    <div class="social-buttons">
+      <button class="social-icon-button">
+        <i class="fa-brands fa-researchgate icon-size"></i>
+      </button>
+      <button class="social-icon-button">
+        <i class="fa-brands fa-mendeley icon-size"></i>
+      </button>
+      <button class="social-icon-button">
+        <i class="fa-brands fa-whatsapp icon-size"></i>
+      </button>
+      <button class="social-icon-button">
+        <i class="fa-brands fa-linkedin icon-size"></i>
+      </button>
+      <button class="social-icon-button">
+        <i class="fa-brands fa-x-twitter icon-size"></i>
+      </button>
+    </div>
+  </div>
+</div>
+

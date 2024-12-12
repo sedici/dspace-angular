@@ -1,20 +1,24 @@
+.jumbotron {
+  padding: 1rem 0;
+  margin-bottom: 0;
+}
+
 .badge-title-container {
   display: flex;
-  align-items: center;
 }
   
 .badge-title-content {
   display: flex;
   flex-direction: column;
-  color: #999;
+
+  h1 {
+    font-weight: bold;
+    margin-bottom: 0;
+  }
 }
 
 .edit-menu {
   margin-left: auto;
-}
-
-.subtitle-container {
-  margin-top: 10px;
 }
 
 .subtitle-content {
@@ -32,14 +36,29 @@
   border-bottom: 1px solid #D8E8Eb;
 }
 
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @media (max-width: 992px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
 .item-identifiers {
   display: flex;
   flex-wrap: wrap;
   gap: 0.2rem;
 }
 
-.reference-image {
-  max-width: 100%;
-  height: auto;
-  margin-bottom: 10px;
+.botones-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+}
+
+#dropdownMenuButton::after {
+  content: none;
 }

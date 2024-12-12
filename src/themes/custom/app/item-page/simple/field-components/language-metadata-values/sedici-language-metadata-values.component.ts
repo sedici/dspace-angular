@@ -29,6 +29,8 @@ export class SediciLanguageMetadataValuesComponent extends MetadataValuesCompone
         this.languageString = 'Inlgés';
       } else if (language === 'pt') {
         this.languageString = 'Portugués';
+      } else if (language === 'de') {
+        this.languageString = 'Alemán';
       }
   }
 }

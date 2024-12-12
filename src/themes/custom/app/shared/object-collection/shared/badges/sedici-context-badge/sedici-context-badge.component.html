@@ -5,12 +5,9 @@
 <div class="badge-title-container">
   <ds-type-badge class="pr-1" [object]="object"></ds-type-badge>
   <ng-container *ngIf="showAccessStatus">
-    <ds-access-status-badge [object]="object"></ds-access-status-badge>
+    <ds-access-status-badge class="pr-1" [object]="object"></ds-access-status-badge>
   </ng-container>
-  <div class="context-info">
-     {{ getContextInfo() }}
-  </div>
-  <div class="context-year">
-    {{ getYear() }}
-  </div>
+  <span>
+    <span class="badge badge-primary">{{ getYear() }}</span>
+  </span>
 </div>

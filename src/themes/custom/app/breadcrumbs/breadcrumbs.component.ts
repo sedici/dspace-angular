@@ -4,7 +4,7 @@ import {
   NgIf,
   NgTemplateOutlet,
 } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
@@ -25,4 +25,18 @@ import { VarDirective } from '../../../../app/shared/utils/var.directive';
   imports: [VarDirective, NgIf, NgTemplateOutlet, NgFor, RouterLink, NgbTooltipModule, AsyncPipe, TranslateModule],
 })
 export class BreadcrumbsComponent extends BaseComponent {
+  isResponsive: boolean = false;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.checkResponsive();
+  }
+
+  ngOnInit() {
+    this.checkResponsive();
+  }
+
+  checkResponsive() {
+    this.isResponsive = window.innerWidth < 768; // Ajusta el ancho según tus necesidades
+  }
 }

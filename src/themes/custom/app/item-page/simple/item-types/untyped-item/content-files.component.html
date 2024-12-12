@@ -1,39 +1,133 @@
-<div class="content-container row">
+<div class="content-container row" *ngIf="files.length > 0; else noFile">
   <div class="file-list col-lg-4 col-12">
-    <div *ngFor="let file of files" class="file-item row" (click)="selectFile(file)">
+    <div *ngFor="let file of files" class="file-item row" (click)="selectFile(file)" [ngClass]="{'selected-file': file === selectedFile}">
       <div class="file-icon col-1" [ngStyle]="getBadgeStyle(file.name)">
         <span class="file-extension">{{ getFileExtension(file.name) }}</span>
       </div>
-      <div class="file-info col-11">
-        <div class="row">
-          <span class="file-name col-8">{{ getFileDescription(file) }}</span>
-          <div class="col-4">
-            <ds-sedici-file-download-link [bitstream]="file" [item]="object"></ds-sedici-file-download-link>
-          </div>
-        </div>
+      <div class="col-lg-8 col-7">
+        <span class="file-name">{{ getFileDescription(file) }}</span>
+      </div>
+      <div class="col-lg-3 col-3 download-button">
+        <ds-sedici-file-download-link [bitstream]="file" [item]="object"></ds-sedici-file-download-link>
+      </div>
+      <div class="d-block d-lg-none col-1 preview-button"> <!-- Solo visible en dispositivos móviles -->
+        <i class="fa-regular fa-eye" (click)="openModal(contentTemplate)"></i>
       </div>
     </div>
   </div>
 
-  <div class="file-preview col-lg-8 col-12">
+  <ng-template #contentTemplate>
+    <ng-container [ngSwitch]="getFileExtension(selectedFile.name)">
+      <div *ngSwitchCase="'pdf'">
+        <div *ngIf="isLoading" class="loading-overlay">
+          <i class="fa-solid fa-spinner fa-spin-pulse loading-spinner"></i>
+        </div>
+        <ngx-doc-viewer 
+          [url]="previewUrl"
+          viewer="google"
+          style="width: 100%; height: 90vh;"
+          (loaded)="onDocLoaded()">
+        </ngx-doc-viewer>
+      </div>
+      <div *ngSwitchCase="'jpg'">
+        <img  class="preview-image" [src]="previewUrl" alt="{{ dsoNameService.getName(selectedFile) }}">
+      </div>
+      <div *ngSwitchCase="'zip'">
+        <h3>Archivos en el ZIP:</h3>
+        <ul>
+          <ng-container *ngTemplateOutlet="renderTree; context: { tree: zipContentTree }"></ng-container>
+        </ul>
+        <ng-template #renderTree let-tree="tree">
+          <ul>
+            <li *ngFor="let key of objectKeys(tree || {})">
+              <ng-container *ngIf="isFolder(tree[key]); else fileTemplate">
+                <i class="fa fa-folder"></i> {{ key }}
+                <ng-container *ngTemplateOutlet="renderTree; context: { tree: tree[key] }"></ng-container>
+              </ng-container>
+        
+              <ng-template #fileTemplate>
+                <ng-container [ngSwitch]="getFileExtension(key)">
+                  <i *ngSwitchCase="'pdf'" class="fa fa-file-pdf"></i>
+                  <i *ngSwitchCase="'doc'" class="fa fa-file-word"></i>
+                  <i *ngSwitchCase="'docx'" class="fa fa-file-word"></i>
+                  <i *ngSwitchCase="'csv'" class="fa fa-file-csv"></i>
+                  <i *ngSwitchCase="'jpg'" class="fa fa-file-image"></i>
+                  <i *ngSwitchCase="'jpeg'" class="fa fa-file-image"></i>
+                  <i *ngSwitchCase="'png'" class="fa fa-file-image"></i>
+                  <i *ngSwitchDefault class="fa fa-file"></i>
+                </ng-container>
+                {{ key }}
+              </ng-template>
+            </li>
+          </ul>
+        </ng-template>
+      </div>
+      <div *ngSwitchDefault class="fa fa-file">
+        {{ dsoNameService.getName(selectedFile) }}
+      </div>
+    </ng-container>
+  </ng-template>
+
+  <div class="file-preview d-none d-lg-block col-lg-8">
     <div *ngIf="selectedFile; else noPreview">
-      <ng-container *ngIf="isImage(selectedFile); else fileName">
-        <div *ngIf="previewUrl; else noImagePreview">
+      <ng-container [ngSwitch]="getFileExtension(selectedFile.name)">
+        <div *ngSwitchCase="'pdf'">
+          <div *ngIf="isLoading" class="loading-overlay">
+            <i class="fa-solid fa-spinner fa-spin-pulse loading-spinner"></i>
+          </div>
+          <ngx-doc-viewer 
+            [url]="previewUrl"
+            viewer="google"
+            style="width: 100%; height: 90vh;"
+            (loaded)="onDocLoaded()">
+          </ngx-doc-viewer>
+        </div>
+        <div *ngSwitchCase="'jpg'">
           <img  class="preview-image" [src]="previewUrl" alt="{{ dsoNameService.getName(selectedFile) }}">
         </div>
-        <ng-template #noImagePreview>
-          <span class="no-preview">SOY UNA IMAGEN {{ dsoNameService.getName(selectedFile) }}</span>
-        </ng-template>
+        <div *ngSwitchCase="'zip'">
+          <h3>Archivos en el ZIP:</h3>
+          <ul>
+            <ng-container *ngTemplateOutlet="renderTree; context: { tree: zipContentTree }"></ng-container>
+          </ul>
+          <ng-template #renderTree let-tree="tree">
+            <ul>
+              <li *ngFor="let key of objectKeys(tree || {})">
+                <ng-container *ngIf="isFolder(tree[key]); else fileTemplate">
+                  <i class="fa fa-folder"></i> {{ key }}
+                  <ng-container *ngTemplateOutlet="renderTree; context: { tree: tree[key] }"></ng-container>
+                </ng-container>
+          
+                <ng-template #fileTemplate>
+                  <ng-container [ngSwitch]="getFileExtension(key)">
+                    <i *ngSwitchCase="'pdf'" class="fa fa-file-pdf"></i>
+                    <i *ngSwitchCase="'doc'" class="fa fa-file-word"></i>
+                    <i *ngSwitchCase="'docx'" class="fa fa-file-word"></i>
+                    <i *ngSwitchCase="'csv'" class="fa fa-file-csv"></i>
+                    <i *ngSwitchCase="'jpg'" class="fa fa-file-image"></i>
+                    <i *ngSwitchCase="'jpeg'" class="fa fa-file-image"></i>
+                    <i *ngSwitchCase="'png'" class="fa fa-file-image"></i>
+                    <i *ngSwitchDefault class="fa fa-file"></i>
+                  </ng-container>
+                  {{ key }}
+                </ng-template>
+              </li>
+            </ul>
+          </ng-template>
+        </div>
+        <div *ngSwitchDefault class="fa fa-file">
+          {{ dsoNameService.getName(selectedFile) }}
+        </div>
       </ng-container>
-      <ng-template #fileName>
-        <!-- <span class="preview-title">{{ dsoNameService.getName(selectedFile) }}</span> -->
-        <span class="no-preview">{{ dsoNameService.getName(selectedFile) }}</span>
-      </ng-template>
     </div>
     <ng-template #noPreview>
       <div class="no-preview">
-        <span>preview</span>
+        <span>ZONA DE PREVIEW</span>
       </div>
     </ng-template>
   </div>
 </div>
+
+<ng-template #noFile>
+  Lamentablemente el ítem seleccionado no tiene archivos para ver/descargar. Si lo desea, puede contactar directamente con el autor. En caso de ser el autor, es bienvenido a subir los archivos correspondientes para así poder completar el registro.
+</ng-template>

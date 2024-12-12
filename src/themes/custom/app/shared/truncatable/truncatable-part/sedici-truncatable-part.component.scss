@@ -1,0 +1,21 @@
+.content:not(.truncated) ~ button.expandButton {
+  display: none;
+}
+
+.btn:focus {
+  box-shadow: none !important;
+}
+
+.removeFaded.content::after {
+  display: none;
+}
+
+@for $i from 1 through 10 {
+  .clamp-default-#{$i} {
+    .content {
+      &:after {
+        background: linear-gradient(to right, rgba(255, 255, 255, 0), #e9ecef 70%);
+      }
+    }
+  }
+}

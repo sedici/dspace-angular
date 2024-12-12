@@ -24,7 +24,7 @@ body {
 }
 
 #main-content {
-    z-index: var(--ds-main-z-index);
+    // z-index: var(--ds-main-z-index); // ARREGLA HOME | VER QUÉ HACE CON EL RESTO
     flex: 1 1 100%;
 }
 

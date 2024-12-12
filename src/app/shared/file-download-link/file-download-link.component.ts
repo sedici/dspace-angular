@@ -72,7 +72,7 @@ export class FileDownloadLinkComponent implements OnInit {
   canDownload$: Observable<boolean>;
 
   constructor(
-    private authorizationService: AuthorizationDataService,
+    protected authorizationService: AuthorizationDataService,
   ) {
   }
 

@@ -3,10 +3,13 @@ import {
   NgIf,
   NgFor,
   NgStyle,
+  NgClass,
 } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
+  ViewChild,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -23,14 +26,24 @@ import { SediciContextBadgeComponent } from 'src/themes/custom/app/shared/object
 import { LanguageSwitcherComponent } from './language-switcher.component';
 import { MetadataValue } from 'src/app/core/shared/metadata.models';
 import { BadgeMetadataValuesComponent } from '../../field-components/badge-metadata-values/badge-metadata-values.component';
-import { TruncatableComponent } from 'src/app/shared/truncatable/truncatable.component';
-import { TruncatablePartComponent } from 'src/app/shared/truncatable/truncatable-part/truncatable-part.component';
 import { TabbedContentComponent } from './tabbed-content.component';
 import { SediciDateMetadataValuesComponent } from '../../field-components/date-metadata-values/sedici-date-metadata-values.component';
 import { SediciLanguageMetadataValuesComponent } from '../../field-components/language-metadata-values/sedici-language-metadata-values.component';
 import { setPersistentIdentifiers } from 'src/app/shared/utils/persistent.identifier';
 import { SediciTruncatableGenericItemPageFieldComponent } from './sedici-truncatable-generic-item-page-field';
+import { SediciContextComponent } from '../../field-components/context/sedici-context.component';
 
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { SediciCitationComponent } from '../../field-components/citation/sedici-citation.component';
+import { RouteService } from 'src/app/core/services/route.service';
+import { Router } from '@angular/router';
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SediciShareButtonsComponent } from '../../field-components/share-buttons/sedici-share-buttons.component';
+
+import { LrwLAReferenciaComponent } from '../../field-components/usage-stats copy/lrw-lareferencia.component';
+
+import { ExpandableMetadataComponent } from './expandable-metadata';
 /**
  * Component that represents an untyped Item page
  */
@@ -47,6 +60,7 @@ import { SediciTruncatableGenericItemPageFieldComponent } from './sedici-truncat
     NgIf,
     NgFor,
     NgStyle,
+    NgClass,
     DsoEditMenuComponent,
     GenericItemPageFieldComponent,
     ItemPageUriFieldComponent,
@@ -55,13 +69,17 @@ import { SediciTruncatableGenericItemPageFieldComponent } from './sedici-truncat
     TranslateModule,
     LanguageSwitcherComponent,
     BadgeMetadataValuesComponent,
-    TruncatableComponent,
-    TruncatablePartComponent,
     TabbedContentComponent,
     SediciDateMetadataValuesComponent,
     SediciLanguageMetadataValuesComponent,
     SediciContextBadgeComponent,
     SediciTruncatableGenericItemPageFieldComponent,
+    SediciContextComponent,    
+    SediciCitationComponent,
+    NgbModule,
+    SediciShareButtonsComponent,
+    LrwLAReferenciaComponent,
+    ExpandableMetadataComponent,
   ],
 })
 export class UntypedItemComponent extends BaseComponent {
@@ -69,9 +87,40 @@ export class UntypedItemComponent extends BaseComponent {
   identifierOtherMetadataName = ['dc.identifier.uri', 'sedici.identifier.other'];
   itemIdentifiers: { mdValue: MetadataValue, label: string, url: string }[];
 
+  @ViewChild('tabbedContent', { read: ElementRef }) tabbedContentElement: ElementRef;
+  @ViewChild('tabbedContent') tabbedContentComponent: TabbedContentComponent;
+
+  constructor(private modalService: NgbModal, protected routeService: RouteService, protected router: Router) {
+    super(routeService, router);
+  }
+
+  openModalCitation() {
+    this.modalService.open(SediciCitationComponent, {
+      centered: true, // Centra el modal
+    });
+  }
+
+  openModalShareButtons() {
+    const modalRef = this.modalService.open(SediciShareButtonsComponent, {
+      centered: true, // Centra el modal
+    });
+    modalRef.componentInstance.link = this.object.firstMetadataValue('dc.identifier.uri');
+  }
+
+  get hasMetadata(): boolean {
+    return this.hasField('sedici.description.note') ||
+           this.hasField('dc.format') ||
+           this.hasField('dc.format.medium');
+  }
+
+  // Comprueba si el campo existe y tiene contenido
+  private hasField(field: string): boolean {
+    const value = this.object.metadata[field];
+    return value && value.length > 0;
+  }
+
   ngOnInit() {
     super.ngOnInit();
-    const abstracts = this.object.metadata['dc.description.abstract'];
     this.subtype = this.object.metadata['sedici.subtype'][0]?.value;
     this.itemIdentifiers = setPersistentIdentifiers(this.object, this.identifierOtherMetadataName);
   }

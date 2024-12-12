@@ -1,16 +1,12 @@
 .download-btn {
   background-color: #fff;
   border: 1px solid #ccc;
-  padding: 3px 8px;
   cursor: pointer;
   border-radius: 4px;
   font-size: .625rem;
+  width: 100%;
 
   &:hover {
     background-color: #e0e0e0;
   }
-
-  .pr-1 {
-    padding-right: 5px;
-  } 
 }

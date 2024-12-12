@@ -1,0 +1,68 @@
+.share-modal-content {
+  padding: 20px;
+}
+
+.link-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.share-link {
+  flex: 1;
+  padding: .25rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
+
+#copyButton {
+  margin-left: 5px;
+  padding: 5px 10px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+}
+
+#copyButton:hover {
+  background-color: #0056b3;
+}
+
+.copy-success-message {
+  color: green;
+  margin-left: 10px;
+}
+
+.social-buttons {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+}
+
+.social-icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+}
+
+.social-icon-button i {
+  font-size: 3rem;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+}
+
+.social-icon-button:hover i {
+  transform: scale(1.1);
+}
+
+/* Colores específicos para cada red social */
+.fa-researchgate { color: #63e6be; }
+.fa-mendeley { color: #c70039; }
+.fa-whatsapp { color: #25d366; }
+.fa-linkedin { color: #0077b5; }
+.fa-x-twitter { color: black; }
