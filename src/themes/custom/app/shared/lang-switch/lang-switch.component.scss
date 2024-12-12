@@ -23,7 +23,7 @@
   transform-origin: top right; /* Asegura que se despliegue desde la parte superior derecha */
   right: 0 !important; /* Alínea el borde derecho del menú con el contenedor */
   top: 100% !important; /* Desplaza el menú justo debajo del botón */
-  transform: translateX(-85%); /* Lo mueve hacia la izquierda */
+  transform: translateX(-85%) !important; /* Lo mueve hacia la izquierda */
 }
 
 
