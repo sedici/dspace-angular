@@ -12,6 +12,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { BreadcrumbsComponent as BaseComponent } from '../../../../app/breadcrumbs/breadcrumbs.component';
 import { VarDirective } from '../../../../app/shared/utils/var.directive';
 
+import { BreadcrumbsService } from 'src/app/breadcrumbs/breadcrumbs.service';
+import { Router } from '@angular/router';
 /**
  * Component representing the breadcrumbs of a page
  */
@@ -26,14 +28,24 @@ import { VarDirective } from '../../../../app/shared/utils/var.directive';
 })
 export class BreadcrumbsComponent extends BaseComponent {
   isResponsive: boolean = false;
+  isItemView: boolean = false;
+
+  constructor(
+    protected breadcrumbsService: BreadcrumbsService,
+    private router: Router,
+  ) {
+    super(breadcrumbsService);
+  }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.checkResponsive();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.checkResponsive();
+    const currentUrl = this.router.url;
+    this.isItemView = currentUrl.includes('/items/');
   }
 
   checkResponsive() {

@@ -1,10 +1,15 @@
 <ng-container *ngVar="(breadcrumbs$ | async) as breadcrumbs">
   <nav *ngIf="breadcrumbs && (showBreadcrumbs$ | async)" aria-label="breadcrumb" class="nav-breadcrumb">
     <ol class="container breadcrumb my-0">
-      <ng-container *ngIf="breadcrumbs.length > 2 && isResponsive">
-        <li class="breadcrumb-item">...</li>
+      <ng-container *ngIf="isResponsive">
+        <li *ngIf="breadcrumbs.length > 2" class="breadcrumb-item">...</li>
         <ng-container *ngIf="breadcrumbs.length > 1">
-          <ng-container *ngTemplateOutlet="breadcrumb; context: breadcrumbs[breadcrumbs.length - 2]"></ng-container>
+          <ng-container *ngIf="isItemView">
+            <ng-container *ngTemplateOutlet="breadcrumb; context: breadcrumbs[breadcrumbs.length - 3]"></ng-container>
+          </ng-container>
+          <ng-container *ngIf="!isItemView">
+            <ng-container *ngTemplateOutlet="breadcrumb; context: breadcrumbs[breadcrumbs.length - 2]"></ng-container>
+          </ng-container>
         </ng-container>
       </ng-container>
       <ng-container *ngIf="!isResponsive">
