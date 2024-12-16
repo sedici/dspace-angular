@@ -11,6 +11,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class SediciViewerComponent {
   @Input() content: any;
+  @Input() headerTemplate: any;
 
   constructor(public activeModal: NgbActiveModal) {}
 

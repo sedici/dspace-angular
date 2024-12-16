@@ -1,5 +1,5 @@
 import { Component, Input, Inject } from '@angular/core';
-import { NgFor, NgIf, NgStyle, NgClass, NgSwitch, NgSwitchCase, NgSwitchDefault, NgTemplateOutlet } from '@angular/common';
+import { NgFor, NgIf, NgStyle, NgClass, NgSwitch, NgSwitchCase, NgSwitchDefault, NgTemplateOutlet, AsyncPipe } from '@angular/common';
 import { Item } from 'src/app/core/shared/item.model';
 import { BitstreamDataService } from 'src/app/core/data/bitstream-data.service';
 import { APP_CONFIG, AppConfig } from 'src/config/app-config.interface';
@@ -16,6 +16,9 @@ import { ChangeDetectorRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as JSZip from 'jszip';
 
+import { HostWindowService } from 'src/app/shared/host-window.service';
+import { Observable } from 'rxjs';
+import { NotificationsService } from 'src/app/shared/notifications/notifications.service';
 @Component({
   selector: 'content-files',
   styleUrls: ['./content-files.component.scss'],
@@ -30,6 +33,7 @@ import * as JSZip from 'jszip';
     NgSwitchCase,
     NgSwitchDefault,
     NgTemplateOutlet,
+    AsyncPipe,
     FileSizePipe,
     SediciFileDownloadLinkComponent,
     NgxDocViewerModule,
@@ -48,12 +52,17 @@ export class ContentFilesComponent {
     this.isLoading = false;
   }
 
-  openModal(content: any) {
+  openModal(content: any, headerTemplate: any) {
     const modalRef = this.modalService.open(SediciViewerComponent, { size: 'lg' });
     modalRef.componentInstance.content = content;
+    modalRef.componentInstance.headerTemplate = headerTemplate;
   }
 
+  isLoadingFiles: boolean = true;
   files: Bitstream[] = [];
+
+  isMobile$: Observable<boolean>;
+  isMobile = false;
 
   constructor(
     protected bitstreamDataService: BitstreamDataService,
@@ -61,8 +70,12 @@ export class ContentFilesComponent {
     @Inject(APP_CONFIG) protected appConfig: AppConfig,
     private modalService: NgbModal,
     private http: HttpClient,
-    private cdr: ChangeDetectorRef
-  ) {}
+    private cdr: ChangeDetectorRef,
+    private windowService: HostWindowService,
+    private notificationsService: NotificationsService,
+  ) {
+    this.isMobile$ = this.windowService.isMobile();
+  }
 
   selectedFile: Bitstream | null = null;
 
@@ -91,7 +104,8 @@ export class ContentFilesComponent {
       case 'docx':
       case 'csv':
         // Harcodeo una URL de vista previa para probar
-        this.previewUrl = "http://sedici.unlp.edu.ar/bitstream/handle/10915/59633/Cap%C3%ADtulo_1_-_Las_inundaciones_en_la_Regi%C3%B3n_Capital_-_Cartograf%C3%ADa_tem%C3%A1tica_para_el_planeamiento.CISAUA%2000%20Original%20Informe%20Final%20-%20PIO-%2030-3-17%20C009.pdf-PDFA.pdf?sequence=3&isAllowed=y";
+        // this.previewUrl = "http://sedici.unlp.edu.ar/bitstream/handle/10915/59633/Cap%C3%ADtulo_1_-_Las_inundaciones_en_la_Regi%C3%B3n_Capital_-_Cartograf%C3%ADa_tem%C3%A1tica_para_el_planeamiento.CISAUA%2000%20Original%20Informe%20Final%20-%20PIO-%2030-3-17%20C009.pdf-PDFA.pdf?sequence=3&isAllowed=y";
+        this.previewUrl = "https://host170.sedici.unlp.edu.ar/server/api/core/bitstreams/3d8afd41-cff2-4b40-b8e9-0d4238860ab6/content";
         break;
       default:
         this.previewUrl = file._links.content.href;
@@ -136,6 +150,9 @@ export class ContentFilesComponent {
   ngOnInit(): void {
     this.getPrimaryBitstreamId();
     this.getAllPages();
+    this.isMobile$.subscribe(isMobile => {
+      this.isMobile = isMobile;
+    });
   }
 
   zipContent: { name: string, type: 'file' | 'folder' }[] = []; // Lista para mostrar los archivos dentro del ZIP y su tipo
@@ -207,10 +224,19 @@ export class ContentFilesComponent {
   }
 
   getAllPages(): void {
+    this.isLoadingFiles = true;
     this.bitstreamDataService.findAllByItemAndBundleName(this.object, 'ORIGINAL', { currentPage: 0, elementsPerPage: 1000 }).subscribe((response: any) => {
-      if (response && response.payload && response.payload.page.length > 0) {
-        this.files = response.payload.page;
+      if (response && response.hasSucceeded) {
+        if (response.payload && response.payload.page.length > 0) {
+          this.files = response.payload.page;
+        }
+        this.isLoadingFiles = false;
       }
+    },
+    (err) => {
+      console.error('Error en la solicitud:', err);
+      this.notificationsService.error('Error', 'Ocurrió un error al intentar cargar los archivos.');
+      this.isLoadingFiles = false;
     });
   }
 }
