@@ -83,7 +83,7 @@
           [copyToClipboardButton]="true">
         </ds-badge-metadata-values>
       </div>
-      <div class="botones-header">
+      <div class="botones-context">
         <button class="btn" (click)="openModalCitation()">
           <i class="fa-solid fa-quote-right"></i>
           <span class="d-none d-lg-inline"> Cómo citar</span>
@@ -118,7 +118,7 @@
         <language-switcher [item]="object"></language-switcher>
         <app-expandable-metadata>
           <div class="d-flex flex-wrap responsive-columns">
-            <div class="p-2 col-lg-4 col-md-12" [ngClass]="{'col-lg-12': !hasMetadata}">
+            <div class="metadata-column col-lg-4 col-md-12" [ngClass]="{'col-lg-12': !hasMetadata}">
               <ds-generic-item-page-field [item]="object"
                 [fields]="['sedici.contributor.director']"
                 [separator]="' | '"
@@ -203,7 +203,7 @@
                 [label]="'sedici.item.page.sedici.relation.isRelatedWith'">
               </ds-item-page-uri-field>
             </div>
-            <div class="p-2 col-lg-8 col-md-12" *ngIf="hasMetadata">
+            <div class="metadata-column col-lg-8 col-md-12" *ngIf="hasMetadata">
               <ds-generic-item-page-field [item]="object"
                 [fields]="['sedici.description.note']"
                 [separator]="'<br/>'"
