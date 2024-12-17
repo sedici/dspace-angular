@@ -105,6 +105,8 @@ export class UntypedItemComponent extends BaseComponent {
       centered: true, // Centra el modal
     });
     modalRef.componentInstance.link = this.object.firstMetadataValue('dc.identifier.uri');
+    modalRef.componentInstance.title = this.object.firstMetadataValue('dc.title');
+    modalRef.componentInstance.type = this.object.firstMetadataValue('sedici.subtype') || this.object.firstMetadataValue('dc.type');
   }
 
   get hasMetadata(): boolean {
