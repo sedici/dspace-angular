@@ -12,6 +12,8 @@
 
 @for $i from 1 through 10 {
   .clamp-default-#{$i} {
+    margin-bottom: .5rem;
+
     .content {
       &:after {
         background: linear-gradient(to right, rgba(255, 255, 255, 0), #e9ecef 70%);
