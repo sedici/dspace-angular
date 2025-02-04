@@ -1,0 +1,111 @@
+.selection-menu {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #f9f9f9;
+
+  .section {
+    margin-bottom: 10px;
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    textarea {
+      width: 100%;
+      max-height: 10vh; // PRUEBA BAJA RESOLUCIÓN
+      resize: vertical; // Permite ajustar manualmente
+      padding: 10px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+  }
+
+  .row {
+    display: flex;
+    justify-content: space-between; // Opcional: distribuye el espacio
+    gap: 15px; // Espaciado entre los dos elementos
+    margin-left: 0;
+    margin-right: 0;
+  
+    .field {
+      flex: 1; // Ajusta cada campo para ocupar espacio igual
+      display: flex;
+      flex-direction: column;
+  
+      label {
+        margin-bottom: 5px; // Espaciado entre el label y el select
+      }
+  
+      select {
+        width: 100%; // Asegura que cada select ocupe todo su contenedor
+        height: 100%;
+        padding: 5px;
+      }
+    }
+  }
+
+  .action-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+
+    .btn {
+      flex: 1;
+      padding: 10px 15px;
+      font-size: 14px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+
+      &.btn-primary {
+        background-color: #007bff;
+        color: #fff;
+      }
+
+      &.btn-secondary {
+        background-color: #6c757d;
+        color: #fff;
+      }
+
+      .square {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f0f0f0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      
+      .square:hover {
+        background-color: #e0e0e0;
+      }
+    }
+
+    .dropdown {
+      .dropdown-menu {
+        display: none; /* Ocultar el menú cuando no está activo */
+      }
+      
+      .dropdown-menu.show {
+        display: flex; /* Mostrar el menú como flexbox cuando está activo */
+      }
+    }
+  }
+
+  // Prueba inputs divididos
+  .inputs-grid {
+    display: grid;
+    grid-template-rows: repeat(5, auto); /* Define un máximo de 5 filas */
+    grid-auto-flow: column; /* Llena las columnas verticalmente */
+    gap: 5px;
+    font-size: .75rem;
+  }
+  // Fin prueba inputs divididos
+}

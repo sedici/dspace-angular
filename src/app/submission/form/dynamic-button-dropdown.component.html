@@ -1,0 +1,11 @@
+<div class="dropdown-container">
+  <button class="btn btn-secondary" title="Opciones" aria-label="Opciones" (click)="toggleDropdown($event)">
+    <span><i class="fa-solid fa-wand-magic-sparkles"></i></span>
+  </button>
+
+  <div #dropdown class="dropdown-menu">
+    <div *ngFor="let option of options" (click)="applyFilter(option.filter)" class="dropdown-item" [title]="option.text">
+      <i [class]="option.icon"></i>
+    </div>
+  </div>
+</div>

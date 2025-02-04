@@ -1,4 +1,7 @@
-import { CommonModule } from '@angular/common';
+import { 
+  CommonModule,
+  NgFor,
+} from '@angular/common';
 import {
   ChangeDetectorRef,
   Component,
@@ -13,6 +16,7 @@ import {
   of as observableOf,
   Subscription,
 } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import {
   distinctUntilChanged,
   filter,
@@ -51,6 +55,9 @@ import { SubmissionFormFooterComponent } from './footer/submission-form-footer.c
 import { SubmissionFormSectionAddComponent } from './section-add/submission-form-section-add.component';
 import { ThemedSubmissionUploadFilesComponent } from './submission-upload-files/themed-submission-upload-files.component';
 
+import { FormsModule } from '@angular/forms';
+
+import { PdfViewerComponent } from './pdf-viewer.component';
 /**
  * This component represents the submission form.
  */
@@ -66,6 +73,9 @@ import { ThemedSubmissionUploadFilesComponent } from './submission-upload-files/
     ThemedSubmissionUploadFilesComponent,
     SubmissionFormCollectionComponent,
     SubmissionFormSectionAddComponent,
+    FormsModule,
+    NgFor,
+    PdfViewerComponent,
   ],
   standalone: true,
 })
@@ -157,6 +167,8 @@ export class SubmissionFormComponent implements OnChanges, OnDestroy {
    */
   protected subs: Subscription[] = [];
 
+  public pdfBlobUrl: string | null = null;
+
   /**
    * Initialize instance variables
    *
@@ -167,6 +179,7 @@ export class SubmissionFormComponent implements OnChanges, OnDestroy {
    * @param {SectionsService} sectionsService
    */
   constructor(
+    private http: HttpClient,
     private authService: AuthService,
     private changeDetectorRef: ChangeDetectorRef,
     private halService: HALEndpointService,
@@ -227,6 +240,7 @@ export class SubmissionFormComponent implements OnChanges, OnDestroy {
 
       // start auto save
       this.submissionService.startAutoSave(this.submissionId);
+      this.loadSectionData();
     }
   }
 
@@ -320,5 +334,37 @@ export class SubmissionFormComponent implements OnChanges, OnDestroy {
       map((sections: SectionDataObject[]) =>
         sections.filter((section: SectionDataObject) => !isEqual(section.sectionType,SectionsType.Collection))),
     );
+  }
+
+  AAA(responsePath: any) {
+    const files = responsePath.sections.upload.files;
+    const pdfFiles = files.filter(file => file.format.extensions.includes("pdf")); // Filtro los archivos PDF
+    const lastFileLoad = files[files.length - 1];
+
+    // Lo cargo sólo si es el primer archivo PDF
+    if (pdfFiles.length === 1 && lastFileLoad.format.extensions.includes("pdf")) {
+      const fileUrl = lastFileLoad.url;
+      this.http.get(fileUrl, { responseType: 'blob' }).subscribe((blob: Blob) => {
+        this.pdfBlobUrl = URL.createObjectURL(blob);
+      });
+    }
+  }
+
+  loadSectionData() {
+    this.submissionService.getSubmissionSections(this.submissionId).subscribe((sections: SectionDataObject[]) => {
+      const uploadSection = sections.find(section => section.sectionType === 'upload');
+      if (uploadSection && uploadSection.data && (uploadSection.data as any).files && (uploadSection.data as any).files.length > 0) {
+        const files = (uploadSection.data as any).files;
+        const primaryUUID = (uploadSection.data as any).primary;
+        const pdfFiles = files.filter(file => file.format.extensions.includes("pdf")); // Filtro los archivos PDF
+        const pdfFile = pdfFiles.find(file => file.uuid === primaryUUID) || pdfFiles[0]; // Filtro el archivo PDF primario o el primero de la lista
+        if (pdfFile) {
+          const fileUrl = pdfFile.url;
+          this.http.get(fileUrl, { responseType: 'blob' }).subscribe((blob: Blob) => {
+            this.pdfBlobUrl = URL.createObjectURL(blob);
+          });
+        }
+      }
+    });
   }
 }

@@ -37,3 +37,22 @@
     text-decoration: $link-hover-decoration;
   }
 }
+
+.selection-menu-bottom {
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+
+  select, button {
+    margin: 5px 0;
+  }
+}
+
+canvas {
+  border: 1px solid black;
+  width: 100%;
+  height: auto;
+}

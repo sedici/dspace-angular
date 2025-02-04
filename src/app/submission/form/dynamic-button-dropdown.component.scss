@@ -1,0 +1,37 @@
+.dropdown-container {
+  position: relative;
+  display: inline-block;
+
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: none;
+    z-index: 1000;
+    padding: 8px;
+
+    .dropdown-item {
+      padding: 8px;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+
+      &:hover {
+        background-color: #f0f0f0;
+      }
+    }
+  }
+}
