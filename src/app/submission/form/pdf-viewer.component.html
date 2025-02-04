@@ -1,0 +1,90 @@
+<!-- <div [ngStyle]="{ height: selectedText ? '500px' : '100vh' }"> --> <!-- Con el vh se 'escapa' por debajo del footer -->
+<!-- <div [ngStyle]="{ height: selectedText ? '500px' : '800px' }"> --> <!-- VER de pasar a porcentajes o vh (calculado) -->
+<div [ngStyle]="{ height: selectedText ? '50vh' : '70vh' }">  
+  <!-- VISOR DEL PDF -->
+  <ng2-pdfjs-viewer
+    viewerId="1"
+    #pdfViewerOnDemand
+    [pdfSrc]="pdfUrl"
+    [openFile]="false"
+    zoom="page-width"
+    [download]="false"
+    (onDocumentLoad)="pagesLoadedEvent()"
+    class="pdf-viewer">
+  </ng2-pdfjs-viewer>
+
+  <!-- MENÚ DE PREVISUALIZACIÓN Y ACCIONES -->
+  <div *ngIf="isTextSelected" class="selection-menu">
+    <!-- SECCIÓN: TEXTO SELECCIONADO -->
+    <div class="section" *ngIf="!showDynamicInputs">
+      <label for="selected-text"><strong>Texto seleccionado:</strong></label>
+      <textarea
+        id="selected-text"
+        [(ngModel)]="selectedText"
+        placeholder="Texto seleccionado"
+        rows="6"
+      ></textarea>
+    </div>
+
+    <!-- Contenedor para los inputs dinámicos -->
+    <div id="inputsContainer" class="inputs-grid" *ngIf="showDynamicInputs"></div>
+
+
+    <div class="selection-menu">
+      <!-- SECCIÓN: PREVISUALIZACIÓN DEL TEXTO SELECCIONADO -->
+      <div class="row">
+        <div class="field">
+          <select [(ngModel)]="selectedTextarea" id="textarea-select">
+            <option value="" disabled selected>Seleccionar</option>
+            <option *ngFor="let option of metadataOptions" [value]="option.value">
+              {{ option.name }}
+            </option>
+          </select>
+        </div>
+        
+        <div class="field" *ngIf="!isRepeatableMetadataName(extractIdPart())">
+          <select [(ngModel)]="replaceText" id="replaceText">
+            <option [ngValue]="null" disabled selected>Seleccionar</option>
+            <ng-container *ngIf="isRepeatableAndExtensibleMetadataName(extractIdPart()); else defaultOptions">
+              <option [ngValue]="true">Nuevo campo</option>
+              <option [ngValue]="false">Agregar al campo</option>
+            </ng-container>
+            <ng-template #defaultOptions>
+              <option [ngValue]="true">Reemplazar</option>
+              <option [ngValue]="false">No reemplazar</option>
+            </ng-template>
+          </select>
+        </div>
+    
+        <!-- SECCIÓN: BOTONES DE FILTROS -->
+        <div class="action-buttons">
+          <button class="btn square" (click)="applyFilter('splitByDelimiter')" [disabled]="showDynamicInputs">Split</button>
+          <button class="btn square" (click)="applyFilter('removeTitles')">RemTit</button>
+          <button class="btn square" (click)="applyFilter('removeDoubleSpaces')">RemDouSpa</button>
+
+          <div ngbDropdown class="dropdown">
+            <button ngbDropdownToggle class="btn square">A</button>
+            <div ngbDropdownMenu class="dropdown-menu dropdown-transformer-menu">
+              <button class="btn square" (click)="applyFilter('removeReferences')">RemRef</button>
+              <button class="btn square">2</button>
+              <button class="btn square">3</button>
+              <button class="btn square">4</button>
+              <button class="btn square">5</button>
+              <button class="btn square">6</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- SECCIÓN: BOTONES DE ACCIÓN -->
+    <div class="action-buttons">
+      <button (click)="copyToTextarea()" class="btn btn-primary">
+        Agregar
+      </button>
+      <button (click)="clearSelection()" class="btn btn-secondary">
+        Cancelar
+      </button>
+    </div>
+  </div>
+</div>

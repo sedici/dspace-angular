@@ -4,6 +4,8 @@ import {
   Input,
   OnChanges,
   OnDestroy,
+  EventEmitter,
+  Output,
 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -61,6 +63,8 @@ export class SubmissionUploadFilesComponent implements OnChanges, OnDestroy {
    * @type {UploaderOptions}
    */
   @Input() uploadFilesOptions: UploaderOptions;
+
+  @Output() AAA = new EventEmitter<any>();
 
   /**
    * A boolean representing if is possible to active drop zone over the document page
@@ -170,6 +174,7 @@ export class SubmissionUploadFilesComponent implements OnChanges, OnDestroy {
           }
         }),
     );
+    this.AAA.emit(workspaceitem);
   }
 
   /**

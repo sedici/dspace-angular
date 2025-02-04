@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Normalizer</title>
+  <script type="module" defer>
+    import { filterTransformer } from './filterTransformer.js';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const input = document.getElementById('inputText');
+      const result = document.getElementById('resultText');
+
+      const applyFilter = (filter) => {
+        const text = input.value;
+
+        let transformedText;
+        switch (filter) {
+          case 'camelCase':
+            transformedText = filterTransformer.toCamelCase(text);
+            break;
+          case 'upperCase':
+            transformedText = filterTransformer.toUpperCase(text);
+            break;
+          case 'lowerCase':
+            transformedText = filterTransformer.toLowerCase(text);
+            break;
+          case 'splitByDelimiter':
+            transformedText = filterTransformer.splitByDelimiter(text).join(' ¿? '); // VER en qué formato devolverlos | Devuelve Array
+            break;
+          case 'removeDoubleSpaces':
+            transformedText = filterTransformer.removeDoubleSpaces(text);
+            break;
+          case 'removeSpacesBetweenLetters':
+            transformedText = filterTransformer.removeSpacesBetweenLetters(text);
+            break;
+          case 'removeSpacesAtStartAndEnd':
+            transformedText = filterTransformer.removeSpacesAtStartAndEnd(text);
+            break;
+          case 'removeLineBreaks':
+            transformedText = filterTransformer.removeLineBreaks(text);
+            break;
+          case 'removeTitles':
+            transformedText = filterTransformer.removeTitles(text);
+            break;
+          case 'removeReferences':
+            transformedText = filterTransformer.removeReferences(text);
+            break;
+          case 'transformPersons':
+            console.log('persons después', filterTransformer.transformPersons(text));
+            break;
+          default:
+            transformedText = text;
+        }
+
+        result.textContent = transformedText;
+      };
+
+      document.getElementById('camelCaseBtn').addEventListener('click', () => applyFilter('camelCase'));
+      document.getElementById('upperCaseBtn').addEventListener('click', () => applyFilter('upperCase'));
+      document.getElementById('lowerCaseBtn').addEventListener('click', () => applyFilter('lowerCase'));
+      document.getElementById('splitByDelimiterBtn').addEventListener('click', () => applyFilter('splitByDelimiter'));
+
+      document.getElementById('removeDoubleSpacesBtn').addEventListener('click', () => applyFilter('removeDoubleSpaces'));
+      document.getElementById('removeSpacesBetweenLettersBtn').addEventListener('click', () => applyFilter('removeSpacesBetweenLetters'));
+      document.getElementById('removeSpacesAtStartAndEndBtn').addEventListener('click', () => applyFilter('removeSpacesAtStartAndEnd'));
+      document.getElementById('removeLineBreaksBtn').addEventListener('click', () => applyFilter('removeLineBreaks'));
+
+      document.getElementById('removeTitlesBtn').addEventListener('click', () => applyFilter('removeTitles'));
+      document.getElementById('removeReferencesBtn').addEventListener('click', () => applyFilter('removeReferences'));
+      document.getElementById('transformPersonsBtn').addEventListener('click', () => applyFilter('transformPersons'));
+    });
+  </script>
+</head>
+<body>
+  <h1>Text Normalizer</h1>
+  <div>
+    <label for="inputText">Input Text:</label>
+    <textarea id="inputText" rows="4" cols="50"></textarea>
+  </div>
+  <div>
+    <button id="camelCaseBtn">Camel Case</button>
+    <button id="upperCaseBtn">Upper Case</button>
+    <button id="lowerCaseBtn">Lower Case</button>
+    <button id="splitByDelimiterBtn">Split by ';'</button>
+
+    <button id="removeDoubleSpacesBtn">removeDoubleSpaces</button>
+    <button id="removeSpacesBetweenLettersBtn">removeSpacesBetweenLetters</button>
+    <button id="removeSpacesAtStartAndEndBtn">removeSpacesAtStartAndEnd</button>
+    <button id="removeLineBreaksBtn">removeLineBreaks</button>
+    <button id="removeTitlesBtn">removeTitles</button>
+    <button id="removeReferencesBtn">removeReferences</button>
+    <button id="transformPersonsBtn">transformPersons</button>
+  </div>
+  <div>
+    <h2>Result:</h2>
+    <p id="resultText"></p>
+  </div>
+</body>
+</html>

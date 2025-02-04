@@ -1,6 +1,8 @@
 import {
   Component,
   Input,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 
 import { ThemedComponent } from '../../../shared/theme-support/themed.component';
@@ -22,10 +24,13 @@ export class ThemedSubmissionUploadFilesComponent extends ThemedComponent<Submis
 
   @Input() uploadFilesOptions: UploaderOptions;
 
+  @Output() AAA = new EventEmitter<any>();
+
   protected inAndOutputNames: (keyof SubmissionUploadFilesComponent & keyof this)[] = [
     'collectionId',
     'submissionId',
     'uploadFilesOptions',
+    'AAA',
   ];
 
   protected getComponentName(): string {
