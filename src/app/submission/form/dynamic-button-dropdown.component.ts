@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, Renderer2, ViewChild, AfterViewInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, ElementRef, Renderer2, ViewChild, AfterViewInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -15,6 +15,8 @@ export class DynamicButtonDropdownComponent implements AfterViewInit, OnDestroy 
   options = [
     { text: 'upperCase', filter: 'upperCase', icon: 'fa-solid fa-arrow-up-a-z' }, // Mayúsculas
     { text: 'lowerCase', filter: 'lowerCase', icon: 'fa-solid fa-arrow-down-a-z' }, // Minúsculas
+    { text: 'Reorder person name', filter: 'reorderPerson', icon: 'fa-solid fa-right-left' }, // Reordenar nombre/apellido
+    { text: 'Capitalize', filter: 'capitalize', icon: 'fa-solid fa-bars' }, // Mayúscuya inicial
     { text: 'Remove titles', filter: 'removeTitles', icon: 'fa-solid fa-bars' }, // Quitar títulos (Ej: Lic., Mg.)
     { text: 'Remove double spaces', filter: 'removeDoubleSpaces', icon: 'fa-solid fa-bars' }, // Eliminar espacios dobles
     { text: 'Remove references', filter: 'removeReferences', icon: 'fa-solid fa-bars' }, // Quitar referencias (Ej: números, asteriscos)
