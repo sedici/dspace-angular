@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, ViewChild, ChangeDetectorRef, NgZone, ComponentRef } from '@angular/core';
 import { NgIf, NgFor, NgStyle } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PdfJsViewerModule } from "ng2-pdfjs-viewer";
@@ -8,8 +8,12 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AfterViewInit } from '@angular/core';
 
-import { DynamicButtonDropdownComponent } from './dynamic-button-dropdown.component';
 import { ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
+import { DynamicButtonDropdownComponent } from './dynamic-button-dropdown.component';
+import { ShortcutsButtonsComponent } from './shortcuts-buttons.component';
+
+import { SectionFormOperationsService } from '../sections/form/section-form-operations.service';
+import { JsonPatchOperationPathCombiner } from '../../core/json-patch/builder/json-patch-operation-path-combiner'
 
 @Component({
   selector: 'app-pdf-viewer',
@@ -24,6 +28,7 @@ import { ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 		PdfJsViewerModule,
     NgbDropdownModule,
     DynamicButtonDropdownComponent,
+    ShortcutsButtonsComponent,
 	],
 })
 // export class PdfViewerComponent {
@@ -34,8 +39,15 @@ export class PdfViewerComponent implements AfterViewInit {
   iframe;
   container;
   pdfIsLoading = true;
+  private buttonComponents: ComponentRef<ShortcutsButtonsComponent>[] = [];
 
-	constructor(private changeDetectorRef: ChangeDetectorRef, private viewContainerRef: ViewContainerRef, private componentFactoryResolver: ComponentFactoryResolver) { }
+	constructor(
+    private changeDetectorRef: ChangeDetectorRef,
+    private viewContainerRef: ViewContainerRef,
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private ngZone: NgZone,
+    private formOperationsService: SectionFormOperationsService
+  ) { }
 
   public pagesLoadedEvent(): void {
     this.iframe = this.pdfViewerOnDemand.iframe.nativeElement;
@@ -65,7 +77,7 @@ export class PdfViewerComponent implements AfterViewInit {
     'sedici_contributor_codirector',
     'sedici_contributor_juror',
     'sedici_contributor_inscriber',
-    'dc.title.alternative',
+    'dc_title_alternative',
     'dc_format',
     'dc_format_extent',
     'dc_subject',
@@ -165,115 +177,67 @@ export class PdfViewerComponent implements AfterViewInit {
       // Fin prueba split y filters
 
       this.isTextSelected = false;
-      this.removeButtons(this.container); // Borro los botones de acceso rápido
+      this.removeButtons(); // Borro los botones de acceso rápido
     }
 		this.changeDetectorRef.detectChanges();
   }
 
-  createButtons(rect: DOMRect): void {  
-    this.removeButtons(this.container); // Eliminar botones existentes para evitar duplicados
+  createButtons(rect: DOMRect): void {
+    this.ngZone.run(() => { // Forzamos que Angular detecte cambios dentro de su zona
+      this.removeButtons(); // Eliminar botones existentes para evitar duplicados
 
-    // Crear un contenedor para los botones
-    const buttonGroup = document.createElement('div');
-    buttonGroup.classList.add('button-group');
-    buttonGroup.style.position = 'absolute';
-
-    const centerX = rect.left + (rect.width / 2); // Calcular la posición centrada horizontalmente
-
-    // Ajustar la posición del contenedor de botones
-    buttonGroup.style.left = `${centerX}px`;
-    buttonGroup.style.top = `${rect.bottom}px`;
-    buttonGroup.style.transform = 'translateX(-50%)'; // Centrar el contenedor en el eje X
-    buttonGroup.style.zIndex = '1000';
-    buttonGroup.style.display = 'flex'; // Estilo para alinear los botones horizontalmente
-    buttonGroup.style.gap = '0px'; // Sin separación entre botones
+      const factory = this.componentFactoryResolver.resolveComponentFactory(ShortcutsButtonsComponent);
+      const componentRef = this.viewContainerRef.createComponent(factory);
+      
+      componentRef.instance.rect = rect;
+      componentRef.instance.buttonClicked.subscribe((event: { idElement: string, multiple: boolean }) => {
+        this.handleButtonClicked(event.idElement, event.multiple);
+      });
   
-    // Configuración de botones con sus acciones
-    const buttonsConfig = [
-      {
-        label: 'T',
-        action: () => {
-          this.selectedTextarea = 'dc_title';
-          const element = document.getElementById(this.selectedTextarea) as HTMLTextAreaElement | HTMLInputElement;
-          this.setMetadataValue(element, this.selectedText, false);
-          this.removeButtons(this.container);
-        },
-        color: '#00ff00' // Verde
-      },
-      {
-        label: 'A',
-        action: () => {
-          this.selectedTextarea = 'sedici_creator_person';
-          const author = filterTransformer.transformPerson(this.selectedText);
-          this.processRepeatableMetadata([author]);
-          this.removeButtons(this.container);
-        },
-        color: '#0000ff' // Azul
-      },
-      {
-        label: 'As',
-        action: () => {
-          this.selectedTextarea = 'sedici_creator_person';
-          const authors = filterTransformer.transformPersons(this.selectedText);
-          this.processRepeatableMetadata(authors);
-          this.removeButtons(this.container);
-        },
-        color: '#0000ff' // Azul
-      },
-      {
-        label: 'PC',
-        action: () => {
-          this.selectedTextarea = 'dc_subject';
-          const keyword = filterTransformer.transformKeyword(this.selectedText);
-          this.processRepeatableMetadata([keyword]);
-          this.removeButtons(this.container);
-        },
-        color: '#ff0000' // Rojo
-      },
-      {
-        label: 'PCs',
-        action: () => {
-          this.selectedTextarea = 'dc_subject';
-          const keywords = filterTransformer.transformKeywords(this.selectedText);
-          this.processRepeatableMetadata(keywords);
-          this.removeButtons(this.container);
-        },
-        color: '#ff0000' // Rojo
-      }
-    ];
-  
-    // Crear botones dinámicamente según la configuración
-    buttonsConfig.forEach(config => {
-      const button = document.createElement('button');
-      button.classList.add('selection-button'); // Clase para identificar fácilmente
-      button.innerText = config.label;
-      button.style.backgroundColor = config.color; // Color definido en la configuración
-      button.style.color = '#fff';
-      button.style.border = 'none';
-      button.style.padding = '5px 10px';
-      button.style.cursor = 'pointer';
-      button.style.flexGrow = '1'; // Asegura que los botones se alineen perfectamente
-  
-      button.addEventListener('click', config.action); // Agregar evento clic al botón
-  
-      buttonGroup.appendChild(button); // Agregar el botón al contenedor
+      this.buttonComponents.push(componentRef);
+      this.changeDetectorRef.detectChanges(); // Ahora sí debería forzar el render correctamente
     });
-  
-    this.container.appendChild(buttonGroup); // Agregar el grupo de botones al contenedor del visor
-  }
-  
-  // Método para eliminar todos los botones
-  removeButtons(container: HTMLElement): void {
-    const buttonGroup = container.querySelector('.button-group');
-    if (buttonGroup) {
-      container.removeChild(buttonGroup);
-    }
   }
 
+  handleButtonClicked(idElement: string, multiple: boolean) {
+    this.selectedTextarea = idElement;
+    const element = document.getElementById(this.selectedTextarea) as HTMLTextAreaElement | HTMLInputElement;
+    if (multiple) {
+      if (this.selectedTextarea === 'sedici_creator_person') {
+        const authors = filterTransformer.transformPersons(this.selectedText);
+        this.processRepeatableMetadata(authors);
+      } else {
+        const keywords = filterTransformer.transformKeywords(this.selectedText);
+        this.processRepeatableMetadata(keywords);
+      }
+    } else {
+      if (this.selectedTextarea === 'sedici_creator_person') {
+        const author = filterTransformer.transformPerson(this.selectedText);
+        this.processRepeatableMetadata([author]);
+      } else if (this.selectedTextarea === 'dc_subject') {
+        const keyword = filterTransformer.transformKeyword(this.selectedText);
+        this.processRepeatableMetadata([keyword]);
+      } else {
+        this.setMetadataValue(element, this.selectedText, true);
+      }
+    }
+    this.removeButtons();
+  }
+
+  removeButtons(): void {
+    this.buttonComponents.forEach(componentRef => componentRef.destroy()); // Eliminamos solo los botones
+    this.buttonComponents = []; // Limpiamos el array de referencias
+  }
+  
   copyToTextarea() {
     if (this.selectedTextarea) {
       const idPart = this.extractIdPart();
-      let element = document.getElementById(this.selectedTextarea) as HTMLTextAreaElement | HTMLInputElement;
+      let elements = document.querySelectorAll(`[id*="${this.selectedTextarea}"]`);
+      let element = Array.from(elements).find(el => 
+        window.getComputedStyle(el).visibility === 'visible' &&
+        el.getAttribute('id').startsWith('label') === false
+      ) as HTMLTextAreaElement | HTMLInputElement;
+      
       if (this.showDynamicInputs) {
         this.retrieveInputs();
       } else if (idPart.includes('date')) {
@@ -281,9 +245,15 @@ export class PdfViewerComponent implements AfterViewInit {
         const metadataYear = document.getElementById(this.selectedTextarea) as HTMLTextAreaElement | HTMLInputElement;
         const metadataMonth = document.getElementById(this.selectedTextarea.replace(/_year$/, '_month')) as HTMLTextAreaElement | HTMLInputElement;
         const metadataDay = document.getElementById(this.selectedTextarea.replace(/_year$/, '_day')) as HTMLTextAreaElement | HTMLInputElement;
-        if (date.year != '') { this.setMetadataValue(metadataYear, date.year, true); }
-        if (date.month != '') { this.setMetadataValue(metadataMonth, date.month, true); }
-        if (date.day != '') { this.setMetadataValue(metadataDay, date.day, true); }
+        if (date.year != '') {
+          this.setMetadataValue(metadataYear, date.year, true);
+          if (date.month != '') {
+            this.setMetadataValue(metadataMonth, date.month, true);
+            if (date.day != '') {
+              this.setMetadataValue(metadataDay, date.day, true);
+            }
+          }
+        }
       } else if (idPart === 'sedici_relation_journalVolumeAndIssue'){
         const journalVolumeAndIssue = this.splitVolumeIssueYear(this.selectedText);
         if (journalVolumeAndIssue.volume) {
@@ -372,8 +342,11 @@ export class PdfViewerComponent implements AfterViewInit {
       };
 
       const elementsWithSameId = Array.from(document.querySelectorAll(`[id*="${idPart}"]`))
-          .filter(element => window.getComputedStyle(element).visibility === 'visible') // Filtrar elementos visibles
-
+        .filter(element => {
+          const id = element.getAttribute('id');
+          return id === idPart || id.endsWith(idPart);
+        })
+        .filter(element => window.getComputedStyle(element).visibility === 'visible') // Filtrar elementos visibles
       let index = 0; // Definir la variable index
       let element = elementsWithSameId[index] as HTMLTextAreaElement | HTMLInputElement;
 
@@ -386,24 +359,13 @@ export class PdfViewerComponent implements AfterViewInit {
       if (!element) {
         await this.addMetadataField(selectedTextarea);
         const newElementsWithSameId = Array.from(document.querySelectorAll(`[id*="${idPart}"]`))
+          .filter(element => {
+            const id = element.getAttribute('id');
+            return id === idPart || id.endsWith(idPart);
+          })
           .filter(element => window.getComputedStyle(element).visibility === 'visible') // Filtrar elementos visibles
         element = newElementsWithSameId[newElementsWithSameId.length - 1] as HTMLTextAreaElement | HTMLInputElement;
         copyTextToElement(element, keyword);
-
-        // VER DE UNIFICAR
-        const parent = element.closest('.col');
-        if (parent) {
-          const factory = this.componentFactoryResolver.resolveComponentFactory(DynamicButtonDropdownComponent);
-          const componentRef = this.viewContainerRef.createComponent(factory);
-          componentRef.instance.filterApplied.subscribe((filter: string) => {
-            this.applyFilterToSubmissionField = true;
-            const newValue = this.applyFilter(filter, element.value);
-            this.setMetadataValue(element, newValue, true);
-          });
-          parent.insertAdjacentElement('afterend', componentRef.location.nativeElement);
-        }
-        // FIN VER DE UNIFICAR
-
       } else {
         copyTextToElement(element, keyword); // Si el elemento está vacío, copia el texto en él
       }
@@ -423,7 +385,7 @@ export class PdfViewerComponent implements AfterViewInit {
     this.selectedText = '';
     this.isTextSelected = false;
     this.selectedTextarea = '';
-    this.removeButtons(this.container);
+    this.removeButtons();
   }
 
   splitDate(date: string) {
@@ -433,9 +395,11 @@ export class PdfViewerComponent implements AfterViewInit {
   
     // Meses en español para convertirlos a números
     const monthNames: { [key: string]: string } = {
-      enero: '1', febrero: '2', marzo: '3', abril: '4', mayo: '5', junio: '6', julio: '7', agosto: '8', septiembre: '9', octubre: '10', noviembre: '11', diciembre: '12'
+      enero: '1', febrero: '2', marzo: '3', abril: '4', mayo: '5', junio: '6', julio: '7', agosto: '8', septiembre: '9', octubre: '10', noviembre: '11', diciembre: '12',
+      january: '1', february: '2', march: '3', april: '4', may: '5', june: '6', july: '7', august: '8', september: '9', october: '10', november: '11', december: '12'
     };
   
+    // FALTAN FORMATOS FECHAS EN INGLÉS (ej: April 7, 2017)
     // Expresiones regulares para los distintos formatos
     const formats: {
       regex: RegExp;
@@ -448,9 +412,11 @@ export class PdfViewerComponent implements AfterViewInit {
       { regex: /^(\d{4})\/(\d{1,2})\/(\d{1,2})$/, handler: (m) => ({ year: m[1], month: m[2], day: m[3] }) }, // AAAA/MM/DD
       { regex: /^([a-zA-Zñ]+)\s+de\s+(\d{4})$/, handler: (m) => ({ month: monthNames[m[1].toLowerCase()], year: m[2] }) }, // M de AAAA
       { regex: /^([a-zA-Zñ]+)\s+(\d{4})$/, handler: (m) => ({ month: monthNames[m[1].toLowerCase()], year: m[2] }) }, // M AAAA
+      { regex: /^(\d{4})\s+([a-zA-Zñ]+)$/, handler: (m) => ({ month: monthNames[m[2].toLowerCase()], year: m[1] }) }, // AAAA M
       { regex: /^([a-zA-Zñ]+)-([a-zA-Zñ]+)\s+(\d{4})$/, handler: (m) => ({ month: monthNames[m[2].toLowerCase()], year: m[3] }) }, // M-M AAAA
       { regex: /^(\d{1,2})\s+de\s+([a-zA-Zñ]+)\s+de\s+(\d{4})$/, handler: (m) => ({ day: m[1], month: monthNames[m[2].toLowerCase()], year: m[3] }) }, // D de M de AAAA
       { regex: /^(\d{1,2})\s+([a-zA-Zñ]+)\s+de\s+(\d{4})$/, handler: (m) => ({ day: m[1], month: monthNames[m[2].toLowerCase()], year: m[3] }) }, // D M de AAAA
+      { regex: /^(\d{1,2})\s+([a-zA-Zñ]+)\s+(\d{4})$/, handler: (m) => ({ day: m[1], month: monthNames[m[2].toLowerCase()], year: m[3] }) }, // D M AAAA
       { regex: /^(\d{1,2})\s+de\s+([a-zA-Zñ]+)\s+(\d{4})$/, handler: (m) => ({ day: m[1], month: monthNames[m[2].toLowerCase()], year: m[3] }) }, // D de M AAAA
       { regex: /^(\d{1,2})\s+al\s+(\d{1,2})\s+de\s+([a-zA-Zñ]+)\s+de\s+(\d{4})$/, handler: (m) => ({ month: monthNames[m[3].toLowerCase()], year: m[4] }) }, // D1 al D2 de M de AAAA
       { regex: /^(\d{1,2})-(\d{1,2})\s+de\s+([a-zA-Zñ]+)\s+de\s+(\d{4})$/, handler: (m) => ({ month: monthNames[m[3].toLowerCase()], year: m[4] }) }, // D1-D2 de M de AAAA
@@ -682,6 +648,8 @@ export class PdfViewerComponent implements AfterViewInit {
         return filterTransformer.toUpperCase(text);
       case 'lowerCase':
         return filterTransformer.toLowerCase(text);
+      case 'capitalize':
+        return filterTransformer.toCapitalize(text);
       case 'splitByDelimiter':
         const parts = filterTransformer.splitByDelimiter(text);
         this.showDynamicInputs = true; // Mostrar inputs dinámicos
@@ -700,6 +668,13 @@ export class PdfViewerComponent implements AfterViewInit {
         return filterTransformer.removeTitles(text);
       case 'removeReferences':
         return filterTransformer.removeReferences(text);
+      case 'reorderPerson':
+        const result = filterTransformer.reorderPerson(text);
+        if (!result) {
+          alert('El filtro solo se puede aplicar cuando se tiene UN nombre y UN apellido.');
+          return text;
+        }
+        return result;
       default:
         return text;
     }
@@ -726,9 +701,72 @@ export class PdfViewerComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.addButtonsToInputs();
+
+    // Extiende el método original para interceptar los cambios
+    const originalDispatch = this.formOperationsService.dispatchOperationsFromChangeEvent;
+    this.formOperationsService.dispatchOperationsFromChangeEvent = 
+      (pathCombiner: JsonPatchOperationPathCombiner, event: any, previousValue: any, hasStoredValue: boolean) => {
+        // Intercepta el cambio antes de procesarlo
+        if (event?.model?.id === 'dc_type' || event?.model?.id === 'sedici_subtype') {
+          setTimeout(() => {
+            this.addButtonsToInputs();
+          }, 500);
+        }
+        // Llama al método original
+        return originalDispatch.call(this.formOperationsService, pathCombiner, event, previousValue, hasStoredValue);
+    };
   }
 
+  private elementsAmount: number = 0;
+  ngAfterViewChecked() {
+    if (!this.tieneBotonesDinamicos()) {
+      this.addButtonsToInputs();
+    }
+
+    const textareas = Array.from(document.querySelectorAll('textarea'));
+    const inputss = Array.from(document.querySelectorAll('input'));
+    const elements = [...textareas, ...inputss];
+    if (this.elementsAmount !== elements.length) {
+      this.elementsAmount = elements.length;
+      this.addButtonsToInputs();
+    }
+  }
+
+  private previousButtonCount = new Map<string, number>();
+  // BUSCAR OTRO MÉTODO DE CHEQUEO DE FALTA DE BOTONES (interceptar momento del guardado automático)
+  tieneBotonesDinamicos(): boolean {
+    const secciones = ['traditionalpageone', 'traditionalpagetwo', 'traditionalpageone2', 'traditionalpagetwo2'];
+    let cambiosDetectados = false;
+    let tieneBotones = true;
+
+    for (const seccion of secciones) {
+      const sectionElement = document.querySelector(`[id="${seccion}-header"]`);
+      const parent = sectionElement?.closest('.card');
+      const buttons = parent?.querySelectorAll('app-dynamic-button-dropdown');
+      const currentCount = buttons?.length || 0;
+      
+      if (!this.previousButtonCount.has(seccion)) {
+        this.previousButtonCount.set(seccion, currentCount);
+      }
+      
+      if (currentCount !== this.previousButtonCount.get(seccion)) {
+        this.previousButtonCount.set(seccion, currentCount);
+        cambiosDetectados = true;
+      }
+  
+      if (cambiosDetectados && currentCount === 0) {
+        tieneBotones = false;
+        break; // Salir del bucle si se detecta un cambio y no hay botones
+      }
+    }
+    
+    return tieneBotones;
+  }
+
+
   addButtonsToInputs() {
+    this.removeFiltersButtons();
+
     const textareas = Array.from(document.querySelectorAll('textarea'));
     const inputss = Array.from(document.querySelectorAll('input'));
     const elements = [...textareas, ...inputss];
@@ -753,21 +791,20 @@ export class PdfViewerComponent implements AfterViewInit {
       'sedici_date_exposure_month',
       'sedici_date_exposure_day',
     ]);
-    const uniqueIdParts = new Set();
+    const uniqueId = new Set();
 
     this.metadataOptions = elements
+      .filter(element => window.getComputedStyle(element).visibility === 'visible') // Filtrar elementos visibles
       .filter(element => element.id) // Filtrar elementos con id
       .filter(element => {
         // Excluir elementos específicos y aquellos que coinciden con el patrón (Bitstreams subidos, FileUploader y otros)
         return !excludedIds.has(element.id) && !element.id.match(/^primaryBitstream\d+$/) && !element.id.match(/^inputFileUploader-ds-drag-and-drop-uploader\d+$/) && !element.id.match(/^SL_locer\d+$/) && !element.id.match(/^SL_BBL_locer\d+$/);
       })
       .filter(element => {
-        const match = element.id.match(/(dc|sedici|mods|thesis).*/); // Extraer la parte común del id
-        const idPart = match ? match[0] : element.id;
-        if (uniqueIdParts.has(idPart)) {
-          return false; // Si el idPart ya está en el Set, filtrar el elemento (para que no haya repetidos)
+        if (uniqueId.has(element.id)) {
+          return false; // Si el id ya está en el Set, filtrar el elemento (para que no haya repetidos)
         } else {
-          uniqueIdParts.add(idPart); // Agregar el idPart al Set
+          uniqueId.add(element.id); // Agregar el id al Set
           return true; // Mantener el elemento
         }
       })
@@ -781,26 +818,46 @@ export class PdfViewerComponent implements AfterViewInit {
     };
   
     const inputs = document.querySelectorAll(this.metadataOptions.map(option => `[id="${escapeSelector(option.value)}"]`).join(', '));
-    console.log('metadataOptions', this.metadataOptions);
-    console.log('inputs', inputs);
+  
     inputs.forEach(input => {
-      // VER DE UNIFICAR2
-      if (!input.id) return;
+      let container;
 
-      const parent = input.closest('.col');
+      if (!input.id) return;
+  
+      const parent = input.closest('.col') || input.closest('ds-dynamic-form-control-container');
       if (!parent) return;
 
-      const element = input as HTMLTextAreaElement | HTMLInputElement;
+      if (parent.classList.contains('col-sm-12')) {
+        container = document.createElement('div');
+        container.classList.add('d-flex', 'align-items-center', 'w-100');
+        container.style.gap = '8px';
+        
+        input.classList.add('flex-grow-1');
+        input.parentNode.insertBefore(container, input);
+        container.appendChild(input);
+      }
+
       const factory = this.componentFactoryResolver.resolveComponentFactory(DynamicButtonDropdownComponent);
       const componentRef = this.viewContainerRef.createComponent(factory);
+      
       componentRef.instance.filterApplied.subscribe((filter: string) => {
         this.applyFilterToSubmissionField = true;
-        const newValue = this.applyFilter(filter, element.value);
-        this.setMetadataValue(element, newValue, true);
+        const newValue = this.applyFilter(filter, (input as HTMLInputElement).value);
+        this.setMetadataValue(input as HTMLInputElement, newValue, true);
       });
-      parent.insertAdjacentElement('afterend', componentRef.location.nativeElement);
-      // FIN VER DE UNIFICAR2
+      
+      if (parent.classList.contains('col-sm-12')) {
+        container.appendChild(componentRef.location.nativeElement);
+      } else {
+        parent.insertAdjacentElement('afterend', componentRef.location.nativeElement);
+      }
     });
   }
+
+  removeFiltersButtons(): void {
+    const buttons = document.querySelectorAll('app-dynamic-button-dropdown');
+    buttons.forEach((button) => button.remove());
+  }
+  
   // Fin prueba botones filter inputs formulario submission
 }

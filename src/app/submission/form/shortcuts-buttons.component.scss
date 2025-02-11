@@ -1,0 +1,17 @@
+.button-group {
+  position: absolute;
+  transform: translateX(-50%); // Centrar el contenedor en el eje X
+  z-index: 1000;
+  display: flex; // Estilo para alinear los botones horizontalmente
+  gap: 0px; // Sin separación entre botones
+}
+
+.selection-button {
+  color: #fff;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  width: 35px; // Ancho fijo para todos los botones
+  height: 30px; // Alto fijo para todos los botones
+  font-size: .75rem;
+}

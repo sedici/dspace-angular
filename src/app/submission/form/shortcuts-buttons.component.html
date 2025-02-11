@@ -1,0 +1,9 @@
+<div [ngClass]="'button-group'" [ngStyle]="{'left.px': rect.left + (rect.width / 2), 'top.px': rect.bottom + 10}">
+  <button *ngFor="let config of buttonsConfig"
+          class="selection-button"
+          [ngStyle]="{'background-color': config.color}"
+          [title]="config.text"
+          (click)="config.action()">
+    {{ config.label }}
+  </button>
+</div>

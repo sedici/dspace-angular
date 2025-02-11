@@ -20,21 +20,13 @@ export const filterTransformer = {
     return text.toLowerCase();
   },
 
-  // Divide el texto por uno o varios delimitadores
-  splitByDelimiter: (text, delimiters = [';', '/', '-', '–', ',', '.'] ) => { // La coma y el punto van al final porque pueden ser parte del texto sin tener que dividirlo
-    // Manejar el caso específico de dividir por la coma ';' y la palabra ' y '
-    // VER CASO 'Iván Moreno y Fabianesi'
-    if (text.includes(';') && text.includes(' y ')) {
-      const parts = text.split(/;| y /).map(item => item.trim()).filter(item => item !== '');
-      return parts;
-    }
-    
-    // Manejar el caso específico de dividir por la coma ',' y la palabra ' y '
-    if (text.includes(',') && text.includes(' y ')) {
-      const parts = text.split(/,| y /).map(item => item.trim()).filter(item => item !== '');
-      return parts;
-    }
+  // Convierte la primera letra de cada oración a mayúsculas (COMPLEMENTAR CON NER PARA EL TEMA NOMBRES PROPIOS)
+  toCapitalize(text) {
+    return text.toLowerCase().replace(/(^\s*\w|[.!?¿¡]\s*\w)/g, match => match.toUpperCase());
+  },
 
+  // Divide el texto por uno o varios delimitadores
+  splitByDelimiter: (text, delimiters = [';', '/', ' - ', ' – ', ' * ', '•', ',', '.'] ) => { // La coma y el punto van al final porque pueden ser parte del texto sin tener que dividirlo
     // Manejar el caso específico de dividir por el guión '-' y el guión largo '–'
     if (text.includes('-') && text.includes('–')) {
       const parts = text.split(/-|–/).map(item => item.trim()).filter(item => item !== '');
@@ -43,12 +35,22 @@ export const filterTransformer = {
     
     let parts = [text];
     for (const delimiter of delimiters) {
-      const regex = new RegExp(`\\${delimiter}`, 'g');
+      const escapedDelimiter = delimiter.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'); // Escapar caracteres especiales en el delimitador
+      const regex = new RegExp(escapedDelimiter, 'g');
       const newParts = parts.flatMap(part => part.split(regex).map(item => item.trim()).filter(item => item !== ''));
       if (newParts.length > 1) {
         parts = newParts;
         break; // Detener el bucle si se ha realizado una división exitosa
       }
+    }
+
+    // VER CASO PALABRAS CLAVES 'mito; leer; historia; teseo y el minotauro'
+    // Verificar si la última parte contiene ' y ', ' & ' o ' and '
+    const lastPart = parts[parts.length - 1];
+    if (lastPart.includes(' y ') || lastPart.includes(' & ') || lastPart.includes(' and ')) {
+      const newParts = lastPart.split(/ y | & | and /).map(item => item.trim()).filter(item => item !== '');
+      parts.pop(); // Eliminar la última parte
+      parts = parts.concat(newParts);
     }
     return parts;
   },
@@ -88,8 +90,16 @@ export const filterTransformer = {
 
   // Filtro para eliminar referencias asociadas de las personas
   removeReferences: (text) => {
-    // return text.replace(/(\d+|\*+|\([a-zA-Z0-9]+\)|(?<![\p{L}])[a-zA-Z](?![\p{L}]))/gu, ''); // Elimina números, asteriscos, paréntesis con letras o números y letras sueltas
     return text.replace(/(\d+|\*+|\([a-zA-Z0-9]+\)|(?<![\p{L}])[a-z](?![\p{L}]))/gu, ''); // Elimina números, asteriscos, paréntesis con letras o números y letras (minúsculas) sueltas
+  },
+
+  // Método para reodenar Nombre Apellido en Apellido, Nombre (SOLO SIRVE CON UNO DE CADA UNO)
+  reorderPerson: (text) => {
+    const words = text.trim().split(/\s+/);
+    if (words.length === 2) {
+      return `${words[1]}, ${words[0]}`;
+    }
+    return false;
   },
 
   // FIN representación de personas
