@@ -3,6 +3,7 @@
   border-radius: 5px;
   padding: 10px;
   background-color: #f9f9f9;
+  margin-bottom: 5px;
 
   .section {
     margin-bottom: 10px;
@@ -52,13 +53,23 @@
     justify-content: space-between;
     gap: 10px;
 
+    .filter-btn {
+      padding: 10px 15px;
+      font-size: 14px;
+      border: none;
+      border-radius: 5px;
+    }
+    
+    .filter-btn:hover {
+      background-color: #e0e0e0;
+    }
+
     .btn {
       flex: 1;
       padding: 10px 15px;
       font-size: 14px;
       border: none;
       border-radius: 5px;
-      cursor: pointer;
 
       &.btn-primary {
         background-color: #007bff;
@@ -69,23 +80,10 @@
         background-color: #6c757d;
         color: #fff;
       }
-
-      .square {
-        width: 40px;
-        height: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #f0f0f0;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-      }
-      
-      .square:hover {
-        background-color: #e0e0e0;
-      }
+    }
+    
+    .filter-btn:hover {
+      background-color: #e0e0e0;
     }
 
     .dropdown {

@@ -58,19 +58,19 @@
     
         <!-- SECCIÓN: BOTONES DE FILTROS -->
         <div class="action-buttons">
-          <button class="btn square" (click)="applyFilter('splitByDelimiter')" [disabled]="showDynamicInputs">Split</button>
-          <button class="btn square" (click)="applyFilter('removeTitles')">RemTit</button>
-          <button class="btn square" (click)="applyFilter('removeDoubleSpaces')">RemDouSpa</button>
+          <button class="filter-btn" (click)="applyFilter('splitByDelimiter')" [disabled]="showDynamicInputs">Split</button>
+          <button class="filter-btn" (click)="applyFilter('removeTitles')">❌🎓</button>
+          <button class="filter-btn" (click)="applyFilter('removeReferences')">❌🔢</button>
 
           <div ngbDropdown class="dropdown">
-            <button ngbDropdownToggle class="btn square">A</button>
+            <button ngbDropdownToggle class="filter-btn">A</button>
             <div ngbDropdownMenu class="dropdown-menu dropdown-transformer-menu">
-              <button class="btn square" (click)="applyFilter('removeReferences')">RemRef</button>
-              <button class="btn square">2</button>
-              <button class="btn square">3</button>
-              <button class="btn square">4</button>
-              <button class="btn square">5</button>
-              <button class="btn square">6</button>
+              <button class="filter-btn" (click)="applyFilter('removeDoubleSpaces')">❌␣␣</button>
+              <button class="filter-btn">2</button>
+              <button class="filter-btn">3</button>
+              <button class="filter-btn">4</button>
+              <button class="filter-btn">5</button>
+              <button class="filter-btn">6</button>
             </div>
           </div>
         </div>

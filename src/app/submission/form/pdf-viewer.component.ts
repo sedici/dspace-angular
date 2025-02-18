@@ -270,10 +270,17 @@ export class PdfViewerComponent implements AfterViewInit {
           else {
             this.setMetadataValue(element, `año ${journalVolumeAndIssue.year}`, true);
           }
+        } else if (journalVolumeAndIssue.tomo) {
+          if(journalVolumeAndIssue.issue) {
+            this.setMetadataValue(element, `tomo ${journalVolumeAndIssue.tomo}, no. ${journalVolumeAndIssue.issue}`, true);
+          }
+          else {
+            this.setMetadataValue(element, `tomo ${journalVolumeAndIssue.tomo}`, true);
+          }
         } else if (journalVolumeAndIssue.issue) {
-          this.setMetadataValue(element, `no. ${journalVolumeAndIssue.issue}`, true);
+          this.setMetadataValue(element, `no. ${journalVolumeAndIssue.issue}`, this.replaceText);
         } else {
-          alert('No se encontraron año, volumen o número');
+          alert('No se encontraron año, volumen, tomo o número');
         }
       } else if (this.isRepeatableMetadataName(idPart) || (this.isRepeatableAndExtensibleMetadataName(idPart) && this.replaceText)) {
         this.processRepeatableMetadata([this.selectedText]);
@@ -437,6 +444,39 @@ export class PdfViewerComponent implements AfterViewInit {
   }
 
   splitVolumeIssueYear(data: string) {
+    function romanToInt(roman: string): number {
+      const romanNumeralMap: { [key: string]: number } = {
+        I: 1,
+        IV: 4,
+        V: 5,
+        IX: 9,
+        X: 10,
+        XL: 40,
+        L: 50,
+        XC: 90,
+        C: 100,
+        CD: 400,
+        D: 500,
+        CM: 900,
+        M: 1000,
+      };
+    
+      let i = 0;
+      let num = 0;
+    
+      while (i < roman.length) {
+        if (i + 1 < roman.length && romanNumeralMap[roman.substring(i, i + 2)]) {
+          num += romanNumeralMap[roman.substring(i, i + 2)];
+          i += 2;
+        } else {
+          num += romanNumeralMap[roman.charAt(i)];
+          i += 1;
+        }
+      }
+    
+      return num;
+    }
+    
     const issuePatterns = [
       {
         regex: /(?:\bN[º°.\s]*\s*(\d+)|\((?:N[º°.\s]*?)?\s*(\d+)\)|N\.(\d+)|(?:Número|número)\s*(\d+)|\((\d+)\))/i,
@@ -456,6 +496,10 @@ export class PdfViewerComponent implements AfterViewInit {
         regex: /(?:[Vv](?:ol(?:\.|umen)?)?\.?\s*(\d+)|\b\w+,\s*(\d+))/i,
         fields: ['volume'],
       },
+      {
+        regex: /\b[IVXLCDM]+\b/g,  // Números romanos
+        fields: ['tomo'],
+      },
     ];
 
     const extraPatterns = [
@@ -469,7 +513,7 @@ export class PdfViewerComponent implements AfterViewInit {
       },
     ];
 
-    let result: { year?: string; volume?: string; issue?: string } = {};
+    let result: { year?: string; volume?: string; tomo?: string; issue?: string } = {};
 
     for (const pattern of issuePatterns) {
       const match = data.match(pattern.regex);
@@ -501,7 +545,12 @@ export class PdfViewerComponent implements AfterViewInit {
       const match = data.match(pattern.regex);
       if (match) {
         pattern.fields.forEach((field) => {
-          const capturedValue = match.slice(1).find((value) => value !== undefined);
+          let capturedValue = '';
+          if (field === 'tomo') {
+            capturedValue = romanToInt(match[0].toUpperCase()).toString();
+          } else {
+            capturedValue = match.slice(1).find((value) => value !== undefined);
+          }
           if (capturedValue && result[field] === undefined) {
             result[field] = capturedValue;
           }
