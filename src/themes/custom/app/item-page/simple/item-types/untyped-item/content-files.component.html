@@ -1,23 +1,37 @@
 <div *ngIf="!isLoadingFiles; else loadingFiles">
-  <div class="content-container row" *ngIf="files.length > 0; else noFile">
-    <div class="file-list col-lg-4 col-12">
-      <div *ngFor="let file of files" class="file-item row" (click)="isMobile ? openModal(contentTemplate, headerTemplate) : null" (click)="selectFile(file)" [ngClass]="{'selected-file': file === selectedFile}">
-        <div class="file-icon col-1" [ngStyle]="getBadgeStyle(file.name)">
-          <span class="file-extension">{{ getFileExtension(file.name) }}</span>
+  <div class="content-container" *ngIf="files.length > 0; else noFile">
+    <div *ngIf="files.length !== 1; else oneFile" class="row">
+      <div class="file-list col-lg-3 col-12">
+        <div *ngFor="let file of files" class="file-item row" (click)="isMobile ? openModal(contentTemplate, headerTemplate) : null" (click)="(selectedFile !== file) ? selectFile(file) : null" [ngClass]="{'selected-file': file === selectedFile}">
+          <div class="file-icon col-1" [ngStyle]="getBadgeStyle(file.name)">
+            <span class="file-extension">{{ getFileExtension(file.name) }}</span>
+          </div>
+          <div class="col-lg-8 col-11">
+            <span class="file-name">{{ getFileDescription(file) }}</span>
+          </div>
+          <div class="col-lg-3 col-3 download-button d-none d-lg-block">
+            <ds-sedici-file-download-link [bitstream]="file" [item]="object"></ds-sedici-file-download-link>
+          </div>
+          <ng-template #headerTemplate>
+            <ds-sedici-file-download-link [bitstream]="file" [item]="object" [isSticky]="true"></ds-sedici-file-download-link>
+          </ng-template>
         </div>
-        <div class="col-lg-8 col-11">
-          <span class="file-name">{{ getFileDescription(file) }}</span>
+      </div>
+    
+
+      <div class="file-preview d-none d-lg-block col-lg-9">
+        <div *ngIf="selectedFile; else noPreview">
+          <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
         </div>
-        <div class="col-lg-3 col-3 download-button d-none d-lg-block">
-          <ds-sedici-file-download-link [bitstream]="file" [item]="object"></ds-sedici-file-download-link>
-        </div>
-        <ng-template #headerTemplate>
-          <ds-sedici-file-download-link [bitstream]="file" [item]="object"></ds-sedici-file-download-link>
+        <ng-template #noPreview>
+          <div class="no-preview">
+            <span>ZONA DE PREVIEW</span>
+          </div>
         </ng-template>
       </div>
     </div>
 
-    <div class="file-preview d-none d-lg-block col-lg-8">
+    <ng-template #oneFile>
       <div *ngIf="selectedFile; else noPreview">
         <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
       </div>
@@ -26,37 +40,47 @@
           <span>ZONA DE PREVIEW</span>
         </div>
       </ng-template>
-    </div>
+    </ng-template>
 
     <ng-template #contentTemplate>
-      <ng-container [ngSwitch]="getFileExtension(selectedFile.name)">
-        <ng-container *ngSwitchCase="'pdf'">
-          <ng-container *ngTemplateOutlet="pdfTemplate"></ng-container>
+      <div class="content-preview-wrapper">
+        <!-- Sticky download button -->
+        <div *ngIf="!isMobile" class="sticky-download">
+          <ds-sedici-file-download-link [bitstream]="selectedFile" [item]="object" [isSticky]="true"></ds-sedici-file-download-link>
+        </div>
+        
+        <ng-container [ngSwitch]="getFileExtension(selectedFile.name)">
+          <ng-container *ngSwitchCase="'pdf'">
+            <ng-container *ngTemplateOutlet="pdfTemplate"></ng-container>
+          </ng-container>
+          <ng-container *ngSwitchCase="'jpg'">
+            <ng-container *ngTemplateOutlet="imageTemplate"></ng-container>
+          </ng-container>
+          <ng-container *ngSwitchCase="'zip'">
+            <ng-container *ngTemplateOutlet="zipTemplate"></ng-container>
+          </ng-container>
+          <ng-container *ngSwitchDefault>
+            <div class="fa fa-file">
+              {{ dsoNameService.getName(selectedFile) }}
+            </div>
+          </ng-container>
         </ng-container>
-        <ng-container *ngSwitchCase="'jpg'">
-          <ng-container *ngTemplateOutlet="imageTemplate"></ng-container>
-        </ng-container>
-        <ng-container *ngSwitchCase="'zip'">
-          <ng-container *ngTemplateOutlet="zipTemplate"></ng-container>
-        </ng-container>
-        <ng-container *ngSwitchDefault>
-          <div class="fa fa-file">
-            {{ dsoNameService.getName(selectedFile) }}
-          </div>
-        </ng-container>
-      </ng-container>
+      </div>
     </ng-template>
 
     <ng-template #pdfTemplate>
       <div *ngIf="isLoading" class="loading-overlay">
         <i class="fa-solid fa-spinner fa-spin-pulse loading-spinner"></i>
       </div>
-      <ngx-doc-viewer 
-        [url]="previewUrl"
-        viewer="google"
-        style="width: 100%; height: 90vh;"
-        (loaded)="onDocLoaded()">
-      </ngx-doc-viewer>
+      <div style="width: 100%; height: 90vh;">
+        <ng2-pdfjs-viewer
+          #pdfViewerOnDemand
+          [pdfSrc]="previewUrl"
+          [openFile]="false"
+          zoom = "page-width"
+          (onDocumentLoad)="onDocLoaded()">
+        </ng2-pdfjs-viewer>
+      </div>
     </ng-template>
     
     <ng-template #imageTemplate>
@@ -64,7 +88,7 @@
     </ng-template>
     
     <ng-template #zipTemplate>
-      <h3>Archivos en el ZIP:</h3>
+      <h3>{{selectedFile.name}}:</h3>
       <ul>
         <ng-container *ngTemplateOutlet="renderTree; context: { tree: zipContentTree }"></ng-container>
       </ul>

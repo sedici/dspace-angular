@@ -37,9 +37,11 @@
 }
 
 .flex-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @media screen and (min-width: 769px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
 .item-identifiers {
@@ -51,6 +53,10 @@
 .botones-context {
   display: flex;
   gap: 0.2rem;
+
+  @media screen and (max-width: 768px) {
+    justify-content: space-around;
+  }
 }
 
 .metadata-column {

@@ -3,7 +3,7 @@ import {
   NgClass,
   NgIf,
 } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { FileSizePipe } from 'src/app/shared/utils/file-size-pipe';
@@ -26,7 +26,8 @@ import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
   ],
 })
 export class SediciFileDownloadLinkComponent extends FileDownloadLinkComponent implements OnInit {
-  
+  @Input() isSticky: boolean = false;
+
   adaptFileSize (size: string): string {
     if (size.includes("KB")) {
       const kbValue = parseFloat(size.replace("KB", "").trim()); // Extraer el valor numérico en KB

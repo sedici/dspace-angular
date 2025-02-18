@@ -1,14 +1,29 @@
 <a [routerLink]="(bitstreamPath$ | async)?.routerLink" [queryParams]="(bitstreamPath$ | async)?.queryParams" [target]="isBlank ? '_blank' : '_self'" [ngClass]="cssClasses">
-  <button class="download-btn" placement="left" [ngbTooltip]="'item.page.filesection.download' | translate">
-    <ng-container *ngIf="(canDownload$ | async) !== true; else downloadIcon">
-      <span role="img" [attr.aria-label]="'file-download-link.restricted' | translate" class="pr-1">
-        <i class="fas fa-lock"></i>
-      </span>
-    </ng-container>
-    <ng-template #downloadIcon>
-      <span role="img" [attr.aria-label]="'file-download-link.download' | translate" class="pr-1">
-        <i class="fas fa-download"></i>
-      </span>
-    </ng-template>{{ adaptFileSize((bitstream?.sizeBytes) | dsFileSize:0) }}
-  </button>
+  <div *ngIf="isSticky !== true; else stickyButton">
+    <button class="download-btn" placement="left" [ngbTooltip]="'item.page.filesection.download' | translate">
+      <ng-container *ngIf="(canDownload$ | async) !== true; else downloadIcon">
+        <span role="img" [attr.aria-label]="'file-download-link.restricted' | translate" class="pr-1">
+          <i class="fas fa-lock"></i>
+        </span>
+      </ng-container>
+      <ng-template #downloadIcon>
+        <span role="img" [attr.aria-label]="'file-download-link.download' | translate" class="pr-1">
+          <i class="fas fa-download"></i>
+        </span>
+      </ng-template>{{ adaptFileSize((bitstream?.sizeBytes) | dsFileSize:0) }}
+    </button>
+  </div>
 </a>
+
+<ng-template #stickyButton>
+  <div class="sticky-button">
+    <button class="download-btn">
+      <div class="download-content">
+        <span role="img" [attr.aria-label]="'file-download-link.download' | translate">
+          <i class="fas fa-download"></i>
+        </span>
+        <span>Descargar ({{ adaptFileSize((bitstream?.sizeBytes) | dsFileSize:0) }})</span>
+      </div>
+    </button>
+  </div>
+</ng-template>

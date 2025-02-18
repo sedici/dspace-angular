@@ -1,4 +1,4 @@
-import { Component, Input, Inject } from '@angular/core';
+import { Component, Input, Inject, ViewChild, ElementRef } from '@angular/core';
 import { NgFor, NgIf, NgStyle, NgClass, NgSwitch, NgSwitchCase, NgSwitchDefault, NgTemplateOutlet, AsyncPipe } from '@angular/common';
 import { Item } from 'src/app/core/shared/item.model';
 import { BitstreamDataService } from 'src/app/core/data/bitstream-data.service';
@@ -19,6 +19,8 @@ import * as JSZip from 'jszip';
 import { HostWindowService } from 'src/app/shared/host-window.service';
 import { Observable } from 'rxjs';
 import { NotificationsService } from 'src/app/shared/notifications/notifications.service';
+
+import { PdfJsViewerModule } from "ng2-pdfjs-viewer";
 @Component({
   selector: 'content-files',
   styleUrls: ['./content-files.component.scss'],
@@ -38,10 +40,12 @@ import { NotificationsService } from 'src/app/shared/notifications/notifications
     SediciFileDownloadLinkComponent,
     NgxDocViewerModule,
     SediciViewerComponent,
+    PdfJsViewerModule,
   ],
 })
 export class ContentFilesComponent {
   @Input() object: Item;
+  @ViewChild('pdfViewerOnDemand') pdfViewerOnDemand;
 
   primaryBitsreamId: string;
   previewUrl: string;
@@ -53,7 +57,7 @@ export class ContentFilesComponent {
   }
 
   openModal(content: any, headerTemplate: any) {
-    const modalRef = this.modalService.open(SediciViewerComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(SediciViewerComponent, { size: 'lg', windowClass: 'fullscreen-modal' });
     modalRef.componentInstance.content = content;
     modalRef.componentInstance.headerTemplate = headerTemplate;
   }
@@ -105,7 +109,9 @@ export class ContentFilesComponent {
       case 'csv':
         // Harcodeo una URL de vista previa para probar
         // this.previewUrl = "http://sedici.unlp.edu.ar/bitstream/handle/10915/59633/Cap%C3%ADtulo_1_-_Las_inundaciones_en_la_Regi%C3%B3n_Capital_-_Cartograf%C3%ADa_tem%C3%A1tica_para_el_planeamiento.CISAUA%2000%20Original%20Informe%20Final%20-%20PIO-%2030-3-17%20C009.pdf-PDFA.pdf?sequence=3&isAllowed=y";
-        this.previewUrl = "https://host170.sedici.unlp.edu.ar/server/api/core/bitstreams/3d8afd41-cff2-4b40-b8e9-0d4238860ab6/content";
+        this.previewUrl = file._links.content.href;
+        this.pdfViewerOnDemand._src = this.previewUrl;
+        this.pdfViewerOnDemand.refresh();
         break;
       default:
         this.previewUrl = file._links.content.href;
@@ -231,6 +237,9 @@ export class ContentFilesComponent {
           this.files = response.payload.page;
         }
         this.isLoadingFiles = false;
+        if (this.files.length === 1) {
+          this.selectFile(this.files[0]);
+        }
       }
     },
     (err) => {

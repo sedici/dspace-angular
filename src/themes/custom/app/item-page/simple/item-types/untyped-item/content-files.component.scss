@@ -29,6 +29,7 @@
         justify-content: center;
         color: #fff;
         border-radius: 4px;
+        padding: 0 10px;
 
         .file-extension {
           font-size: .625rem;
@@ -47,8 +48,7 @@
       }
 
       .download-button{
-        padding-left: 10px;
-        padding-right: 10px;
+        padding: 0px;
       }
     
       .preview-button{
@@ -61,6 +61,26 @@
     position: relative;
     padding-right: 0px;
     padding-left: 0px;
+
+    .content-preview-wrapper {
+      position: relative;
+      min-height: 85vh;
+      
+      .sticky-download {
+        position: sticky;
+        top: 1rem;
+        z-index: 100;
+        height: 0; // Evita que ocupe espacio vertical
+        
+        ::ng-deep ds-sedici-file-download-link {
+          position: absolute;
+          right: -5rem;
+          top: 2rem;
+          padding: 0.5rem;
+          border-radius: 4px;
+        }
+      }
+    }
   }
 
   .no-preview {
@@ -119,4 +139,12 @@ ul {
   i {
     margin-right: 8px;
   }
+}
+
+::ng-deep .fullscreen-modal .modal-dialog {
+  margin: 0;
+}
+
+::ng-deep .fullscreen-modal .modal-body {
+  padding: 0;
 }

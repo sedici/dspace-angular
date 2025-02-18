@@ -1,12 +1,39 @@
+a {
+  text-decoration: none;
+}
+
 .download-btn {
   background-color: #fff;
   border: 1px solid #ccc;
   cursor: pointer;
   border-radius: 4px;
   font-size: .625rem;
-  width: 100%;
+  width: 60px;
 
   &:hover {
     background-color: #e0e0e0;
+  }
+}
+
+.sticky-button {
+  .download-btn {
+    display: flex;
+    justify-content: center;
+    background-color: #40ab32;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    font-size: 0.875rem;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    
+    .fas {
+      font-size: 1rem;
+    }
+
+    p {
+      margin-bottom: 0px;
+    }
   }
 }
