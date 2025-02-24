@@ -29,6 +29,7 @@ import {
 
 import { SubmissionRestService } from '../../../core/submission/submission-rest.service';
 import { SubmissionScopeType } from '../../../core/submission/submission-scope-type';
+import { BtnDisabledDirective } from '../../../shared/btn-disabled.directive';
 import { isNotEmpty } from '../../../shared/empty.util';
 import { BrowserOnlyPipe } from '../../../shared/utils/browser-only.pipe';
 import { SubmissionService } from '../../submission.service';
@@ -51,7 +52,7 @@ import { getAdvancedWorkflowRoute } from 'src/app/workflowitems-edit-page/workfl
   styleUrls: ['./submission-form-footer.component.scss'],
   templateUrl: './submission-form-footer.component.html',
   standalone: true,
-  imports: [CommonModule, BrowserOnlyPipe, TranslateModule, NgbTooltipModule,],
+  imports: [CommonModule, BrowserOnlyPipe, TranslateModule, NgbTooltipModule, BtnDisabledDirective],
 })
 export class SubmissionFormFooterComponent implements OnChanges {
 
