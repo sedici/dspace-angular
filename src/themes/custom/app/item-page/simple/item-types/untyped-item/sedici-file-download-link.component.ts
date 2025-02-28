@@ -9,7 +9,17 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FileSizePipe } from 'src/app/shared/utils/file-size-pipe';
 import { FileDownloadLinkComponent } from 'src/app/shared/file-download-link/file-download-link.component';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { AuthorizationDataService } from 'src/app/core/data/feature-authorization/authorization-data.service';
+import { ChangeDetectorRef } from '@angular/core';
+import {
+  combineLatest as observableCombineLatest,
+  Observable,
+  of as observableOf,
+} from 'rxjs';
+import { FeatureID } from 'src/app/core/data/feature-authorization/feature-id';
+import { map } from 'rxjs/operators';
+import { isNotEmpty } from 'src/app/shared/empty.util';
+import { DSONameService } from 'src/app/core/breadcrumbs/dso-name.service';
 @Component({
   selector: 'ds-sedici-file-download-link',
   templateUrl: './sedici-file-download-link.component.html',
@@ -27,6 +37,31 @@ import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 })
 export class SediciFileDownloadLinkComponent extends FileDownloadLinkComponent implements OnInit {
   @Input() isSticky: boolean = false;
+
+  constructor(
+    protected authorizationService: AuthorizationDataService,
+    public dsoNameService: DSONameService,
+    private cdr: ChangeDetectorRef
+  ) {
+    super(authorizationService, dsoNameService);
+  }
+
+  ngOnChanges() {
+    this.bitstreamPath$ = this.getBitstreamPathObservable();
+    this.cdr.detectChanges(); // Forzar la detección de cambios
+  }
+  
+  private getBitstreamPathObservable(): Observable<{ routerLink: string, queryParams: any }> {
+    if (this.enableRequestACopy) {
+      this.canDownload$ = this.authorizationService.isAuthorized(FeatureID.CanDownload, isNotEmpty(this.bitstream) ? this.bitstream.self : undefined);
+      const canRequestACopy$ = this.authorizationService.isAuthorized(FeatureID.CanRequestACopy, isNotEmpty(this.bitstream) ? this.bitstream.self : undefined);
+      return observableCombineLatest([this.canDownload$, canRequestACopy$]).pipe(
+        map(([canDownload, canRequestACopy]) => this.getBitstreamPath(canDownload, canRequestACopy)),
+      );
+    } else {
+      return observableOf(this.getBitstreamDownloadPath());
+    }
+  }
 
   adaptFileSize (size: string): string {
     if (size.includes("KB")) {

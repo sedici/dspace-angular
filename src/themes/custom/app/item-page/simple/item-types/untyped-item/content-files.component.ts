@@ -8,12 +8,11 @@ import { FileSizePipe } from 'src/app/shared/utils/file-size-pipe';
 import { DSONameService } from 'src/app/core/breadcrumbs/dso-name.service';
 import { SediciFileDownloadLinkComponent } from './sedici-file-download-link.component';
 
-import { NgxDocViewerModule } from 'ngx-doc-viewer';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SediciViewerComponent } from '../../field-components/viewer/sedici-viewer.component';
 
 import { ChangeDetectorRef } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as JSZip from 'jszip';
 
 import { HostWindowService } from 'src/app/shared/host-window.service';
@@ -21,6 +20,7 @@ import { Observable } from 'rxjs';
 import { NotificationsService } from 'src/app/shared/notifications/notifications.service';
 
 import { PdfJsViewerModule } from "ng2-pdfjs-viewer";
+import { AuthService } from 'src/app/core/auth/auth.service';
 @Component({
   selector: 'content-files',
   styleUrls: ['./content-files.component.scss'],
@@ -38,7 +38,6 @@ import { PdfJsViewerModule } from "ng2-pdfjs-viewer";
     AsyncPipe,
     FileSizePipe,
     SediciFileDownloadLinkComponent,
-    NgxDocViewerModule,
     SediciViewerComponent,
     PdfJsViewerModule,
   ],
@@ -60,6 +59,7 @@ export class ContentFilesComponent {
     const modalRef = this.modalService.open(SediciViewerComponent, { size: 'lg', windowClass: 'fullscreen-modal' });
     modalRef.componentInstance.content = content;
     modalRef.componentInstance.headerTemplate = headerTemplate;
+    modalRef.componentInstance.embargoedFile = this.embargoedFile;
   }
 
   isLoadingFiles: boolean = true;
@@ -77,16 +77,20 @@ export class ContentFilesComponent {
     private cdr: ChangeDetectorRef,
     private windowService: HostWindowService,
     private notificationsService: NotificationsService,
+    private authService: AuthService,
   ) {
     this.isMobile$ = this.windowService.isMobile();
   }
 
   selectedFile: Bitstream | null = null;
+  embargoedFile: boolean = false;
 
   selectFile(file: Bitstream) {
     this.selectedFile = file;
     const extension = this.getFileExtension(file.name);
     this.isLoading = true;
+    this.embargoedFile = false;
+    const authToken = this.authService.getToken();
   
     switch (extension) {
       case 'jpg':
@@ -107,11 +111,40 @@ export class ContentFilesComponent {
       case 'doc':
       case 'docx':
       case 'csv':
-        // Harcodeo una URL de vista previa para probar
-        // this.previewUrl = "http://sedici.unlp.edu.ar/bitstream/handle/10915/59633/Cap%C3%ADtulo_1_-_Las_inundaciones_en_la_Regi%C3%B3n_Capital_-_Cartograf%C3%ADa_tem%C3%A1tica_para_el_planeamiento.CISAUA%2000%20Original%20Informe%20Final%20-%20PIO-%2030-3-17%20C009.pdf-PDFA.pdf?sequence=3&isAllowed=y";
         this.previewUrl = file._links.content.href;
-        this.pdfViewerOnDemand._src = this.previewUrl;
-        this.pdfViewerOnDemand.refresh();
+
+        // Usar HttpClient para obtener el archivo con autenticación
+        this.http.get(this.previewUrl, {
+          headers: new HttpHeaders({
+            'Authorization': `Bearer ${authToken}`
+          }),
+          responseType: 'blob'
+        }).subscribe((data: Blob) => {
+          // Crear una URL para el blob
+          const objectUrl = URL.createObjectURL(data);
+
+          // Verificar si el visor PDF está disponible
+          const assignBlobUrl = () => {
+            if (this.pdfViewerOnDemand) {
+              // Asignar la URL del blob al visor PDF
+              this.pdfViewerOnDemand._src = objectUrl;
+              this.pdfViewerOnDemand.refresh();
+              this.isLoading = false;
+            } else {
+              console.error('El visor PDF no está disponible.');
+              setTimeout(assignBlobUrl, 100); // Intentar nuevamente después de 100ms
+            }
+          };
+          assignBlobUrl();
+        }, error => {
+          console.error('Error al cargar el archivo:', error);
+          if (error.status === 401 || error.status === 403) {
+            this.embargoedFile = true;
+            this.cdr.detectChanges();
+          }     
+          this.isLoading = false;
+        });
+        this.isLoading = false;
         break;
       default:
         this.previewUrl = file._links.content.href;
@@ -247,5 +280,14 @@ export class ContentFilesComponent {
       this.notificationsService.error('Error', 'Ocurrió un error al intentar cargar los archivos.');
       this.isLoadingFiles = false;
     });
+  }
+
+  handleClick(file: Bitstream, contentTemplate: any, headerTemplate: any) {
+    this.selectFile(file);
+    setTimeout(() => {
+      if (this.isMobile) {
+        this.openModal(contentTemplate, headerTemplate);
+      }
+    }, 100);
   }
 }

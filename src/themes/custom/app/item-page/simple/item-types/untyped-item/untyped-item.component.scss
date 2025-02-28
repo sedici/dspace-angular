@@ -55,10 +55,20 @@
   gap: 0.2rem;
 
   @media screen and (max-width: 768px) {
-    justify-content: space-around;
+    gap: 0;
+
+    button {
+      flex: 1 100%;
+      padding: 10px;
+    }
   }
 }
 
 .metadata-column {
   padding: 0 .5rem ;
+}
+
+// Modifico todos los botones que están incluidos en el componente
+:host ::ng-deep .btn:focus {
+  outline-style: none !important;
 }

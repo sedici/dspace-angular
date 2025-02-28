@@ -25,7 +25,12 @@
   <ng-template #breadcrumb let-text="text" let-url="url">
     <li class="breadcrumb-item">
       <div class="breadcrumb-item-limiter">
-        <a [routerLink]="url" class="text-truncate" [ngbTooltip]="text | translate" placement="bottom">{{ text | translate }}</a>
+        <a [routerLink]="url"
+          class="text-truncate"
+          [ngbTooltip]="(isResponsive ? null : text | translate)"
+          placement="bottom">
+          {{ text | translate }}
+        </a>
       </div>
     </li>
   </ng-template>

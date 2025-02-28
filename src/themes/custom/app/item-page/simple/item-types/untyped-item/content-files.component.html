@@ -2,7 +2,7 @@
   <div class="content-container" *ngIf="files.length > 0; else noFile">
     <div *ngIf="files.length !== 1; else oneFile" class="row">
       <div class="file-list col-lg-3 col-12">
-        <div *ngFor="let file of files" class="file-item row" (click)="isMobile ? openModal(contentTemplate, headerTemplate) : null" (click)="(selectedFile !== file) ? selectFile(file) : null" [ngClass]="{'selected-file': file === selectedFile}">
+        <div *ngFor="let file of files" class="file-item row" (click)="handleClick(file, contentTemplate, headerTemplate)" [ngClass]="{'selected-file': file === selectedFile}">          
           <div class="file-icon col-1" [ngStyle]="getBadgeStyle(file.name)">
             <span class="file-extension">{{ getFileExtension(file.name) }}</span>
           </div>
@@ -18,10 +18,16 @@
         </div>
       </div>
     
-
       <div class="file-preview d-none d-lg-block col-lg-9">
         <div *ngIf="selectedFile; else noPreview">
-          <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+          <div *ngIf="!embargoedFile; else embargoedTemplate">
+            <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+          </div>
+          <ng-template #embargoedTemplate>
+            <div class="no-preview">
+              <span>EL ARCHIVO "{{ dsoNameService.getName(selectedFile) }}" SE ENCUENTRA EMBARGADO</span>
+            </div>
+          </ng-template>
         </div>
         <ng-template #noPreview>
           <div class="no-preview">
@@ -32,10 +38,17 @@
     </div>
 
     <ng-template #oneFile>
-      <div *ngIf="selectedFile; else noPreview">
-        <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+      <div *ngIf="selectedFile; else noPreviewInOneFile">
+        <div *ngIf="!embargoedFile; else embargoedTemplateInOneFile">
+          <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+        </div>
+        <ng-template #embargoedTemplateInOneFile>
+          <div class="no-preview">
+            <span>EL ARCHIVO "{{ dsoNameService.getName(selectedFile) }}" SE ENCUENTRA EMBARGADO</span>
+          </div>
+        </ng-template>
       </div>
-      <ng-template #noPreview>
+      <ng-template #noPreviewInOneFile>
         <div class="no-preview">
           <span>ZONA DE PREVIEW</span>
         </div>
@@ -84,7 +97,9 @@
     </ng-template>
     
     <ng-template #imageTemplate>
-      <img class="preview-image" [src]="previewUrl" alt="{{ dsoNameService.getName(selectedFile) }}">
+      <div style="display: flex; justify-content: center;">
+        <img class="preview-image" [src]="previewUrl" alt="{{ dsoNameService.getName(selectedFile) }}">
+      </div>
     </ng-template>
     
     <ng-template #zipTemplate>

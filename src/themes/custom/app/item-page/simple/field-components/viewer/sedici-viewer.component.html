@@ -8,6 +8,11 @@
 </div>
 <div class="modal-body">
   <ng-container *ngIf="content">
-    <ng-container *ngTemplateOutlet="content"></ng-container>
+    <div *ngIf="embargoedFile">
+      <span>EL ARCHIVO SE ENCUENTRA EMBARGADO</span>
+    </div>
+    <div *ngIf="!embargoedFile">
+      <ng-container *ngTemplateOutlet="content"></ng-container>
+    </div>
   </ng-container>
 </div>
