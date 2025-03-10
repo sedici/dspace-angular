@@ -20,49 +20,52 @@
         </ds-generic-item-page-field>
       </h4>
     </div>
-    <hr class="divider">
-    <ds-generic-item-page-field [item]="object"
-      [fields]="['sedici.creator.person']"
-      [separator]="' | '">
-    </ds-generic-item-page-field>
-    <ds-generic-item-page-field [item]="object"
-      [fields]="['sedici.creator.corporate']"
-      [separator]="' | '"
-      [label]="'sedici.item.page.sedici.creator.corporate'">
-    </ds-generic-item-page-field>
-    <ds-generic-item-page-field [item]="object"
-      [fields]="['sedici.creator.interprete']"
-      [separator]="' | '"
-      [label]="'sedici.item.page.sedici.creator.interprete'">
-    </ds-generic-item-page-field>
-    <ds-generic-item-page-field [item]="object"
-      [fields]="['sedici.contributor.compiler']"
-      [separator]="' | '"
-      [label]="'sedici.item.page.sedici.contributor.compiler'">
-    </ds-generic-item-page-field>
-    <ds-generic-item-page-field [item]="object"
-      [fields]="['sedici.contributor.translator']"
-      [separator]="' | '"
-      [label]="'sedici.item.page.sedici.contributor.translator'">
-    </ds-generic-item-page-field>
-    <ds-generic-item-page-field [item]="object"
-      [fields]="['sedici.contributor.editor']"
-      [separator]="' | '"
-      [label]="'sedici.item.page.sedici.contributor.editor'">
-    </ds-generic-item-page-field>
-    <ds-generic-item-page-field [item]="object"
-      [fields]="['sedici.contributor.inscriber']"
-      [separator]="' | '"
-      [label]="'sedici.item.page.sedici.contributor.inscriber'">
-    </ds-generic-item-page-field>
+    <hr class="divider divider-top">
+    <div class="author-container">
+      <ds-generic-item-page-field [item]="object"
+        [fields]="['sedici.creator.person']"
+        [separator]="' | '">
+      </ds-generic-item-page-field>
+      <ds-generic-item-page-field [item]="object"
+        [fields]="['sedici.creator.corporate']"
+        [separator]="' | '"
+        [label]="'sedici.item.page.sedici.creator.corporate'">
+      </ds-generic-item-page-field>
+      <ds-generic-item-page-field [item]="object"
+        [fields]="['sedici.creator.interprete']"
+        [separator]="' | '"
+        [label]="'sedici.item.page.sedici.creator.interprete'">
+      </ds-generic-item-page-field>
+      <ds-generic-item-page-field [item]="object"
+        [fields]="['sedici.contributor.compiler']"
+        [separator]="' | '"
+        [label]="'sedici.item.page.sedici.contributor.compiler'">
+      </ds-generic-item-page-field>
+      <ds-generic-item-page-field [item]="object"
+        [fields]="['sedici.contributor.translator']"
+        [separator]="' | '"
+        [label]="'sedici.item.page.sedici.contributor.translator'">
+      </ds-generic-item-page-field>
+      <ds-generic-item-page-field [item]="object"
+        [fields]="['sedici.contributor.editor']"
+        [separator]="' | '"
+        [label]="'sedici.item.page.sedici.contributor.editor'">
+      </ds-generic-item-page-field>
+      <ds-generic-item-page-field [item]="object"
+        [fields]="['sedici.contributor.inscriber']"
+        [separator]="' | '"
+        [label]="'sedici.item.page.sedici.contributor.inscriber'">
+      </ds-generic-item-page-field>
+    </div>
     <sedici-context [object]="object"></sedici-context>
+    <hr class="divider divider-bot">
     <div class="flex-container">
       <div class="item-identifiers">
         <ng-container *ngFor="let idValue of itemIdentifiers">
           <ds-badge-metadata-values
             [mdValues]="[idValue.mdValue]"
             [badgeType]="'badge-identifier'"
-            [badgeLabelType]="'badge-primary'"
+            [badgeLabelType]="'badge-secondary'"
             [badgeLabel]="idValue.label"
             [copyToClipboardButton]="true"
             [url]="[idValue.url]">
@@ -71,14 +74,14 @@
         <ds-badge-metadata-values
           [mdValues]="object?.allMetadata(['sedici.identifier.issn'])"
           [badgeType]="'badge-identifier'"
-          [badgeLabelType]="'badge-primary'"
+          [badgeLabelType]="'badge-secondary'"
           [badgeLabel]="'ISSN'"
           [copyToClipboardButton]="true">
         </ds-badge-metadata-values>
         <ds-badge-metadata-values
           [mdValues]="object?.allMetadata(['sedici.identifier.isbn'])"
           [badgeType]="'badge-identifier'"
-          [badgeLabelType]="'badge-primary'"
+          [badgeLabelType]="'badge-secondary'"
           [badgeLabel]="'ISBN'"
           [copyToClipboardButton]="true">
         </ds-badge-metadata-values>
@@ -159,10 +162,6 @@
                 [fields]="['mods.originInfo.place']"
                 [separator]="'; '"
                 [label]="'sedici.item.page.mods.originInfo.place'">
-              </ds-generic-item-page-field>
-              <ds-generic-item-page-field [item]="object"
-                [fields]="['dc.format.extent']"
-                [label]="'sedici.item.page.dc.format.extent'">
               </ds-generic-item-page-field>
               <ds-generic-item-page-field [item]="object"
                 [fields]="['dc.audience']"

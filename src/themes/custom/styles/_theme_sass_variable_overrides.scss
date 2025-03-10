@@ -31,8 +31,11 @@ $white:  #ffffff !default;
 //
 // $link-color: map-get($theme-colors, info) !default;
 
-/*** TOCANDO VARIABLES ***/
+/*** MODIFICACIÓN DE VARIABLES PARA CUSTOM ***/
 $font-size-base: 0.875rem !default; // Assumes the browser default, typically `16px`
 $line-height-base: 2 !default; // En lugar del 1.5 por defecto
-// $badge-font-size:  75% !default; //VER si aumentar el tamaño de la fuente para los badge
-// $font-family-sans-serif: SE PUEDEN MODIFICAR ARRIBA DIRECTAMENTE
+
+$font-weight-thin: 100 !default;
+$font-weight-light: 300 !default;
+$font-weight-regular: 400 !default;
+$font-weight-bold: 700 !default;

@@ -60,6 +60,14 @@
 
 .abstract-text {
   font-size: .75rem;
+  font-weight: var(--font-weight-light);
   white-space: pre-wrap;
   text-align: justify;
+}
+
+::ng-deep .language-switcher-wrapper ds-truncatable-part .collapseButton,
+::ng-deep .language-switcher-wrapper ds-truncatable-part .expandButton {
+  margin-left: auto;
+  margin-right: 0;
+  display: block;
 }

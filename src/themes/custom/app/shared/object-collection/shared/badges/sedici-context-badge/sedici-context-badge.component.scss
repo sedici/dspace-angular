@@ -1,5 +1,13 @@
-.badge-title-container {
+.badge-container {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
+
+  .badge {
+    font-weight: var(--font-weight-thin);
+  }
+}
+
+:host ::ng-deep .badge {
+  font-size: 1.1667em;
 }

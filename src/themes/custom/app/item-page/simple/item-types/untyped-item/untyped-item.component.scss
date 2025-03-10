@@ -1,3 +1,7 @@
+.container {
+  font-size: .75rem;
+}
+
 .jumbotron {
   padding: 1rem 0 0;
   margin-bottom: 0;
@@ -12,6 +16,7 @@
   flex-direction: column;
 
   h1 {
+    font-size: 1.75em;
     font-weight: bold;
     margin-bottom: 0;
   }
@@ -22,18 +27,35 @@
 }
 
 .subtitle-content {
+  font-size: 1.3333em;
+  font-weight: var(--font-weight-thin);
   font-style: italic;
   color: #555;
   margin-bottom: 0.5rem;
 }
 
 .divider {
-  border-top: 1px solid #999;
-  margin: 0.5rem 0;
+  border-top: 1px solid #ccc;
+}
+
+.divider-top {
+  margin-top: 1rem;
+  margin-bottom: .5rem;
+}
+
+.divider-bot {
+  margin-top: .5rem;
+  margin-bottom: 1rem;
 }
 
 .section-divider {
   border-bottom: 1px solid #D8E8Eb;
+}
+
+sedici-context,
+.author-container {
+  font-size: 1.3333em;
+  font-weight: var(--font-weight-light);
 }
 
 .flex-container {
@@ -48,6 +70,11 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.2rem;
+
+  ::ng-deep .badge {
+    font-size: 1.1667em;
+    font-weight: var(--font-weight-regular);
+  }
 }
 
 .botones-context {
@@ -59,13 +86,39 @@
 
     button {
       flex: 1 100%;
-      padding: 10px;
+      border-radius: 0;
+      border-top: 1px solid #ccc;
+      padding-top: 0.3rem;
     }
+
+    button + button {
+      border-left: 1px solid #ccc; /* Línea divisoria */
+      padding-left: 0.5rem; /* Espacio después de la línea */
+    }
+  }
+
+  ::ng-deep .btn {
+    font-size: 1.3333em;
+    font-weight: var(--font-weight-light);
   }
 }
 
 .metadata-column {
   padding: 0 .5rem ;
+
+  ::ng-deep ds-generic-item-page-field,
+  ::ng-deep sedici-truncatable-generic-item-page-field,
+  ::ng-deep ds-item-page-uri-field {
+    h6 {
+      font-size: 1.3333em;
+      font-weight: var(--font-weight-bold);
+    }
+  
+    span, a {
+      font-size: 1.1667em;
+      font-weight: var(--font-weight-thin);
+    }
+  }
 }
 
 // Modifico todos los botones que están incluidos en el componente

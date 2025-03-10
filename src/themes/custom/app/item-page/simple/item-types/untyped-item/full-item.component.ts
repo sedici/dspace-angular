@@ -12,7 +12,7 @@ import { CollectionsComponent } from 'src/app/item-page/field-components/collect
 import { ItemPageIdentifierOtherFieldComponent } from '../../field-components/specific-field/identfier-other/item-page-identifier.other-field';
 @Component({
   selector: 'full-item',
-  // styleUrls: ['./full-item.component.scss'],
+  styleUrls: ['./full-item.component.scss'],
   templateUrl: './full-item.component.html',
   standalone: true,
   imports: [

@@ -77,6 +77,11 @@
     [label]="'sedici.item.page.sedici.relation.ciclo'">
   </ds-generic-item-page-field>
 
+  <ds-generic-item-page-field [item]="object"
+    [fields]="['dc.format.extent']"
+    [label]="'sedici.item.page.dc.format.extent'">
+  </ds-generic-item-page-field>
+
   <ds-sedici-date-metadata-values
     [mdValues]="object?.allMetadata(['dc.date.accessioned'])"
     [label]="'sedici.item.page.dc.date.accessioned'">

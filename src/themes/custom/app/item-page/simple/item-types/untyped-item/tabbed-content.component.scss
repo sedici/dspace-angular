@@ -12,7 +12,7 @@
   padding: 10px 20px;
   text-align: center;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: var(--font-weight-thin);
   color: #888;
   position: relative;
   transition: color 0.3s ease;
@@ -20,12 +20,13 @@
 
   @media screen and (max-width: map-get($grid-breakpoints, md)) {
     padding: 5px 10px;
-    font-size: .7rem;
+    font-size: 1em;
   }
 }
 
 .tab.active {
   color: #42a5f5;
+  font-weight: var(--font-weight-bold);
 }
 
 .tab.active::after {
