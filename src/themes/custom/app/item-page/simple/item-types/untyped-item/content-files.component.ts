@@ -15,7 +15,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as JSZip from 'jszip';
 
-import { HostWindowService } from 'src/app/shared/host-window.service';
+import { HostWindowService, WidthCategory } from 'src/app/shared/host-window.service';
 import { Observable } from 'rxjs';
 import { NotificationsService } from 'src/app/shared/notifications/notifications.service';
 
@@ -79,7 +79,7 @@ export class ContentFilesComponent {
     private notificationsService: NotificationsService,
     private authService: AuthService,
   ) {
-    this.isMobile$ = this.windowService.isMobile();
+    this.isMobile$ = this.windowService.isUpTo(WidthCategory.MD);
   }
 
   selectedFile: Bitstream | null = null;
@@ -150,6 +150,11 @@ export class ContentFilesComponent {
         this.previewUrl = file._links.content.href;
         break;
     }
+  }
+
+  isPreviewAvailable(fileName: string): boolean {
+    const extension = this.getFileExtension(fileName);
+    return ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'zip', 'pdf'].includes(extension);
   }
 
   getFileExtension(fileName: string): string {
@@ -270,6 +275,7 @@ export class ContentFilesComponent {
           this.files = response.payload.page;
         }
         this.isLoadingFiles = false;
+        this.cdr.detectChanges();
         if (this.files.length === 1) {
           this.selectFile(this.files[0]);
         }

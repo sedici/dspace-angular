@@ -2,16 +2,25 @@
   <div class="content-container" *ngIf="files.length > 0; else noFile">
     <div *ngIf="files.length !== 1; else oneFile" class="row">
       <div class="file-list col-lg-3 col-12">
-        <div *ngFor="let file of files" class="file-item row" (click)="handleClick(file, contentTemplate, headerTemplate)" [ngClass]="{'selected-file': file === selectedFile}">          
-          <div class="file-icon col-1" [ngStyle]="getBadgeStyle(file.name)">
-            <span class="file-extension">{{ getFileExtension(file.name) }}</span>
-          </div>
-          <div class="col-lg-8 col-11">
-            <span class="file-name">{{ getFileDescription(file) }}</span>
-          </div>
-          <div class="col-lg-3 col-3 download-button d-none d-lg-block">
-            <ds-sedici-file-download-link [bitstream]="file" [item]="object"></ds-sedici-file-download-link>
-          </div>
+        <div *ngFor="let file of files" (click)="isPreviewAvailable(file.name) && handleClick(file, contentTemplate, headerTemplate)" [ngClass]="{'selected-file': file === selectedFile}">          
+          <ng-container *ngIf="isPreviewAvailable(file.name); else applyNoPreviewTemplate">
+            <div class="file-item row">
+              <div class="file-icon col-1" [ngStyle]="getBadgeStyle(file.name)">
+                <span class="file-extension">{{ getFileExtension(file.name) }}</span>
+              </div>
+              <div class="col-lg-8 col-11">
+                <span class="file-name">{{ getFileDescription(file) }}</span>
+              </div>
+              <div class="col-lg-3 col-3 download-button d-none d-lg-block">
+                <ds-sedici-file-download-link [bitstream]="file" [item]="object"></ds-sedici-file-download-link>
+              </div>
+            </div>
+          </ng-container>
+          
+          <ng-template #applyNoPreviewTemplate>
+            <ng-container *ngTemplateOutlet="noPreviewAvailable; context: { file: file }"></ng-container>
+          </ng-template>
+
           <ng-template #headerTemplate>
             <ds-sedici-file-download-link [bitstream]="file" [item]="object" [isSticky]="true"></ds-sedici-file-download-link>
           </ng-template>
@@ -39,15 +48,22 @@
 
     <ng-template #oneFile>
       <div *ngIf="selectedFile; else noPreviewInOneFile">
-        <div *ngIf="!embargoedFile; else embargoedTemplateInOneFile">
-          <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
-        </div>
-        <ng-template #embargoedTemplateInOneFile>
-          <div class="no-preview">
-            <span>EL ARCHIVO "{{ dsoNameService.getName(selectedFile) }}" SE ENCUENTRA EMBARGADO</span>
+        <ng-container *ngIf="isPreviewAvailable(selectedFile.name); else applyNoPreviewTemplateOne">
+          <div *ngIf="!embargoedFile; else embargoedTemplateInOneFile">
+            <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
           </div>
+          <ng-template #embargoedTemplateInOneFile>
+            <div class="no-preview">
+              <span>EL ARCHIVO "{{ dsoNameService.getName(selectedFile) }}" SE ENCUENTRA EMBARGADO</span>
+            </div>
+          </ng-template>
+        </ng-container>
+        
+        <ng-template #applyNoPreviewTemplateOne>
+          <ng-container *ngTemplateOutlet="noPreviewAvailable; context: { file: selectedFile }"></ng-container>
         </ng-template>
       </div>
+      
       <ng-template #noPreviewInOneFile>
         <div class="no-preview">
           <span>ZONA DE PREVIEW</span>
@@ -55,13 +71,28 @@
       </ng-template>
     </ng-template>
 
-    <ng-template #contentTemplate>
-      <div class="content-preview-wrapper">
-        <!-- Sticky download button -->
-        <div *ngIf="!isMobile" class="sticky-download">
-          <ds-sedici-file-download-link [bitstream]="selectedFile" [item]="object" [isSticky]="true"></ds-sedici-file-download-link>
+    <ng-template #noPreviewAvailable let-file="file">
+      <div class="file-no-preview-available">
+        <div class="file-item row">
+          <div class="file-icon col-1" [ngStyle]="getBadgeStyle(file.name)">
+            <span class="file-extension">{{ getFileExtension(file.name) }}</span>
+          </div>
+          <div class="col-8">
+            <span class="file-name">{{ getFileDescription(file) }}</span>
+            <span class="text-no-preview-available">
+              <i class="fa-solid fa-eye-slash"></i>
+              Preview no disponible
+            </span>
+          </div>
+          <div class="col-3 download-button">
+            <ds-sedici-file-download-link [bitstream]="file" [item]="object"></ds-sedici-file-download-link>
+          </div>
         </div>
-        
+      </div>
+    </ng-template>
+
+    <ng-template #contentTemplate>
+      <div class="content-preview-wrapper">        
         <ng-container [ngSwitch]="getFileExtension(selectedFile.name)">
           <ng-container *ngSwitchCase="'pdf'">
             <ng-container *ngTemplateOutlet="pdfTemplate"></ng-container>
@@ -78,6 +109,11 @@
             </div>
           </ng-container>
         </ng-container>
+
+        <!-- Sticky download button -->
+        <div *ngIf="!isMobile" class="sticky-download">
+          <ds-sedici-file-download-link [bitstream]="selectedFile" [item]="object" [isSticky]="true"></ds-sedici-file-download-link>
+        </div>
       </div>
     </ng-template>
 

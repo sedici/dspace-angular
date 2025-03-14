@@ -6,6 +6,13 @@
 .tab-header {
   display: flex;
   border-bottom: 2px solid #42a5f5;
+  overflow-x: auto; // Permitir el desplazamiento horizontal
+  white-space: nowrap; // Evitar que los tabs se envuelvan en una nueva línea
+
+  // Ocultar las barras de desplazamiento en algunos navegadores
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .tab {
@@ -20,7 +27,7 @@
 
   @media screen and (max-width: map-get($grid-breakpoints, md)) {
     padding: 5px 10px;
-    font-size: 1em;
+    font-size: 1.1667em;
   }
 }
 

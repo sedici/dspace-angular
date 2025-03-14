@@ -75,6 +75,13 @@ sedici-context,
     font-size: 1.1667em;
     font-weight: var(--font-weight-regular);
   }
+
+  @media screen and (min-width: 769px) {
+    ::ng-deep .simple-view-element {
+      margin-bottom: 0px;
+    }
+  }
+  
 }
 
 .botones-context {
@@ -88,7 +95,6 @@ sedici-context,
       flex: 1 100%;
       border-radius: 0;
       border-top: 1px solid #ccc;
-      padding-top: 0.3rem;
     }
 
     button + button {
