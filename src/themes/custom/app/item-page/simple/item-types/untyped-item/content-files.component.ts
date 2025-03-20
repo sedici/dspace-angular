@@ -7,6 +7,8 @@ import { Bitstream } from 'src/app/core/shared/bitstream.model';
 import { FileSizePipe } from 'src/app/shared/utils/file-size-pipe';
 import { DSONameService } from 'src/app/core/breadcrumbs/dso-name.service';
 import { SediciFileDownloadLinkComponent } from './sedici-file-download-link.component';
+import { isNotEmpty } from 'src/app/shared/empty.util';
+import { FeatureID } from 'src/app/core/data/feature-authorization/feature-id';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SediciViewerComponent } from '../../field-components/viewer/sedici-viewer.component';
@@ -21,6 +23,7 @@ import { NotificationsService } from 'src/app/shared/notifications/notifications
 
 import { PdfJsViewerModule } from "ng2-pdfjs-viewer";
 import { AuthService } from 'src/app/core/auth/auth.service';
+import { AuthorizationDataService } from 'src/app/core/data/feature-authorization/authorization-data.service';
 @Component({
   selector: 'content-files',
   styleUrls: ['./content-files.component.scss'],
@@ -78,6 +81,7 @@ export class ContentFilesComponent {
     private windowService: HostWindowService,
     private notificationsService: NotificationsService,
     private authService: AuthService,
+    private authorizationService: AuthorizationDataService,
   ) {
     this.isMobile$ = this.windowService.isUpTo(WidthCategory.MD);
   }
@@ -91,6 +95,7 @@ export class ContentFilesComponent {
     this.isLoading = true;
     this.embargoedFile = false;
     const authToken = this.authService.getToken();
+    this.cdr.detectChanges();
   
     switch (extension) {
       case 'jpg':
@@ -98,7 +103,6 @@ export class ContentFilesComponent {
       case 'png':
       case 'gif':
       case 'bmp':
-      case 'webp':
         this.previewUrl = file._links.content.href;
         this.isLoading = false;
         break;
@@ -108,43 +112,50 @@ export class ContentFilesComponent {
         this.isLoading = false;
         break;
       case 'pdf':
-      case 'doc':
-      case 'docx':
-      case 'csv':
         this.previewUrl = file._links.content.href;
 
-        // Usar HttpClient para obtener el archivo con autenticación
-        this.http.get(this.previewUrl, {
-          headers: new HttpHeaders({
-            'Authorization': `Bearer ${authToken}`
-          }),
-          responseType: 'blob'
-        }).subscribe((data: Blob) => {
-          // Crear una URL para el blob
-          const objectUrl = URL.createObjectURL(data);
-
-          // Verificar si el visor PDF está disponible
-          const assignBlobUrl = () => {
-            if (this.pdfViewerOnDemand) {
-              // Asignar la URL del blob al visor PDF
-              this.pdfViewerOnDemand._src = objectUrl;
-              this.pdfViewerOnDemand.refresh();
-              this.isLoading = false;
-            } else {
-              console.error('El visor PDF no está disponible.');
-              setTimeout(assignBlobUrl, 100); // Intentar nuevamente después de 100ms
+        const waitForDownloadable = (file: Bitstream) => {
+          if (this.isDownloadable(file) !== undefined) {
+            if(this.isDownloadable(this.selectedFile)) {
+              // Usar HttpClient para obtener el archivo con autenticación
+              this.http.get(this.previewUrl, {
+                headers: new HttpHeaders({
+                  'Authorization': `Bearer ${authToken}`
+                }),
+                responseType: 'blob'
+              }).subscribe((data: Blob) => {
+                // Crear una URL para el blob
+                const objectUrl = URL.createObjectURL(data);
+    
+                // Verificar si el visor PDF está disponible
+                const assignBlobUrl = () => {
+                  if (this.pdfViewerOnDemand) {
+                    // Asignar la URL del blob al visor PDF
+                    this.pdfViewerOnDemand._src = objectUrl;
+                    this.pdfViewerOnDemand.refresh();
+                    this.isLoading = false;
+                  } else {
+                    console.error('El visor PDF no está disponible.');
+                    setTimeout(assignBlobUrl, 100); // Intentar nuevamente después de 100ms
+                  }
+                };
+                assignBlobUrl();
+              }, error => {
+                console.error('Error al cargar el archivo:', error);
+                if (error.status === 401 || error.status === 403) {
+                  this.embargoedFile = true;
+                  this.cdr.detectChanges();
+                }     
+                this.isLoading = false;
+              });
             }
-          };
-          assignBlobUrl();
-        }, error => {
-          console.error('Error al cargar el archivo:', error);
-          if (error.status === 401 || error.status === 403) {
-            this.embargoedFile = true;
+            this.isLoading = false;
             this.cdr.detectChanges();
-          }     
-          this.isLoading = false;
-        });
-        this.isLoading = false;
+          } else {
+            setTimeout(() => waitForDownloadable(file), 100);
+          }
+        }
+        waitForDownloadable(this.selectedFile);
         break;
       default:
         this.previewUrl = file._links.content.href;
@@ -154,12 +165,17 @@ export class ContentFilesComponent {
 
   isPreviewAvailable(fileName: string): boolean {
     const extension = this.getFileExtension(fileName);
-    return ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'zip', 'pdf'].includes(extension);
+    return ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'zip', 'pdf'].includes(extension);
   }
 
   getFileExtension(fileName: string): string {
     const parts = fileName.split('.');
     return (parts.length > 1 ? parts.pop() : '').toLowerCase();
+  }
+
+  isImageFile(extension: string): boolean {
+    const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp'];
+    return imageExtensions.includes(extension);
   }
 
   stringToHexColor(str: string): string {
@@ -274,11 +290,12 @@ export class ContentFilesComponent {
         if (response.payload && response.payload.page.length > 0) {
           this.files = response.payload.page;
         }
-        this.isLoadingFiles = false;
         this.cdr.detectChanges();
+        this.checkAndSaveDownloadStatus();
         if (this.files.length === 1) {
           this.selectFile(this.files[0]);
         }
+        this.isLoadingFiles = false;
       }
     },
     (err) => {
@@ -286,6 +303,27 @@ export class ContentFilesComponent {
       this.notificationsService.error('Error', 'Ocurrió un error al intentar cargar los archivos.');
       this.isLoadingFiles = false;
     });
+  }
+
+  checkAndSaveDownloadStatus(): void {
+    this.files.forEach(file => {
+      this.authorizationService.isAuthorized(
+        FeatureID.CanDownload,
+        isNotEmpty(file) ? file.self : undefined)
+        .subscribe(canDownload => {
+          // Extiende el objeto file con una nueva propiedad canDownload
+          (file as any).canDownload = canDownload;
+          this.cdr.detectChanges();
+        });
+    });
+  }
+
+  isDownloadable(file: Bitstream): boolean {
+    return (file as any).canDownload;
+  }
+
+  hasPreviewAndDownloadableFiles(): boolean {
+    return this.files.some(file => this.isPreviewAvailable(file.name) && (file as any).canDownload);
   }
 
   handleClick(file: Bitstream, contentTemplate: any, headerTemplate: any) {

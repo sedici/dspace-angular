@@ -54,17 +54,17 @@
   flex-wrap: nowrap;
 }
 
+.selected-file .file-item{
+  background-color: #aaa;
+}
+
 .file-item {
   align-items: center;
   padding: .5rem .25rem;
   cursor: pointer;
 
-  &.selected-file {
-    background-color: #f5f5f5;
-  }
-
   &:hover {
-    background-color: #f5f5f5;
+    background-color: #ccc;
   }
 
   .file-icon {
@@ -158,4 +158,19 @@ ul {
 
 ::ng-deep .fullscreen-modal .modal-body {
   padding: 0;
+}
+
+// Versión con botón de preview
+.preview-btn {
+  background-color: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: .5rem;
+  font-size: .625rem;
+  width: 60px;
+
+  &:hover {
+    background-color: #666;
+  }
 }

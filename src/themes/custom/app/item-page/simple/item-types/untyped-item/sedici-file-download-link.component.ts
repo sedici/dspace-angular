@@ -63,6 +63,11 @@ export class SediciFileDownloadLinkComponent extends FileDownloadLinkComponent i
     }
   }
 
+  public isFileDownloadable(): Observable<boolean> {
+    return this.authorizationService.isAuthorized(FeatureID.CanDownload, 
+      isNotEmpty(this.bitstream) ? this.bitstream.self : undefined);
+  }
+
   adaptFileSize (size: string): string {
     if (size.includes("KB")) {
       const kbValue = parseFloat(size.replace("KB", "").trim()); // Extraer el valor numérico en KB

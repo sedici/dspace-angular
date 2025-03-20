@@ -16,6 +16,7 @@
 }
 
 .tab {
+  font-size: 1.1667em;
   padding: 10px 20px;
   text-align: center;
   cursor: pointer;
@@ -27,7 +28,6 @@
 
   @media screen and (max-width: map-get($grid-breakpoints, md)) {
     padding: 5px 10px;
-    font-size: 1.1667em;
   }
 }
 
