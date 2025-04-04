@@ -9315,7 +9315,7 @@
   "sedici.item.page.dc.date.accessioned": "Creado el",
 
   // Tabs
-  "sedici.tabs.content": "Contenido",
+  "sedici.tabs.files": "Archivos",
   "sedici.tabs.license": "Licencia",
   "sedici.tabs.howToCite": "Cómo citar",
   "sedici.tabs.statistics": "Estadísticas",
@@ -10372,4 +10372,13 @@
 
   // "search-facet-option.update.announcement": "The page will be reloaded. Filter {{ filter }} is selected.",
   "search-facet-option.update.announcement": "La página será recargada. Filtro {{ filter }} seleccionado.",
+
+  // "form.date-picker.placeholder.year": "Year",
+  "form.date-picker.placeholder.year": "Año",
+
+  // "form.date-picker.placeholder.month": "Month",
+  "form.date-picker.placeholder.month": "Mes",
+
+  // "form.date-picker.placeholder.day": "Day",
+  "form.date-picker.placeholder.day": "Día",
 }

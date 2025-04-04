@@ -10379,8 +10379,8 @@
   // "sedici.item.page.dc.date.accessioned": "Creado el",
   "sedici.item.page.dc.date.accessioned": "Criado em",
 
-  // "sedici.tabs.content": "Contenido",
-  "sedici.tabs.content": "Conteúdo",
+  // "sedici.tabs.files": "Archivos",
+  "sedici.tabs.files": "Arquivos",
   
   // "sedici.tabs.license": "Licencia",
   "sedici.tabs.license": "Licença",
