@@ -14,9 +14,8 @@
       <ng-template #plainText>{{ mdValue.value }}</ng-template>
       <ng-container *ngIf="copyToClipboardButton">
         <span class="d-none" #elementContentToCopy>{{mdValue.value}}</span>
-        <i id="copyButton-{{mdValue.value}}" class="copyButton fa fa-copy" aria-hidden="true" (click)="copyToClipboard(elementContentToCopy, 'copyButton-' + mdValue.value )"></i>
+        <i id="copyButton-{{mdValue.value}}" class="copyButton fa fa-copy" aria-hidden="true" title="Copiar" (click)="copyToClipboard(elementContentToCopy, 'copyButton-' + mdValue.value )"></i>
       </ng-container>
     </span>
   </div>
 </ng-template>
-

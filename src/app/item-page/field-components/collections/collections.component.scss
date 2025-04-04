@@ -1,0 +1,17 @@
+.collections {
+  list-style-type: disc;
+  padding-left: 1.5em;
+  margin: 0;
+
+  li {
+    margin-bottom: 0.5em;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+}

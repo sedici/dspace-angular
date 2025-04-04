@@ -26,7 +26,7 @@ export class TabbedContentComponent implements OnInit {
   selectedTabIndex = 0;
 
   tabs = [
-    { label: 'sedici.tabs.content', visible: true },
+    { label: 'sedici.tabs.files', visible: true },
     { label: 'sedici.tabs.license', visible: true },
     { label: 'sedici.tabs.statistics', visible: true },
     { label: 'sedici.tabs.fullRecord', visible: true }

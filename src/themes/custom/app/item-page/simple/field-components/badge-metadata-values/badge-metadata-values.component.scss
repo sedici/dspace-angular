@@ -12,7 +12,12 @@
 
 .badge-group {
     display: inline-block;
+    margin-right: 0.2rem;
 }
+
+.badge-group:last-child {
+    margin-right: 0;
+  }
 
 .badge-group::after {
     white-space: pre;
@@ -22,6 +27,7 @@
 .badge-identifier {
     color: #505050;
     font-weight: inherit;
+    padding-top: 0;
 }
 
 .group-inline-block {
@@ -29,8 +35,7 @@
 }
 
 ::ng-deep .badge-group span {
-    padding: 0.4em;
-    padding-right: 0.5em;
+    padding: 0.35em;
 }
 
 .copyButton {

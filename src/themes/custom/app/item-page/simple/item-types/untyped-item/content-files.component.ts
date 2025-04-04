@@ -24,6 +24,7 @@ import { NotificationsService } from 'src/app/shared/notifications/notifications
 import { PdfJsViewerModule } from "ng2-pdfjs-viewer";
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { AuthorizationDataService } from 'src/app/core/data/feature-authorization/authorization-data.service';
+import { SediciShareButtonsComponent } from '../../field-components/share-buttons/sedici-share-buttons.component';
 @Component({
   selector: 'content-files',
   styleUrls: ['./content-files.component.scss'],
@@ -59,10 +60,19 @@ export class ContentFilesComponent {
   }
 
   openModal(content: any, headerTemplate: any) {
-    const modalRef = this.modalService.open(SediciViewerComponent, { size: 'lg', windowClass: 'fullscreen-modal' });
+    const modalRef = this.modalService.open(SediciViewerComponent, { size: 'lg', windowClass: 'fullscreen-modal', centered: true });
     modalRef.componentInstance.content = content;
     modalRef.componentInstance.headerTemplate = headerTemplate;
     modalRef.componentInstance.embargoedFile = this.embargoedFile;
+  }
+
+  openModalShareButtons() {
+    const modalRef = this.modalService.open(SediciShareButtonsComponent, {
+      centered: true, // Centra el modal
+    });
+    modalRef.componentInstance.link = this.object.firstMetadataValue('dc.identifier.uri');
+    modalRef.componentInstance.title = this.object.firstMetadataValue('dc.title');
+    modalRef.componentInstance.type = this.object.firstMetadataValue('sedici.subtype') || this.object.firstMetadataValue('dc.type');
   }
 
   isLoadingFiles: boolean = true;

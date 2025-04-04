@@ -1,11 +1,10 @@
 <div class="row">
   <div class="col-lg-6 col-md-12">
     <ds-item-page-cc-license-field [item]="object" [variant]="'full'"></ds-item-page-cc-license-field>
-  </div>
-  <div class="col-lg-6 col-md-12">            
+
     <div *ngIf="license" class="licencias">
       <div *ngIf="(license.includes('PDM') || license.includes('Creative Public Domain')); else noMark">
-        <h2>No Copyright</h2>
+        <h3 class="license-title">No Copyright</h3>
         
         <div class="licencia-item">
           <i class="fa-brands fa-creative-commons-pd"></i>
@@ -19,8 +18,56 @@
             You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. See Other Information below.
           </div>
         </div>
+      </div>
 
-        <h2>Other Information</h2>
+      <ng-template #noMark>
+        <div *ngIf="license.includes('Universal'); else noZero">
+          <h3 class="license-title">No Copyright</h3>
+        
+          <div class="licencia-item">
+            <i class="fa-brands fa-creative-commons-zero"></i>
+            <div>
+              The person who associated a work with this deed has dedicated the work to the public domain by waiving all of his or her rights to the work worldwide under copyright law, including all related and neighboring rights, to the extent allowed by law.
+            </div>
+          </div>
+
+          <div class="licencia-item">
+            <div>
+              You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. See Other Information below.
+            </div>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template #noZero>
+        <div *ngIf="(license.includes('CC') || license.includes('cc') || license.includes('Attribution')) ">
+          <h3 class="license-title">{{ 'sedici.license.free' | translate }}</h3>
+  
+          <div class="licencia-item">
+            <div>
+              <strong>{{ 'sedici.license.share' | translate }}</strong> - {{ 'sedici.license.share.description' | translate }}
+            </div>
+          </div>
+  
+          <div *ngIf="!(license.includes('ND') || license.includes('NoDerivs'))" class="licencia-item">
+            <div>
+              <strong>{{ 'sedici.license.adapt' | translate }}</strong> - {{ 'sedici.license.adapt.description' | translate }}
+            </div>
+          </div>
+  
+          <div class="licencia-item">
+            <div>
+              {{ 'sedici.license.description' | translate }}
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+  <div class="col-lg-6 col-md-12">            
+    <div *ngIf="license" class="licencias">
+      <div *ngIf="(license.includes('PDM') || license.includes('Creative Public Domain')); else noMark">
+        <h3 class="license-title">Other Information</h3>
 
         <div class="licencia-item">
           <div>
@@ -55,22 +102,7 @@
 
       <ng-template #noMark>
         <div *ngIf="license.includes('Universal'); else noZero">
-          <h2>No Copyright</h2>
-        
-          <div class="licencia-item">
-            <i class="fa-brands fa-creative-commons-zero"></i>
-            <div>
-              The person who associated a work with this deed has dedicated the work to the public domain by waiving all of his or her rights to the work worldwide under copyright law, including all related and neighboring rights, to the extent allowed by law.
-            </div>
-          </div>
-
-          <div class="licencia-item">
-            <div>
-              You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. See Other Information below.
-            </div>
-          </div>
-
-          <h2>Other Information</h2>
+          <h3 class="license-title">Other Information</h3>
 
           <div class="licencia-item">
             <div>
@@ -94,27 +126,7 @@
 
       <ng-template #noZero>
         <div *ngIf="(license.includes('CC') || license.includes('cc') || license.includes('Attribution')) ">
-          <h2>{{ 'sedici.license.free' | translate }}</h2>
-
-          <div class="licencia-item">
-            <div>
-              <strong>{{ 'sedici.license.share' | translate }}</strong> - {{ 'sedici.license.share.description' | translate }}
-            </div>
-          </div>
-
-          <div *ngIf="!(license.includes('ND') || license.includes('NoDerivs'))" class="licencia-item">
-            <div>
-              <strong>{{ 'sedici.license.adapt' | translate }}</strong> - {{ 'sedici.license.adapt.description' | translate }}
-            </div>
-          </div>
-
-          <div class="licencia-item">
-            <div>
-              {{ 'sedici.license.description' | translate }}
-            </div>
-          </div>
-
-          <h2>{{ 'sedici.license.terms' | translate }}</h2>
+          <h3 class="license-title">{{ 'sedici.license.terms' | translate }}</h3>
         
           <div class="licencia-item">
             <i class="fa-brands fa-creative-commons-by"></i>

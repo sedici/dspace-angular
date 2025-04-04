@@ -1,9 +1,12 @@
 <ds-metadata-field-wrapper [label]="label | translate">
-    <div class="collections">
-        <a *ngFor="let collection of (this.collections$ | async); let last=last;" [routerLink]="['/collections', collection.id]">
-            <span>{{ dsoNameService.getName(collection) }}</span><span *ngIf="!last" [innerHTML]="separator"></span>
-        </a>
-    </div>
+    <ul class="collections">
+        <li *ngFor="let collection of (this.collections$ | async); let last=last;">
+            <a [routerLink]="['/collections', collection.id]">
+                <span>{{ dsoNameService.getName(collection) }}</span>
+            </a>
+            <span *ngIf="!last" [innerHTML]="separator"></span>
+        </li>
+    </ul>
 
     <div *ngIf="isLoading$ | async">
         {{'item.page.collections.loading' | translate}}
