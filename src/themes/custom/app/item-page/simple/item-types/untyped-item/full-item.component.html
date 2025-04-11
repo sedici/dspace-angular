@@ -1,94 +1,18 @@
-<div>
-  <ds-sedici-date-metadata-values
-    [mdValues]="object?.allMetadata(['dc.date.issued'])"
-    [label]="'sedici.item.page.dc.date.issued'">
-  </ds-sedici-date-metadata-values>
-
-  <ds-sedici-date-metadata-values
-    [mdValues]="object?.allMetadata(['dc.date.created'])"
-    [label]="'sedici.item.page.dc.date.created'">
-  </ds-sedici-date-metadata-values>
-
-  <ds-sedici-date-metadata-values
-    [mdValues]="object?.allMetadata(['sedici.date.exposure'])"
-    [label]="'sedici.item.page.sedici.date.exposure'">
-  </ds-sedici-date-metadata-values>
-
-  <ds-generic-item-page-field [item]="object"
-    [fields]="['dc.description.filiation']"
-    [label]="'sedici.item.page.dc.description.filiation'">
-  </ds-generic-item-page-field>
-
-  <ds-generic-item-page-field [item]="object"
-    [fields]="['sedici.identifier.expediente']"
-    [label]="'sedici.item.page.sedici.identifier.expediente'">
-  </ds-generic-item-page-field>
-
-  <ds-generic-item-page-field [item]="object"
-    [fields]="['mods.location']"
-    [label]="'sedici.item.page.mods.location'">
-  </ds-generic-item-page-field>
-
-  <ds-generic-item-page-field [item]="object"
-    [fields]="['sedici.subject.ford']"
-    [separator]="'; '"
-    [label]="'sedici.item.page.sedici.subject.ford'">
-  </ds-generic-item-page-field>
-
-  <ds-sedici-language-metadata-values
-    [mdValues]="object?.allMetadata(['dc.language'])"
-    [label]="'sedici.item.page.dc.language'">
-  </ds-sedici-language-metadata-values>
-
-  <ds-item-page-identifier-other-field [item]="object"></ds-item-page-identifier-other-field>
-
-  <ds-generic-item-page-field [item]="object"
-    [fields]="['thesis.degree.name']"
-    [label]="'sedici.item.page.thesis.degree.name'">
-  </ds-generic-item-page-field>
-
-  <ds-generic-item-page-field [item]="object"
-    [fields]="['thesis.degree.grantor']"
-    [label]="'sedici.item.page.thesis.degree.grantor'">
-  </ds-generic-item-page-field>
-
-  <ds-generic-item-page-field [item]="object"
-    [fields]="['sedici.relation.event']"
-    [label]="'sedici.item.page.sedici.relation.event'">
-  </ds-generic-item-page-field>
-
-  <ds-generic-item-page-field [item]="object"
-    [fields]="['sedici.relation.journalTitle']"
-    [label]="'sedici.item.page.sedici.relation.journalTitle'">
-  </ds-generic-item-page-field>
-
-  <ds-generic-item-page-field [item]="object"
-    [fields]="['sedici.relation.journalVolumeAndIssue']"
-    [label]="'sedici.item.page.sedici.relation.journalVolumeAndIssue'">
-  </ds-generic-item-page-field>
-
-  <ds-generic-item-page-field [item]="object"
-    [fields]="['sedici.relation.bookTitle']"
-    [label]="'sedici.item.page.sedici.relation.bookTitle'">
-  </ds-generic-item-page-field>
-
-  <ds-generic-item-page-field [item]="object"
-    [fields]="['sedici.relation.ciclo']"
-    [label]="'sedici.item.page.sedici.relation.ciclo'">
-  </ds-generic-item-page-field>
-
-  <ds-generic-item-page-field [item]="object"
-    [fields]="['dc.format.extent']"
-    [label]="'sedici.item.page.dc.format.extent'">
-  </ds-generic-item-page-field>
-
-  <ds-sedici-date-metadata-values
-    [mdValues]="object?.allMetadata(['dc.date.accessioned'])"
-    [label]="'sedici.item.page.dc.date.accessioned'">
-  </ds-sedici-date-metadata-values>
-
-  <ds-item-page-collections [item]="object"></ds-item-page-collections>
+<div class="table-responsive">
+  <table class="table">
+    <tbody>
+      <ng-container *ngFor="let row of metadataRows">
+        <ng-container *ngFor="let value of row.values">
+          <tr>
+            <td class="label">{{ row.label | translate }}</td>
+            <td>{{ value }}</td>
+          </tr>
+        </ng-container>
+      </ng-container>
+    </tbody>
+  </table>
 </div>
+<ds-item-page-collections [item]="object"></ds-item-page-collections>
 
 <div>
   <a class="btn btn-outline-primary" [routerLink]="[itemPageRoute + '/full']" role="button">

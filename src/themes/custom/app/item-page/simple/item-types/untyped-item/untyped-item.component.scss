@@ -51,11 +51,6 @@
   margin-bottom: .5rem;
 }
 
-.divider-bot {
-  margin-top: .5rem;
-  margin-bottom: 1rem;
-}
-
 .section-divider {
   border-bottom: 1px solid #D8E8Eb;
 }
@@ -78,16 +73,6 @@ sedici-context,
   display: flex;
   flex-wrap: wrap;
   gap: 0.2rem;
-
-  ::ng-deep .badge {
-    font-size: 1.1667em;
-    font-weight: var(--font-weight-regular);
-  }
-
-  ::ng-deep .badge-group {
-    border: solid 1px #495057;
-    border-radius: 0.25rem;
-  }
 
   @media screen and (min-width: 769px) {
     ::ng-deep .simple-view-element {
@@ -120,6 +105,10 @@ sedici-context,
     font-size: 1.3333em;
     font-weight: var(--font-weight-light);
   }
+
+  .btn-citation {
+    color: var(--sedici-color);
+  }
 }
 
 .metadata-column {
@@ -135,7 +124,7 @@ sedici-context,
   
     span, a {
       font-size: 1.25em;
-      font-weight: var(--font-weight-thin);
+      font-weight: var(--font-weight-regular);
     }
   }
 }

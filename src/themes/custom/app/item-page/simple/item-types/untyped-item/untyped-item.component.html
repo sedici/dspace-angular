@@ -58,7 +58,6 @@
       </ds-generic-item-page-field>
     </div>
     <sedici-context [object]="object"></sedici-context>
-    <hr class="divider divider-bot">
     <div class="flex-container">
       <div class="item-identifiers">
         <ng-container *ngFor="let idValue of itemIdentifiers">
@@ -75,23 +74,23 @@
           [mdValues]="object?.allMetadata(['sedici.identifier.issn'])"
           [badgeType]="'badge-identifier'"
           [badgeLabelType]="'badge-secondary'"
-          [badgeLabel]="'ISSN'"
+          [badgeLabel]="'issn'"
           [copyToClipboardButton]="true">
         </ds-badge-metadata-values>
         <ds-badge-metadata-values
           [mdValues]="object?.allMetadata(['sedici.identifier.isbn'])"
           [badgeType]="'badge-identifier'"
           [badgeLabelType]="'badge-secondary'"
-          [badgeLabel]="'ISBN'"
+          [badgeLabel]="'isbn'"
           [copyToClipboardButton]="true">
         </ds-badge-metadata-values>
       </div>
       <div class="botones-context">
-        <button class="btn" (click)="openModalCitation()">
+        <button class="btn btn-citation" (click)="openModalCitation()">
           <i class="fa-solid fa-quote-right"></i>
           <span> Cómo citar</span>
         </button>
-        <button class="btn" (click)="openModalShareButtons()">
+        <button class="btn btn-share" (click)="openModalShareButtons()">
           <i class="fa-solid fa-share"></i>
           <span> Compartir</span>
         </button>

@@ -3,24 +3,24 @@
     <div *ngIf="files.length !== 1; else oneFile" >
       <div *ngIf="hasPreviewAndDownloadableFiles(); else noPreviewAndDownloadableFiles" class="row">
         <div class="file-list col-lg-3 col-12">
-          <div *ngFor="let file of files" (click)="!isMobile && isPreviewAvailable(file.name) && file.canDownload && handleClick(file, contentTemplate, headerTemplate)" [ngClass]="{'selected-file': file === selectedFile}">          
+          <div *ngFor="let file of files" (click)="isPreviewAvailable(file.name) && file.canDownload && handleClick(file, contentTemplate, headerTemplate)" [ngClass]="{'selected-file': file === selectedFile}">          
             <ng-container *ngIf="isPreviewAvailable(file.name) && file.canDownload; else applyNoPreviewTemplate">
               <div class="file-item row">
-                <div class="file-icon col-1" [ngStyle]="getBadgeStyle(file.name)">
-                  <span class="file-extension">{{ getFileExtension(file.name) }}</span>
+                <div class="file-icon col-1">
+                  <img [src]="getIconPath(file.name)" alt="File icon"/>
                 </div>
                 <div class="col-8">
                   <span class="file-name">{{ getFileDescription(file) }}</span>
                 </div>
                 <div class="col-3 download-button">
-                  <div *ngIf="isMobile">
+                  <!-- <div *ngIf="isMobile">
                     <button class="preview-btn" (click)="handleClick(file, contentTemplate, headerTemplate)">
                       <span class="pr-1">
                         <i class="fa-solid fa-eye"></i>
                       </span>
                       <span>Preview</span>
                     </button>
-                  </div>
+                  </div> -->
                   <ds-sedici-file-download-link [bitstream]="file" [item]="object"></ds-sedici-file-download-link>
                 </div>
               </div>
@@ -95,8 +95,8 @@
     <ng-template #noPreviewAvailable let-file="file">
       <div class="file-no-preview-available">
         <div class="file-item row">
-          <div class="file-icon col-1" [ngStyle]="getBadgeStyle(file.name)">
-            <span class="file-extension">{{ getFileExtension(file.name) }}</span>
+          <div class="file-icon col-1">
+            <img [src]="getIconPath(file.name)" alt="File icon"/>
           </div>
           <div class="col-8">
             <span class="file-name">{{ getFileDescription(file) }}</span>

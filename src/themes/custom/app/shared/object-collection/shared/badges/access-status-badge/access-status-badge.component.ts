@@ -23,9 +23,9 @@ import { RemoteData } from 'src/app/core/data/remote-data';
 
 @Component({
   selector: 'ds-themed-access-status-badge',
-  // styleUrls: ['./access-status-badge.component.scss'],
-  // templateUrl: './access-status-badge.component.html',
-  templateUrl: '../../../../../../../../app/shared/object-collection/shared/badges/access-status-badge/access-status-badge.component.html',
+  styleUrls: ['./access-status-badge.component.scss'],
+  templateUrl: './access-status-badge.component.html',
+  // templateUrl: '../../../../../../../../app/shared/object-collection/shared/badges/access-status-badge/access-status-badge.component.html',
   standalone: true,
   imports: [NgIf, AsyncPipe, TranslateModule],
 })

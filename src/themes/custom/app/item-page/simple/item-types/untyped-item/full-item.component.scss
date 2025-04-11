@@ -1,15 +1,8 @@
-::ng-deep ds-sedici-date-metadata-values,
-::ng-deep ds-generic-item-page-field,
-::ng-deep ds-sedici-language-metadata-values,
-::ng-deep ds-item-page-identifier-other-field,
-::ng-deep ds-item-page-collections {
-  h6 {
-    font-size: 1.25em;
-    font-weight: var(--font-weight-bold);
-  }
+tbody {
+  font-size: 1.25em;
+  font-weight: var(--font-weight-regular);
+}
 
-  span, a {
-    font-size: 1.25em;
-    font-weight: var(--font-weight-thin);
-  }
+.label {
+  white-space: nowrap;
 }

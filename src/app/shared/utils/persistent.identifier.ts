@@ -27,11 +27,11 @@ export function setPersistentIdentifiers(object: Item, identifierOtherMetadataNa
       let urlBase = '';
 
       if (identifierValue.includes('doi') || identifierValue.startsWith('10.')) {
-        label = 'DOI';
+        label = 'doi';
         urn = extractSuffix(mdValue.value, ['https://doi.org/', 'http://dx.doi.org/', 'doi:', 'DOI:']);
         urlBase = 'https://doi.org/';
       } else if (identifierValue.includes('hdl') || identifierValue.includes('handle')) {
-        label = 'HDL';
+        label = 'handle';
         urn = extractSuffix(mdValue.value, ['http://hdl.handle.net/', 'hdl:', '/handle/']);
         urlBase = 'http://hdl.handle.net/';
       } else if (identifierValue.includes('arxiv')) {
@@ -43,7 +43,7 @@ export function setPersistentIdentifiers(object: Item, identifierOtherMetadataNa
         urn = extractSuffix(mdValue.value, ['pmid:', 'pmcid:']);
         urlBase = urn.startsWith('PMC') ? 'https://www.ncbi.nlm.nih.gov/pmc/articles/' : 'https://pubmed.ncbi.nlm.nih.gov/';
       } else if (identifierValue.includes('ark')) {
-        label = 'ARK';
+        label = 'ark';
         urn = extractSuffix(mdValue.value, ['ark:']);
         urlBase = 'https://n2t.net/ark:/'; // VER
       } else {

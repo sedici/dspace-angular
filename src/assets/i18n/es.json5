@@ -52,7 +52,7 @@
   "error-page.orcid.generic-error": "Hubo un error en el login vía ORCID. Asegúrese que ha compartido el correo electrónico de su cuenta ORCID con Dspace. Si continuase el error, contacte con el administrador",
 
   // "access-status.embargo.listelement.badge": "Embargo",
-  "access-status.embargo.listelement.badge": "Embargo",
+  "access-status.embargo.listelement.badge": "Documento Embargado",
 
   // "access-status.metadata.only.listelement.badge": "Metadata only",
   "access-status.metadata.only.listelement.badge": "Solo Metadatos",

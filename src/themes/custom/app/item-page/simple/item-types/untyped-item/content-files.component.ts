@@ -213,16 +213,24 @@ export class ContentFilesComponent {
     return { 'background-color': color };
   }
 
+  getIconPath(fileName: string): string {
+    const extension = this.getFileExtension(fileName);
+    if (this.isImageFile(extension)) {
+      return `assets/custom/images/icon_imagen.png`;
+    }
+    return `assets/custom/images/icon_${extension}.png`;
+  }
+
   getFileDescription(file: Bitstream): string {
     return file.metadata['dc.description']?.[0]?.value || this.dsoNameService.getName(file) ;
   }
 
   ngOnInit(): void {
-    this.getPrimaryBitstreamId();
-    this.getAllPages();
     this.isMobile$.subscribe(isMobile => {
       this.isMobile = isMobile;
     });
+    this.getPrimaryBitstreamId();
+    this.getAllPages();
   }
 
   zipContent: { name: string, type: 'file' | 'folder' }[] = []; // Lista para mostrar los archivos dentro del ZIP y su tipo
@@ -304,6 +312,18 @@ export class ContentFilesComponent {
         this.checkAndSaveDownloadStatus();
         if (this.files.length === 1) {
           this.selectFile(this.files[0]);
+        } else if (!this.isMobile && this.files.length > 1) {
+          // Seleccionar el primary bitstream si está disponible y tiene un preview
+          const primaryBitstream = this.files.find(file => file.id === this.primaryBitsreamId && this.isPreviewAvailable(file.name));
+          if (primaryBitstream && this.isPreviewAvailable(primaryBitstream.name)) {
+            this.selectFile(primaryBitstream);
+          } else {
+            // Seleccionar el primer archivo con preview disponible
+            const firstPreviewableFile = this.files.find(file => this.isPreviewAvailable(file.name));
+            if (firstPreviewableFile) {
+              this.selectFile(firstPreviewableFile);
+            }
+          }
         }
         this.isLoadingFiles = false;
       }

@@ -38,6 +38,8 @@ export class LanguageSwitcherComponent {
         abstract = abstracts[0].value;
         this.selectedLanguage = abstracts[0].language;
       }
+      const prefix = 'Resumen: ';
+      abstract = prefix + abstract;
       return this.sanitizer.bypassSecurityTrustHtml(abstract);
     }
     return this.sanitizer.bypassSecurityTrustHtml('');

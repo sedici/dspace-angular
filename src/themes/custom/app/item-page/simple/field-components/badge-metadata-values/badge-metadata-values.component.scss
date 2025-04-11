@@ -1,45 +1,58 @@
-.badge-label {
-    border-top-right-radius: unset;
-    border-bottom-right-radius: unset;
-    display: inline-block;
-}
-
-.badge-content {
-    border-top-left-radius: unset;
-    border-bottom-left-radius: unset;
-    display: inline-block;
-}
-
 .badge-group {
-    display: inline-block;
-    margin-right: 0.2rem;
-}
-
-.badge-group:last-child {
-    margin-right: 0;
+  display: inline-flex;
+  margin-right: 0.5rem;
+  
+  .badge {
+    font-size: 1.1667em;
+    font-weight: var(--font-weight-regular);
+    border-radius: 0px;
+    padding: 0;
   }
-
-.badge-group::after {
-    white-space: pre;
-    content: " ";
+  
+  .badge-label {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    color: white;
+    background-color: #706f6f;
+    border: 1px solid #706f6f;
+    padding: 0.35em 0.5em;
+  }
+  
+  .badge-content {
+    display: flex;
+    align-items: center;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background-color: white;
+    color: #706f6f;
+    
+    a.no-format {
+      border: 1px solid #dee2e6;
+      padding: 0.35em;
+      color: inherit;
+      text-decoration: none;
+    }
+  }
 }
 
-.badge-identifier {
-    color: #505050;
-    font-weight: inherit;
-    padding-top: 0;
-}
-
-.group-inline-block {
-    display: inline-block;
-}
-
-::ng-deep .badge-group span {
-    padding: 0.35em;
+.copy-button-wrapper {
+  display: inline-block;
+  background-color: #f6f6f6;
+  border: 1px solid #b3b1b4;
+  padding: .35em;
+  line-height: 1;
+  vertical-align: middle;
 }
 
 .copyButton {
-    color: #000;
-    cursor: pointer;
-    margin-left: 5px;
+  color: #b3b1b4;
+  cursor: pointer;
+  font-size: 0.85em;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.copy-button-wrapper:hover {
+  background-color: #e9ecef;
 }

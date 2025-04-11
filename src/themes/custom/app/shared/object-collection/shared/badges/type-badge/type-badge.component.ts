@@ -8,7 +8,7 @@ import { TypeBadgeComponent as BaseComponent } from 'src/app/shared/object-colle
 
 @Component({
   selector: 'ds-themed-type-badge',
-  // styleUrls: ['./type-badge.component.scss'],
+  styleUrls: ['./type-badge.component.scss'],
   templateUrl: './type-badge.component.html',
   // templateUrl: '../../../../../../../../app/shared/object-collection/shared/badges/type-badge/type-badge.component.html',
   standalone: true,
