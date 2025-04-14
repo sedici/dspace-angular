@@ -32,6 +32,11 @@
       color: inherit;
       text-decoration: none;
     }
+
+    .plainText {
+      border: 1px solid #dee2e6;
+      padding: 0.35em;
+    }
   }
 }
 
@@ -42,17 +47,17 @@
   padding: .35em;
   line-height: 1;
   vertical-align: middle;
-}
-
-.copyButton {
-  color: #b3b1b4;
   cursor: pointer;
-  font-size: 0.85em;
-  background: none;
-  border: none;
-  padding: 0;
 }
 
 .copy-button-wrapper:hover {
   background-color: #e9ecef;
+}
+
+.copyButton {
+  color: #b3b1b4;
+  font-size: 0.85em;
+  background: none;
+  border: none;
+  padding: 0;
 }

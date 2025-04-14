@@ -11,13 +11,15 @@
     </span>
     <span class="badge {{badgeType}}" [ngClass]="{'badge-content': badgeLabel}">
       <a *ngIf="url; else plainText" href="{{ url }}" target="_blank" class="no-format">{{ mdValue.value }}</a>
-      <ng-template #plainText>{{ mdValue.value }}</ng-template>
+      <ng-template #plainText>
+        <span class="plainText">
+          {{ mdValue.value }}
+        </span>
+      </ng-template>
       <ng-container *ngIf="copyToClipboardButton">
         <span class="d-none" #elementContentToCopy>{{mdValue.value}}</span>
-        <span class="copy-button-wrapper">
-          <i id="copyButton-{{mdValue.value}}" class="copyButton fa fa-copy" 
-             aria-hidden="true" title="Copiar" 
-             (click)="copyToClipboard(elementContentToCopy, 'copyButton-' + mdValue.value)"></i>
+        <span class="copy-button-wrapper" title="Copiar" (click)="copyToClipboard(elementContentToCopy, 'copyButton-' + mdValue.value)">
+          <i id="copyButton-{{mdValue.value}}" class="copyButton fa fa-copy" aria-hidden="true"></i>
         </span>
       </ng-container>
     </span>
