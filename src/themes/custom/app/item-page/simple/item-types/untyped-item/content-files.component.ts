@@ -229,8 +229,9 @@ export class ContentFilesComponent {
     this.isMobile$.subscribe(isMobile => {
       this.isMobile = isMobile;
     });
-    this.getPrimaryBitstreamId();
-    this.getAllPages();
+    this.getPrimaryBitstreamId().then(() => {
+      this.getAllPages();
+    });
   }
 
   zipContent: { name: string, type: 'file' | 'folder' }[] = []; // Lista para mostrar los archivos dentro del ZIP y su tipo
@@ -292,12 +293,16 @@ export class ContentFilesComponent {
     return node !== null && typeof node === 'object';
   }
 
-  private getPrimaryBitstreamId() {
-    this.bitstreamDataService.findPrimaryBitstreamByItemAndName(this.object, 'ORIGINAL', true, true).subscribe((primaryBitstream: Bitstream | null) => {
-      if (!primaryBitstream) {
-        return;
-      }
-      this.primaryBitsreamId = primaryBitstream?.id;
+  private getPrimaryBitstreamId(): Promise<string | null> {
+    return new Promise((resolve) => {
+      this.bitstreamDataService.findPrimaryBitstreamByItemAndName(this.object, 'ORIGINAL', true, true).subscribe((primaryBitstream: Bitstream | null) => {
+        if (primaryBitstream) {
+          this.primaryBitsreamId = primaryBitstream.id;
+          resolve(this.primaryBitsreamId);
+        } else {
+          resolve(null);
+        }
+      });
     });
   }
 
