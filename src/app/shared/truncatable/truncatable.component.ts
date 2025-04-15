@@ -76,7 +76,7 @@ export class TruncatableComponent implements OnInit, AfterViewChecked {
     if (this.showToggle) {
       const truncatedElements = this.el.nativeElement.querySelectorAll('.truncated');
       if (truncatedElements?.length > 0) {
-        const truncateElements = this.el.nativeElement.querySelectorAll('.dont-break-out');
+        const truncateElements = this.el.nativeElement.querySelectorAll('.preserve-line-breaks');
         for (let i = 0; i < (truncateElements.length - 1); i++) {
           truncateElements[i].classList.remove('truncated');
           truncateElements[i].classList.add('notruncatable');

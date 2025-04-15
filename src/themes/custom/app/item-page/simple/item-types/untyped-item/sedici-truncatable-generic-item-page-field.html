@@ -3,9 +3,7 @@
     [id]="label"
     [minLines]="minLines"
     [showCollapseButton]="false">
-    <div>
-      <h6 class="label">{{ label | translate }}</h6>
-      <span [innerHTML]="metadataTextValue"></span>
-    </div>
+    <h6 class="label">{{ label | translate }}</h6>
+    <span [innerHTML]="metadataTextValue"></span>
   </sedici-truncatable-part>
 </ds-truncatable>
