@@ -60,7 +60,7 @@
 
 .file-item {
   align-items: center;
-  padding: .5rem .25rem;
+  padding: .5rem;
   cursor: pointer;
 
   &:hover {
@@ -80,6 +80,7 @@
     -webkit-box-orient: vertical; // Necesario para line-clamp
     -webkit-line-clamp: 2; // Limita el texto a 2 líneas
     line-clamp: 2; // Limita el texto a 2 líneas
+    word-break: break-word;
   }
 
   .text-no-preview-available {

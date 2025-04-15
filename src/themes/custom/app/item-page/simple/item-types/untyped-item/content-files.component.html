@@ -122,7 +122,9 @@
             <ng-container *ngTemplateOutlet="imageTemplate"></ng-container>
           </ng-container>
           <ng-container *ngSwitchCase="getFileExtension(selectedFile.name) === 'zip'">
-            <ng-container *ngTemplateOutlet="zipTemplate"></ng-container>
+            <div style="padding: .5rem 1rem;">
+              <ng-container *ngTemplateOutlet="zipTemplate"></ng-container>
+            </div>
           </ng-container>
           <ng-container *ngSwitchDefault>
             <div class="fa fa-file">
