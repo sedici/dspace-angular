@@ -8,6 +8,7 @@
   border-bottom: 2px solid #42a5f5;
   overflow-x: auto; // Permitir el desplazamiento horizontal
   white-space: nowrap; // Evitar que los tabs se envuelvan en una nueva línea
+  justify-content: space-between;
 
   // Ocultar las barras de desplazamiento en algunos navegadores
   &::-webkit-scrollbar {
@@ -16,12 +17,11 @@
 }
 
 .tab {
-  font-size: 1.1667em;
+  font-size: 1.5em;
   padding: 10px 20px;
   text-align: center;
   cursor: pointer;
-  font-weight: var(--font-weight-regular);
-  color: #888;
+  font-weight: var(--font-weight-thin);
   position: relative;
   transition: color 0.3s ease;
   white-space: nowrap;

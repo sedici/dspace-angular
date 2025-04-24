@@ -4109,7 +4109,7 @@
   "item.page.citation": "Citación",
 
   // "item.page.collections": "Collections",
-  "item.page.collections": "Colecciones",
+  "item.page.collections": "El recurso se encuentra en las siguientes colecciones:",
 
   // "item.page.collections.loading": "Loading...",
   "item.page.collections.loading": "Cargando...",
@@ -9296,7 +9296,7 @@
   "sedici.item.page.sedici.identifier.uri": "Enlaces externos",
   "sedici.item.page.sedici.relation.isRelatedWith": "Documentos relacionados",
 
-  // Registro completo
+  // Más infromación (vista del ítem)
   "sedici.item.page.dc.date.issued": "Fecha de publicación",
   "sedici.item.page.dc.date.created": "Fecha de creación",
   "sedici.item.page.sedici.date.exposure": "Fecha de exposición",
@@ -9319,7 +9319,7 @@
   "sedici.tabs.license": "Licencia",
   "sedici.tabs.howToCite": "Cómo citar",
   "sedici.tabs.statistics": "Estadísticas",
-  "sedici.tabs.fullRecord": "Registro completo",
+  "sedici.tabs.moreInformation": "Más información",
 
   // Licencia
   "sedici.license.free": "Usted es libre de:",

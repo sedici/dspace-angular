@@ -315,12 +315,10 @@ export class ContentFilesComponent {
         }
         this.cdr.detectChanges();
         this.checkAndSaveDownloadStatus();
-        if (this.files.length === 1) {
-          this.selectFile(this.files[0]);
-        } else if (!this.isMobile && this.files.length > 1) {
+        if (!this.isMobile && this.files.length >= 1) {
           // Seleccionar el primary bitstream si está disponible y tiene un preview
           const primaryBitstream = this.files.find(file => file.id === this.primaryBitsreamId && this.isPreviewAvailable(file.name));
-          if (primaryBitstream && this.isPreviewAvailable(primaryBitstream.name)) {
+          if (primaryBitstream) {
             this.selectFile(primaryBitstream);
           } else {
             // Seleccionar el primer archivo con preview disponible

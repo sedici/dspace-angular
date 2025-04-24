@@ -3,16 +3,18 @@ a {
 }
 
 .download-btn {
-  background-color: black;
+  background-color: var(--sedici-color);
   color: white;
   border: none;
   cursor: pointer;
   border-radius: .5rem;
   font-size: .625rem;
   width: 60px;
-
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);  // Sombra sutil
+  transition: background-color 0.2s ease;
+  
   &:hover {
-    background-color: #666;
+    background-color: #5c9acb;  // Azul un poco más oscuro al hover
   }
 }
 
@@ -20,20 +22,21 @@ a {
   .download-btn {
     display: flex;
     justify-content: center;
-    border-radius: 0px;
     padding: 1rem;
     font-size: 0.875rem;
     align-items: center;
-    gap: 8px;
-    width: 100%;
+    width: 80%;
+    margin: 0 auto;
+    
+    .download-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
     
     .fas {
       font-size: 1em;
-      margin-right: .625rem;
-    }
-
-    p {
-      margin-bottom: 0px;
     }
   }
 }

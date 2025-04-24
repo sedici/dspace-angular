@@ -21,6 +21,10 @@ li.breadcrumb-item {
     max-width: 100%;
     display: block;
   }
+
+  @media screen and (max-width: 500px) {
+    max-width: var(--ds-breadcrumb-max-length-mobile);
+  }
 }
 
 li.breadcrumb-item {

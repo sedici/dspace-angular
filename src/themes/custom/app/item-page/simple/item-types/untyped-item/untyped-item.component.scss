@@ -5,6 +5,7 @@
 .jumbotron {
   padding: 1rem 0 0;
   margin-bottom: 0;
+  background-color: #f6f6f6;
 }
 
 .badge-title-container {
@@ -31,7 +32,7 @@
 }
 
 .subtitle-content {
-  font-size: 1.3333em;
+  font-size: 1.33333em;
   font-weight: var(--font-weight-regular);
   font-style: italic;
   color: #555;
@@ -57,8 +58,21 @@
 
 sedici-context,
 .author-container {
-  font-size: 1.3333em;
-  font-weight: var(--font-weight-regular);
+  ::ng-deep span, ::ng-deep a {
+    font-size: 1.33333em;
+    font-weight: var(--font-weight-regular);
+  }
+
+  ::ng-deep h6 {
+    font-size: 1.33333em;
+    font-weight: var(--font-weight-bold);
+  }
+}
+
+.author-container {
+  ::ng-deep .simple-view-element {
+    line-height: 1.5;
+  }
 }
 
 .flex-container {
@@ -103,12 +117,20 @@ sedici-context,
   }
 
   ::ng-deep .btn {
-    font-size: 1.3333em;
+    font-size: 1.33333em;
     font-weight: var(--font-weight-light);
   }
+}
 
-  .btn-citation {
-    color: var(--sedici-color);
+app-expandable-metadata {
+  ::ng-deep .simple-view-element {
+    line-height: 1.5;
+  }
+
+  sedici-truncatable-generic-item-page-field {
+    ::ng-deep .content {
+      line-height: 1.5;
+    }
   }
 }
 

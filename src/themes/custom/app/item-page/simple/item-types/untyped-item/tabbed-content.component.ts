@@ -29,7 +29,7 @@ export class TabbedContentComponent implements OnInit {
     { label: 'sedici.tabs.files', visible: true },
     { label: 'sedici.tabs.license', visible: true },
     { label: 'sedici.tabs.statistics', visible: true },
-    { label: 'sedici.tabs.fullRecord', visible: true }
+    { label: 'sedici.tabs.moreInformation', visible: true }
   ];
 
   ngOnInit() {
