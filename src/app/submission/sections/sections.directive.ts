@@ -149,9 +149,9 @@ export class SectionsDirective implements OnDestroy, OnInit {
           if (previousActive !== this.active) {
             this.changeDetectorRef.detectChanges();
             // If section is no longer active dispatch save action
-            if (!this.active && isNotNull(activeSectionId)) {
-              this.submissionService.dispatchSave(this.submissionId);
-            }
+            // if (!this.active && isNotNull(activeSectionId)) {
+            //   this.submissionService.dispatchSave(this.submissionId);
+            // }
           }
         }),
     );
