@@ -123,42 +123,39 @@ export class PdfViewerComponent implements AfterViewInit {
       'sedici_date_exposure_month',
       'sedici_date_exposure_day',
     ]);
+
     const uniqueIdParts = new Set();
 
-    this.metadataOptions = elements
-      .filter(element => window.getComputedStyle(element).visibility === 'visible') // Filtrar elementos visibles
-      .filter(element => element.id) // Filtrar elementos con id
-      .filter(element => {
-        // Excluir elementos específicos y aquellos que coinciden con el patrón (Bitstreams subidos, FileUploader y otros)
-        return !excludedIds.has(element.id) && !element.id.match(/^primaryBitstream\d+$/) && !element.id.match(/^inputFileUploader-ds-drag-and-drop-uploader\d+$/) && !element.id.match(/^SL_locer\d+$/) && !element.id.match(/^SL_BBL_locer\d+$/);
-      })
-      .filter(element => {
-        const match = element.id.match(/(dc|sedici|mods|thesis).*/); // Extraer la parte común del id
-        const idPart = match ? match[0] : element.id;
-        if (uniqueIdParts.has(idPart)) {
-          return false; // Si el idPart ya está en el Set, filtrar el elemento (para que no haya repetidos)
-        } else {
-          uniqueIdParts.add(idPart); // Agregar el idPart al Set
-          return true; // Mantener el elemento
-        }
-      })
-      .map(element => {
-        let name;
-        switch (element.id) {
-          case 'dc_date_issued_year':
-            name = 'Fecha de publicación';
-            break;
-          case 'dc_date_created_year':
-            name = 'Fecha de creación';
-            break;
-          case 'sedici_date_exposure_year':
-            name = 'Fecha de presentación';
-            break;
-        default:
-            name = element.placeholder || element.name || element.id;
-        }
-        return { name, value: element.id };
-      });
+    const nameMap = {
+      'dc_date_issued_year': 'Fecha de publicación',
+      'dc_date_created_year': 'Fecha de creación',
+      'sedici_date_exposure_year': 'Fecha de presentación',
+    };
+
+    const visibleElements = elements.filter(element => 
+      window.getComputedStyle(element).visibility === 'visible' && element.id);
+    
+    setTimeout(() => {
+      this.metadataOptions = visibleElements
+        .filter(element => {
+          // Excluir elementos específicos y aquellos que coinciden con el patrón (Bitstreams subidos, FileUploader y otros)
+          return !excludedIds.has(element.id) && !element.id.match(/^primaryBitstream\d+$/) && !element.id.match(/^inputFileUploader-ds-drag-and-drop-uploader\d+$/) && !element.id.match(/^SL_locer\d+$/) && !element.id.match(/^SL_BBL_locer\d+$/);
+        })
+        .filter(element => {
+          const match = element.id.match(/(dc|sedici|mods|thesis).*/); // Extraer la parte común del id
+          const idPart = match ? match[0] : element.id;
+          if (uniqueIdParts.has(idPart)) {
+            return false; // Si el idPart ya está en el Set, filtrar el elemento (para que no haya repetidos)
+          } else {
+            uniqueIdParts.add(idPart); // Agregar el idPart al Set
+            return true; // Mantener el elemento
+          }
+        })
+        .map(element => ({
+          name: nameMap[element.id] || element.placeholder || element.name || element.id,
+          value: element.id
+        }));
+    }, 100);
 
     const selection = event.view.getSelection();
     if (selection && selection.toString().length > 0) {
@@ -241,7 +238,7 @@ export class PdfViewerComponent implements AfterViewInit {
       if (this.showDynamicInputs) {
         this.retrieveInputs();
       } else if (idPart.includes('date')) {
-        const date = this.splitDate(this.selectedText);
+        const date = this.splitDate(this.selectedText.trim());
         const metadataYear = document.getElementById(this.selectedTextarea) as HTMLTextAreaElement | HTMLInputElement;
         const metadataMonth = document.getElementById(this.selectedTextarea.replace(/_year$/, '_month')) as HTMLTextAreaElement | HTMLInputElement;
         const metadataDay = document.getElementById(this.selectedTextarea.replace(/_year$/, '_day')) as HTMLTextAreaElement | HTMLInputElement;
@@ -768,9 +765,6 @@ export class PdfViewerComponent implements AfterViewInit {
 
   private elementsAmount: number = 0;
   ngAfterViewChecked() {
-    if (!this.tieneBotonesDinamicos()) {
-      this.addButtonsToInputs();
-    }
 
     const textareas = Array.from(document.querySelectorAll('textarea'));
     const inputss = Array.from(document.querySelectorAll('input'));
@@ -779,37 +773,6 @@ export class PdfViewerComponent implements AfterViewInit {
       this.elementsAmount = elements.length;
       this.addButtonsToInputs();
     }
-  }
-
-  private previousButtonCount = new Map<string, number>();
-  // BUSCAR OTRO MÉTODO DE CHEQUEO DE FALTA DE BOTONES (interceptar momento del guardado automático)
-  tieneBotonesDinamicos(): boolean {
-    const secciones = ['traditionalpageone', 'traditionalpagetwo', 'traditionalpageone2', 'traditionalpagetwo2'];
-    let cambiosDetectados = false;
-    let tieneBotones = true;
-
-    for (const seccion of secciones) {
-      const sectionElement = document.querySelector(`[id="${seccion}-header"]`);
-      const parent = sectionElement?.closest('.card');
-      const buttons = parent?.querySelectorAll('app-dynamic-button-dropdown');
-      const currentCount = buttons?.length || 0;
-      
-      if (!this.previousButtonCount.has(seccion)) {
-        this.previousButtonCount.set(seccion, currentCount);
-      }
-      
-      if (currentCount !== this.previousButtonCount.get(seccion)) {
-        this.previousButtonCount.set(seccion, currentCount);
-        cambiosDetectados = true;
-      }
-  
-      if (cambiosDetectados && currentCount === 0) {
-        tieneBotones = false;
-        break; // Salir del bucle si se detecta un cambio y no hay botones
-      }
-    }
-    
-    return tieneBotones;
   }
 
 
