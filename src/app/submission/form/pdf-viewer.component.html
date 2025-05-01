@@ -34,7 +34,7 @@
       <!-- SECCIÓN: PREVISUALIZACIÓN DEL TEXTO SELECCIONADO -->
       <div class="row">
         <div class="field">
-          <select [(ngModel)]="selectedTextarea" id="textarea-select">
+          <select [(ngModel)]="selectedMetadataField" id="textarea-select">
             <option value="" disabled selected>Seleccionar</option>
             <option *ngFor="let option of metadataOptions" [value]="option.value">
               {{ option.name }}
@@ -79,7 +79,7 @@
     
     <!-- SECCIÓN: BOTONES DE ACCIÓN -->
     <div class="action-buttons">
-      <button (click)="copyToTextarea()" class="btn btn-primary">
+      <button (click)="copyToMetadataField()" class="btn btn-primary">
         Agregar
       </button>
       <button (click)="clearSelection()" class="btn btn-secondary">
