@@ -16,34 +16,38 @@
 
     textarea {
       width: 100%;
-      max-height: 10vh; // PRUEBA BAJA RESOLUCIÓN
-      resize: vertical; // Permite ajustar manualmente
+      max-height: 10vh;
+      resize: vertical;
       padding: 10px;
       box-sizing: border-box;
       font-size: 14px;
     }
   }
 
-  .row {
-    display: flex;
-    justify-content: space-between; // Opcional: distribuye el espacio
-    gap: 15px; // Espaciado entre los dos elementos
-    margin-left: 0;
-    margin-right: 0;
-  
-    .field {
-      flex: 1; // Ajusta cada campo para ocupar espacio igual
+  .selection-submenu {
+    margin-bottom: 5px;
+
+    .row {
       display: flex;
-      flex-direction: column;
-  
-      label {
-        margin-bottom: 5px; // Espaciado entre el label y el select
-      }
-  
-      select {
-        width: 100%; // Asegura que cada select ocupe todo su contenedor
-        height: 100%;
-        padding: 5px;
+      justify-content: space-between;
+      gap: 15px;
+      margin-left: 0;
+      margin-right: 0;
+    
+      .field {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    
+        label {
+          margin-bottom: 5px;
+        }
+    
+        select {
+          width: 100%;
+          height: 100%;
+          padding: 5px;
+        }
       }
     }
   }
@@ -81,29 +85,23 @@
         color: #fff;
       }
     }
-    
-    .filter-btn:hover {
-      background-color: #e0e0e0;
-    }
 
     .dropdown {
       .dropdown-menu {
-        display: none; /* Ocultar el menú cuando no está activo */
+        display: none;
       }
       
       .dropdown-menu.show {
-        display: flex; /* Mostrar el menú como flexbox cuando está activo */
+        display: flex;
       }
     }
   }
 
-  // Prueba inputs divididos
   .inputs-grid {
     display: grid;
-    grid-template-rows: repeat(5, auto); /* Define un máximo de 5 filas */
-    grid-auto-flow: column; /* Llena las columnas verticalmente */
+    grid-template-rows: repeat(5, auto); // Define un máximo de 5 filas
+    grid-auto-flow: column;
     gap: 5px;
     font-size: .75rem;
   }
-  // Fin prueba inputs divididos
 }
