@@ -1,6 +1,7 @@
 <!-- <div [ngStyle]="{ height: selectedText ? '500px' : '100vh' }"> --> <!-- Con el vh se 'escapa' por debajo del footer -->
 <!-- <div [ngStyle]="{ height: selectedText ? '500px' : '800px' }"> --> <!-- VER de pasar a porcentajes o vh (calculado) -->
-<div [ngStyle]="{ height: selectedText ? '50vh' : '70vh' }">  
+<!-- <div [ngStyle]="{ height: selectedText ? '50vh' : '70vh' }"> -->
+<div [ngStyle]="{ height: selectedText ? '65vh' : '65vh' }">
   <!-- VISOR DEL PDF -->
   <ng2-pdfjs-viewer
     viewerId="1"
@@ -17,7 +18,7 @@
   <div *ngIf="isTextSelected" class="selection-menu">
     <!-- SECCIÓN: TEXTO SELECCIONADO -->
     <div class="section" *ngIf="!showDynamicInputs">
-      <label for="selected-text"><strong>Texto seleccionado:</strong></label>
+      <label for="selected-text">Texto seleccionado:</label>
       <textarea
         id="selected-text"
         [(ngModel)]="selectedText"
@@ -30,7 +31,7 @@
     <div id="inputsContainer" class="inputs-grid" *ngIf="showDynamicInputs"></div>
 
 
-    <div class="selection-menu">
+    <div class="selection-submenu">
       <!-- SECCIÓN: PREVISUALIZACIÓN DEL TEXTO SELECCIONADO -->
       <div class="row">
         <div class="field">
