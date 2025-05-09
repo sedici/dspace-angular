@@ -65,6 +65,10 @@
     justify-content: space-between; // Asegura que el contenido esté distribuido adecuadamente
   }
 
+  ::ng-deep ds-themed-search-form .form-control {
+    color: white;
+  }
+
   .logo-container {
     display: flex;
     align-items: center; // Centra verticalmente la imagen y el texto
