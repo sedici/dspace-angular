@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {
   FormsModule,
   ReactiveFormsModule,
@@ -11,13 +11,20 @@ import { ClickOutsideDirective } from '../../../../app/shared/utils/click-outsid
 
 @Component({
   selector: 'ds-themed-search-navbar',
-  // styleUrls: ['./search-navbar.component.scss'],
-  styleUrls: ['../../../../app/search-navbar/search-navbar.component.scss'],
-  // templateUrl: './search-navbar.component.html'
-  templateUrl: '../../../../app/search-navbar/search-navbar.component.html',
+  styleUrls: ['./search-navbar.component.scss'],
+  // styleUrls: ['../../../../app/search-navbar/search-navbar.component.scss'],
+  templateUrl: './search-navbar.component.html',
+  // templateUrl: '../../../../app/search-navbar/search-navbar.component.html',
   standalone: true,
   imports: [ClickOutsideDirective, FormsModule, ReactiveFormsModule, TranslateModule, BrowserOnlyPipe],
 })
 export class SearchNavbarComponent extends BaseComponent {
+  @Input() alwaysExpanded = false;
 
+  ngOnInit() {
+    if (this.alwaysExpanded) {
+      this.searchExpanded = true;
+      this.isExpanded = 'expanded';
+    }
+  }
 }

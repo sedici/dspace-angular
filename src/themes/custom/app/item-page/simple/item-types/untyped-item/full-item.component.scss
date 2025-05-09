@@ -9,4 +9,8 @@ tbody {
 
 ds-item-page-collections {
   font-size: 1.25em;
+
+  ::ng-deep h6 {
+    font-size: 1.2em;
+  }
 }

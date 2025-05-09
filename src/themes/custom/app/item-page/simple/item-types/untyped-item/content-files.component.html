@@ -27,7 +27,7 @@
                 <span class="file-name">{{ getFileDescription(file) }}</span>
               </div>
               <div class="button-container">
-                <ds-sedici-file-download-link [bitstream]="file" [item]="object" [isSticky]="true"></ds-sedici-file-download-link>
+                <ds-sedici-file-download-link [bitstream]="file" [item]="object" [isSticky]="true" [isMobile]="true"></ds-sedici-file-download-link>
                 <button class="btn" (click)="openModalShareButtons()">
                   <i class="fa-solid fa-share"></i>
                   <span> Compartir</span>
@@ -121,7 +121,6 @@
     </ng-template>
     
     <ng-template #zipTemplate>
-      <h3>{{selectedFile.name}}:</h3>
       <ul>
         <ng-container *ngTemplateOutlet="renderTree; context: { tree: zipContentTree }"></ng-container>
       </ul>

@@ -1,5 +1,11 @@
 .modal-header {
   display: inherit;
+
+  .close {
+    padding: 0;
+    margin: 0;
+    font-size: 2.25em;
+  }
 }
 
 ::ng-deep ngb-modal-backdrop.fade.show {

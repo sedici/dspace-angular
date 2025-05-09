@@ -37,6 +37,7 @@ import { DSONameService } from 'src/app/core/breadcrumbs/dso-name.service';
 })
 export class SediciFileDownloadLinkComponent extends FileDownloadLinkComponent implements OnInit {
   @Input() isSticky: boolean = false;
+  @Input() isMobile: boolean = false;
 
   constructor(
     protected authorizationService: AuthorizationDataService,

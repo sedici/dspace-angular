@@ -33,7 +33,7 @@ import {
       left: 0;
       right: 0;
       height: 2em; /* Ajusta la altura del degradado */
-      background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #e9ecef 100%);
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #f6f6f6 100%);
       pointer-events: none;
     }
 

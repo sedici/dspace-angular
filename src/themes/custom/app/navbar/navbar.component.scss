@@ -1,0 +1,66 @@
+:host {
+  --ds-expandable-navbar-height: auto;
+
+  nav.navbar {
+    background-color: var(--ds-navbar-bg);
+    align-items: baseline;
+    padding: 0;
+  }
+
+  /** Mobile menu styling **/
+  @media screen and (max-width: map-get($grid-breakpoints, md)-0.02) {
+    .navbar {
+      width: 100vw;
+      background-color: var(--bs-white);
+      position: fixed;
+      overflow: hidden;
+      height: 0;
+      z-index: var(--ds-nav-z-index);
+      &.open {
+        height: auto;
+        border-bottom: 3px var(--sedici-color) solid; // open navbar covers header-navbar-wrapper border
+      }
+    }
+  }
+
+  @media screen and (min-width: map-get($grid-breakpoints, md)) {
+    .reset-padding-md {
+      margin-left: calc(var(--bs-spacer) / -1);
+      margin-right: calc(var(--bs-spacer) / -1);
+    }
+  }
+
+  /* TODO remove when https://github.com/twbs/bootstrap/issues/24726 is fixed */
+  .navbar-expand-md.navbar-container {
+    @media screen and (max-width: map-get($grid-breakpoints, md)-0.02) {
+      > .navbar-inner-container {
+        padding: 0 var(--bs-spacer);
+      }
+      padding: 0;
+    }
+  }
+
+  #main-navbar ::ng-deep {
+    .ds-menu-item, .ds-menu-toggler-wrapper {
+      white-space: nowrap;
+      text-decoration: none;
+    }
+
+    .dropdown-menu {
+      padding: 0.5rem !important;
+    }
+
+    .ds-menu-item {
+      display: block;
+
+      &:hover, &:focus {
+        color: var(--ds-navbar-link-color-hover);
+      }
+
+      @media (max-width: 767px) {
+        padding-top: .5rem;
+        padding-bottom: .5rem;
+      }
+    }
+  }
+}
