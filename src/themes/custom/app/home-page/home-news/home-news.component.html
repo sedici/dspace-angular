@@ -1,0 +1,59 @@
+<div class="background-image-container mt-ncs">
+  <div class="container">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="d-flex flex-wrap">
+        <!--<div>
+          <h1 class="display-3">Se viene</h1>
+        </div>-->
+      </div>
+      <div class="sedici-description">
+        <div class="logo-container">
+          <img [src]="'assets/custom/images/unlp.svg'" alt="UNLP" class="image">
+        </div>
+        <span class="text"><b>El Servicio de Difusión de la Creación Intelectual</b> es el Repositorio Institucional de la <b>Universidad Nacional de La Plata</b>, un servicio libre y gratuito creado para albergar, preservar y dar visibilidad a las producciones de las Unidades Académicas de la Universidad</span>
+      </div>
+      <ds-themed-search-form [searchPlaceholder]="'Busque entre nuestros 150000 items'"></ds-themed-search-form>
+    </div>
+  </div>
+  <div class="horizontal-sections">
+    <div class="section">
+      <div class="img-container">
+        <img [src]="'assets/custom/images/autores.png'" alt="UNLP" class="image">
+      </div>
+      <div class="text-container">
+        <h3><b>Autores</b></h3>
+        <p>Profesores, investigadores, estudiantes u otros colaboradores</p>
+      </div>
+    </div>
+    <div class="section">
+      <div class="img-container">
+        <img [src]="'assets/custom/images/publicaciones.png'" alt="UNLP" class="image">
+      </div>
+      <div class="text-container">
+        <h3><b>Publicaciones</b></h3>
+        <p>Revistas, libras, informes tecincos, trabajos de conferencias, tesis ...</p>
+      </div>
+    </div>
+    <div class="section">
+      <div class="img-container">
+        <img [src]="'assets/custom/images/unidades_academicas.png'" alt="UNLP" class="image">
+      </div>
+      <div class="text-container">
+        <h3><b>Unidades Academicas</b></h3>
+        <p>Facultades, colegios, laboratorios, institutos, centros, unidades academicas ...</p>
+      </div>
+    </div>
+    <div class="section">
+      <div class="img-container">
+        <img [src]="'assets/custom/images/datos.png'" alt="UNLP" class="image">
+      </div>
+      <div class="text-container">
+        <h3><b>Datos</b></h3>
+        <p>Conjuntos de datos recopilados, resultados de encuestas ...</p>
+      </div>
+    </div>
+  </div>
+  <picture class="background-image">
+    <img alt="" [src]="'assets/custom/images/fondo.avif'"/><!-- without the []="''" Firefox downloads both the fallback and the resolved image -->
+  </picture>
+</div>

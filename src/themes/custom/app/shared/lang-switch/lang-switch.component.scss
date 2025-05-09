@@ -1,0 +1,36 @@
+.dropdown-toggle::after {
+  display:none;
+}
+
+.dropdown-toggle {
+  color: var(--ds-header-icon-color);
+
+  &:hover, &:focus {
+    color: var(--ds-header-icon-color-hover);
+  }
+}
+
+.dropdown-item {
+  cursor: pointer;
+}
+
+.text-uppercase{
+  text-transform: uppercase;
+}
+
+/* Asegúrate de que el menú desplegable no se corte */
+.dropdown-menu {
+  transform-origin: top right; /* Asegura que se despliegue desde la parte superior derecha */
+  right: 0 !important; /* Alínea el borde derecho del menú con el contenedor */
+  top: 100% !important; /* Desplaza el menú justo debajo del botón */
+  transform: translateX(-85%); /* Lo mueve hacia la izquierda */
+}
+
+
+.custom-dropdown-menu {
+  position: absolute;
+  top: 100%; /* Asegura que el menú aparezca justo debajo del botón */
+  left: 0; /* Asegura que el menú aparezca alineado a la izquierda del botón */
+  transform: translateY(0); /* Ajuste para evitar el corte por el borde de la pantalla */
+  /* Otras propiedades que puedas necesitar */
+}

@@ -1,5 +1,6 @@
 import { AdminNotifyMetricsRow } from '../app/admin/admin-notify-dashboard/admin-notify-metrics/admin-notify-metrics.model';
 import { RestRequestMethod } from '../app/core/data/rest-request-method';
+import { LiveRegionConfig } from '../app/shared/live-region/live-region.config';
 import { NotificationAnimationsType } from '../app/shared/notifications/models/notification-animations-type';
 import { ActuatorsConfig } from './actuators.config';
 import { AppConfig } from './app-config.interface';
@@ -515,6 +516,7 @@ export class DefaultAppConfig implements AppConfig {
       enabled: false,
       filter: ['title', 'author', 'subject', 'entityType'],
     },
+    filterPlaceholdersCount: 5,
   };
 
   notifyMetrics: AdminNotifyMetricsRow[] = [
@@ -591,4 +593,26 @@ export class DefaultAppConfig implements AppConfig {
       ],
     },
   ];
+
+  highlightCollections = [
+    { id: "3ea6678e-f073-4ecc-9b58-857824b9102f", type: "com" },
+    { id: "c080da2b-38b4-4238-971d-d68498f1ddb1", type: "com" },
+    { id: "ca781749-741d-49e7-9465-1a0000feb78a", type: "com" },
+    { id: "c080da2b-38b4-4238-971d-d68498f1ddb1", type: "com" },
+    { id: "d07ae08a-2831-4235-8931-5afbf4daa9c8", type: "com" },
+    { id: "c080da2b-38b4-4238-971d-d68498f1ddb1", type: "com" },
+    { id: "ca781749-741d-49e7-9465-1a0000feb78a", type: "com" },
+    { id: "c080da2b-38b4-4238-971d-d68498f1ddb1", type: "com" },
+    { id: "3ea6678e-f073-4ecc-9b58-857824b9102f", type: "com" },
+    { id: "c080da2b-38b4-4238-971d-d68498f1ddb1", type: "com" },
+    { id: "c080da2b-38b4-4238-971d-d68498f1ddb1", type: "com" },
+    { id: "ca781749-741d-49e7-9465-1a0000feb78a", type: "com" },
+    { id: "a2d47058-1d76-4530-b1ff-461ec6ce94b5", type: "col" }
+  ]
+
+  // Live Region configuration, used by the LiveRegionService
+  liveRegion: LiveRegionConfig = {
+    messageTimeOutDurationMs: 30000,
+    isVisible: false,
+  };
 }

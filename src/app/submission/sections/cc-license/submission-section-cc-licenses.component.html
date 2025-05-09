@@ -1,38 +1,39 @@
-<div class="mb-4 ccLicense-select">
-  <ds-select
-    [disabled]="!submissionCcLicenses">
+@if (submissionCcLicenses) {
+  <div class="mb-4 ccLicense-select">
+    <div ngbDropdown>
+      <input id="cc-license-dropdown"
+             class="form-control"
+             [(ngModel)]="selectedCcLicense.name"
+             placeholder="{{ !storedCcLicenseLink ? ('submission.sections.ccLicense.select' | translate) : ('submission.sections.ccLicense.change' | translate)}}"
+             [ngModelOptions]="{standalone: true}"
+             ngbDropdownToggle
+             role="combobox"
+             #script="ngModel">
+      <div ngbDropdownMenu aria-labelledby="cc-license-dropdown" class="w-100 scrollable-menu"
+           role="menu"
+           infiniteScroll
+           (scroll)="onScroll($event)"
+           [infiniteScrollDistance]="5"
+           [infiniteScrollThrottle]="300"
+           [infiniteScrollUpDistance]="1.5"
+           [fromRoot]="true"
+           [scrollWindow]="false">
 
-    <ng-container class="selection">
-      <span *ngIf="!submissionCcLicenses">
-        <ds-loading></ds-loading>
-      </span>
-      <span *ngIf="getSelectedCcLicense()">
-        {{ getSelectedCcLicense().name }}
-      </span>
-      <span *ngIf="submissionCcLicenses && !getSelectedCcLicense()">
-        <ng-container *ngIf="storedCcLicenseLink">
-          {{ 'submission.sections.ccLicense.change' | translate }}
-        </ng-container>
-        <ng-container *ngIf="!storedCcLicenseLink">
-          {{ 'submission.sections.ccLicense.select' | translate }}
-        </ng-container>
-      </span>
-    </ng-container>
-
-    <ng-container class="menu">
-      <button *ngIf="submissionCcLicenses?.length === 0"
-              class="dropdown-item disabled">
-        {{ 'submission.sections.ccLicense.none' | translate }}
-      </button>
-      <button *ngFor="let license of submissionCcLicenses"
-              class="dropdown-item"
-              (click)="selectCcLicense(license)">
-        {{ license.name }}
-      </button>
-    </ng-container>
-
-  </ds-select>
-</div>
+        @if(submissionCcLicenses?.length === 0) {
+          <button class="dropdown-item disabled">
+            {{ 'submission.sections.ccLicense.none' | translate }}
+          </button>
+        } @else {
+          @for(license of submissionCcLicenses; track license.id) {
+            <button class="dropdown-item" (click)="selectCcLicense(license)">
+              {{ license.name }}
+            </button>
+          }
+        }
+      </div>
+  </div>
+  </div>
+}
 
 <ng-container *ngIf="getSelectedCcLicense()">
 
@@ -67,15 +68,15 @@
           </button>
         </div>
 
-        <div class="modal-body">
+        <!-- <div class="modal-body">
           <div *ngFor="let value of field.enums"
                class="mb-4">
             <h5>
-              {{ value.label }}
+              {{ 'submission.sections.ccLicense.option.answer.' + value.label | translate: {default:value.label} }}
             </h5>
             <div [innerHTML]="value.description" class="font-weight-light"></div>
           </div>
-        </div>
+        </div> -->
 
       </div>
 
@@ -84,7 +85,7 @@
     <ds-select *ngIf="field.enums?.length > 5" [disabled]="field.id === 'jurisdiction' && defaultJurisdiction !== undefined && defaultJurisdiction !== 'none'">
       <ng-container class="selection" *ngVar="getSelectedOption(getSelectedCcLicense(), field) as option">
         <span *ngIf="option">
-          {{ option.label }}
+          {{ 'submission.sections.ccLicense.option.answer.' + option.label | translate: {default:option.label} }}
         </span>
         <span *ngIf="!option">
           {{ 'submission.sections.ccLicense.option.select' | translate }}
@@ -95,7 +96,7 @@
           <button *ngFor="let option of field.enums"
                   class="dropdown-item"
                   (click)="selectOption(getSelectedCcLicense(), field, option)">
-            {{ option.label }}
+            {{ 'submission.sections.ccLicense.option.answer.' + option.label | translate: {default:option.label} }}
           </button>
         </div>
       </ng-container>
@@ -109,7 +110,7 @@
                  title="{{ option.label }}"
                  class="mr-1"
                  [checked]="isSelectedOption(getSelectedCcLicense(), field, option)">
-          <span>{{ option.label }}</span>
+          <span>{{ 'submission.sections.ccLicense.option.answer.' + option.label | translate: {default:option.label} }}</span>
         </div>
       </div>
     </ng-container>

@@ -47,6 +47,7 @@ import { getFirstCompletedRemoteData } from '../../core/shared/operators';
 import { ResourceType } from '../../core/shared/resource-type';
 import { AlertComponent } from '../../shared/alert/alert.component';
 import { AlertType } from '../../shared/alert/alert-type';
+import { BtnDisabledDirective } from '../../shared/btn-disabled.directive';
 import {
   hasNoValue,
   hasValue,
@@ -67,7 +68,7 @@ import { EditItemMenuComponent } from '../../shared/edit-item-menu/edit-item-men
   styleUrls: ['./dso-edit-metadata.component.scss'],
   templateUrl: './dso-edit-metadata.component.html',
   standalone: true,
-  imports: [EditItemMenuComponent, NgIf, DsoEditMetadataHeadersComponent, MetadataFieldSelectorComponent, DsoEditMetadataValueHeadersComponent, DsoEditMetadataValueComponent, NgFor, DsoEditMetadataFieldValuesComponent, AlertComponent, ThemedLoadingComponent, AsyncPipe, TranslateModule],
+  imports: [EditItemMenuComponent, NgIf, DsoEditMetadataHeadersComponent, MetadataFieldSelectorComponent, DsoEditMetadataValueHeadersComponent, DsoEditMetadataValueComponent, NgFor, DsoEditMetadataFieldValuesComponent, AlertComponent, ThemedLoadingComponent, AsyncPipe, TranslateModule, BtnDisabledDirective],
 })
 /**
  * Component showing a table of all metadata on a DSpaceObject and options to modify them

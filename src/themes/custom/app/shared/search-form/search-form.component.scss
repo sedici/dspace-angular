@@ -1,0 +1,47 @@
+.search-button {
+  background-color: transparent; // Fondo transparente
+  border: none; // Sin borde
+  padding: 0; // Sin padding
+  margin-left: 10px; // Ajuste para que la lupa esté más cerca del borde del input
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  //width: 40px; // Ancho fijo para el botón, ajusta según necesites
+  //height: 40px; // Alto fijo para el botón, ajusta según necesites
+
+  i {
+      color: white; // Color blanco para la lupa
+      font-size: 2.7rem; // Tamaño de la lupa, ajusta según necesites
+  }
+
+  &:hover {
+      cursor: pointer; // Cambia el cursor al pasar sobre la lupa
+  }
+}
+
+.form-control {
+  background-color: rgba(255, 255, 255, 0.7); // Fondo blanco con transparencia
+  color: white; // Texto blanco
+  border: none; // Sin borde
+  border-radius: 0; // Sin bordes redondeados en el input
+  box-shadow: none; // Sin sombra en el input
+  font-size: 1.7rem; // Ajusta el tamaño del texto
+  //padding: 10px 15px; // Ajuste del padding interno para espaciar bien el texto
+  //width: 100%; // Asegura que el input ocupe todo el ancho disponible
+  font-style: italic;
+}
+
+/*.input-group {
+  border: 2px solid rgba(255, 255, 255, 0.5); // Borde blanco con un poco de transparencia
+  border-radius: 10px; // Bordes redondeados
+  overflow: hidden; // Asegura que todo dentro del grupo de entrada se mantenga dentro del borde
+  background-color: transparent; // Fondo transparente para el grupo
+}*/
+
+/*.scope-button {
+  background-color: rgba(255, 255, 255, 0.3); // Fondo blanco con transparencia
+  color: white; // Texto blanco
+  border: none; // Sin borde
+  border-radius: 0; // Sin bordes redondeados en el botón
+  padding: 10px 15px; // Ajuste del padding
+}*/
