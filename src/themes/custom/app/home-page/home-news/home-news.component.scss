@@ -2,7 +2,6 @@
   display: block;
 
   div.background-image-container {
-    color: white;
     position: relative;
 
     .background-image > img {
@@ -19,7 +18,6 @@
 
     .container {
       position: relative;
-      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
 
       &:before, &:after {
         content: '';
@@ -65,20 +63,32 @@
     justify-content: space-between; // Asegura que el contenido esté distribuido adecuadamente
   }
 
-  ::ng-deep ds-themed-search-form .form-control {
-    color: white;
-  }
-
-  .logo-container {
-    display: flex;
-    align-items: center; // Centra verticalmente la imagen y el texto
-    width: 25%;
+  @media screen and (max-width: map-get($grid-breakpoints, md)) {
+    flex-direction: column;
+    text-align: left;
+    
+    .escudo-container {
+      width: 50%;
+    }
+    
+    .text {
+      width: 100%;
+      font-size: 0.75rem;
+      line-height: 2.5;
+    }
   }
 
   .jumbotron {
     background-color: transparent;
     padding-bottom: 20px;
     margin-bottom: 0px;
+
+    @media screen and (max-width: map-get($grid-breakpoints, md)) {
+      .sedici-logo-container {
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+    }
   }
 
   a {
@@ -89,39 +99,69 @@
     }
   }
 
-  .horizontal-sections {
-    display: flex;
-    justify-content: space-between; /* Espacio igual entre las secciones */
-    text-align: left; /* Centra el texto dentro de cada sección */
-
-    .section {
-      flex: 1; /* Cada sección ocupa la misma cantidad de espacio */
-      padding: 10px; /* Espaciado interno */
-      margin: 0 10px; /* Espaciado entre las secciones */
-      display: flex;
-
-      h3 {
-        margin-bottom: 10px; /* Espacio debajo del título */
-        font-size: 1.5rem; /* Tamaño del título */
+  .destacado {
+    .collection-card {
+      text-align: left;
+      padding: 1rem;
+      height: 100%;
+      
+      .icon-container {
+        margin-bottom: 0;
+        
+        img {
+          width: 80px;
+          height: 80px;
+          object-fit: contain;
+        }
       }
-
-      p {
-        font-size: 1rem; /* Tamaño del texto pequeño */
+      
+      .text-container {
+        h4 {
+          font-size: 1rem;
+          font-weight: bold;
+          margin-bottom: 0;
+        }
+        
+        p {
+          font-size: 0.625rem;
+          color: #333;
+          margin: 0;
+        }
       }
-
-      .img-container {
-        margin-right: 10px; // Espacio entre la imagen y el texto
+    }
+    
+    // Estilo para dispositivos medianos y grandes (horizontal)
+    @media (min-width: 768px) {
+      .collection-card {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        
+        .icon-container {
+          margin-right: 15px;
+        }
+        
+        .text-container {
+          flex: 1;
+        }
       }
-
     }
 
-    .section:first-child {
-      margin-left: 25px; /* Elimina el margen izquierdo del primer elemento */
-    }
-
-    .section:last-child {
-      margin-right: 15px; /* Elimina el margen derecho del último elemento */
+    // Estilo para dispositivos móviles (grid 2x2) con ícono a la derecha
+    @media (max-width: 767px) {
+      .collection-card {
+        text-align: center;
+        padding: 0.5rem 1rem;
+        
+        .icon-container {
+          margin-bottom: 5px;
+          
+          img {
+            width: 60px; // Un poco más pequeño para ajustar al espacio
+            height: 60px;
+          }
+        }
+      }
     }
   }
-
 }

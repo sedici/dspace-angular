@@ -58,8 +58,30 @@
     margin-right: 20px;
   }
 
-  #search-container {
+  .left-container {
+    display: flex;
+    flex-basis: 100%;
+  }
+
+  .right-container-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: end;
     padding: 0 .5rem;
+    flex-basis: 100%;
+
+    ds-search-navbar {
+      width: 100%;
+    }
+  }
+
+  .right-container {
+    display: flex;
+    justify-content: end;
+
+    ds-search-navbar {
+      width: 300px;
+    }
   }
 
   ::ng-deep ds-navbar .container{

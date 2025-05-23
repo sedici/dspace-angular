@@ -2,7 +2,7 @@
   <div class="navbar-brand w-100 mb-0">
     <form [formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm.value)" class="d-flex align-items-center w-100">
       <div class="search-form-container w-100 position-relative">
-        <button class="search-icon btn" type="submit" attr.aria-label="{{ 'nav.search.submit' | translate }}" [disabled]="(searchForm.value.query === '')">
+        <button class="search-icon btn" type="submit" attr.aria-label="{{ 'nav.search.submit' | translate }}">
           <i class="fas fa-search"></i>
         </button>
         <input class="form-control search-input" 

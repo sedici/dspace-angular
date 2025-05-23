@@ -98,12 +98,14 @@ export class ContentFilesComponent {
 
   selectedFile: Bitstream | null = null;
   embargoedFile: boolean = false;
+  isAssetAvailable: boolean = true;
 
   selectFile(file: Bitstream) {
     this.selectedFile = file;
     const extension = this.getFileExtension(file.name);
     this.isLoading = true;
     this.embargoedFile = false;
+    this.isAssetAvailable = true;
     const authToken = this.authService.getToken();
     this.cdr.detectChanges();
   
@@ -155,7 +157,11 @@ export class ContentFilesComponent {
                 if (error.status === 401 || error.status === 403) {
                   this.embargoedFile = true;
                   this.cdr.detectChanges();
-                }     
+                }
+                if (error.status === 500) {
+                  this.isAssetAvailable = false;
+                  this.cdr.detectChanges();
+                }  
                 this.isLoading = false;
               });
             }
@@ -186,31 +192,6 @@ export class ContentFilesComponent {
   isImageFile(extension: string): boolean {
     const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp'];
     return imageExtensions.includes(extension);
-  }
-
-  stringToHexColor(str: string): string {
-    let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-      hash += str.charCodeAt(i);
-      hash += (hash << 10);
-      hash ^= (hash >> 6);
-    }
-    hash += (hash << 3);
-    hash ^= (hash >> 11);
-    hash += (hash << 15);
-    
-    let color = '#';
-    for (let i = 0; i < 3; i++) {
-      const value = (hash >> (i * 8)) & 0xFF;
-      color += ('00' + value.toString(16)).substr(-2);
-    }
-    return color;
-  }
-
-  getBadgeStyle(fileName: string): { [key: string]: string } {
-    const extension = this.getFileExtension(fileName);
-    const color = this.stringToHexColor(extension);
-    return { 'background-color': color };
   }
 
   getIconPath(fileName: string): string {
@@ -303,6 +284,7 @@ export class ContentFilesComponent {
           resolve(null);
         }
       });
+      resolve(null);
     });
   }
 

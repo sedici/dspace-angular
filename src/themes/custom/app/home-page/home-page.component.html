@@ -17,48 +17,66 @@
     <ds-view-tracker [object]="site"></ds-view-tracker>
   </ng-container>
 
-  <ds-home-slider
-    [title]="'Produccion de la UNLP'"
-    [slide]="false"
-    [items]="colecciones">
-  </ds-home-slider>
-
-  <ds-home-slider
-    *ngIf="aux == numCollection"
-    [title]="'Colecciones destacadas'"
-    [slide]="true"
-    [nItems]="1"
-    [prueba]="true"
-    [sliderItems]="carrousel2">
-  </ds-home-slider>
-
-  <!--<ds-home-slider
-    [title]="'Colecciones destacadas'"
-    [slide]="true"
-    [nItems]="1"
-    [prueba]="false"
-    [items]="carrousel">
-  </ds-home-slider>-->
-
-  <!--<ds-recent-item-list *ngIf="recentSubmissionspageSize>0"></ds-recent-item-list>-->
+  <div class="destacado">
+    <div class="explorar-title-container">
+      <h2 class="explorar-title">Explorar</h2>
+      <p class="explorar-subtitle">PRODUCCIÓN DE LA <b>UNLP</b></p>
+    </div>
+    <div class="row">
+      <div *ngFor="let item of colecciones" class="col-6 col-md-4 mb-4">
+        <div class="collection-card">
+          <div class="icon-container">
+            <img [src]="item.img" alt="{{item.title}}">
+          </div>
+          <div class="text-container">
+            <h4>{{item.title}}</h4>
+            <p>{{item.description}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </ng-template>
 
-<div class="help text-center d-flex justify-content-around align-items-center">
-      <div class="p-2 bd-highlight">
-        <i class="fa-solid fa-circle-info"></i>
-          <h5>Ayuda para investigadores</h5>
+<!-- <ng-container *ngTemplateOutlet="itemsGrid; context: { title: 'COLECCIONES DESTACADAS', items: coleccionesDestacadas }"></ng-container>
+<ng-container *ngTemplateOutlet="itemsGrid; context: { title: 'UNIDADES ACADÉMICAS', items: unidadesAcademicas }"></ng-container> -->
+<ng-container *ngTemplateOutlet="itemsGrid; context: { title: 'COLECCIONES DESTACADAS', items: comcolArray }"></ng-container>
+<ng-container *ngTemplateOutlet="itemsGrid; context: { title: 'UNIDADES ACADÉMICAS', items: comcolArray }"></ng-container>
+
+<ng-template #itemsGrid let-title="title" let-items="items">
+  <div class="section-destacados">
+    <h2 class="section-title">{{title}}</h2>
+    <div class="section-grid container">
+      <div *ngFor="let item of items" class="section-item">
+        <a [href]="item.href">
+          <div class="img-container">
+            <img [src]="item.img" [alt]="item.title">
+          </div>
+          <div class="section-texto">
+            <p>{{item.description || item.title}}</p>
+          </div>
+        </a>
       </div>
-      <div class="p-2 bd-highlight">
-          <i class="fa-solid fa-scale-balanced"></i>
-          <h5>Obligación de depósito en el repositorio</h5>
-      </div>
-      <div class="p-2 bd-highlight">
-        <i class="fa-solid fa-chart-simple"></i>
-          <h5>Estadísticas de crecimiento</h5>
-      </div>
+    </div>
+  </div>
+</ng-template>
+
+<div class="help text-center d-flex flex-column flex-md-row justify-content-around align-items-center">
+  <div class="p-2 bd-highlight">
+    <i class="fa-solid fa-circle-info"></i>
+    <h5>Ayuda para investigadores</h5>
+  </div>
+  <div class="p-2 bd-highlight">
+    <i class="fa-solid fa-scale-balanced"></i>
+    <h5>Obligación de depósito en el repositorio</h5>
+  </div>
+  <div class="p-2 bd-highlight">
+    <i class="fa-solid fa-chart-simple"></i>
+    <h5>Estadísticas de crecimiento</h5>
+  </div>
 </div>
 
-<div class="aliados-section align-items-center">
+<div class="aliados-section align-items-center d-none d-md-flex">
   <div class="aliados-title d-flex align-items-center justify-content-end">
     <div>
       <h2>Aliados</h2>

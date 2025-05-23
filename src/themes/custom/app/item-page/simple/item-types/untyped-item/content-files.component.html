@@ -39,13 +39,18 @@
       </div>
     
       <div class="file-preview d-none d-lg-block col-lg-9">
-        <div *ngIf="selectedFile; else noPreview">
+        <div *ngIf="selectedFile && isAssetAvailable; else noAsset">
           <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
         </div>
-        <ng-template #noPreview>
-          <div class="no-preview">
-            <span>NO HAY ARCHIVO/S CON PREVISUALIZACIÓN DISPONIBLE</span>
+        <ng-template #noAsset>
+          <div *ngIf="!isAssetAvailable; else noPreview" class="no-preview">
+            <span>OCURRIÓ UN ERROR INESPERADO: PREVISUALIZACIÓN NO DISPONIBLE</span>
           </div>
+          <ng-template #noPreview>
+            <div class="no-preview">
+              <span>NO HAY ARCHIVO/S CON PREVISUALIZACIÓN DISPONIBLE</span>
+            </div>
+          </ng-template>
         </ng-template>
       </div>
     </div>

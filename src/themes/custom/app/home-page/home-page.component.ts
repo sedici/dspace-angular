@@ -5,6 +5,7 @@ import {
   NgClass,
   NgIf,
   NgTemplateOutlet,
+  NgFor,
 } from '@angular/common';
 import {
   Component,
@@ -13,11 +14,6 @@ import {
 } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import {
-  filter,
-  map,
-  mergeMap,
-} from 'rxjs/operators';
 import { RemoteData } from 'src/app/core/data/remote-data';
 
 import { HomeCoarComponent } from '../../../../app/home-page/home-coar/home-coar.component';
@@ -30,22 +26,25 @@ import { ThemedConfigurationSearchPageComponent } from '../../../../app/search-p
 import { ThemedSearchFormComponent } from '../../../../app/shared/search-form/themed-search-form.component';
 import { PageWithSidebarComponent } from '../../../../app/shared/sidebar/page-with-sidebar.component';
 import { ViewTrackerComponent } from '../../../../app/statistics/angulartics/dspace/view-tracker.component';
-import { HomeSliderComponent, SliderItem, SliderItem2 } from './sedici-home-slider/home-slider.component';
+import { HomeSliderComponent, SliderItem } from './sedici-home-slider/home-slider.component';
 import {
   APP_CONFIG,
   AppConfig,
 } from 'src/config/app-config.interface';
 import { ActivatedRoute } from '@angular/router';
 import { getFirstSucceededRemoteDataPayload } from 'src/app/core/shared/operators';
-import { getAllSucceededRemoteDataPayload } from 'src/app/core/shared/operators';
 import { Community } from 'src/app/core/shared/community.model';
 import { ComcolPageLogoComponent } from 'src/app/shared/comcol/comcol-page-logo/comcol-page-logo.component';
 import { Bitstream } from 'src/app/core/shared/bitstream.model';
 import { Collection } from 'src/app/core/shared/collection.model';
-import { hasValue } from 'src/app/shared/empty.util';
 import { FollowLinkConfig, followLink } from 'src/app/shared/utils/follow-link-config.model';
-import { DSpaceObject } from 'src/app/core/shared/dspace-object.model';
-import { COMMUNITY_PAGE_LINKS_TO_FOLLOW } from 'src/app/community-page/community-page.resolver';
+
+interface ColeccionDestacada {
+  title: string;
+  img: string;
+  href: string;
+  description?: string;
+}
 @Component({
   selector: 'ds-themed-home-page',
   styleUrls: ['./home-page.component.scss'],
@@ -53,19 +52,19 @@ import { COMMUNITY_PAGE_LINKS_TO_FOLLOW } from 'src/app/community-page/community
   templateUrl: './home-page.component.html',
   // templateUrl: '../../../../app/home-page/home-page.component.html',
   standalone: true,
-  imports: [ThemedHomeNewsComponent, ComcolPageLogoComponent, NgTemplateOutlet, NgIf, ViewTrackerComponent, ThemedSearchFormComponent, ThemedTopLevelCommunityListComponent, RecentItemListComponent, AsyncPipe, TranslateModule, NgClass, SuggestionsPopupComponent, ThemedConfigurationSearchPageComponent, PageWithSidebarComponent, HomeCoarComponent, HomeSliderComponent],
+  imports: [ThemedHomeNewsComponent, ComcolPageLogoComponent, NgTemplateOutlet, NgIf, NgFor, ViewTrackerComponent, ThemedSearchFormComponent, ThemedTopLevelCommunityListComponent, RecentItemListComponent, AsyncPipe, TranslateModule, NgClass, SuggestionsPopupComponent, ThemedConfigurationSearchPageComponent, PageWithSidebarComponent, HomeCoarComponent, HomeSliderComponent],
 })
 export class HomePageComponent extends BaseComponent {
 
   aux = 0;
   numCollection = this.appConfig.highlightCollections.length;
   highlightCollections: any;
+  academicUnits: any;
   collectionName: String;
   logo: Bitstream;
   logoRD$: Observable<RemoteData<Bitstream>>;
   communityRD$: Observable<RemoteData<Community>>;
   collectionRD$: Observable<RemoteData<Collection>>;
-  //linksToFollow: FollowLinkConfig<DSpaceObject>[] = COMMUNITY_PAGE_LINKS_TO_FOLLOW as FollowLinkConfig<DSpaceObject>[];
   comlinksToFollow: FollowLinkConfig<Community>[] = [
     followLink('logo'),
   ];
@@ -78,26 +77,102 @@ export class HomePageComponent extends BaseComponent {
       title: "Revistas",
       img: "assets/custom/images/revistas.png",
       href: "",
-      description: "Tesis de grado, postgrado y otros documentos",
+      description: "123.456",
     } as SliderItem,{
       title: "Eventos",
       img: "assets/custom/images/eventos.png",
       href: "",
-      description: "Tesis de grado, postgrado y otros documentos"
+      description: "123.456"
     } as SliderItem,{
       title: "Libros",
       img: "assets/custom/images/libros2.png",
       href: "",
-      description: "Tesis de grado, postgrado y otros documentos"
-    } as SliderItem,{
-      title: "Tesis",
-      img: "assets/custom/images/tesis.png",
-      href: "",
-      description: "Tesis de grado, postgrado y otros documentos"
-    } as SliderItem
+      description: "123.456"
+    } as SliderItem,
+    // {
+    //   title: "Tesis",
+    //   img: "assets/custom/images/tesis.png",
+    //   href: "",
+    //   description: "123.456"
+    // } as SliderItem
   ];
 
-  carrousel2 :SliderItem2[][] = [];
+  coleccionesDestacadas: ColeccionDestacada[] = [
+    {
+      title: "Transparencia activa",
+      img: "assets/custom/images/colecciones/transparencia.png",
+      href: "/collections/transparencia",
+    },
+    {
+      title: "Radio Universidad",
+      img: "assets/custom/images/colecciones/radio.png",
+      href: "/communities/3029e173-44fa-4ab8-a76a-3488c390fb06",
+    },
+    {
+      title: "Red de Museos",
+      img: "assets/custom/images/colecciones/museos.png",
+      href: "/communities/5e81a596-9011-4166-878f-82c7c066e512",
+    },
+    {
+      title: "RedUNCI",
+      img: "assets/custom/images/colecciones/redunci.png",
+      href: "/communities/19ace49e-c442-4258-9a7d-60c26c2c4693"
+    },
+    {
+      title: "Educación a Distancia y Tecnologías",
+      img: "assets/custom/images/colecciones/direccion_general.png",
+      href: "/collections/direccion_general"
+    },
+    {
+      title: "Emergencia hídrica",
+      img: "assets/custom/images/colecciones/emergencia.png",
+      href: "/communities/273f7a90-9c00-4764-a9c6-6eafba041932",
+    }
+  ];
+
+  unidadesAcademicas: ColeccionDestacada[] = [
+    {
+      title: "Bachillerato de Bellas Artes",
+      img: "assets/custom/images/colecciones/transparencia.png",
+      href: "/collections/BBA",
+    },
+    {
+      title: "Facultad de Artes",
+      img: "assets/custom/images/colecciones/transparencia.png",
+      href: "/collections/FdA",
+    },
+    {
+      title: "Facultad de Ciencias Astronómicas y Geofísicas",
+      img: "assets/custom/images/colecciones/transparencia.png",
+      href: "/collections/FacultadCienciasAstronómicasGeofísicas",
+    },
+    {
+      title: "Facultad de Informática",
+      img: "assets/custom/images/colecciones/transparencia.png",
+      href: "/collections/FacultadInformática",
+    },
+    {
+      title: "Red de Museos",
+      img: "assets/custom/images/colecciones/museos.png",
+      href: "/communities/5e81a596-9011-4166-878f-82c7c066e512",
+    },
+    {
+      title: "RedUNCI",
+      img: "assets/custom/images/colecciones/redunci.png",
+      href: "/communities/19ace49e-c442-4258-9a7d-60c26c2c4693",
+    },
+    {
+      title: "Dirección General de Educación a Distancia y Tecnologías",
+      img: "assets/custom/images/colecciones/direccion_general.png",
+      href: "/collections/direccion_general",
+      description: "Educación a Distancia y Tecnologías"
+    },
+    {
+      title: "Emergencia hídrica",
+      img: "assets/custom/images/colecciones/emergencia.png",
+      href: "/communities/273f7a90-9c00-4764-a9c6-6eafba041932",
+    }
+  ];
 
   constructor(
     @Inject(APP_CONFIG) protected appConfig: AppConfig,
@@ -108,65 +183,60 @@ export class HomePageComponent extends BaseComponent {
   ) {
     super(appConfig, route);
     this.highlightCollections = this.appConfig.highlightCollections;
+    this.academicUnits = this.appConfig.academicUnits;
   }
 
+  comcolArray: SliderItem[] = [];
 
   ngOnInit(): void {
     super.ngOnInit();
-    const resultado = [];
-    for (let i = 0; i < this.appConfig.highlightCollections.length; i += 5) {
-      const subarreglo = this.appConfig.highlightCollections.slice(i, i + 5);
-      resultado.push(subarreglo);
-    }
-    for (const arreglo of resultado){
-      const slider = [];
-      for (const uuid of arreglo){
-        if(uuid.type == "com"){
-          this.communityRD$ = this.comuds.findById(
-            uuid.id,
-            true,
-            true,
-            ...this.comlinksToFollow,
+
+    for (const comcol of this.appConfig.academicUnits){
+      if(comcol.type == "com"){
+        this.communityRD$ = this.comuds.findById(
+          comcol.id,
+          true,
+          true,
+          ...this.comlinksToFollow,
+          );
+        this.communityRD$.pipe(
+          getFirstSucceededRemoteDataPayload(),
+        ).subscribe((community: Community) => {
+          community.logo.subscribe(imageUrl => {
+            this.comcolArray.push(
+              {
+                title: community.name,
+                href:"/communities/" + comcol.id,
+                img: imageUrl.payload._links.content.href,
+                description: community.name
+              } as SliderItem
             );
-          this.communityRD$.pipe(
-            getFirstSucceededRemoteDataPayload(),
-          ).subscribe((community: Community) => {
-            slider.push(
-              {title: community.name,
-              href:"/communities/"+uuid.id,
-              img: community.logo}as SliderItem2
-              );
-            console.log(this.carrousel2);
-            this.logoRD$ = community.logo;
-            this.aux += 1;
-            console.log(this.aux);
             this.cdr.detectChanges();
           });
-        }else{
-          this.collectionRD$ = this.collds.findById(
-            uuid.id,
-            true,
-            true,
-            ...this.collinksToFollow,
+        });
+      } else {
+        this.collectionRD$ = this.collds.findById(
+          comcol.id,
+          true,
+          true,
+          ...this.collinksToFollow,
+          );
+        this.collectionRD$.pipe(
+          getFirstSucceededRemoteDataPayload(),
+        ).subscribe((collection: Collection) => {
+          collection.logo.subscribe(imageUrl => {
+            this.comcolArray.push(
+              {
+                title: collection.name,
+                href:"/collections/" + comcol.id,
+                img: imageUrl.payload._links.content.href,
+                description: collection.name
+              } as SliderItem
             );
-          this.collectionRD$.pipe(
-            getFirstSucceededRemoteDataPayload(),
-          ).subscribe((collection: Collection) => {
-            slider.push(
-              {title: collection.name,
-              href:"/collections/"+uuid.id,
-              img: collection.logo}as SliderItem2
-              );
-            console.log(this.carrousel2);
-            this.logoRD$ = collection.logo;
-            this.aux += 1;
-            console.log(this.aux);
             this.cdr.detectChanges();
           });
-        }
+        });
       }
-      this.carrousel2.push(slider)
     }
   }
-
 }

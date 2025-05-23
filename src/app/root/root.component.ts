@@ -12,6 +12,7 @@ import {
 import {
   Router,
   RouterOutlet,
+  NavigationEnd,
 } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import {
@@ -19,12 +20,14 @@ import {
   combineLatest as combineLatestObservable,
   Observable,
   of,
+  Subscription,
 } from 'rxjs';
 import {
   first,
   map,
   skipWhile,
   startWith,
+  filter,
 } from 'rxjs/operators';
 import { INotificationBoardOptions } from 'src/config/notifications-config.interfaces';
 
@@ -40,7 +43,7 @@ import {
 import { ThemedFooterComponent } from '../footer/themed-footer.component';
 import { ThemedHeaderNavbarWrapperComponent } from '../header-nav-wrapper/themed-header-navbar-wrapper.component';
 import { slideSidebarPadding } from '../shared/animations/slide';
-import { HostWindowService } from '../shared/host-window.service';
+import { HostWindowService, WidthCategory } from '../shared/host-window.service';
 import { LiveRegionComponent } from '../shared/live-region/live-region.component';
 import { ThemedLoadingComponent } from '../shared/loading/themed-loading.component';
 import { MenuService } from '../shared/menu/menu.service';
@@ -81,6 +84,12 @@ export class RootComponent implements OnInit {
   models: any;
 
   browserOsClasses = new BehaviorSubject<string[]>([]);
+
+  isMobile$: Observable<boolean>;
+  maxMobileWidth = WidthCategory.SM;
+
+  public isHomePage$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private routerSubscription: Subscription;
 
   /**
    * Whether or not to show a full screen loader
@@ -135,6 +144,34 @@ export class RootComponent implements OnInit {
     if (this.router.url === getPageInternalServerErrorRoute()) {
       this.shouldShowRouteLoader = false;
     }
+
+    this.isMobile$ = this.windowService.isUpTo(this.maxMobileWidth);
+
+    const currentUrl = this.router.url;
+    this.isHomePage$.next(this.isHomeUrl(currentUrl));
+
+    this.routerSubscription = this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd),
+      map((event: NavigationEnd) => {
+        const isHome = this.isHomeUrl(event.urlAfterRedirects);
+        return isHome;
+      })
+    ).subscribe(isHome => {
+      this.isHomePage$.next(isHome);
+    });
+  }
+
+  ngOnDestroy() {
+    // Importante: limpiar la suscripción para evitar pérdidas de memoria
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
+  }
+
+  private isHomeUrl(url: string): boolean {
+    return url === '/' || 
+           url === '/home' || 
+           url.startsWith('/home?');
   }
 
   skipToMainContent() {

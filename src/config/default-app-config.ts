@@ -610,6 +610,17 @@ export class DefaultAppConfig implements AppConfig {
     { id: "a2d47058-1d76-4530-b1ff-461ec6ce94b5", type: "col" }
   ]
 
+  academicUnits = [
+    { id: "a32f8515-54e3-4a2f-a2d1-f75dc259b23d", type: "com" },
+    { id: "68849da0-46cf-48ad-a0de-c0e3164fc586", type: "com" },
+    { id: "dc151b51-f2b8-4767-8188-09787fe59346", type: "com" },
+    { id: "82114471-eeb7-47ab-87da-921fa15a797e", type: "com" },
+    { id: "c512bd95-c05d-4e16-954b-d3619dc7822e", type: "com" },
+    { id: "52a57dcf-13b0-467a-b00b-e7cc94365e4b", type: "com" },
+    { id: "79c15c83-fec3-46cb-9792-c66a7d7296f7", type: "com" },
+    { id: "0377bf31-92cb-439a-89e2-389639989fc4", type: "com" },
+  ]
+
   // Live Region configuration, used by the LiveRegionService
   liveRegion: LiveRegionConfig = {
     messageTimeOutDurationMs: 30000,

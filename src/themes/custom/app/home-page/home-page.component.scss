@@ -5,52 +5,185 @@
   margin: 20px 0; /* Espacio arriba y abajo del título */
 }
 
-.destacado {
-  display: flex;
-  justify-content: space-around; /* Espacio igual entre las secciones */
-  align-items: center; /* Centra verticalmente las secciones */
-  flex-wrap: wrap; /* Permite que las secciones se ajusten si no caben en una fila */
-  text-align: center; /* Centra el texto dentro de cada sección */
+.explorar-title-container {
+  margin: 2rem 0 1.5rem 0;
 
-  .section {
-    flex: 1 1 20%; /* Ajusta la flexibilidad de las secciones */
-    padding: 10px; /* Espaciado interno */
-    margin: 10px; /* Espaciado entre las secciones */
+  @media screen and (min-width: map-get($grid-breakpoints, md)) {
+    text-align: center;
+  }
+  
+  .explorar-title {
+    color: var(--sedici-color);
+    font-size: 2rem;
+    margin-bottom: 0.2rem;
+  }
+  
+  .explorar-subtitle {
+    color: #666;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    margin: 0;
+  }
+}
+
+.destacado {  
+  .collection-card {
     display: flex;
-    align-items: center; /* Centra verticalmente la imagen y el texto */
     flex-direction: column;
-
-    img {
-      width: 120px; /* Anchura de la imagen */
-      height: 120px; /* Altura de la imagen */
-      margin-bottom: 10px; /* Espacio entre la imagen y el texto */
+    align-items: center;
+    text-align: center;
+    padding: 15px;
+    height: 100%;
+    border-radius: 5px;
+    box-shadow: 1px 5px rgba(0,0,0,0.1);
+    
+    .icon-container {
+      margin-bottom: 10px;
+      
+      img {
+        width: 80px;
+        height: 80px;
+        object-fit: contain;
+      }
     }
-
+    
     .text-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center; /* Centra el texto horizontalmente */
+      h4 {
+        font-size: 1rem;
+        font-weight: bold;
+        margin-bottom: 0;
+      }
+      
+      p {
+        font-size: 0.625rem;
+        color: #666;
+        margin: 0;
+      }
     }
-
-    h4 {
-      margin-bottom: 10px; /* Espacio debajo del título */
-      font-size: 1.1rem; /* Tamaño del título */
-    }
-
-    p {
-      font-size: 1rem; /* Tamaño del texto pequeño */
+  }
+  
+  // Estilo para dispositivos medianos y grandes (horizontal)
+  @media (min-width: 768px) {
+    .collection-card {
+      flex-direction: row;
+      text-align: left;
+      
+      .icon-container {
+        margin-right: 15px;
+        margin-bottom: 0;
+      }
+      
+      .text-container {
+        flex: 1;
+      }
     }
   }
 
+  // Estilo para dispositivos móviles (grid 2x2) con ícono a la derecha
+  @media (max-width: 767px) {
+    .collection-card {
+      flex-direction: row; // Cambiamos a horizontal para móvil
+      text-align: left;
+      padding: 15px;
+      height: 100%;
+      justify-content: space-between; // Distribuir espaciado
+      align-items: center;
+      
+      .icon-container {
+        order: 2; // Mueve el ícono a la derecha
+        margin-bottom: 0;
+        margin-left: 10px; // Espacio entre texto e icono
+        
+        img {
+          width: 60px; // Un poco más pequeño para ajustar al espacio
+          height: 60px;
+        }
+      }
+      
+      .text-container {
+        order: 1; // Mueve el texto a la izquierda
+        flex: 1;
+      }
+    }
+  }
+}
+
+// Estilos para la sección de items destacados
+.section-destacados {
+  margin: 2rem 0;
+  
+  .section-title {
+    text-align: center;
+    color: #fff;
+    background-color: var(--sedici-color); // Color azul como en la imagen
+    padding: 0.5rem 0;
+    font-size: 1.25rem;
+    letter-spacing: 1px;
+  }
+  
+  .section-grid {
+    display: flex;
+    gap: 2rem;
+    
+    .section-item {
+      text-align: center;
+      
+      .img-container {
+        margin-bottom: 1rem;
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        img {
+          max-width: 100%;
+          max-height: 100px;
+          object-fit: contain;
+        }
+      }
+      
+      .section-texto {
+        p {
+          color: #666;
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .section-grid {
+      overflow-x: auto;
+
+      .section-item {
+        min-width: 30vw; // Me aseguro que aparazcan 2 y 1/2 para que sepa que se puede deslizar
+      }
+    }
+  }
+
+  @media (min-width: 768px) {
+    .section-grid {
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .section-item{
+      flex: 0 1 250px;
+    }
+  }
 }
 
 .help {
-  margin-top: 20px;
   padding: 20px 10%;
-  height: 300px;
-  background-color: #cecece; /* Color de fondo similar al de la imagen */
+  background-color: #cecece;
 
-  i{
+  @media screen and (max-width: map-get($grid-breakpoints, md)) {
+    background-color: white;
+    gap: 3rem;
+    box-shadow: 0 -5px rgba(0,0,0,0.1);
+  }
+
+  i {
     font-size: 9rem;
     color:#777777;
     margin-bottom: 4.5%;

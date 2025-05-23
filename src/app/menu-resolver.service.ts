@@ -136,7 +136,7 @@ export class MenuResolverService  {
       id: 'Institucional',
       active: false,
       visible: true,
-      index: 1,
+      index: 3,
       model: {
         type: MenuItemType.TEXT,
         text: 'Institucional',
@@ -166,7 +166,7 @@ export class MenuResolverService  {
       id: 'PreguntasFrecuentes',
       active: false,
       visible: true,
-      index: 2,
+      index: 4,
       model: {
         type: MenuItemType.TEXT,
         text: 'Preguntas frecuentes',
