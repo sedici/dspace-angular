@@ -84,12 +84,6 @@ export class HomeNewsComponent extends BaseComponent {
       img: "assets/custom/images/unidades_academicas.png",
       href: "",
       description: "Facultades, colegios, laboratorios, institutos, centros ..."
-    } as CardItem,
-    {
-      title: "Datos",
-      img: "assets/custom/images/datos.png",
-      href: "",
-      description: "Conjuntos de datos recopilados, resultados de encuestas ..."
     } as CardItem
   ];
 }

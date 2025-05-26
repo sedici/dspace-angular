@@ -14,6 +14,7 @@ export class SediciViewerComponent {
   @Input() content: any;
   @Input() headerTemplate: any;
   @Input() embargoedFile: boolean;
+  @Input() isAssetAvailable: boolean;
 
   constructor(public activeModal: NgbActiveModal) {}
 

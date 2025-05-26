@@ -23,7 +23,7 @@
       <p class="explorar-subtitle">PRODUCCIÓN DE LA <b>UNLP</b></p>
     </div>
     <div class="row">
-      <div *ngFor="let item of colecciones" class="col-6 col-md-4 mb-4">
+      <div *ngFor="let item of colecciones" class="col-6 col-md-3 mb-4">
         <div class="collection-card">
           <div class="icon-container">
             <img [src]="item.img" alt="{{item.title}}">
@@ -38,16 +38,14 @@
   </div>
 </ng-template>
 
-<!-- <ng-container *ngTemplateOutlet="itemsGrid; context: { title: 'COLECCIONES DESTACADAS', items: coleccionesDestacadas }"></ng-container>
-<ng-container *ngTemplateOutlet="itemsGrid; context: { title: 'UNIDADES ACADÉMICAS', items: unidadesAcademicas }"></ng-container> -->
-<ng-container *ngTemplateOutlet="itemsGrid; context: { title: 'COLECCIONES DESTACADAS', items: comcolArray }"></ng-container>
-<ng-container *ngTemplateOutlet="itemsGrid; context: { title: 'UNIDADES ACADÉMICAS', items: comcolArray }"></ng-container>
+<ng-container *ngTemplateOutlet="itemsGrid; context: { title: 'COLECCIONES DESTACADAS', items: coleccionesDestacadas, column: false, isSingleRow: true }"></ng-container>
+<ng-container *ngTemplateOutlet="itemsGrid; context: { title: 'UNIDADES ACADÉMICAS', items: unidadesAcademicas, column: true, isSingleRow: false }"></ng-container>
 
-<ng-template #itemsGrid let-title="title" let-items="items">
+<ng-template #itemsGrid let-title="title" let-items="items" let-column="column" let-isSingleRow="isSingleRow">
   <div class="section-destacados">
     <h2 class="section-title">{{title}}</h2>
-    <div class="section-grid container">
-      <div *ngFor="let item of items" class="section-item">
+    <div class="section-grid container" [ngClass]="{'d-inline d-sm-flex': column}">
+      <div *ngFor="let item of items" class="section-item" [ngClass]="isSingleRow ? 'single-row' : 'multi-row'">
         <a [href]="item.href">
           <div class="img-container">
             <img [src]="item.img" [alt]="item.title">

@@ -11,7 +11,10 @@
     <div *ngIf="embargoedFile">
       <span>EL ARCHIVO SE ENCUENTRA EMBARGADO</span>
     </div>
-    <div *ngIf="!embargoedFile">
+    <div *ngIf="!isAssetAvailable">
+      <span>OCURRIÓ UN ERROR INESPERADO: PREVISUALIZACIÓN NO DISPONIBLE</span>
+    </div>
+    <div *ngIf="!embargoedFile && isAssetAvailable">
       <ng-container *ngTemplateOutlet="content"></ng-container>
     </div>
   </ng-container>

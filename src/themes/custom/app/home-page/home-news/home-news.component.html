@@ -2,22 +2,25 @@
   <div class="container">
     <div class="jumbotron jumbotron-fluid">
       <div class="sedici-logo-container d-md-none">
-        <img [src]="'assets/custom/images/SEDICIUNLP.svg'" alt="">
+        <img [src]="'assets/custom/images/escudoUNLP.svg'" alt="Escudo UNLP">
+      </div>
+      <div class="sedici-logo-container d-md-none">
+        <img [src]="'assets/custom/images/SEDICIUNLP.svg'" alt="Logo UNLP">
       </div>
       <div class="sedici-description">
-        <div class="escudo-container">
-          <img [src]="'assets/custom/images/escudoUNLP.svg'" alt="UNLP" class="image">
+        <div class="escudo-container d-none d-md-block">
+          <img [src]="'assets/custom/images/escudoUNLP.svg'" alt="Escudo UNLP">
         </div>
-        <span class="text"><b>El Servicio de Difusión de la Creación Intelectual</b> es el Repositorio Institucional de la <b>Universidad Nacional de La Plata</b>, un servicio libre y gratuito creado para albergar, preservar y dar visibilidad a las producciones de las Unidades Académicas de la Universidad</span>
+        <span class="text"><b>El Servicio de Difusión de la Creación Intelectual</b> es el Repositorio Institucional de la <b>Universidad Nacional de La Plata</b>, un servicio libre y gratuito creado para albergar, preservar y dar visibilidad a las producciones de las Unidades Académicas de la Universidad.</span>
       </div>
       <ds-themed-search-form *ngIf="(isMobile$ | async) !== true" [searchPlaceholder]="'Busque entre los ' + totalItems + ' recursos disponibles en el repositorio'"></ds-themed-search-form>
       <ds-search-navbar *ngIf="(isMobile$ | async)"></ds-search-navbar>
     </div>
   </div>
 
-  <div class="destacado">
+  <div class="destacado container">
     <div class="row">
-      <div *ngFor="let item of cardItems" class="col-6 col-md-3">
+      <div *ngFor="let item of cardItems" class="col-12 col-md-4">
         <div class="collection-card">
           <div class="icon-container">
             <img [src]="item.img" alt="{{item.title}}">

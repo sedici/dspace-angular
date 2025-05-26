@@ -595,19 +595,12 @@ export class DefaultAppConfig implements AppConfig {
   ];
 
   highlightCollections = [
-    { id: "3ea6678e-f073-4ecc-9b58-857824b9102f", type: "com" },
-    { id: "c080da2b-38b4-4238-971d-d68498f1ddb1", type: "com" },
-    { id: "ca781749-741d-49e7-9465-1a0000feb78a", type: "com" },
-    { id: "c080da2b-38b4-4238-971d-d68498f1ddb1", type: "com" },
-    { id: "d07ae08a-2831-4235-8931-5afbf4daa9c8", type: "com" },
-    { id: "c080da2b-38b4-4238-971d-d68498f1ddb1", type: "com" },
-    { id: "ca781749-741d-49e7-9465-1a0000feb78a", type: "com" },
-    { id: "c080da2b-38b4-4238-971d-d68498f1ddb1", type: "com" },
-    { id: "3ea6678e-f073-4ecc-9b58-857824b9102f", type: "com" },
-    { id: "c080da2b-38b4-4238-971d-d68498f1ddb1", type: "com" },
-    { id: "c080da2b-38b4-4238-971d-d68498f1ddb1", type: "com" },
-    { id: "ca781749-741d-49e7-9465-1a0000feb78a", type: "com" },
-    { id: "a2d47058-1d76-4530-b1ff-461ec6ce94b5", type: "col" }
+    { id: "a32f8515-54e3-4a2f-a2d1-f75dc259b23d", type: "com" },
+    { id: "68849da0-46cf-48ad-a0de-c0e3164fc586", type: "com" },
+    { id: "dc151b51-f2b8-4767-8188-09787fe59346", type: "com" },
+    { id: "82114471-eeb7-47ab-87da-921fa15a797e", type: "com" },
+    { id: "c512bd95-c05d-4e16-954b-d3619dc7822e", type: "com" },
+    { id: "52a57dcf-13b0-467a-b00b-e7cc94365e4b", type: "com" },
   ]
 
   academicUnits = [

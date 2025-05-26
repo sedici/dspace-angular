@@ -56,8 +56,6 @@ interface ColeccionDestacada {
 })
 export class HomePageComponent extends BaseComponent {
 
-  aux = 0;
-  numCollection = this.appConfig.highlightCollections.length;
   highlightCollections: any;
   academicUnits: any;
   collectionName: String;
@@ -78,100 +76,25 @@ export class HomePageComponent extends BaseComponent {
       img: "assets/custom/images/revistas.png",
       href: "",
       description: "123.456",
-    } as SliderItem,{
+    } as SliderItem,
+    {
       title: "Eventos",
       img: "assets/custom/images/eventos.png",
       href: "",
       description: "123.456"
-    } as SliderItem,{
+    } as SliderItem,
+    {
       title: "Libros",
       img: "assets/custom/images/libros2.png",
       href: "",
       description: "123.456"
     } as SliderItem,
-    // {
-    //   title: "Tesis",
-    //   img: "assets/custom/images/tesis.png",
-    //   href: "",
-    //   description: "123.456"
-    // } as SliderItem
-  ];
-
-  coleccionesDestacadas: ColeccionDestacada[] = [
     {
-      title: "Transparencia activa",
-      img: "assets/custom/images/colecciones/transparencia.png",
-      href: "/collections/transparencia",
-    },
-    {
-      title: "Radio Universidad",
-      img: "assets/custom/images/colecciones/radio.png",
-      href: "/communities/3029e173-44fa-4ab8-a76a-3488c390fb06",
-    },
-    {
-      title: "Red de Museos",
-      img: "assets/custom/images/colecciones/museos.png",
-      href: "/communities/5e81a596-9011-4166-878f-82c7c066e512",
-    },
-    {
-      title: "RedUNCI",
-      img: "assets/custom/images/colecciones/redunci.png",
-      href: "/communities/19ace49e-c442-4258-9a7d-60c26c2c4693"
-    },
-    {
-      title: "Educación a Distancia y Tecnologías",
-      img: "assets/custom/images/colecciones/direccion_general.png",
-      href: "/collections/direccion_general"
-    },
-    {
-      title: "Emergencia hídrica",
-      img: "assets/custom/images/colecciones/emergencia.png",
-      href: "/communities/273f7a90-9c00-4764-a9c6-6eafba041932",
-    }
-  ];
-
-  unidadesAcademicas: ColeccionDestacada[] = [
-    {
-      title: "Bachillerato de Bellas Artes",
-      img: "assets/custom/images/colecciones/transparencia.png",
-      href: "/collections/BBA",
-    },
-    {
-      title: "Facultad de Artes",
-      img: "assets/custom/images/colecciones/transparencia.png",
-      href: "/collections/FdA",
-    },
-    {
-      title: "Facultad de Ciencias Astronómicas y Geofísicas",
-      img: "assets/custom/images/colecciones/transparencia.png",
-      href: "/collections/FacultadCienciasAstronómicasGeofísicas",
-    },
-    {
-      title: "Facultad de Informática",
-      img: "assets/custom/images/colecciones/transparencia.png",
-      href: "/collections/FacultadInformática",
-    },
-    {
-      title: "Red de Museos",
-      img: "assets/custom/images/colecciones/museos.png",
-      href: "/communities/5e81a596-9011-4166-878f-82c7c066e512",
-    },
-    {
-      title: "RedUNCI",
-      img: "assets/custom/images/colecciones/redunci.png",
-      href: "/communities/19ace49e-c442-4258-9a7d-60c26c2c4693",
-    },
-    {
-      title: "Dirección General de Educación a Distancia y Tecnologías",
-      img: "assets/custom/images/colecciones/direccion_general.png",
-      href: "/collections/direccion_general",
-      description: "Educación a Distancia y Tecnologías"
-    },
-    {
-      title: "Emergencia hídrica",
-      img: "assets/custom/images/colecciones/emergencia.png",
-      href: "/communities/273f7a90-9c00-4764-a9c6-6eafba041932",
-    }
+      title: "Datos",
+      img: "assets/custom/images/datos.png",
+      href: "",
+      description: "123.456"
+    } as SliderItem,
   ];
 
   constructor(
@@ -186,12 +109,18 @@ export class HomePageComponent extends BaseComponent {
     this.academicUnits = this.appConfig.academicUnits;
   }
 
-  comcolArray: SliderItem[] = [];
+  coleccionesDestacadas: SliderItem[] = [];
+  unidadesAcademicas: SliderItem[] = [];
 
   ngOnInit(): void {
     super.ngOnInit();
+    this.coleccionesDestacadas = this.getComColInfo(this.highlightCollections);
+    this.unidadesAcademicas = this.getComColInfo(this.academicUnits);
+  }
 
-    for (const comcol of this.appConfig.academicUnits){
+  getComColInfo(array): SliderItem[] {
+    let comcolArray: SliderItem[] = [];
+    for (const comcol of array) {
       if(comcol.type == "com"){
         this.communityRD$ = this.comuds.findById(
           comcol.id,
@@ -203,7 +132,7 @@ export class HomePageComponent extends BaseComponent {
           getFirstSucceededRemoteDataPayload(),
         ).subscribe((community: Community) => {
           community.logo.subscribe(imageUrl => {
-            this.comcolArray.push(
+            comcolArray.push(
               {
                 title: community.name,
                 href:"/communities/" + comcol.id,
@@ -225,7 +154,7 @@ export class HomePageComponent extends BaseComponent {
           getFirstSucceededRemoteDataPayload(),
         ).subscribe((collection: Collection) => {
           collection.logo.subscribe(imageUrl => {
-            this.comcolArray.push(
+            comcolArray.push(
               {
                 title: collection.name,
                 href:"/collections/" + comcol.id,
@@ -238,5 +167,6 @@ export class HomePageComponent extends BaseComponent {
         });
       }
     }
-  }
+    return comcolArray;
+  }  
 }

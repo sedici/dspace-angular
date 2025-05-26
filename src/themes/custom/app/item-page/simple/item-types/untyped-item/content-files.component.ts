@@ -64,6 +64,7 @@ export class ContentFilesComponent {
     modalRef.componentInstance.content = content;
     modalRef.componentInstance.headerTemplate = headerTemplate;
     modalRef.componentInstance.embargoedFile = this.embargoedFile;
+    modalRef.componentInstance.isAssetAvailable = this.isAssetAvailable;
   }
 
   openModalShareButtons() {

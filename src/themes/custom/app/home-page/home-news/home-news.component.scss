@@ -58,9 +58,14 @@
   .sedici-description {
     display: flex;
     align-items: center;
-    font-size: 21px;
-    padding-bottom: 18px;
+    padding-bottom: 1rem;
     justify-content: space-between; // Asegura que el contenido esté distribuido adecuadamente
+  }
+
+  @media screen and (min-width: map-get($grid-breakpoints, md)) {
+    .escudo-container {
+      margin-right: 1rem;
+    }
   }
 
   @media screen and (max-width: map-get($grid-breakpoints, md)) {
@@ -75,6 +80,7 @@
       width: 100%;
       font-size: 0.75rem;
       line-height: 2.5;
+      text-align: justify;
     }
   }
 
@@ -101,12 +107,15 @@
 
   .destacado {
     .collection-card {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
       text-align: left;
       padding: 1rem;
       height: 100%;
       
       .icon-container {
-        margin-bottom: 0;
+        margin-right: 1rem;
         
         img {
           width: 80px;
@@ -130,32 +139,9 @@
       }
     }
     
-    // Estilo para dispositivos medianos y grandes (horizontal)
-    @media (min-width: 768px) {
-      .collection-card {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        
-        .icon-container {
-          margin-right: 15px;
-        }
-        
-        .text-container {
-          flex: 1;
-        }
-      }
-    }
-
-    // Estilo para dispositivos móviles (grid 2x2) con ícono a la derecha
     @media (max-width: 767px) {
       .collection-card {
-        text-align: center;
-        padding: 0.5rem 1rem;
-        
         .icon-container {
-          margin-bottom: 5px;
-          
           img {
             width: 60px; // Un poco más pequeño para ajustar al espacio
             height: 60px;

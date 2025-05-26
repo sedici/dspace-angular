@@ -167,7 +167,11 @@
       align-items: center;
     }
 
-    .section-item{
+    .single-row {
+      flex: 0 1 150px;
+    }
+
+    .multi-row {
       flex: 0 1 250px;
     }
   }
