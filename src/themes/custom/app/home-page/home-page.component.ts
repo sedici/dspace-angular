@@ -7,6 +7,7 @@ import {
   NgTemplateOutlet,
   NgFor,
 } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import {
   Component,
   Inject,
@@ -39,11 +40,12 @@ import { Bitstream } from 'src/app/core/shared/bitstream.model';
 import { Collection } from 'src/app/core/shared/collection.model';
 import { FollowLinkConfig, followLink } from 'src/app/shared/utils/follow-link-config.model';
 
-interface ColeccionDestacada {
+interface ExploracionDestacada {
   title: string;
   img: string;
   href: string;
   description?: string;
+  queryParams?: {[key: string]: any};
 }
 @Component({
   selector: 'ds-themed-home-page',
@@ -52,7 +54,7 @@ interface ColeccionDestacada {
   templateUrl: './home-page.component.html',
   // templateUrl: '../../../../app/home-page/home-page.component.html',
   standalone: true,
-  imports: [ThemedHomeNewsComponent, ComcolPageLogoComponent, NgTemplateOutlet, NgIf, NgFor, ViewTrackerComponent, ThemedSearchFormComponent, ThemedTopLevelCommunityListComponent, RecentItemListComponent, AsyncPipe, TranslateModule, NgClass, SuggestionsPopupComponent, ThemedConfigurationSearchPageComponent, PageWithSidebarComponent, HomeCoarComponent, HomeSliderComponent],
+  imports: [ThemedHomeNewsComponent, ComcolPageLogoComponent, NgTemplateOutlet, NgIf, NgFor, RouterLink, ViewTrackerComponent, ThemedSearchFormComponent, ThemedTopLevelCommunityListComponent, RecentItemListComponent, AsyncPipe, TranslateModule, NgClass, SuggestionsPopupComponent, ThemedConfigurationSearchPageComponent, PageWithSidebarComponent, HomeCoarComponent, HomeSliderComponent],
 })
 export class HomePageComponent extends BaseComponent {
 
@@ -70,31 +72,43 @@ export class HomePageComponent extends BaseComponent {
     followLink('logo'),
   ];
 
-  colecciones:Array<SliderItem> = [
+  exploraciones:Array<ExploracionDestacada> = [
     {
       title: "Revistas",
       img: "assets/custom/images/revistas.png",
-      href: "",
+      href: "/handle/10915/51",
       description: "123.456",
-    } as SliderItem,
+    } as ExploracionDestacada,
     {
       title: "Eventos",
       img: "assets/custom/images/eventos.png",
-      href: "",
+      href: "/handle/10915/1038",
       description: "123.456"
-    } as SliderItem,
+    } as ExploracionDestacada,
     {
       title: "Libros",
       img: "assets/custom/images/libros2.png",
-      href: "",
-      description: "123.456"
-    } as SliderItem,
+      href: "/search",
+      description: "123.456",
+      queryParams: {
+        "spc.page": 1,
+        "f.itemtype": "Libro,equals",
+        "spc.sf": "dc.date.accessioned",
+        "spc.sd": "DESC"
+      }
+    } as ExploracionDestacada,
     {
       title: "Datos",
       img: "assets/custom/images/datos.png",
-      href: "",
-      description: "123.456"
-    } as SliderItem,
+      href: "/search",
+      description: "123.456",
+      queryParams: {
+        "spc.page": 1,
+        "f.itemtype": "Conjunto de datos,equals",
+        "spc.sf": "dc.date.accessioned",
+        "spc.sd": "DESC"
+      }
+    } as ExploracionDestacada,
   ];
 
   constructor(

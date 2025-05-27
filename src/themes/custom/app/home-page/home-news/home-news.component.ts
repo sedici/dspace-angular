@@ -3,6 +3,7 @@ import {
   NgIf,
   NgFor,
 } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HostWindowService, WidthCategory } from 'src/app/shared/host-window.service';
@@ -27,7 +28,7 @@ export interface CardItem {
   templateUrl: './home-news.component.html',
   //templateUrl: '../../../../../app/home-page/home-news/home-news.component.html',
   imports:[
-    AsyncPipe, NgIf, NgFor, SearchFormComponent, ThemedSearchNavbarComponent,
+    AsyncPipe, NgIf, NgFor, SearchFormComponent, ThemedSearchNavbarComponent, RouterLink,
   ],
   standalone: true,
 })
@@ -72,17 +73,17 @@ export class HomeNewsComponent extends BaseComponent {
     {
       title: "Autores",
       img: "assets/custom/images/autores.png",
-      href: "",
+      href: "/browse/author",
       description: "Profesores, investigadores, estudiantes u otros colaboradores",
     } as CardItem,{
       title: "Publicaciones",
       img: "assets/custom/images/publicaciones.png",
-      href: "",
+      href: "/search",
       description: "Revistas, libras, informes tecincos, trabajos de conferencias, tesis ..."
     } as CardItem,{
       title: "Unidades Academicas",
       img: "assets/custom/images/unidades_academicas.png",
-      href: "",
+      href: "/handle/10915/1",
       description: "Facultades, colegios, laboratorios, institutos, centros ..."
     } as CardItem
   ];

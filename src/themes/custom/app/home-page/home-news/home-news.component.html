@@ -23,11 +23,15 @@
       <div *ngFor="let item of cardItems" class="col-12 col-md-4">
         <div class="collection-card">
           <div class="icon-container">
-            <img [src]="item.img" alt="{{item.title}}">
+            <a [routerLink]="item.href">
+              <img [src]="item.img" alt="{{item.title}}">
+            </a>
           </div>
           <div class="text-container">
-            <h4>{{item.title}}</h4>
-            <p>{{item.description}}</p>
+            <a [routerLink]="item.href">
+              <h4>{{item.title}}</h4>
+              <p>{{item.description}}</p>
+            </a>
           </div>
         </div>
       </div>

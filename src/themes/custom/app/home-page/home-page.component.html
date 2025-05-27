@@ -23,16 +23,18 @@
       <p class="explorar-subtitle">PRODUCCIÓN DE LA <b>UNLP</b></p>
     </div>
     <div class="row">
-      <div *ngFor="let item of colecciones" class="col-6 col-md-3 mb-4">
-        <div class="collection-card">
-          <div class="icon-container">
-            <img [src]="item.img" alt="{{item.title}}">
+      <div *ngFor="let item of exploraciones" class="col-6 col-md-3 mb-4">
+        <a [routerLink]="item.href" [queryParams]="item.queryParams || {}">
+          <div class="collection-card">
+            <div class="icon-container">
+              <img [src]="item.img" alt="{{item.title}}">
+            </div>
+            <div class="text-container">
+              <h4>{{item.title}}</h4>
+              <p>{{item.description}}</p>
+            </div>
           </div>
-          <div class="text-container">
-            <h4>{{item.title}}</h4>
-            <p>{{item.description}}</p>
-          </div>
-        </div>
+        </a>
       </div>
     </div>
   </div>
@@ -81,8 +83,14 @@
     </div>
   </div>
   <div class="aliados-logos">
-    <img src="assets/custom/images/SNRD.png" alt="SNRD Logo">
-    <img src="assets/custom/images/La referencia.png" alt="La Referencia Logo">
-    <img src="assets/custom/images/COAR.png" alt="COAR Logo">
+    <a href="https://repositoriosdigitales.mincyt.gob.ar/vufind/" target="_blank">
+      <img src="assets/custom/images/SNRD.png" alt="SNRD Logo">
+    </a>
+    <a href="https://www.lareferencia.info/es/" target="_blank">
+      <img src="assets/custom/images/La referencia.png" alt="La Referencia Logo">
+    </a>
+    <a href="https://coar-repositories.org/" target="_blank">
+      <img src="assets/custom/images/COAR.png" alt="COAR Logo">
+    </a>
   </div>
 </div>

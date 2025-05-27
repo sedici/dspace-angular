@@ -86,7 +86,7 @@
 
   .jumbotron {
     background-color: transparent;
-    padding-bottom: 20px;
+    padding-bottom: 0px;
     margin-bottom: 0px;
 
     @media screen and (max-width: map-get($grid-breakpoints, md)) {
@@ -106,6 +106,8 @@
   }
 
   .destacado {
+    padding-bottom: 15px;
+
     .collection-card {
       display: flex;
       flex-direction: row;
@@ -136,6 +138,10 @@
           color: #333;
           margin: 0;
         }
+      }
+
+      a {
+        color: inherit;
       }
     }
     
