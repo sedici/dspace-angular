@@ -21,6 +21,18 @@
     .footer-icons {
       display: flex;
       gap: 1rem;
+
+      @media (max-width: 768px) {
+        img {
+          max-width: 100px;
+        }
+      }
+
+      @media (min-width: 769px) {
+        img {
+          max-height: 75px;
+        }
+      }
     }
 
     .footer-right {
@@ -81,6 +93,7 @@
       .footer-icons {
         flex-direction: column;
         margin-top: 1rem !important;
+        align-items: center;
       }
 
       .bottom-footer {
