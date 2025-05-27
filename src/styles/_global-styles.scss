@@ -21,6 +21,10 @@ body {
     flex-direction: column;
     width: 100%;
     position: relative;
+
+    @media screen and (max-width: map-get($grid-breakpoints, md)) {   
+        margin-bottom: 60px; //AJUSTAR SEGÚN BOTTOM-NAV-BAR
+    }
 }
 
 .margin-header {

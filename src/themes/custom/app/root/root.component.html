@@ -7,7 +7,6 @@
      params: { collapsedWidth: (collapsedSidebarWidth$ | async), expandedWidth: (expandedSidebarWidth$ | async) }
     }">
   <ds-admin-sidebar [expandedSidebarWidth$]="expandedSidebarWidth$" [collapsedSidebarWidth$]="collapsedSidebarWidth$"></ds-admin-sidebar>
-  <!-- <div class="inner-wrapper"> -->
   <div class="inner-wrapper" [ngClass]="{'margin-header': ((isMobile$ | async) !== true) || ((isMobile$ | async) && ((isHomePage$ | async) !== true))}">
     <ds-system-wide-alert-banner></ds-system-wide-alert-banner>
     <ds-header-navbar-wrapper *ngIf="((isMobile$ | async) !== true) || ((isMobile$ | async) && ((isHomePage$ | async) !== true))"></ds-header-navbar-wrapper>
@@ -23,6 +22,7 @@
     </main>
 
     <ds-footer></ds-footer>
+    <bottom-navigation-bar *ngIf="(isMobile$ | async)"></bottom-navigation-bar>
   </div>
 </div>
 
