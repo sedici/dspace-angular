@@ -124,6 +124,36 @@
     font-size: 1.25rem;
     letter-spacing: 1px;
   }
+
+  .section-subtitle {
+    position: relative;
+    text-align: center;
+    color: #333;
+    padding: 0.25rem 0;
+    font-size: 1rem;
+    letter-spacing: 1px;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      height: 1px;
+      background-color: #d4d4d4;
+    }
+
+    &::before {
+      margin-left: -102%;
+      width: 100%;
+      margin-right: 15px;
+    }
+    
+    &::after {
+      margin-left: 2%;
+      width: 100%;
+    }
+  }
   
   .section-grid {
     display: flex;
@@ -171,12 +201,8 @@
       align-items: center;
     }
 
-    .single-row {
+    .section-item {
       flex: 0 1 150px;
-    }
-
-    .multi-row {
-      flex: 0 1 250px;
     }
   }
 }

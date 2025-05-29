@@ -52,14 +52,10 @@
 
     .ds-menu-item {
       display: block;
+      padding: .5rem 0;
 
       &:hover, &:focus {
         color: var(--ds-navbar-link-color-hover);
-      }
-
-      @media (max-width: 767px) {
-        padding-top: .5rem;
-        padding-bottom: .5rem;
       }
     }
   }

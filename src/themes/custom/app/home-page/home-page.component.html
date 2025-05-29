@@ -40,14 +40,18 @@
   </div>
 </ng-template>
 
-<ng-container *ngTemplateOutlet="itemsGrid; context: { title: 'COLECCIONES DESTACADAS', items: coleccionesDestacadas, column: false, isSingleRow: true }"></ng-container>
-<ng-container *ngTemplateOutlet="itemsGrid; context: { title: 'UNIDADES ACADÉMICAS', items: unidadesAcademicas, column: true, isSingleRow: false }"></ng-container>
+<ng-container *ngTemplateOutlet="itemsGrid; context: { title: 'COLECCIONES DESTACADAS', items: coleccionesDestacadas, column: false }"></ng-container>
+<ng-container *ngTemplateOutlet="itemsGrid; context: { title: 'UNIDADES ACADÉMICAS' }"></ng-container>
+<ng-container *ngTemplateOutlet="itemsGrid; context: { subtitle: 'FACULTADES', items: facultadesComunidades, column: true }"></ng-container>
+<ng-container *ngTemplateOutlet="itemsGrid; context: { subtitle: 'PREGRADO', items: pregradoComunidades, column: true }"></ng-container>
+<ng-container *ngTemplateOutlet="itemsGrid; context: { subtitle: 'PRESIDENCIA', items: presidenciaComunidades, column: true }"></ng-container>
 
-<ng-template #itemsGrid let-title="title" let-items="items" let-column="column" let-isSingleRow="isSingleRow">
+<ng-template #itemsGrid let-title="title" let-subtitle="subtitle" let-items="items" let-column="column">
   <div class="section-destacados">
-    <h2 class="section-title">{{title}}</h2>
-    <div class="section-grid container" [ngClass]="{'d-inline d-sm-flex': column}">
-      <div *ngFor="let item of items" class="section-item" [ngClass]="isSingleRow ? 'single-row' : 'multi-row'">
+    <h2 *ngIf="title" class="section-title">{{title}}</h2>
+    <h5 *ngIf="subtitle" class="section-subtitle">{{subtitle}}</h5>
+    <div *ngIf="items" class="section-grid container" [ngClass]="{'d-inline d-sm-flex': column}">
+      <div *ngFor="let item of items" class="section-item">
         <a [href]="item.href">
           <div class="img-container">
             <img [src]="item.img" [alt]="item.title">

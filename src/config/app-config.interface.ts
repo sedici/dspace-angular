@@ -66,7 +66,9 @@ interface AppConfig extends Config {
   search: SearchConfig;
   notifyMetrics: AdminNotifyMetricsRow[];
   highlightCollections: { id: string, type: string }[];
-  academicUnits: { id: string, type: string }[];
+  facultades: { id: string, type: string }[];
+  pregrado: { id: string, type: string }[];
+  presidencia: { id: string, type: string }[];
   liveRegion: LiveRegionConfig;
 }
 

@@ -59,7 +59,9 @@ interface ExploracionDestacada {
 export class HomePageComponent extends BaseComponent {
 
   highlightCollections: any;
-  academicUnits: any;
+  facultades: any;
+  pregrado: any;
+  presidencia: any;
   collectionName: String;
   logo: Bitstream;
   logoRD$: Observable<RemoteData<Bitstream>>;
@@ -120,16 +122,22 @@ export class HomePageComponent extends BaseComponent {
   ) {
     super(appConfig, route);
     this.highlightCollections = this.appConfig.highlightCollections;
-    this.academicUnits = this.appConfig.academicUnits;
+    this.facultades = this.appConfig.facultades;
+    this.pregrado = this.appConfig.pregrado;
+    this.presidencia = this.appConfig.presidencia;
   }
 
   coleccionesDestacadas: SliderItem[] = [];
-  unidadesAcademicas: SliderItem[] = [];
+  facultadesComunidades: SliderItem[] = [];
+  pregradoComunidades: SliderItem[] = [];
+  presidenciaComunidades: SliderItem[] = [];
 
   ngOnInit(): void {
     super.ngOnInit();
     this.coleccionesDestacadas = this.getComColInfo(this.highlightCollections);
-    this.unidadesAcademicas = this.getComColInfo(this.academicUnits);
+    this.facultadesComunidades = this.getComColInfo(this.facultades);
+    this.pregradoComunidades = this.getComColInfo(this.pregrado);
+    this.presidenciaComunidades = this.getComColInfo(this.presidencia);
   }
 
   getComColInfo(array): SliderItem[] {

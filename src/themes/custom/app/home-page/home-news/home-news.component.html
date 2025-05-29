@@ -30,7 +30,7 @@
           <div class="text-container">
             <a [routerLink]="item.href">
               <h4>{{item.title}}</h4>
-              <p>{{item.description}}</p>
+              <p *ngIf="(isMobile$ | async) !== true">{{item.description}}</p>
             </a>
           </div>
         </div>
