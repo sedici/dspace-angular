@@ -594,47 +594,6 @@ export class DefaultAppConfig implements AppConfig {
     },
   ];
 
-  highlightCollections = [
-    { id: "d494cc0f-2737-4a7a-9daf-e22fc8e58a84", type: "com" },
-    { id: "c6d44f7c-6e4c-4ce1-8029-9eb58daac46b", type: "com" },
-    { id: "8d9e517a-3498-483b-87e0-92e4af5201ee", type: "com" },
-    { id: "d33185b4-b78d-4276-a8c9-0e9c71e49961", type: "com" },
-    { id: "e6f02d59-cd20-4681-96b3-780ba7e5cdcd", type: "com" },
-  ]
-
-  facultades = [
-    { id: "a32f8515-54e3-4a2f-a2d1-f75dc259b23d", type: "com" },
-    { id: "68849da0-46cf-48ad-a0de-c0e3164fc586", type: "com" },
-    { id: "dc151b51-f2b8-4767-8188-09787fe59346", type: "com" },
-    { id: "82114471-eeb7-47ab-87da-921fa15a797e", type: "com" },
-    { id: "c512bd95-c05d-4e16-954b-d3619dc7822e", type: "com" },
-    { id: "52a57dcf-13b0-467a-b00b-e7cc94365e4b", type: "com" },
-    { id: "79c15c83-fec3-46cb-9792-c66a7d7296f7", type: "com" },
-    { id: "0377bf31-92cb-439a-89e2-389639989fc4", type: "com" },
-    { id: "67455ba8-5fbd-4c3e-a329-76255c2e0d4c", type: "com" },
-    { id: "db17bbad-ffbc-4492-ba21-7832dbb45d35", type: "com" },
-    { id: "3c55d7ed-6902-44bf-aafb-418d233b5d17", type: "com" },
-    { id: "94f67989-b923-460b-8664-bb1208f5ca95", type: "com" },
-    { id: "05ca356e-a34e-4dd5-9830-302019b29b3f", type: "com" },
-    { id: "a2a1493a-fe76-47fb-8d92-069949d0258c", type: "com" },
-    { id: "0e5298c0-fcbb-4ea0-a48f-09dc865dad83", type: "com" },
-    { id: "2efe306e-9fb0-4ffd-a41d-df87dce71b17", type: "com" },
-    { id: "7d677ad9-01df-4eab-93e5-f90422607258", type: "com" },
-  ]
-
-  pregrado = [
-    { id: "f787acf7-98e1-4bb2-bf59-1a61cafaf1c9", type: "col" },
-    { id: "aa49ba56-f4f1-486a-9f4e-6f164fd15d54", type: "col" },
-    { id: "82e93b11-7bc9-4941-8258-5e6a11c08cb4", type: "col" },
-    { id: "eb151823-d6b6-4d23-8c07-29b60e1868c0", type: "col" },
-    { id: "90eb1dd0-fc7b-4c9b-805b-a100a57c3fa7", type: "col" },
-    { id: "ffe0e77e-4315-4940-8f0d-324b05230192", type: "col" },
-  ]
-
-  presidencia = [
-    { id: "1602087a-09cc-41ae-87d3-d1028385e198", type: "col" },
-  ]
-
   // Live Region configuration, used by the LiveRegionService
   liveRegion: LiveRegionConfig = {
     messageTimeOutDurationMs: 30000,
