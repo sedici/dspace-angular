@@ -3,55 +3,21 @@
 
   div.background-image-container {
     position: relative;
+    background-image: 
+      linear-gradient(135deg,
+        rgba(220,235,255,1) 0%,
+        rgba(210,230,255,1) 5%,
+        rgba(150,200,255,1) 15%,
+        rgba(70,150,255,1) 40%,
+        rgba(0,120,255,1) 60%,
+        rgba(0,120,255,0.8) 80%
+      );
 
-    .background-image > img {
-      background-color: var(--bs-info);
-      position: absolute;
-      z-index: -1;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: top;
-    }
-
-    .container {
-      position: relative;
-
-      &:before, &:after {
-        content: '';
-        display: block;
-        width: var(--ds-banner-background-gradient-width);
-        height: 100%;
-        top: 0;
-        position: absolute;
-      }
-
-      &:before {
-        background: linear-gradient(to left, var(--ds-banner-text-background), transparent);
-        left: calc(-1 * var(--ds-banner-background-gradient-width));
-
-      }
-
-      &:after {
-        background: linear-gradient(to right, var(--ds-banner-text-background), transparent);
-        right: calc(-1 * var(--ds-banner-background-gradient-width));
-      }
-
-      background-color: var(--ds-banner-text-background);
-    }
-
-
-    small.credits {
-      a {
-        color: inherit;
-      }
-
-      opacity: 0.3;
-      position: absolute;
-      right: var(--bs-spacer);
-      bottom: 0;
+    @media (max-width: 768px) {
+      background-image: 
+        linear-gradient(to bottom, rgba(0, 123, 255, 0) 80%, white 100%),
+        linear-gradient(-25deg, white, #007BFF);
+      background-blend-mode: normal;
     }
   }
 
