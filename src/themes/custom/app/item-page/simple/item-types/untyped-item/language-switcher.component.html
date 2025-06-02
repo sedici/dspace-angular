@@ -1,0 +1,16 @@
+<div class="language-switcher-wrapper">
+  <div class="language-switcher-container">
+    <ds-truncatable [id]="item?.id + 'abstract'">
+      <ds-truncatable-part [id]="item?.id + 'abstract'" [minLines]="6">
+        <p class="abstract-text" [innerHTML]="getAbstract()"></p>
+      </ds-truncatable-part>
+    </ds-truncatable>
+  </div>
+  <div *ngIf="availableLanguages.length > 1" class="language-sidebar">
+    <button *ngFor="let language of availableLanguages" 
+            (click)="changeLanguage(language)" 
+            [class.active]="language === selectedLanguage">
+      {{ language.toUpperCase() }}
+    </button>
+  </div>
+</div>

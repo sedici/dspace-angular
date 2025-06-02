@@ -1,14 +1,41 @@
 :host {
+
+  #main-site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1025;
+    border-bottom: 3px var(--sedici-color) solid;
+
+    @media (max-width: 767px) {
+      border-bottom: 0px;
+      padding: 10px;
+    }
+  }
+
+  .color-header {
+    background-color: var(--sedici-color);
+
+    .toggler-icon {
+      color: white;
+    }
+  }
+
+  img#header-logo {
+    height: 100vh;
+    max-height: var(--ds-header-logo-height);
+  }
+  
   header {
     background-color: var(--ds-header-bg);
   }
 
-  .navbar-brand img {
-    max-height: var(--ds-header-logo-height);
-    //max-width: 100%;
+  .navbar-brand {
+    margin-right: 0px;
   }
 
-  .navbar-toggler {
+  #navbar-toggler {
     border: none;
     color: var(--ds-header-icon-color);
 
@@ -31,16 +58,38 @@
     margin-right: 20px;
   }
 
-  .botones-header{
-    //padding-right: 13%;
+  .left-container {
     display: flex;
-    flex-direction: row;
+    flex-basis: 100%;
+  }
 
-    .btn{
-      white-space: nowrap; /* Asegura que el texto no se envuelva */
-      width: auto; /* Asegura que el botón se ajuste al contenido */
+  .right-container-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    padding: 0 .5rem;
+    flex-basis: 100%;
+
+    ds-search-navbar {
+      width: 100%;
     }
   }
 
+  .right-container {
+    display: flex;
+    justify-content: end;
+    align-items: center;
 
+    ds-search-navbar {
+      width: 450px;
+    }
+  }
+
+  ::ng-deep ds-navbar .container{
+    max-width: 100%;
+  }
+
+  ::ng-deep ds-navbar ds-lang-switch .dropdown-item{
+    padding: 0.25rem;
+  }
 }

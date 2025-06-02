@@ -1,0 +1,9 @@
+<ds-truncatable [id]="label">
+  <sedici-truncatable-part *ngIf="length > 0"
+    [id]="label"
+    [minLines]="minLines"
+    [showCollapseButton]="false">
+    <h6 class="label">{{ label | translate }}</h6>
+    <span [innerHTML]="metadataTextValue"></span>
+  </sedici-truncatable-part>
+</ds-truncatable>

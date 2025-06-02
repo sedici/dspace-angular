@@ -1,0 +1,37 @@
+<div class="tab-container">
+  <div class="tab-header">
+    <ng-container *ngFor="let tab of tabs; let i = index">
+      <div 
+        class="tab" 
+        [class.active]="selectedTabIndex === i"
+        (click)="selectTab(i)"
+        *ngIf="tab.visible">
+        {{ tab.label | translate }}
+      </div>
+    </ng-container>
+  </div>
+  <div class="tab-content">
+    <ng-container [ngSwitch]="selectedTabIndex">
+      <div *ngSwitchCase="0">
+        <content-files [object]="object"></content-files>
+      </div>
+      <div *ngSwitchCase="1">
+        <sedici-license [object]="object"></sedici-license>
+      </div>
+      <div *ngSwitchCase="2">
+        <div class="row">
+          <div class="col-lg-6 col-md-12">            
+            <img src="assets/images/LAREFERENCIA2.png" alt="LA REFERENCIA" class="reference-image">
+          </div>
+        </div>
+      </div>
+      <div *ngSwitchCase="3">
+        <full-item [object]="object"></full-item>
+      </div>
+      <div *ngSwitchDefault>
+        Selecciona una solapa.
+      </div>
+    </ng-container>
+  </div>
+</div>
+  

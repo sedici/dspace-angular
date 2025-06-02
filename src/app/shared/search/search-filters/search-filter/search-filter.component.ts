@@ -150,6 +150,9 @@ export class SearchFilterComponent implements OnInit, OnChanges, OnDestroy {
         this.isVisibilityComputed.emit(true);
       }),
     );
+    if(this.filter.name === 'itemtype') {
+      this.filterService.expand(this.filter.name);
+    }
   }
 
   ngOnChanges(): void {

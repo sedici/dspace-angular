@@ -1,0 +1,41 @@
+<div class="modal-header">
+  <h4 class="modal-title">Compartir</h4>
+  <button type="button" class="close" aria-label="Close" (click)="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="share-modal-content">
+    <!-- Barra de enlace para copiar -->
+    <div class="link-bar">
+      <input type="text" class="share-link" [value]="link" readonly #elementContentToCopy>
+      <button id="copyButton" (click)="copyToClipboard(elementContentToCopy)">Copiar</button>
+      <span id="copySuccessMessage" class="copy-success-message" *ngIf="copySuccess">✓</span>
+    </div>
+
+    <!-- Botones de redes sociales con iconos de Font Awesome -->
+    <div class="social-buttons">
+      <!-- Botón de ResearchGate -->
+      <a class="social-icon-button" [href]="researchGateLink" title="ResearchGate" target="_blank">  
+        <i class="fa-brands fa-researchgate icon-size"></i>
+      </a>
+      <!-- Botón de Mendeley -->
+      <a class="social-icon-button" [href]="mendeleyLink" title="Mendeley" target="_blank">  
+        <i class="fa-brands fa-mendeley icon-size"></i>
+      </a>
+       <!-- Botón de WhatsApp -->
+      <a class="social-icon-button" [href]="whatsappLink" title="WhatsApp" target="_blank">  
+        <i class="fa-brands fa-whatsapp icon-size"></i>
+      </a>
+      <!-- Botón de LinkedIn -->
+      <a class="social-icon-button" [href]="linkedinLink" title="LinkedIn" target="_blank">
+        <i class="fa-brands fa-linkedin icon-size"></i>
+      </a>
+      <!-- Botón de X (Twitter) -->
+      <a class="social-icon-button" [href]="xLink" title="X" target="_blank">
+        <i class="fa-brands fa-x-twitter icon-size"></i>
+      </a>
+    </div>
+  </div>
+</div>
+

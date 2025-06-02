@@ -17,13 +17,14 @@ import { LiveRegionComponent } from '../../../../app/shared/live-region/live-reg
 import { ThemedLoadingComponent } from '../../../../app/shared/loading/themed-loading.component';
 import { NotificationsBoardComponent } from '../../../../app/shared/notifications/notifications-board/notifications-board.component';
 import { SystemWideAlertBannerComponent } from '../../../../app/system-wide-alert/alert-banner/system-wide-alert-banner.component';
+import { BottomNavigationBarComponent } from '../bottom-navigation-bar/bottom-navigation-bar';
 
 @Component({
   selector: 'ds-themed-root',
   // styleUrls: ['./root.component.scss'],
   styleUrls: ['../../../../app/root/root.component.scss'],
-  // templateUrl: './root.component.html',
-  templateUrl: '../../../../app/root/root.component.html',
+  templateUrl: './root.component.html',
+  // templateUrl: '../../../../app/root/root.component.html',
   animations: [slideSidebarPadding],
   standalone: true,
   imports: [
@@ -40,6 +41,7 @@ import { SystemWideAlertBannerComponent } from '../../../../app/system-wide-aler
     NotificationsBoardComponent,
     AsyncPipe,
     LiveRegionComponent,
+    BottomNavigationBarComponent,
   ],
 })
 export class RootComponent extends BaseComponent {

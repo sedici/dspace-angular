@@ -17,56 +17,61 @@
     <ds-view-tracker [object]="site"></ds-view-tracker>
   </ng-container>
 
-  <ds-home-slider
-    [title]="'Produccion de la UNLP'"
-    [slide]="false"
-    [items]="colecciones">
-  </ds-home-slider>
-
-  <ds-home-slider
-    *ngIf="aux == numCollection"
-    [title]="'Colecciones destacadas'"
-    [slide]="true"
-    [nItems]="1"
-    [prueba]="true"
-    [sliderItems]="carrousel2">
-  </ds-home-slider>
-
-  <!--<ds-home-slider
-    [title]="'Colecciones destacadas'"
-    [slide]="true"
-    [nItems]="1"
-    [prueba]="false"
-    [items]="carrousel">
-  </ds-home-slider>-->
-
-  <!--<ds-recent-item-list *ngIf="recentSubmissionspageSize>0"></ds-recent-item-list>-->
+  <div class="destacado">
+    <div class="explorar-title-container">
+      <h2 class="explorar-title">Explorar</h2>
+      <p class="explorar-subtitle">PRODUCCIÓN DE LA <b>UNLP</b></p>
+    </div>
+    <div class="row">
+      <div *ngFor="let item of exploraciones" class="col-6 col-md-3 mb-4">
+        <a [routerLink]="item.href" [queryParams]="item.queryParams || {}">
+          <div class="collection-card">
+            <div class="icon-container">
+              <img [src]="item.img" alt="{{item.title}}">
+            </div>
+            <div class="text-container">
+              <h4>{{item.title}}</h4>
+              <p>{{item.description}}</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
 </ng-template>
 
-<div class="help text-center d-flex justify-content-around align-items-center">
-      <div class="p-2 bd-highlight">
-        <i class="fa-solid fa-circle-info"></i>
-          <h5>Ayuda para investigadores</h5>
-      </div>
-      <div class="p-2 bd-highlight">
-          <i class="fa-solid fa-scale-balanced"></i>
-          <h5>Obligación de depósito en el repositorio</h5>
-      </div>
-      <div class="p-2 bd-highlight">
-        <i class="fa-solid fa-chart-simple"></i>
-          <h5>Estadísticas de crecimiento</h5>
-      </div>
+<comcol-grid></comcol-grid>
+
+<div class="help text-center d-flex flex-column flex-md-row justify-content-around align-items-center">
+  <div class="p-2 bd-highlight">
+    <i class="fa-solid fa-circle-info"></i>
+    <h5>Ayuda para investigadores</h5>
+  </div>
+  <div class="p-2 bd-highlight">
+    <i class="fa-solid fa-scale-balanced"></i>
+    <h5>Obligación de depósito en el repositorio</h5>
+  </div>
+  <div class="p-2 bd-highlight">
+    <i class="fa-solid fa-chart-simple"></i>
+    <h5>Estadísticas de crecimiento</h5>
+  </div>
 </div>
 
-<div class="aliados-section align-items-center">
+<div class="aliados-section align-items-center d-none d-md-flex">
   <div class="aliados-title d-flex align-items-center justify-content-end">
     <div>
       <h2>Aliados</h2>
     </div>
   </div>
   <div class="aliados-logos">
-    <img src="ruta/a/snr-logo.png" alt="SNRD Logo">
-    <img src="ruta/a/la-referencia-logo.png" alt="La Referencia Logo">
-    <img src="ruta/a/coar-logo.png" alt="COAR Logo">
+    <a href="https://repositoriosdigitales.mincyt.gob.ar/vufind/" target="_blank">
+      <img src="assets/custom/images/SNRD.png" alt="SNRD Logo">
+    </a>
+    <a href="https://www.lareferencia.info/es/" target="_blank">
+      <img src="assets/custom/images/La referencia.png" alt="La Referencia Logo">
+    </a>
+    <a href="https://coar-repositories.org/" target="_blank">
+      <img src="assets/custom/images/COAR.png" alt="COAR Logo">
+    </a>
   </div>
 </div>

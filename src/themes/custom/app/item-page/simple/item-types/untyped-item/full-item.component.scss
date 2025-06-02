@@ -1,0 +1,16 @@
+tbody {
+  font-size: 1.25em;
+  font-weight: var(--font-weight-regular);
+}
+
+.label {
+  white-space: nowrap;
+}
+
+ds-item-page-collections {
+  font-size: 1.25em;
+
+  ::ng-deep h6 {
+    font-size: 1.2em;
+  }
+}

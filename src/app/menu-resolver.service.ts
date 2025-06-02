@@ -99,50 +99,112 @@ export class MenuResolverService  {
   createPublicMenu$(): Observable<boolean> {
     const menuList: any[] = [
       /* Communities & Collections tree */
-      {
-        id: `browse_global_communities_and_collections`,
+      // {
+      //   id: `browse_global_communities_and_collections`,
+      //   active: false,
+      //   visible: true,
+      //   index: 0,
+      //   model: {
+      //     type: MenuItemType.LINK,
+      //     text: `menu.section.browse_global_communities_and_collections`,
+      //     link: `/community-list`,
+      //   } as LinkMenuItemModel,
+      // },
+    ];
+
+    const itemsInstitucional = [
+      { id: '¿Qué es SEDICI?', texto: '¿Qué es SEDICI?', ruta: '¿Qué es SEDICI?' },
+      { id: 'Políticas del repositorio', texto: 'Políticas del repositorio', ruta: 'Políticas del repositorio' },
+      { id: 'Links', texto: 'Links', ruta: 'Links' },
+      { id: 'Staff', texto: 'Staff', ruta: 'Staff' },
+      { id: '¿Cómo llegar?', texto: '¿Cómo llegar?', ruta: '¿Cómo llegar?' },
+    ];
+    itemsInstitucional.forEach(item => {
+      menuList.push({
+        id: item.id,
+        parentID: 'Institucional',
         active: false,
         visible: true,
-        index: 0,
         model: {
           type: MenuItemType.LINK,
-          text: `menu.section.browse_global_communities_and_collections`,
-          link: `/community-list`,
+          text: item.texto,
+          link: `${item.ruta}`,
         } as LinkMenuItemModel,
-      },
+      });
+    });
+    menuList.push({
+      id: 'Institucional',
+      active: false,
+      visible: true,
+      index: 3,
+      model: {
+        type: MenuItemType.TEXT,
+        text: 'Institucional',
+      } as TextMenuItemModel,
+    });
+
+    const itemsPreguntasFrecuentes = [
+      { id: '¿Cómo agregar trabajos?', texto: '¿Cómo agregar trabajos?', ruta: '¿Cómo agregar trabajos?' },
+      { id: 'Información para tesistas', texto: 'Información para tesistas', ruta: 'Información para tesistas' },
+      { id: 'Revistas de Acceso Abierto', texto: 'Revistas de Acceso Abierto', ruta: 'Revistas de Acceso Abierto' },
+      { id: 'Más preguntas frecuentes', texto: 'Más preguntas frecuentes', ruta: 'Más preguntas frecuentes' },
     ];
+    itemsPreguntasFrecuentes.forEach(item => {
+      menuList.push({
+        id: item.id,
+        parentID: 'PreguntasFrecuentes',
+        active: false,
+        visible: true,
+        model: {
+          type: MenuItemType.LINK,
+          text: item.texto,
+          link: `${item.ruta}`,
+        } as LinkMenuItemModel,
+      });
+    });
+    menuList.push({
+      id: 'PreguntasFrecuentes',
+      active: false,
+      visible: true,
+      index: 4,
+      model: {
+        type: MenuItemType.TEXT,
+        text: 'Preguntas frecuentes',
+      } as TextMenuItemModel,
+    });
+
     // Read the different Browse-By types from config and add them to the browse menu
     this.browseService.getBrowseDefinitions()
       .pipe(getFirstCompletedRemoteData<PaginatedList<BrowseDefinition>>())
       .subscribe((browseDefListRD: RemoteData<PaginatedList<BrowseDefinition>>) => {
-        if (browseDefListRD.hasSucceeded) {
-          browseDefListRD.payload.page.forEach((browseDef: BrowseDefinition) => {
-            menuList.push({
-              id: `browse_global_by_${browseDef.id}`,
-              parentID: 'browse_global',
-              active: false,
-              visible: true,
-              model: {
-                type: MenuItemType.LINK,
-                text: `menu.section.browse_global_by_${browseDef.id}`,
-                link: `/browse/${browseDef.id}`,
-              } as LinkMenuItemModel,
-            });
-          });
-          menuList.push(
-            /* Browse */
-            {
-              id: 'browse_global',
-              active: false,
-              visible: true,
-              index: 1,
-              model: {
-                type: MenuItemType.TEXT,
-                text: 'menu.section.browse_global',
-              } as TextMenuItemModel,
-            },
-          );
-        }
+        // if (browseDefListRD.hasSucceeded) {
+        //   browseDefListRD.payload.page.forEach((browseDef: BrowseDefinition) => {
+        //     menuList.push({
+        //       id: `browse_global_by_${browseDef.id}`,
+        //       parentID: 'browse_global',
+        //       active: false,
+        //       visible: true,
+        //       model: {
+        //         type: MenuItemType.LINK,
+        //         text: `menu.section.browse_global_by_${browseDef.id}`,
+        //         link: `/browse/${browseDef.id}`,
+        //       } as LinkMenuItemModel,
+        //     });
+        //   });
+        //   menuList.push(
+        //     /* Browse */
+        //     {
+        //       id: 'browse_global',
+        //       active: false,
+        //       visible: true,
+        //       index: 4,
+        //       model: {
+        //         type: MenuItemType.TEXT,
+        //         text: 'menu.section.browse_global',
+        //       } as TextMenuItemModel,
+        //     },
+        //   );
+        // }
         menuList.forEach((menuSection) => this.menuService.addSection(MenuID.PUBLIC, Object.assign(menuSection, {
           shouldPersistOnRouteChange: true,
         })));

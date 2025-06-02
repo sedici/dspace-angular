@@ -1,0 +1,63 @@
+.badge-group {
+  display: inline-flex;
+  margin-right: 0.5rem;
+  
+  .badge {
+    font-size: 1.1667em;
+    font-weight: var(--font-weight-regular);
+    border-radius: 0px;
+    padding: 0;
+  }
+  
+  .badge-label {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    color: white;
+    background-color: #706f6f;
+    border: 1px solid #706f6f;
+    padding: 0.35em 0.5em;
+  }
+  
+  .badge-content {
+    display: flex;
+    align-items: center;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background-color: white;
+    color: #706f6f;
+    
+    a.no-format {
+      border: 1px solid #dee2e6;
+      padding: 0.35em;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .plainText {
+      border: 1px solid #dee2e6;
+      padding: 0.35em;
+    }
+  }
+}
+
+.copy-button-wrapper {
+  display: inline-block;
+  background-color: #f6f6f6;
+  border: 1px solid #b3b1b4;
+  padding: .35em;
+  line-height: 1;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.copy-button-wrapper:hover {
+  background-color: #e9ecef;
+}
+
+.copyButton {
+  color: #b3b1b4;
+  font-size: 0.85em;
+  background: none;
+  border: none;
+  padding: 0;
+}

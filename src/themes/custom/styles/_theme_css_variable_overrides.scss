@@ -5,4 +5,14 @@
   //--ds-header-logo-height-xs: 50px;
   //--ds-header-icon-color: #{$link-color};
   //--ds-header-icon-color-hover: #{darken($link-color, 15%)};
+  --sedici-color: #{$sedici-color} !important;
+
+  --ds-breadcrumb-bg: #{$white} !important;
+  --ds-breadcrumb-max-length: 500px;
+  --ds-breadcrumb-max-length-mobile: 300px;
+
+  --font-weight-thin: #{$font-weight-thin} !important;
+  --font-weight-light: #{$font-weight-light} !important;
+  --font-weight-regular: #{$font-weight-regular} !important;
+  --font-weight-bold: #{$font-weight-bold} !important;
 }

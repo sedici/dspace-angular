@@ -62,7 +62,7 @@ export class AccessStatusBadgeComponent implements OnDestroy, OnInit {
    *
    * @param {AccessStatusDataService} accessStatusDataService
    */
-  constructor(private accessStatusDataService: AccessStatusDataService) { }
+  constructor(protected accessStatusDataService: AccessStatusDataService) { }
 
   ngOnInit(): void {
     this.showAccessStatus = environment.item.showAccessStatuses;
