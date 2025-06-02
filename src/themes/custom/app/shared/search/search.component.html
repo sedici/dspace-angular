@@ -88,8 +88,7 @@
 </ng-template>
 
 <ng-template #searchForm>
-    <!-- COMENTO LA BARRA DE BÚSQUEDA, ASÍ SOLAMENTE APARECE LA DEL HEADER -->
-    <!-- <ds-search-form id="search-form"
+    <ds-search-form id="search-form"
                     [query]="(searchOptions$ | async)?.query"
                     [scope]="(searchOptions$ | async)?.scope"
                     [hideScopeInUrl]="hideScopeInUrl"
@@ -97,7 +96,7 @@
                     [showScopeSelector]="showScopeSelector"
                     [inPlaceSearch]="inPlaceSearch"
                     [searchPlaceholder]="searchFormPlaceholder | translate">
-    </ds-search-form> -->
+    </ds-search-form>
     <div class="row mb-3 mb-md-1">
         <div class="labels col-12">
             <ds-search-labels [inPlaceSearch]="inPlaceSearch">
