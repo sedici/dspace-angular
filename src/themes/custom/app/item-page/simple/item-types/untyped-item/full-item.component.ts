@@ -83,15 +83,6 @@ export class FullItemComponent {
         this.metadataRows.push({ label, values });
       }
     });
-    
-    // Agregar identificadores especiales como otra entrada
-    // const otherIdentifiers = this.getOtherIdentifiers();
-    // if (otherIdentifiers.length > 0) {
-    //   this.metadataRows.push({ 
-    //     label: 'Identificadores', 
-    //     values: otherIdentifiers 
-    //   });
-    // }
   }
 
   getDateValues(fieldName: string): string[] {

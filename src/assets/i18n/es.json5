@@ -6524,7 +6524,8 @@
   "search.breadcrumbs": "Buscar",
 
   // "search.search-form.placeholder": "Search the repository ...",
-  "search.search-form.placeholder": "Buscar en el repositorio ...",
+  // "search.search-form.placeholder": "Buscar en el repositorio ...",
+  "search.search-form.placeholder": "Buscar en la Comunidad/Colección ...",
 
   // "search.filters.applied.f.keywords": "Keyword",
   "search.filters.applied.f.keywords": "Palabra clave",
