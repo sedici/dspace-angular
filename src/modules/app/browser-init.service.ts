@@ -36,6 +36,7 @@ import { RequestService } from '../../app/core/data/request.service';
 import { RootDataService } from '../../app/core/data/root-data.service';
 import { LocaleService } from '../../app/core/locale/locale.service';
 import { HeadTagService } from '../../app/core/metadata/head-tag.service';
+import { HeadTagSEDICIService } from 'src/app/core/metadata/head-tag-sedici.service';
 import { HALEndpointService } from '../../app/core/shared/hal-endpoint.service';
 import { CorrelationIdService } from '../../app/correlation-id/correlation-id.service';
 import { InitService } from '../../app/init.service';
@@ -76,7 +77,7 @@ export class BrowserInitService extends InitService {
     protected localeService: LocaleService,
     protected angulartics2DSpace: Angulartics2DSpace,
     protected googleAnalyticsService: GoogleAnalyticsService,
-    protected headTagService: HeadTagService,
+    protected headTagSEDICIService: HeadTagSEDICIService,
     protected breadcrumbsService: BreadcrumbsService,
     protected klaroService: KlaroService,
     protected authService: AuthService,
@@ -95,7 +96,7 @@ export class BrowserInitService extends InitService {
       translate,
       localeService,
       angulartics2DSpace,
-      headTagService,
+      headTagSEDICIService,
       breadcrumbsService,
       themeService,
       menuService,
