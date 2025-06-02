@@ -41,8 +41,6 @@ import { Router } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SediciShareButtonsComponent } from '../../field-components/share-buttons/sedici-share-buttons.component';
 
-import { LrwLAReferenciaComponent } from '../../field-components/usage-stats copy/lrw-lareferencia.component';
-
 import { ExpandableMetadataComponent } from './expandable-metadata';
 /**
  * Component that represents an untyped Item page
@@ -78,7 +76,6 @@ import { ExpandableMetadataComponent } from './expandable-metadata';
     SediciCitationComponent,
     NgbModule,
     SediciShareButtonsComponent,
-    LrwLAReferenciaComponent,
     ExpandableMetadataComponent,
   ],
 })
