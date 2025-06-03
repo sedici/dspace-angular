@@ -23,6 +23,7 @@ import { DSONameService } from '../breadcrumbs/dso-name.service';
 import { CoreState } from '../core-state.model';
 import { BundleDataService } from '../data/bundle-data.service';
 import { AuthorizationDataService } from '../data/feature-authorization/authorization-data.service';
+import { FindListOptions } from '../data/find-list-options.model';
 import { RootDataService } from '../data/root-data.service';
 import { HardRedirectService } from '../services/hard-redirect.service';
 import { HeadTagService } from './head-tag.service';
@@ -113,7 +114,7 @@ export class HeadTagSEDICIService extends HeadTagService {
 
     /**
      * Consideraciones:
-      this.setCitationPdfUrlTag(); // PARCHE PDF
+      this.setCitationPdfUrlTag(); // PARCHE PDF (por ahora se utiliza el original)
 
       this.setTitleTag(); y this.setDescriptionTag(); // NO DEBERÍAN LLAMARSE
      */
@@ -204,6 +205,7 @@ export class HeadTagSEDICIService extends HeadTagService {
         'ORIGINAL',
         true,
         true,
+        new FindListOptions(),
         followLink('primaryBitstream'),
         followLink('bitstreams', {
           findListOptions: {
