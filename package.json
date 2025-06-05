@@ -105,6 +105,7 @@
     "jszip": "^3.10.1",
     "jwt-decode": "^3.1.2",
     "klaro": "^0.7.18",
+    "lareferencia-widget-embed": "^1.1.5",
     "lodash": "^4.17.21",
     "lru-cache": "^7.14.1",
     "markdown-it": "^13.0.1",

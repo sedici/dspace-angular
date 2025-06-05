@@ -7337,6 +7337,13 @@ klona@^2.0.4:
   resolved "https://registry.yarnpkg.com/klona/-/klona-2.0.6.tgz#85bffbf819c03b2f53270412420a4555ef882e22"
   integrity sha512-dhG34DXATL5hSxJbIexCft8FChFXtmskoZYnoPWjXQuebWYCNkVeV3KkGegCK9CP1oswI/vQibS2GY7Em/sJJA==
 
+lareferencia-widget-embed@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/lareferencia-widget-embed/-/lareferencia-widget-embed-1.1.5.tgz#1d6cd8013399fa058059ff4e16aa91ea376da95d"
+  integrity sha512-Nqbe+5RQqbl/TsXv/RZsdTpMszPsfEDGHJcT3WePeWVwfE3efgnKPY6lyB+t47y4m5XKaeKAthbV9l7nDi3jVg==
+  dependencies:
+    tslib "^2.3.0"
+
 launch-editor@^2.6.0:
   version "2.9.1"
   resolved "https://registry.yarnpkg.com/launch-editor/-/launch-editor-2.9.1.tgz#253f173bd441e342d4344b4dae58291abb425047"

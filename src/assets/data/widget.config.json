@@ -1,0 +1,41 @@
+{
+  "lareferencia-widgets": {
+    "lrw": {
+      "active": true,
+      "widget_url": "https://cdn.jsdelivr.net/gh/lareferencia/lrw@2.1.4/dist/lrw.js",
+      "parameters": {
+        "widget_div_id": "usage-stats",
+        "identifier_meta_field": "citation_abstract_html_url",
+        "identifier_prefix": "oai:sedici.unlp.edu.ar:10915/",
+        "identifier_regex": "/handle/[0-9.]+/([0-9]+)/?",
+        "scope_labels": {
+          "N": "SNRD",
+          "R": "SEDICI"
+        },
+        "country": "AR",
+        "repository_source": "OPENDOAR::1329"
+        }
+    },
+     
+    "lrhw": {
+      "active": true,
+      "widget_url": "https://cdn.jsdelivr.net/gh/lareferencia/lrhw@1.0.8/dist/assets/chunks/historic-widget.js",
+      "parameters": {
+        "widget_div_id": "lrhw-widget",
+        "repositories_list": [
+          {
+            "label": "Nombre del repositorio",
+            "value": "source id"
+          }
+        ],
+        "default_repository": {
+          "label": "Nombre del repositorio",
+          "value": "source id"
+        },
+       "scope_labels": {
+          "N": "Nombre Nodo Nacional"
+        }
+      }
+    }
+  }
+}

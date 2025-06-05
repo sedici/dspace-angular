@@ -5,6 +5,7 @@ import { FullItemComponent } from './full-item.component';
 import { ContentFilesComponent } from './content-files.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { SediciLicenseComponent } from './sedici-license.component';
+import { lareferenciaWidgetEmbedModule } from 'lareferencia-widget-embed';
 
 @Component({
   selector: 'ds-tabbed-content',
@@ -16,6 +17,7 @@ import { SediciLicenseComponent } from './sedici-license.component';
     ContentFilesComponent,
     SediciLicenseComponent,
     TranslateModule,
+    lareferenciaWidgetEmbedModule,
   ],
   templateUrl: './tabbed-content.component.html',
   styleUrls: ['./tabbed-content.component.scss']
