@@ -54,7 +54,7 @@ export class HomeNewsComponent extends BaseComponent {
     this.loadItemCount();
   }
 
-  totalItems = 0;
+  totalItems = '';
   
   loadItemCount(): void {
     const searchUrl = `${environment.rest.baseUrl}/api/discover/search/objects?size=1&page=0`;
