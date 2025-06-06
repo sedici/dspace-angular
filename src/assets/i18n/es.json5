@@ -1500,7 +1500,7 @@
   "browse.back.all-results": "Todos los resultados de la búsqueda",
 
   // "browse.comcol.by.author": "By Author",
-  "browse.comcol.by.author": "Por autor",
+  "browse.comcol.by.author": "Por autor/a",
 
   // "browse.comcol.by.dateissued": "By Issue Date",
   "browse.comcol.by.dateissued": "Por fecha de publicación",
@@ -1524,7 +1524,7 @@
   "browse.empty": "No hay ítems para mostrar.",
 
   // "browse.metadata.author": "Author",
-  "browse.metadata.author": "Autor",
+  "browse.metadata.author": "Autor/a",
 
   // "browse.metadata.dateissued": "Issue Date",
   "browse.metadata.dateissued": "Fecha de publicación",
@@ -1539,7 +1539,7 @@
   "browse.metadata.srsc": "Categoría de materia",
 
   // "browse.metadata.author.breadcrumbs": "Browse by Author",
-  "browse.metadata.author.breadcrumbs": "Buscar por autor",
+  "browse.metadata.author.breadcrumbs": "Buscar por autor/a",
 
   // "browse.metadata.dateissued.breadcrumbs": "Browse by Date",
   "browse.metadata.dateissued.breadcrumbs": "Examinar por fecha",
@@ -4340,7 +4340,7 @@
   "item.select.table.deselect": "Deseleccionar ítem",
 
   // "item.select.table.author": "Author",
-  "item.select.table.author": "Autor",
+  "item.select.table.author": "Autor/a",
 
   // "item.select.table.collection": "Collection",
   "item.select.table.collection": "Colección",
@@ -4877,7 +4877,7 @@
   "menu.section.browse_community": "Esta comunidad",
 
   // "menu.section.browse_community_by_author": "By Author",
-  "menu.section.browse_community_by_author": "Por autor",
+  "menu.section.browse_community_by_author": "Por autor/a",
 
   // "menu.section.browse_community_by_issue_date": "By Issue Date",
   "menu.section.browse_community_by_issue_date": "Por fecha de publicación",
@@ -4889,7 +4889,7 @@
   "menu.section.browse_global": "Todo DSpace",
 
   // "menu.section.browse_global_by_author": "By Author",
-  "menu.section.browse_global_by_author": "Por autor",
+  "menu.section.browse_global_by_author": "Por autor/a",
 
   // "menu.section.browse_global_by_dateissued": "By Issue Date",
   "menu.section.browse_global_by_dateissued": "Por fecha de publicación",
@@ -6537,7 +6537,7 @@
   "search.filters.applied.f.title": "Título",
 
   // "search.filters.applied.f.author": "Author",
-  "search.filters.applied.f.author": "Autor",
+  "search.filters.applied.f.author": "Autor/a",
 
   // "search.filters.applied.f.dateIssued.max": "End date",
   "search.filters.applied.f.dateIssued.max": "Fecha de finalización",
@@ -6621,13 +6621,13 @@
   "search.filters.filter.title.label": "Buscar por título",
 
   // "search.filters.filter.author.head": "Author",
-  "search.filters.filter.author.head": "Autor",
+  "search.filters.filter.author.head": "Autor/a",
 
   // "search.filters.filter.author.placeholder": "Author name",
-  "search.filters.filter.author.placeholder": "Nombre de autor",
+  "search.filters.filter.author.placeholder": "Nombre de autor/a",
 
   // "search.filters.filter.author.label": "Search author name",
-  "search.filters.filter.author.label": "Buscar por nombre de autor",
+  "search.filters.filter.author.label": "Buscar por nombre de autor/a",
 
   // "search.filters.filter.birthDate.head": "Birth Date",
   "search.filters.filter.birthDate.head": "Fecha de nacimiento",
