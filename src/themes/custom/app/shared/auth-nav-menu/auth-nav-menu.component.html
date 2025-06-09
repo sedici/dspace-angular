@@ -2,7 +2,7 @@
   <div *ngIf="(isAuthenticated | async) !== true && (showAuth | async)"
       class="nav-item"
       (click)="$event.stopPropagation();">
-    <div ngbDropdown #loginDrop="ngbDropdown" display="dynamic" placement="bottom-right" class="d-inline-block" @fadeInOut>
+    <div ngbDropdown #loginDrop="ngbDropdown" display="dynamic" placement="bottom-right" @fadeInOut>
       <a href="javascript:void(0);" class="dropdownLogin" [attr.aria-label]="'nav.login' |translate"
          (click)="$event.preventDefault()" [attr.data-test]="'login-menu' | dsBrowserOnly"
          role="menuitem"
@@ -19,7 +19,7 @@
     </div>
   </div>
   <div *ngIf="(isAuthenticated | async) && (showAuth | async)" class="nav-item">
-    <div ngbDropdown display="dynamic" placement="bottom-right" class="d-inline-block" @fadeInOut>
+    <div ngbDropdown display="dynamic" placement="bottom-right" @fadeInOut>
       <a href="javascript:void(0);"
          role="menuitem"
          [attr.aria-label]="'nav.user-profile-menu-and-logout' | translate"
