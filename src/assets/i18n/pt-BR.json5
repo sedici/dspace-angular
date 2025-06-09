@@ -5513,6 +5513,21 @@
   // "pagination.sort-direction": "Sort Options",
   "pagination.sort-direction": "Opções de Ordenação",
 
+  // "pagination.sort-field": "Sort by",
+  "pagination.sort-field": "Ordenar por",
+
+  // "pagination.sort-field_score": "Score",
+  "pagination.sort-field_score": "Pontuação",
+
+  // "pagination.sort-field_dc.title": "Title",
+  "pagination.sort-field_dc.title": "Título",
+
+  // "pagination.sort-field_dc.date.issued": "Date Issued",
+  "pagination.sort-field_dc.date.issued": "Data de Publicação",
+
+  // "pagination.sort-field_dc.date.accessioned": "Date Accessioned",
+  "pagination.sort-field_dc.date.accessioned": "Data de Disponibilização",
+
   // "person.listelement.badge": "Person",
   "person.listelement.badge": "Pessoa",
 

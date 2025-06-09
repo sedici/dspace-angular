@@ -3708,6 +3708,16 @@
 
   "pagination.sort-direction": "Sort Options",
 
+  "pagination.sort-field": "Sort by",
+
+  "pagination.sort-field_score": "Score",
+
+  "pagination.sort-field_dc.title": "Title",
+
+  "pagination.sort-field_dc.date.issued": "Date Issued",
+
+  "pagination.sort-field_dc.date.accessioned": "Date Accessioned",
+
   "person.listelement.badge": "Person",
 
   "person.listelement.no-title": "No name found",

@@ -34,6 +34,8 @@ import { ThemedSearchFiltersComponent } from '../search-filters/themed-search-fi
 import { ThemedSearchSettingsComponent } from '../search-settings/themed-search-settings.component';
 import { SearchConfigurationOption } from '../search-switch-configuration/search-configuration-option.model';
 import { SearchSwitchConfigurationComponent } from '../search-switch-configuration/search-switch-configuration.component';
+import { SidebarMode } from '../../sidebar/sidebar.actions';
+import { SidebarService } from '../../sidebar/sidebar.service';
 
 /**
  * This component renders a simple item page.
@@ -131,9 +133,12 @@ export class SearchSidebarComponent implements OnInit {
 
   showAdvancedSearch$: Observable<boolean>;
 
+  sidebarMode$: Observable<SidebarMode>;
+
   constructor(
     @Inject(APP_CONFIG) protected appConfig: AppConfig,
     protected searchConfigurationService: SearchConfigurationService,
+    private sidebarService: SidebarService
   ) {
   }
 
@@ -141,6 +146,8 @@ export class SearchSidebarComponent implements OnInit {
     this.showAdvancedSearch$ = this.searchConfigurationService.getConfigurationAdvancedSearchFilters(this.configuration, this.currentScope).pipe(
       map((advancedFilters: FilterConfig[]) => this.appConfig.search.advancedFilters.enabled && advancedFilters.length > 0),
     );
+    
+    this.sidebarMode$ = this.sidebarService.currentMode;
   }
 
 }

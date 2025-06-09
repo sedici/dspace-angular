@@ -99,6 +99,8 @@ export class PaginationComponent implements OnChanges, OnDestroy, OnInit {
    */
   @Input() showPaginator = true;
 
+  @Input() sortOptionsList: SortOptions[] = [];
+
   /**
    * The current pagination configuration
    */
@@ -221,6 +223,8 @@ export class PaginationComponent implements OnChanges, OnDestroy, OnInit {
 
   public showingDetails$: Observable<PaginationDetails>;
 
+  public uniqueSortFields: SortOptions[] = [];
+
   /**
    * Array to track all subscriptions and unsubscribe them onDestroy
    * @type {Array}
@@ -247,6 +251,11 @@ export class PaginationComponent implements OnChanges, OnDestroy, OnInit {
       }));
     this.checkConfig(this.paginationOptions);
     this.initializeConfig();
+
+    this.uniqueSortFields = this.sortOptionsList.filter(
+      (option, index, self) => 
+        self.findIndex(o => o.field === option.field) === index
+    );
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -329,6 +338,11 @@ export class PaginationComponent implements OnChanges, OnDestroy, OnInit {
    */
   public doSortDirectionChange(sortDirection: SortDirection) {
     this.updateParams({ page: 1, sortDirection: sortDirection });
+    this.emitPaginationChange();
+  }
+
+  public doSortFieldChange(field: string) {
+    this.updateParams({ page: 1, sortField: field });
     this.emitPaginationChange();
   }
 

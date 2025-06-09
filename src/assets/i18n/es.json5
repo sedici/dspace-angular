@@ -5572,6 +5572,21 @@
   // "pagination.sort-direction": "Sort Options",
   "pagination.sort-direction": "Opciones de ordenación",
 
+  // "pagination.sort-field": "Sort by",
+  "pagination.sort-field": "Ordenar por",
+
+  // "pagination.sort-field_score": "Score",
+  "pagination.sort-field_score": "Relevancia",
+
+  // "pagination.sort-field_dc.title": "Title",
+  "pagination.sort-field_dc.title": "Título",
+
+  // "pagination.sort-field_dc.date.issued": "Date Issued",
+  "pagination.sort-field_dc.date.issued": "Fecha de publicación",
+
+  // "pagination.sort-field_dc.date.accessioned": "Date Accessioned",
+  "pagination.sort-field_dc.date.accessioned": "Fecha de envío",
+
   // "person.listelement.badge": "Person",
   "person.listelement.badge": "Persona",
 
@@ -6993,13 +7008,13 @@
   "search.sidebar.filters.title": "Filtros",
 
   // "search.sidebar.open": "Search Tools",
-  "search.sidebar.open": "Herramientas de búsqueda",
+  "search.sidebar.open": "Filtrar resultados",
 
   // "search.sidebar.results": "results",
   "search.sidebar.results": "resultados",
 
   // "search.sidebar.settings.rpp": "Results per page",
-  "search.sidebar.settings.rpp": "resultados por página",
+  "search.sidebar.settings.rpp": "Resultados por página",
 
   // "search.sidebar.settings.sort-by": "Sort By",
   "search.sidebar.settings.sort-by": "Ordenar por",
