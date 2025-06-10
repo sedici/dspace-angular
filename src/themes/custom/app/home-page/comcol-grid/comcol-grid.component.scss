@@ -82,8 +82,13 @@
       align-items: center;
     }
 
+    .section-grid.single-row-scroll {
+      overflow-x: auto;
+      flex-wrap: nowrap;
+    }
+
     .single-row {
-      flex: 0 1 14%;
+      flex: 0 0 150px;
     }
 
     .multi-row {
