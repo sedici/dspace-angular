@@ -50,6 +50,16 @@
     }
   }
 
+  ::ng-deep ds-themed-search-form  {
+    .search-button i {
+      color: white !important;
+    }
+
+    .form-control {
+      background-color: rgba(255, 255, 255, 0.7) !important;
+    }
+  }
+
   .jumbotron {
     background-color: transparent;
     padding-bottom: 0px;
