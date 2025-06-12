@@ -17,8 +17,12 @@
   
       <ds-truncatable [id]="dso.id" *ngIf="object !== undefined && object !== null">
         <a *ngIf="linkType !== linkTypes.None" [target]="(linkType === linkTypes.ExternalLink) ? '_blank' : '_self'" [attr.rel]="(linkType === linkTypes.ExternalLink) ? 'noopener noreferrer' : null"
-           [routerLink]="[itemPageRoute]" class="lead item-list-title dont-break-out"
-           [innerHTML]="dsoTitle"></a>
+          [routerLink]="[itemPageRoute]" class="lead item-list-title dont-break-out">
+          <span [innerHTML]="dsoTitle"></span>
+          <span *ngIf="dso.firstMetadataValue('sedici.title.subtitle')" class="subtitle">
+            . {{ firstMetadataValue('sedici.title.subtitle') }}
+          </span>
+        </a>
         <span *ngIf="linkType === linkTypes.None" class="lead item-list-title dont-break-out"
               [innerHTML]="dsoTitle"></span>
         <span class="text-muted">
@@ -26,7 +30,7 @@
             <ng-container *ngIf="dso.firstMetadataValue('dc.publisher') || dso.firstMetadataValue('dc.date.issued')">
               (<span *ngIf="dso.firstMetadataValue('dc.publisher')" class="item-list-publisher" [innerHTML]="firstMetadataValue('dc.publisher')"></span>
               <span *ngIf="dso.firstMetadataValue('dc.publisher') && dso.firstMetadataValue('dc.date.issued')">, </span>
-            <span *ngIf="dso.firstMetadataValue('dc.date.issued')" class="item-list-date" [innerHTML]="firstMetadataValue('dc.date.issued')"></span>)
+            <span *ngIf="dso.firstMetadataValue('dc.date.issued')" class="item-list-date" [innerHTML]="firstMetadataValue('dc.date.issued').slice(0,4)"></span>)
             </ng-container>
             <span *ngIf="dso.allMetadata(['dc.contributor.author', 'dc.creator', 'dc.contributor.*', 'sedici.creator.person']).length > 0" class="item-list-authors">
               <span *ngFor="let author of allMetadataValues(['dc.contributor.author', 'dc.creator', 'dc.contributor.*', 'sedici.creator.person']); let last=last;">
