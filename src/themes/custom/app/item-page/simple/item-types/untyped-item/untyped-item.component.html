@@ -6,18 +6,28 @@
           <ds-sedici-context-badge *ngIf="showLabel" [object]="object" [showAccessStatus]="true"></ds-sedici-context-badge>
         </div>
         <h1 class="title-content mr-auto">
-          <ds-generic-item-page-field [item]="object"
-            [fields]="['dc.title']">
-          </ds-generic-item-page-field>
+          <span [innerHTML]="object.firstMetadataValue('dc.title')"></span><span *ngIf="object.firstMetadataValue('sedici.title.subtitle') && object.firstMetadataValue('dc.title.alternative')">.
+          {{ object.firstMetadataValue('sedici.title.subtitle') }}
+          </span>
         </h1>
       </div>
       <ds-dso-edit-menu class="edit-menu"></ds-dso-edit-menu>
     </div>
-    <div class="subtitle-container">
-      <h4 class="subtitle-content mr-auto">
-        <ds-generic-item-page-field [item]="object"
-          [fields]="['sedici.title.subtitle']">
-        </ds-generic-item-page-field>
+    <div class="title-alternative-container">
+      <h4 class="title-alternative-content mr-auto">
+        <div *ngIf="!object.firstMetadataValue('dc.title.alternative')">
+          <ds-generic-item-page-field [item]="object"
+            [fields]="['sedici.title.subtitle']">
+          </ds-generic-item-page-field>
+        </div>
+        <div *ngIf="object.firstMetadataValue('dc.title.alternative')">
+          <span *ngFor="let titleAlternative of object.allMetadata('dc.title.alternative')">
+            <div>
+              <span>({{titleAlternative.language}}) </span>
+              <span [innerHTML]="titleAlternative.value"></span>
+            </div>
+          </span>
+        </div>
       </h4>
     </div>
     <hr class="divider divider-top">
@@ -88,7 +98,7 @@
       <div class="botones-context">
         <button class="btn btn-citation" (click)="openModalCitation()">
           <i class="fa-solid fa-quote-right"></i>
-          <span> Cómo citar</span>
+          <span> Citar</span>
         </button>
         <button class="btn btn-share" (click)="openModalShareButtons()">
           <i class="fa-solid fa-share"></i>
@@ -133,10 +143,6 @@
                 [fields]="['sedici.contributor.juror']"
                 [separator]="' | '"
                 [label]="'sedici.item.page.sedici.contributor.juror'">
-              </ds-generic-item-page-field>
-              <ds-generic-item-page-field [item]="object"
-                [fields]="['dc.title.alternative']"
-                [label]="'sedici.item.page.dc.title.alternative'">
               </ds-generic-item-page-field>
               <ds-generic-item-page-field [item]="object"
                 [fields]="['sedici.contributor.colaborator']"

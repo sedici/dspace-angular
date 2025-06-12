@@ -27,8 +27,6 @@ import { LanguageSwitcherComponent } from './language-switcher.component';
 import { MetadataValue } from 'src/app/core/shared/metadata.models';
 import { BadgeMetadataValuesComponent } from '../../field-components/badge-metadata-values/badge-metadata-values.component';
 import { TabbedContentComponent } from './tabbed-content.component';
-import { SediciDateMetadataValuesComponent } from '../../field-components/date-metadata-values/sedici-date-metadata-values.component';
-import { SediciLanguageMetadataValuesComponent } from '../../field-components/language-metadata-values/sedici-language-metadata-values.component';
 import { setPersistentIdentifiers } from 'src/app/shared/utils/persistent.identifier';
 import { SediciTruncatableGenericItemPageFieldComponent } from './sedici-truncatable-generic-item-page-field';
 import { SediciContextComponent } from '../../field-components/context/sedici-context.component';
@@ -68,8 +66,6 @@ import { ExpandableMetadataComponent } from './expandable-metadata';
     LanguageSwitcherComponent,
     BadgeMetadataValuesComponent,
     TabbedContentComponent,
-    SediciDateMetadataValuesComponent,
-    SediciLanguageMetadataValuesComponent,
     SediciContextBadgeComponent,
     SediciTruncatableGenericItemPageFieldComponent,
     SediciContextComponent,    
