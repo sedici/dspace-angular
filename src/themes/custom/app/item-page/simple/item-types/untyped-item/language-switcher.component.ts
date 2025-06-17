@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NgIf, NgFor } from '@angular/common';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { TruncatableComponent } from 'src/app/shared/truncatable/truncatable.component';
 import { TruncatablePartComponent } from 'src/app/shared/truncatable/truncatable-part/truncatable-part.component';
 
@@ -22,18 +22,13 @@ export class LanguageSwitcherComponent {
   @Input() item: any;
   selectedLanguage: string;
   availableLanguages: any[];
-  abstractPrefix: string;
 
-  constructor(private sanitizer: DomSanitizer, private translateService: TranslateService ) {}
+  constructor(private sanitizer: DomSanitizer) {}
 
   ngOnInit() {
     const langValue = this.item.metadata['dc.language']?.[0]?.value;
     this.selectedLanguage = !langValue || langValue === 'other' ? '??' : langValue;
     this.availableLanguages = this.getAvailableLanguages();
-
-    this.translateService.get('item.page.abstract').subscribe((res: string) => {
-      this.abstractPrefix = res + ': ';
-    });
   }
 
   getAbstract(): SafeHtml {
@@ -44,7 +39,6 @@ export class LanguageSwitcherComponent {
         abstract = abstracts[0].value;
         this.selectedLanguage = abstracts[0].language;
       }
-      abstract = this.abstractPrefix + abstract;
       return this.sanitizer.bypassSecurityTrustHtml(abstract);
     }
     return this.sanitizer.bypassSecurityTrustHtml('');
