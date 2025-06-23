@@ -386,6 +386,31 @@ export class SubmissionSectionCcLicensesComponent extends SectionModelComponent 
         (licenses) => {
           this.submissionCcLicenses = [...this.submissionCcLicenses, ...licenses];
           this.isLoading = false;
+
+          const licenseLink$ = this.getCcLicenseLink$();
+          
+          if (licenseLink$ === undefined) {
+            if (this.submissionCcLicenses.length > 0 && this.ccLicenceOptions.currentPage === 1) {
+              this.selectCcLicense(this.submissionCcLicenses[0]);
+              
+              setTimeout(() => {
+                const selectedLicense = this.getSelectedCcLicense();
+                if (selectedLicense && selectedLicense.fields) {
+                  selectedLicense.fields.forEach(field => {
+                    if (field.enums && field.enums.length > 0) {
+                      // Licencia por defecto: CC BY-NC-SA
+                      this.selectOption(selectedLicense, field, field.enums[1]);
+                    }
+                  });
+                  
+                  setTimeout(() => {
+                    this.setAccepted(true);
+                  }, 500);
+                }
+              }, 500);
+            }
+          }
+
           this.ref.detectChanges();
         },
       ),
