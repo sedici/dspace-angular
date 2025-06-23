@@ -99,17 +99,17 @@ export class MenuResolverService  {
   createPublicMenu$(): Observable<boolean> {
     const menuList: any[] = [
       /* Communities & Collections tree */
-      // {
-      //   id: `browse_global_communities_and_collections`,
-      //   active: false,
-      //   visible: true,
-      //   index: 0,
-      //   model: {
-      //     type: MenuItemType.LINK,
-      //     text: `menu.section.browse_global_communities_and_collections`,
-      //     link: `/community-list`,
-      //   } as LinkMenuItemModel,
-      // },
+      {
+        id: `browse_global_communities_and_collections`,
+        active: false,
+        visible: true,
+        index: 0,
+        model: {
+          type: MenuItemType.LINK,
+          text: `menu.section.browse_global_communities_and_collections`,
+          link: `/community-list`,
+        } as LinkMenuItemModel,
+      },
     ];
 
     const itemsInstitucional = [
