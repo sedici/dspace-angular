@@ -9252,7 +9252,9 @@
 
   "accept-and-select-collection": "Aprobar y elegir coleccion",
 
-  "publish-and-workflow": "Publicar",
+  "publish-and-workflow": "Publicar y volver",
+
+  "publish-and-move": "Publicar y ver",
 
   "workflow-item.editaction.header": "Aprobando...",
 
@@ -9265,7 +9267,7 @@
   // FALTAN
   // workflow-item.selectCollection.notification.success.content
   // workflow-item.selectCollection.notification.success.title
-  
+
   "submission.workflow.tasks.claimed.approve_not_select": "Aprobar y publicar",
 
   //"browse.search-form.placeholder": "Search the repository",
