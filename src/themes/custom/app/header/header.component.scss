@@ -60,7 +60,6 @@
 
   .left-container {
     display: flex;
-    flex-basis: 100%;
   }
 
   .right-container-mobile {
@@ -79,9 +78,10 @@
     display: flex;
     justify-content: end;
     align-items: center;
+    flex-basis: 100%;
 
     ds-search-navbar {
-      width: 450px;
+      width: 100%;
     }
   }
 
