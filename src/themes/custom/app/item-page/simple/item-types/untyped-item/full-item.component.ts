@@ -42,8 +42,6 @@ export class FullItemComponent {
     { fieldName: 'sedici.subject.ford', labelKey: 'sedici.item.page.sedici.subject.ford' },
     { fieldName: 'dc.language', labelKey: 'sedici.item.page.dc.language', specialType: 'language' },
     // Identificadores especiales se manejan aparte
-    { fieldName: 'thesis.degree.name', labelKey: 'sedici.item.page.thesis.degree.name' },
-    { fieldName: 'thesis.degree.grantor', labelKey: 'sedici.item.page.thesis.degree.grantor' },
     { fieldName: 'sedici.relation.event', labelKey: 'sedici.item.page.sedici.relation.event' },
     { fieldName: 'sedici.relation.journalTitle', labelKey: 'sedici.item.page.sedici.relation.journalTitle' },
     { fieldName: 'sedici.relation.journalVolumeAndIssue', labelKey: 'sedici.item.page.sedici.relation.journalVolumeAndIssue' },
