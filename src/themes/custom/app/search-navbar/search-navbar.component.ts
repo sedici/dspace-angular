@@ -59,16 +59,16 @@ export class SearchNavbarComponent extends BaseComponent {
   onSubmit(data: any) {
     this.collapse();
     
-    // Obtiene los parámetros actuales de la URL
     const currentParams = { ...this.activatedRoute.snapshot.queryParams };
+
+    // Para que la búsqueda vaya siempre al /search y no se quede dentro del workspace
+    delete currentParams.configuration;
     
-    // Combina los parámetros actuales con el nuevo término de búsqueda
     const queryParams = {
       ...currentParams,
       query: data.query
     };
     
-    // Si la query está vacía, eliminarla de los parámetros
     if (!data.query) {
       delete queryParams.query;
     }
