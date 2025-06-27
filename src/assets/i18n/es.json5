@@ -6887,6 +6887,9 @@
   // "search.filters.filter.supervisedBy.label": "Search Supervised By",
   "search.filters.filter.supervisedBy.label": "Búsqueda Supervisada Por",
 
+  // "search.filters.filter.location.coll.head": "Collection",
+  "search.filters.filter.location.coll.head": "Colección",
+
   // "search.filters.entityType.JournalIssue": "Journal Issue",
   "search.filters.entityType.JournalIssue": "Número de la revista",
 
@@ -7186,6 +7189,12 @@
 
   // "submission.general.save-later": "Save for later",
   "submission.general.save-later": "Guardar para más adelante",
+
+  // "submission.general.saving": "Saving...",
+  "submission.general.saving": "Guardando...",
+
+  // "submission.general.depositing": "Depositing...",
+  "submission.general.depositing": "Depositando...",
 
   // "submission.import-external.page.title": "Import metadata from an external source",
   "submission.import-external.page.title": "Importar metadatos desde una fuente externa",

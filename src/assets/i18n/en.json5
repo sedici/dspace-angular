@@ -4576,6 +4576,8 @@
 
   "search.filters.filter.supervisedBy.label": "Search Supervised By",
 
+  "search.filters.filter.location.coll.head": "Collection",
+
   "search.filters.entityType.JournalIssue": "Journal Issue",
 
   "search.filters.entityType.JournalVolume": "Journal Volume",
@@ -4775,6 +4777,10 @@
   "submission.general.save": "Save",
 
   "submission.general.save-later": "Save for later",
+
+  "submission.general.saving": "Saving...",
+
+  "submission.general.depositing": "Depositing...",
 
   "submission.import-external.page.title": "Import metadata from an external source",
 
