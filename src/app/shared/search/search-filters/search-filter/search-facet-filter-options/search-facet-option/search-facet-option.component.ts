@@ -17,7 +17,7 @@ import {
   TranslateService,
 } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take, switchMap } from 'rxjs/operators';
 
 import { PaginationService } from '../../../../../../core/pagination/pagination.service';
 import { SearchService } from '../../../../../../core/shared/search/search.service';
@@ -29,6 +29,12 @@ import { ShortNumberPipe } from '../../../../../utils/short-number.pipe';
 import { FacetValue } from '../../../../models/facet-value.model';
 import { SearchFilterConfig } from '../../../../models/search-filter-config.model';
 import { getFacetValueForType } from '../../../../search.utils';
+import { CollectionDataService } from 'src/app/core/data/collection-data.service';
+import { Collection } from 'src/app/core/shared/collection.model';
+import { Community } from 'src/app/core/shared/community.model';
+import { getFirstSucceededRemoteDataPayload } from 'src/app/core/shared/operators';
+import { followLink, FollowLinkConfig } from 'src/app/shared/utils/follow-link-config.model';
+import { RemoteData } from 'src/app/core/data/remote-data';
 
 @Component({
   selector: 'ds-search-facet-option',
@@ -81,6 +87,7 @@ export class SearchFacetOptionComponent implements OnInit {
               protected paginationService: PaginationService,
               protected liveRegionService: LiveRegionService,
               private translateService: TranslateService,
+              private collectionService: CollectionDataService,
   ) {
   }
 
@@ -92,6 +99,38 @@ export class SearchFacetOptionComponent implements OnInit {
     this.searchLink = this.getSearchLink();
     this.isVisible = this.isChecked().pipe(map((checked: boolean) => !checked));
     this.addQueryParams$ = this.updateAddParams();
+    if (this.filterConfig.name === 'location.coll') {
+      this.getCommunityByCollectionUUID(this.filterValue.authorityKey);
+    }
+  }
+
+  community: Community;
+  collectionRD$: Observable<RemoteData<Collection>>;
+  collinksToFollow: FollowLinkConfig<Collection>[] = [
+    followLink('parentCommunity'),
+  ];
+
+  getCommunityByCollectionUUID(collectionUUID: string): void {
+    this.collectionRD$ = this.collectionService.findById(
+      collectionUUID,
+      true,
+      true,
+      ...this.collinksToFollow,
+      );
+    this.collectionRD$.pipe(
+      getFirstSucceededRemoteDataPayload(),
+      switchMap((collection: Collection) => {
+        return collection.parentCommunity.pipe(
+          getFirstSucceededRemoteDataPayload()
+        );
+      }),
+      take(1)
+    )
+    .subscribe((community: Community) => {
+      this.community = community;
+    }, (error) => {
+      console.error('Error al obtener la comunidad:', error);
+    });
   }
 
   /**
