@@ -1,0 +1,26 @@
+.search-button {
+  background-color: transparent; // Fondo transparente
+  border: none; // Sin borde
+  padding: 0; // Sin padding
+  margin-left: 10px; // Ajuste para que la lupa esté más cerca del borde del input
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  i {
+    color: black; // Color blanco para la lupa
+    font-size: 2.7rem; // Tamaño de la lupa, ajusta según necesites
+  }
+
+  &:hover {
+      cursor: pointer; // Cambia el cursor al pasar sobre la lupa
+  }
+}
+
+.form-control {
+  background-color: rgba(0, 0, 0, 0.2); // Fondo negro con transparencia
+  border: none; // Sin borde
+  border-radius: 0; // Sin bordes redondeados en el input
+  box-shadow: none; // Sin sombra en el input
+  font-style: italic;
+}

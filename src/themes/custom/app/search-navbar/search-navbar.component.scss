@@ -1,0 +1,52 @@
+.navbar {
+  padding: 0;
+}
+
+.navbar-brand {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+form {
+  width: 100%;
+}
+
+.search-form-container {
+  position: relative;
+  width: 100%;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.search-input {
+  border-radius: 10px;
+  padding: 10px 40px 10px 40px;
+  font-size: 14px;
+  height: auto;
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  width: 100%;
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    border-color: #d0d0d0;
+  }
+}
+
+// Asegurarse de que se vea bien en móviles
+@media screen and (max-width: map-get($grid-breakpoints, md)) {
+  .search-input {
+    width: 100%;
+    max-width: 100%;
+  }
+}

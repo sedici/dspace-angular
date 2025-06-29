@@ -1,0 +1,10 @@
+<ng-container *ngIf="showAccessStatus">
+  <span *ngIf="accessStatus$ | async as accessStatus">
+    <span [class]="'badge access-status-list-element-badge ' + accessStatusClass">
+      <ng-container *ngIf="accessStatusClass === 'access-status-embargo-listelement-badge'">
+        <i class="fa fa-lock" aria-hidden="true"></i> <!-- Ícono de candado -->
+      </ng-container>
+      {{ accessStatus | translate }}
+    </span>
+  </span>
+</ng-container>

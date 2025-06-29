@@ -1,0 +1,23 @@
+<div class="modal-header">
+  <h4 class="modal-title">Cómo citar</h4>
+  <button type="button" class="close" aria-label="Close" (click)="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="citation-type-selector">
+    <label for="citationType">Seleccionar tipo de cita:</label>
+    <select id="citationType" (change)="onCitationTypeChange($event)">
+      <option *ngFor="let option of citationOptions" [value]="option.value">{{ option.label }}</option>
+    </select>
+  </div>
+  <div class="apa-citation-container">
+    <div class="apa-citation" #elementContentToCopy>
+      {{ citation }}
+    </div>
+  </div>
+  <div class="copy-button-container">
+    <span class="copy-text">Copiar al portapapeles</span>
+    <i id="copyButton" class="copyButton fa fa-copy" aria-hidden="true" (click)="copyToClipboard(elementContentToCopy, 'copyButton')"></i>
+  </div>
+</div>

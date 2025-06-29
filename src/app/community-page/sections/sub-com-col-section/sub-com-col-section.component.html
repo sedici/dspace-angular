@@ -1,8 +1,10 @@
 <ng-container *ngIf="(community$ | async) as community">
   <ds-community-page-sub-community-list
-      [community]="community">
+      [community]="community"
+      [pageSize]="'100'">
   </ds-community-page-sub-community-list>
   <ds-community-page-sub-collection-list
-      [community]="community">
+      [community]="community"
+      [pageSize]="'100'">
   </ds-community-page-sub-collection-list>
 </ng-container>

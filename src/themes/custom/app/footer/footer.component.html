@@ -1,0 +1,46 @@
+<footer>
+  <div class="bottom-footer">
+    <div class="footer-left">
+      <p class="footer-title">PREBI - SEDICI © 2003-{{ dateObj | date:'y' }}</p>
+      <p>Universidad Nacional de La Plata</p>
+      <p>Soportado por Dspace</p>
+      <div class="footer-icons mt-5">
+        <a href="https://creativecommons.org/" target="_blank">
+          <img src="assets/custom/images/footer/final_creative_negro.svg" width="75" height="75" [attr.alt]="'Creative Commons'"/>
+        </a>
+        <a href="https://www.openaccess.nl/en" target="_blank">
+          <img src="assets/custom/images/footer/final_OAcolor_.png" [attr.alt]="'Open Access'"/>
+        </a>
+        <a href="https://dspace.org/" target="_blank">
+          <img src="assets/custom/images/footer/final_Dspacecolor.png" [attr.alt]="'Dspace'"/>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-right">
+      <div class="footer-media-icons">
+        <a href="https://www.facebook.com/sedici.unlp" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/sedici_unlp/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://x.com/sedici_unlp" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="https://www.youtube.com/@sediciUNLP" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+      </div>
+      <div *ngIf="(isMobile$ | async) !== true" class="footer-section">
+        <h5 class="footer-subtitle">Busqueda de material</h5>
+        <a href="#">Ayuda</a>
+        <a href="#">Obligacion de deposito</a>
+        <a href="#">Estadisticas</a>
+      </div>
+      <div *ngIf="(isMobile$ | async) !== true" class="footer-section">
+        <h5 class="footer-subtitle">Institucional</h5>
+        <a href="#">Politicas</a>
+        <a href="#">Blog</a>
+      </div>
+      <div *ngIf="(isMobile$ | async) !== true" class="footer-section">
+        <h5 class="footer-subtitle">Preguntas frecuentes</h5>
+        <a href="#">Como agregar trabajos</a>
+        <a href="#">Que hacemos en SEDICI</a>
+        <a href="#">Acerca de</a>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,7 +1,10 @@
-<div class="apa-citation-container" [class.expanded]="isExpanded">
-  <div class="toggle-button-container" *ngIf="showToggleButton">
-    <i class="toggleButton fa" [ngClass]="{'fa-chevron-down': !isExpanded, 'fa-chevron-up': isExpanded}" (click)="toggleExpand()"></i>
-  </div>
+<div class="citation-type-selector">
+  <label for="citationType">Seleccionar tipo de cita:</label>
+  <select id="citationType" (change)="onCitationTypeChange($event)">
+    <option *ngFor="let option of citationOptions" [value]="option.value">{{ option.label }}</option>
+  </select>
+</div>
+<div class="apa-citation-container">
   <div class="apa-citation" #elementContentToCopy>
     {{ citation }}
   </div>

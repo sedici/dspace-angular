@@ -1,6 +1,7 @@
 import {
   SidebarAction,
   SidebarActionTypes,
+  SidebarMode
 } from './sidebar.actions';
 
 /**
@@ -8,10 +9,12 @@ import {
  */
 export interface SidebarState {
   sidebarCollapsed: boolean;
+  mode: SidebarMode;
 }
 
 const initialState: SidebarState = {
   sidebarCollapsed: true,
+  mode: SidebarMode.DEFAULT
 };
 
 /**
@@ -26,21 +29,29 @@ export function sidebarReducer(state = initialState, action: SidebarAction): Sid
     case SidebarActionTypes.COLLAPSE: {
       return Object.assign({}, state, {
         sidebarCollapsed: true,
+        mode: SidebarMode.DEFAULT
       });
     }
 
     case SidebarActionTypes.EXPAND: {
       return Object.assign({}, state, {
         sidebarCollapsed: false,
+        mode: SidebarMode.DEFAULT
       });
+    }
 
+    case SidebarActionTypes.EXPAND_WITH_MODE: {
+      return Object.assign({}, state, {
+        sidebarCollapsed: false,
+        mode: action.payload
+      });
     }
 
     case SidebarActionTypes.TOGGLE: {
       return Object.assign({}, state, {
         sidebarCollapsed: !state.sidebarCollapsed,
+        mode: SidebarMode.DEFAULT
       });
-
     }
 
     default: {

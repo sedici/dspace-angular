@@ -47,6 +47,7 @@ import { MetadataFieldWrapperComponent } from '../../../shared/metadata-field-wr
 
 @Component({
   selector: 'ds-item-page-collections',
+  styleUrls: ['./collections.component.scss'],
   templateUrl: './collections.component.html',
   imports: [
     MetadataFieldWrapperComponent,

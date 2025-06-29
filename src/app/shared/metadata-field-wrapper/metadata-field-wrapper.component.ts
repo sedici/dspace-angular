@@ -24,11 +24,5 @@ export class MetadataFieldWrapperComponent {
 
   @Input() hideIfNoTextContent = true;
 
-  @Input() inlineLabel: boolean;
-
-  ngOnInit() {
-    if (this.inlineLabel === undefined) {
-      this.inlineLabel = true;
-    }
-  }
+  @Input() inlineLabel: boolean = true;
 }

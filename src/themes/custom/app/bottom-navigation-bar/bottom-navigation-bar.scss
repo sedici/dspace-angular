@@ -1,0 +1,30 @@
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  background-color: white;
+  border-top: 1px solid #ccc;
+  padding: 0.5rem 0;
+
+  a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    width: 25%;
+    
+    i {
+      font-size: 22px;
+      margin-bottom: 2px;
+    }
+    
+    span {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+  }
+}

@@ -37,7 +37,7 @@ export class BreadcrumbsComponent {
   showBreadcrumbs$: Observable<boolean>;
 
   constructor(
-    private breadcrumbsService: BreadcrumbsService,
+    protected breadcrumbsService: BreadcrumbsService,
   ) {
     this.breadcrumbs$ = breadcrumbsService.breadcrumbs$;
     this.showBreadcrumbs$ = breadcrumbsService.showBreadcrumbs$;

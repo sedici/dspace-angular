@@ -31,6 +31,7 @@ import { NotificationsService } from '../../../shared/notifications/notification
 //import { WorkflowItemActionPageDirective } from '../../workflow-item-action-page.component';
 import { DSpaceObjectType } from 'src/app/core/shared/dspace-object-type.model';
 import { WorkflowItem } from 'src/app/core/submission/models/workflowitem.model';
+import { Item } from 'src/app/core/shared/item.model';
 import { DSONameService } from '../../../core/breadcrumbs/dso-name.service';
 import { followLink } from 'src/app/shared/utils/follow-link-config.model';
 import { CollectionDataService } from 'src/app/core/data/collection-data.service';
@@ -81,6 +82,7 @@ export class WorkflowSelectCollectionComponent extends AdvancedWorkflowActionCom
   COLLECTIONS = [DSpaceObjectType.COLLECTION];
 
   uuid: String;
+  itemuuid: String;
 
 
 
@@ -112,6 +114,11 @@ export class WorkflowSelectCollectionComponent extends AdvancedWorkflowActionCom
     this.wfi$.subscribe(
       wfi =>{
         this.wfitem = wfi;
+        this.wfitem.item.subscribe((rd: RemoteData<Item>) => {
+          if (rd.hasSucceeded) {
+            this.itemuuid = rd.payload.uuid;
+          }
+      });
       }
     );
 
@@ -140,6 +147,22 @@ export class WorkflowSelectCollectionComponent extends AdvancedWorkflowActionCom
    */
   getType(): string {
     return ADVANCED_WORKFLOW_ACTION_SELECT_COLLECTION;
+  }
+
+  performAndMove(): void {
+    this.sendRequest(this.route.snapshot.queryParams.claimedTask).subscribe((successful: boolean) => {
+      if (successful) {
+        const title = this.translationService.get('workflow-item.' + this.type + '.notification.success.title');
+        const content = this.translationService.get('workflow-item.' + this.type + '.notification.success.content');
+        this.notificationsService.success(title, content);
+        // Redireccion a pagina del item
+        this.router.navigate(['/items/'+this.itemuuid]);
+      } else {
+        const title = this.translationService.get('workflow-item.' + this.type + '.notification.error.title');
+        const content = this.translationService.get('workflow-item.' + this.type + '.notification.error.content');
+        this.notificationsService.error(title, content);
+      }
+    });
   }
 
 }

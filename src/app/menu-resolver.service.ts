@@ -7,7 +7,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   combineLatest,
   combineLatest as observableCombineLatest,
+  mergeMap,
   Observable,
+  of as observableOf,
 } from 'rxjs';
 import {
   filter,
@@ -17,6 +19,7 @@ import {
 } from 'rxjs/operators';
 
 import { PUBLICATION_CLAIMS_PATH } from './admin/admin-notifications/admin-notifications-routing-paths';
+import { AuthService } from './core/auth/auth.service';
 import { BrowseService } from './core/browse/browse.service';
 import { ConfigurationDataService } from './core/data/configuration-data.service';
 import { AuthorizationDataService } from './core/data/feature-authorization/authorization-data.service';
@@ -62,6 +65,7 @@ export class MenuResolverService  {
     protected modalService: NgbModal,
     protected scriptDataService: ScriptDataService,
     protected configurationDataService: ConfigurationDataService,
+    protected authService: AuthService,
   ) {
   }
 
@@ -71,7 +75,7 @@ export class MenuResolverService  {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return combineLatest([
       this.createPublicMenu$(),
-      this.createAdminMenu$(),
+      this.createAdminMenuIfLoggedIn$(),
     ]).pipe(
       map((menusDone: boolean[]) => menusDone.every(Boolean)),
     );
@@ -107,44 +111,115 @@ export class MenuResolverService  {
         } as LinkMenuItemModel,
       },
     ];
+
+    const itemsInstitucional = [
+      { id: '¿Qué es SEDICI?', texto: '¿Qué es SEDICI?', ruta: '¿Qué es SEDICI?' },
+      { id: 'Políticas del repositorio', texto: 'Políticas del repositorio', ruta: 'Políticas del repositorio' },
+      { id: 'Links', texto: 'Links', ruta: 'Links' },
+      { id: 'Staff', texto: 'Staff', ruta: 'Staff' },
+      { id: '¿Cómo llegar?', texto: '¿Cómo llegar?', ruta: '¿Cómo llegar?' },
+    ];
+    itemsInstitucional.forEach(item => {
+      menuList.push({
+        id: item.id,
+        parentID: 'Institucional',
+        active: false,
+        visible: true,
+        model: {
+          type: MenuItemType.LINK,
+          text: item.texto,
+          link: `${item.ruta}`,
+        } as LinkMenuItemModel,
+      });
+    });
+    menuList.push({
+      id: 'Institucional',
+      active: false,
+      visible: true,
+      index: 3,
+      model: {
+        type: MenuItemType.TEXT,
+        text: 'Institucional',
+      } as TextMenuItemModel,
+    });
+
+    const itemsPreguntasFrecuentes = [
+      { id: '¿Cómo agregar trabajos?', texto: '¿Cómo agregar trabajos?', ruta: '¿Cómo agregar trabajos?' },
+      { id: 'Información para tesistas', texto: 'Información para tesistas', ruta: 'Información para tesistas' },
+      { id: 'Revistas de Acceso Abierto', texto: 'Revistas de Acceso Abierto', ruta: 'Revistas de Acceso Abierto' },
+      { id: 'Más preguntas frecuentes', texto: 'Más preguntas frecuentes', ruta: 'Más preguntas frecuentes' },
+    ];
+    itemsPreguntasFrecuentes.forEach(item => {
+      menuList.push({
+        id: item.id,
+        parentID: 'PreguntasFrecuentes',
+        active: false,
+        visible: true,
+        model: {
+          type: MenuItemType.LINK,
+          text: item.texto,
+          link: `${item.ruta}`,
+        } as LinkMenuItemModel,
+      });
+    });
+    menuList.push({
+      id: 'PreguntasFrecuentes',
+      active: false,
+      visible: true,
+      index: 4,
+      model: {
+        type: MenuItemType.TEXT,
+        text: 'Preguntas frecuentes',
+      } as TextMenuItemModel,
+    });
+
     // Read the different Browse-By types from config and add them to the browse menu
     this.browseService.getBrowseDefinitions()
       .pipe(getFirstCompletedRemoteData<PaginatedList<BrowseDefinition>>())
       .subscribe((browseDefListRD: RemoteData<PaginatedList<BrowseDefinition>>) => {
-        if (browseDefListRD.hasSucceeded) {
-          browseDefListRD.payload.page.forEach((browseDef: BrowseDefinition) => {
-            menuList.push({
-              id: `browse_global_by_${browseDef.id}`,
-              parentID: 'browse_global',
-              active: false,
-              visible: true,
-              model: {
-                type: MenuItemType.LINK,
-                text: `menu.section.browse_global_by_${browseDef.id}`,
-                link: `/browse/${browseDef.id}`,
-              } as LinkMenuItemModel,
-            });
-          });
-          menuList.push(
-            /* Browse */
-            {
-              id: 'browse_global',
-              active: false,
-              visible: true,
-              index: 1,
-              model: {
-                type: MenuItemType.TEXT,
-                text: 'menu.section.browse_global',
-              } as TextMenuItemModel,
-            },
-          );
-        }
+        // if (browseDefListRD.hasSucceeded) {
+        //   browseDefListRD.payload.page.forEach((browseDef: BrowseDefinition) => {
+        //     menuList.push({
+        //       id: `browse_global_by_${browseDef.id}`,
+        //       parentID: 'browse_global',
+        //       active: false,
+        //       visible: true,
+        //       model: {
+        //         type: MenuItemType.LINK,
+        //         text: `menu.section.browse_global_by_${browseDef.id}`,
+        //         link: `/browse/${browseDef.id}`,
+        //       } as LinkMenuItemModel,
+        //     });
+        //   });
+        //   menuList.push(
+        //     /* Browse */
+        //     {
+        //       id: 'browse_global',
+        //       active: false,
+        //       visible: true,
+        //       index: 4,
+        //       model: {
+        //         type: MenuItemType.TEXT,
+        //         text: 'menu.section.browse_global',
+        //       } as TextMenuItemModel,
+        //     },
+        //   );
+        // }
         menuList.forEach((menuSection) => this.menuService.addSection(MenuID.PUBLIC, Object.assign(menuSection, {
           shouldPersistOnRouteChange: true,
         })));
       });
 
     return this.waitForMenu$(MenuID.PUBLIC);
+  }
+
+  /**
+   * Initialize all menu sections and items for {@link MenuID.ADMIN}, only if the user is logged in.
+   */
+  createAdminMenuIfLoggedIn$() {
+    return this.authService.isAuthenticated().pipe(
+      mergeMap((isAuthenticated) => isAuthenticated ? this.createAdminMenu$() : observableOf(true)),
+    );
   }
 
   /**
@@ -156,8 +231,6 @@ export class MenuResolverService  {
     this.createExportMenuSections();
     this.createImportMenuSections();
     this.createAccessControlMenuSections();
-    this.createReportMenuSections();
-
     return this.waitForMenu$(MenuID.ADMIN);
   }
 

@@ -3,7 +3,9 @@ import {
   NgClass,
   NgIf,
   NgTemplateOutlet,
+  NgFor,
 } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -17,16 +19,64 @@ import { ThemedConfigurationSearchPageComponent } from '../../../../app/search-p
 import { ThemedSearchFormComponent } from '../../../../app/shared/search-form/themed-search-form.component';
 import { PageWithSidebarComponent } from '../../../../app/shared/sidebar/page-with-sidebar.component';
 import { ViewTrackerComponent } from '../../../../app/statistics/angulartics/dspace/view-tracker.component';
+import { HomeSliderComponent } from './sedici-home-slider/home-slider.component';
+import { ComcolPageLogoComponent } from 'src/app/shared/comcol/comcol-page-logo/comcol-page-logo.component';
+import { ComcolGridComponent } from './comcol-grid/comcol-grid.component';
 
+interface ExploracionDestacada {
+  title: string;
+  img: string;
+  href: string;
+  description?: string;
+  queryParams?: {[key: string]: any};
+}
 @Component({
   selector: 'ds-themed-home-page',
-  // styleUrls: ['./home-page.component.scss'],
-  styleUrls: ['../../../../app/home-page/home-page.component.scss'],
-  // templateUrl: './home-page.component.html'
-  templateUrl: '../../../../app/home-page/home-page.component.html',
+  styleUrls: ['./home-page.component.scss'],
+  // styleUrls: ['../../../../app/home-page/home-page.component.scss'],
+  templateUrl: './home-page.component.html',
+  // templateUrl: '../../../../app/home-page/home-page.component.html',
   standalone: true,
-  imports: [ThemedHomeNewsComponent, NgTemplateOutlet, NgIf, ViewTrackerComponent, ThemedSearchFormComponent, ThemedTopLevelCommunityListComponent, RecentItemListComponent, AsyncPipe, TranslateModule, NgClass, SuggestionsPopupComponent, ThemedConfigurationSearchPageComponent, PageWithSidebarComponent, HomeCoarComponent],
+  imports: [ThemedHomeNewsComponent, ComcolPageLogoComponent, NgTemplateOutlet, NgIf, NgFor, RouterLink, ViewTrackerComponent, ThemedSearchFormComponent, ThemedTopLevelCommunityListComponent, RecentItemListComponent, AsyncPipe, TranslateModule, NgClass, SuggestionsPopupComponent, ThemedConfigurationSearchPageComponent, PageWithSidebarComponent, HomeCoarComponent, HomeSliderComponent, ComcolGridComponent],
 })
 export class HomePageComponent extends BaseComponent {
 
+  exploraciones:Array<ExploracionDestacada> = [
+    {
+      title: "Revistas",
+      img: "assets/custom/images/revistas.png",
+      href: "/handle/10915/51",
+      description: "123.456",
+    } as ExploracionDestacada,
+    {
+      title: "Eventos",
+      img: "assets/custom/images/eventos.png",
+      href: "/handle/10915/1038",
+      description: "123.456"
+    } as ExploracionDestacada,
+    {
+      title: "Libros",
+      img: "assets/custom/images/libros2.png",
+      href: "/search",
+      description: "123.456",
+      queryParams: {
+        "spc.page": 1,
+        "f.itemtype": "Libro,equals",
+        "spc.sf": "dc.date.accessioned",
+        "spc.sd": "DESC"
+      }
+    } as ExploracionDestacada,
+    {
+      title: "Datos",
+      img: "assets/custom/images/datos.png",
+      href: "/search",
+      description: "123.456",
+      queryParams: {
+        "spc.page": 1,
+        "f.itemtype": "Conjunto de datos,equals",
+        "spc.sf": "dc.date.accessioned",
+        "spc.sd": "DESC"
+      }
+    } as ExploracionDestacada,
+  ];
 }

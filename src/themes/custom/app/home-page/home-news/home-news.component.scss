@@ -1,0 +1,136 @@
+:host {
+  display: block;
+
+  div.background-image-container {
+    position: relative;
+    background-image: 
+      linear-gradient(135deg,
+        rgba(220,235,255,1) 0%,
+        rgba(210,230,255,1) 5%,
+        rgba(150,200,255,1) 15%,
+        rgba(70,150,255,1) 40%,
+        rgba(0,120,255,1) 60%,
+        rgba(0,120,255,0.8) 80%
+      );
+
+    @media (max-width: 768px) {
+      background-image: 
+        linear-gradient(to bottom, rgba(0, 123, 255, 0) 80%, white 100%),
+        linear-gradient(-25deg, white, #007BFF);
+      background-blend-mode: normal;
+    }
+  }
+
+  .sedici-description {
+    display: flex;
+    align-items: center;
+    padding-bottom: 1rem;
+    justify-content: space-between; // Asegura que el contenido esté distribuido adecuadamente
+  }
+
+  @media screen and (min-width: map-get($grid-breakpoints, md)) {
+    .escudo-container {
+      margin-right: 1rem;
+    }
+  }
+
+  @media screen and (max-width: map-get($grid-breakpoints, md)) {
+    flex-direction: column;
+    text-align: left;
+    
+    .escudo-container {
+      width: 50%;
+    }
+    
+    .text {
+      width: 100%;
+      font-size: 0.75rem;
+      line-height: 2.5;
+      text-align: justify;
+    }
+  }
+
+  ::ng-deep ds-themed-search-form  {
+    .search-button i {
+      color: white !important;
+    }
+
+    .form-control {
+      background-color: rgba(255, 255, 255, 0.7) !important;
+      font-size: 1.7rem;
+    }
+  }
+
+  .jumbotron {
+    background-color: transparent;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+
+    @media screen and (max-width: map-get($grid-breakpoints, md)) {
+      .sedici-logo-container {
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+    }
+  }
+
+  a {
+    color: var(--ds-home-news-link-color);
+
+    @include hover {
+      color: var(--ds-home-news-link-hover-color);
+    }
+  }
+
+  .destacado {
+    padding-bottom: 15px;
+
+    .collection-card {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      text-align: left;
+      padding: 1rem;
+      height: 100%;
+      
+      .icon-container {
+        margin-right: 1rem;
+        
+        img {
+          width: 80px;
+          height: 80px;
+          object-fit: contain;
+        }
+      }
+      
+      .text-container {
+        h4 {
+          font-size: 1rem;
+          font-weight: bold;
+          margin-bottom: 0;
+        }
+        
+        p {
+          font-size: 0.625rem;
+          color: #333;
+          margin: 0;
+        }
+      }
+
+      a {
+        color: inherit;
+      }
+    }
+    
+    @media (max-width: 767px) {
+      .collection-card {
+        .icon-container {
+          img {
+            width: 60px; // Un poco más pequeño para ajustar al espacio
+            height: 60px;
+          }
+        }
+      }
+    }
+  }
+}

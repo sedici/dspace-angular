@@ -16,71 +16,11 @@ import { ThemedTypeBadgeComponent } from 'src/app/shared/object-collection/share
 })
 export class SediciContextBadgeComponent extends BaseComponent {
 
-  getThesisInfo(): string {
-    const thesisDegreeName = this.object.firstMetadataValue('thesis.degree.name');
-    const thesisDegreeGrantor = this.object.firstMetadataValue('thesis.degree.grantor');
-
-    if (thesisDegreeName && thesisDegreeGrantor) {
-      return `${thesisDegreeName}; ${thesisDegreeGrantor}`;
-    } else {
-      return '';
-    }
-  }
-
-  getJournalInfo(): string {
-    const journalTitle = this.object.firstMetadataValue('sedici.relation.journalTitle');
-    const journalVolumeAndIssue = this.object.firstMetadataValue('sedici.relation.journalVolumeAndIssue');
-    
-    if (journalTitle && journalVolumeAndIssue) {
-      return `${journalTitle}; ${journalVolumeAndIssue}`;
-    } else if (journalTitle) {
-      return journalTitle;
-    } else {
-      return '';
-    }
-  }
-
-  getOriginInfoPlace(): string {
-    let place = this.object.firstMetadataValue('mods.originInfo.place');
-    if (!place) {
-      return '';
-    }
-    return place;
-  }
-
-  getEventInfo(): string {
-    let event = this.object.firstMetadataValue('sedici.relation.event');
-    if (!event) {
-      return '';
-    }
-    return event;
-  }
-
-  getContextInfo(): string {
-    let thesis = this.getThesisInfo();
-    let journal = this.getJournalInfo();
-    let event = this.getEventInfo();
-    let origin = this.getOriginInfoPlace();
-    if (thesis) {
-      return thesis;
-    };
-    if (journal || event) {
-      if (journal && event) {
-        return `${journal} | ${event}`;
-      } else if (journal) {
-        return journal;
-      } else {
-        return event;
-      };
-    };
-    return origin;
-  }
-
   getYear(): string {
-    let dateString = this.object.firstMetadataValue('dc.date.issued') || this.object.firstMetadataValue('dc.date.created');
-    if (!dateString) {
-      return '';
+    let dateString = this.object.firstMetadataValue('dc.date.issued') || this.object.firstMetadataValue('dc.date.created') || this.object.firstMetadataValue('sedici.date.exposure');
+    if (dateString) {
+      return dateString.split('-')[0];
     }
-    return dateString.split('-')[0];
+    return '';
   }
 }

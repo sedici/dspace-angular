@@ -12,57 +12,32 @@ export class ApaCitationComponent implements OnInit {
   @Input() item: any;
   @ViewChild('elementContentToCopy') elementContentToCopy: ElementRef;
   citation: string;
-  isExpanded: boolean = false;
-  showToggleButton: boolean = false;
+  citationType: string = 'apa';
+
+  citationOptions = [
+    { value: 'apa', label: 'APA' },
+    { value: 'chicago', label: 'Chicago' },
+    { value: 'mla', label: 'MLA' },
+  ];
 
   ngOnInit(): void {
-    this.generateCitation();
+    this.generateCitation(this.citationType);
   }
 
-  ngAfterViewInit(): void {
-    this.checkContentHeight();
+  generateCitation(type: string): void {
+    if (type === 'apa') {
+      this.citation = 'Melville, H. & Schaeffer, M. (1922) Moby Dick. New York, Dodd, Mead and company. [Pdf] Retrieved from the Library of Congress, https://www.loc.gov/item/22022440/';
+    } else if (type === 'chicago') {
+      this.citation = 'Melville, Herman, and Mead Schaeffer. Moby Dick. New York, Dodd, Mead and company, 1922. Pdf. https://www.loc.gov/item/22022440/';
+    } else {
+      this.citation = 'Melville, Herman, and Mead Schaeffer. Moby Dick. New York, Dodd, Mead and company, 1922. Pdf. Retrieved from the Library of Congress, <www.loc.gov/item/22022440/>';
+    }
   }
 
-  generateCitation(): void {
-    const authors = this.getAuthors();
-    const year = this.getYear();
-    const title = this.getTitle();
-    const journalTitle = this.getJournalTitle();
-    const journalVolumeAndIssue = this.getJournalVolumeAndIssue();
-    const pages = this.getPages();
-    const source = this.getSource();
-
-    this.citation = `${authors} (${year}). ${title}. ${journalTitle}, ${journalVolumeAndIssue}, ${pages}. ${source}.`;
-  }
-
-  getAuthors(): string {
-    const authors = this.item.allMetadata(['sedici.creator.person']);
-    return authors.map(author => author.value).join(', ');
-  }
-
-  getYear(): string {
-    const date = this.item.firstMetadataValue('dc.date.issued');
-    return date ? new Date(date).getFullYear().toString() : 's.f.';
-  }
-
-  getTitle(): string {
-    return this.item.firstMetadataValue('dc.title') || 'Sin título';
-  }
-
-  getJournalTitle(): string {
-    return this.item.firstMetadataValue('sedici.relation.journalTitle') || 'Sin journalTitle';
-  }
-
-  getJournalVolumeAndIssue(): string {
-    return this.item.firstMetadataValue('sedici.relation.journalVolumeAndIssue') || 'Sin journalVolumeAndIssue';
-  }
-
-  getPages(): string {
-    return this.item.firstMetadataValue('dc.format.extent') || 'Sin pages';
-  }
-
-  getSource(): string {
-    return this.item.firstMetadataValue('dc.identifier.doi') || 'Sin fuente';
+  onCitationTypeChange(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    this.citationType = selectElement.value;
+    this.generateCitation(this.citationType);
   }
 
   copyToClipboard(el: HTMLDivElement, id: string) {
@@ -79,17 +54,6 @@ export class ApaCitationComponent implements OnInit {
       });
     } else {
       console.log('Browser do not support Clipboard API');
-    }
-  }
-
-  toggleExpand(): void {
-    this.isExpanded = !this.isExpanded;
-  }
-
-  checkContentHeight(): void {
-    const maxHeight = 195; // Altura máxima de la caja
-    if (this.elementContentToCopy.nativeElement.scrollHeight > maxHeight) {
-      this.showToggleButton = true;
     }
   }
 }

@@ -1,0 +1,15 @@
+// @import '../../../../../../../styles/variables';
+
+.item-list-supervision {
+  a {
+   cursor: pointer;
+  }
+}
+
+::ng-deep ds-badges .badge {
+  padding: .3rem;
+}
+
+.subtitle {
+  font-style: italic;
+}

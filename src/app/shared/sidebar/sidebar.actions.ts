@@ -3,6 +3,12 @@ import { Action } from '@ngrx/store';
 
 import { type } from '../ngrx/type';
 
+export enum SidebarMode {
+  DEFAULT = 'default',
+  SORT = 'sort',
+  FILTERS = 'filters'
+}
+
 /**
  * For each action type in an action group, make a simple
  * enum object for all of this group's action types.
@@ -14,6 +20,7 @@ import { type } from '../ngrx/type';
 export const SidebarActionTypes = {
   COLLAPSE: type('dspace/sidebar/COLLAPSE'),
   EXPAND: type('dspace/sidebar/EXPAND'),
+  EXPAND_WITH_MODE: type('dspace/sidebar/EXPAND_WITH_MODE'),
   TOGGLE: type('dspace/sidebar/TOGGLE'),
 };
 
@@ -31,6 +38,12 @@ export class SidebarExpandAction implements Action {
   type = SidebarActionTypes.EXPAND;
 }
 
+export class SidebarExpandWithModeAction implements Action {
+  type = SidebarActionTypes.EXPAND_WITH_MODE;
+  
+  constructor(public payload: SidebarMode) {}
+}
+
 /**
  * Used to collapse the sidebar when it's expanded and expand it when it's collapsed
  */
@@ -45,4 +58,5 @@ export class SidebarToggleAction implements Action {
 export type SidebarAction
   = SidebarCollapseAction
   | SidebarExpandAction
+  | SidebarExpandWithModeAction
   | SidebarToggleAction;

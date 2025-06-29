@@ -1547,14 +1547,14 @@
   // "browse.metadata.srsc.breadcrumbs": "Browse by Subject Category",
   "browse.metadata.srsc.breadcrumbs": "Navegue por Categoria de Assunto",
 
-  // "browse.metadata.srsc.tree.descrption": "Select a subject to add as search filter",
-  "browse.metadata.srsc.tree.descrption": "Selecione um assunto para adicionar como filtro de pesquisa",
+  // "browse.metadata.srsc.tree.description": "Select a subject to add as search filter",
+  "browse.metadata.srsc.tree.description": "Selecione um assunto para adicionar como filtro de pesquisa",
 
   // "browse.metadata.nsi.breadcrumbs": "Browse by Norwegian Science Index",
   "browse.metadata.nsi.breadcrumbs": "Navegue pelo Índice de Ciência Norueguês",
 
-  // "browse.metadata.nsi.tree.descrption": "Select an index to add as search filter",
-  "browse.metadata.nsi.tree.descrption": "Selecione um índice para adicionar como filtro de pesquisa",
+  // "browse.metadata.nsi.tree.description": "Select an index to add as search filter",
+  "browse.metadata.nsi.tree.description": "Selecione um índice para adicionar como filtro de pesquisa",
 
   // "browse.metadata.title.breadcrumbs": "Browse by Title",
   "browse.metadata.title.breadcrumbs": "Pesquisar por Título",
@@ -2840,8 +2840,8 @@
   // "file-section.error.header": "Error obtaining files for this item",
   "file-section.error.header": "Erro obtendo arquivos para este item",
 
-  // "footer.copyright": "copyright © 2002-{{ year }}",
-  "footer.copyright": "copyright © 2002-{{ year }}",
+  // "footer.copyright": "copyright © 2003-{{ year }}",
+  "footer.copyright": "copyright © 2003-{{ year }}",
 
   // "footer.link.dspace": "DSpace software",
   "footer.link.dspace": "DSpace software",
@@ -5513,6 +5513,21 @@
   // "pagination.sort-direction": "Sort Options",
   "pagination.sort-direction": "Opções de Ordenação",
 
+  // "pagination.sort-field": "Sort by",
+  "pagination.sort-field": "Ordenar por",
+
+  // "pagination.sort-field_score": "Score",
+  "pagination.sort-field_score": "Pontuação",
+
+  // "pagination.sort-field_dc.title": "Title",
+  "pagination.sort-field_dc.title": "Título",
+
+  // "pagination.sort-field_dc.date.issued": "Date Issued",
+  "pagination.sort-field_dc.date.issued": "Data de Publicação",
+
+  // "pagination.sort-field_dc.date.accessioned": "Date Accessioned",
+  "pagination.sort-field_dc.date.accessioned": "Data de Disponibilização",
+
   // "person.listelement.badge": "Person",
   "person.listelement.badge": "Pessoa",
 
@@ -6800,6 +6815,9 @@
   // "search.filters.filter.supervisedBy.label": "Search Supervised By",
   "search.filters.filter.supervisedBy.label": "Pesquisa Supervisionada por",
 
+  // "search.filters.filter.location.coll.head": "Collection",
+  "search.filters.filter.location.coll.head": "Coleção",
+
   // "search.filters.entityType.JournalIssue": "Journal Issue",
   "search.filters.entityType.JournalIssue": "Número de Revista",
 
@@ -7099,6 +7117,12 @@
 
   // "submission.general.save-later": "Save for later",
   "submission.general.save-later": "Salvar para continuar depois",
+
+  // "submission.general.saving": "Saving...",
+  "submission.general.saving": "Salvando...",
+
+  // "submission.general.depositing": "Depositing...",
+  "submission.general.depositing": "Depositando...",
 
   // "submission.import-external.page.title": "Import metadata from an external source",
   "submission.import-external.page.title": "Importar metadados de fonte externa",
@@ -10249,4 +10273,191 @@
 
   //"browse.search-form.placeholder": "Search the repository",
   "browse.search-form.placeholder": "Buscar no repositório",
+
+  // "sedici.item.page.sedici.creator.corporate": "Autor institucional",
+  "sedici.item.page.sedici.creator.corporate": "Autor Institucional",
+  
+  // "sedici.item.page.sedici.creator.interprete": "Intérprete",
+  "sedici.item.page.sedici.creator.interprete": "Intérprete",
+  
+  // "sedici.item.page.sedici.contributor.compiler": "Compilador",
+  "sedici.item.page.sedici.contributor.compiler": "Compilador",
+  
+  // "sedici.item.page.sedici.contributor.translator": "Traductor",
+  "sedici.item.page.sedici.contributor.translator": "Tradutor",
+  
+  // "sedici.item.page.sedici.contributor.editor": "Editor",
+  "sedici.item.page.sedici.contributor.editor": "Editor",
+  
+  // "sedici.item.page.sedici.contributor.inscriber": "Firmantes",
+  "sedici.item.page.sedici.contributor.inscriber": "Signatários",
+  
+  // "sedici.item.page.dc.coverage.spatial": "Alcance geográfico",
+  "sedici.item.page.dc.coverage.spatial": "Cobertura Geográfica",
+  
+  // "sedici.item.page.dc.coverage.temporal": "Alcance temporal",
+  "sedici.item.page.dc.coverage.temporal": "Cobertura Temporal",
+  
+  // "sedici.item.page.dc.subject": "Palabras clave",
+  "sedici.item.page.dc.subject": "Palavras-chave",
+  
+  // "sedici.item.page.sedici.contributor.director": "Directores",
+  "sedici.item.page.sedici.contributor.director": "Diretores",
+  
+  // "sedici.item.page.sedici.contributor.codirector": "Co-directores",
+  "sedici.item.page.sedici.contributor.codirector": "Co-diretores",
+  
+  // "sedici.item.page.sedici.institucionDesarrollo": "Instiución de Desarrollo",
+  "sedici.item.page.sedici.institucionDesarrollo": "Instituição de Desenvolvimento",
+  
+  // "sedici.item.page.sedici.contributor.juror": "Jurados",
+  "sedici.item.page.sedici.contributor.juror": "Jurados",
+  
+  // "sedici.item.page.dc.title.alternative": "Título alternativo",
+  "sedici.item.page.dc.title.alternative": "Título Alternativo",
+  
+  // "sedici.item.page.sedici.description.note": "Notas",
+  "sedici.item.page.sedici.description.note": "Notas",
+  
+  // "sedici.item.page.sedici.contributor.colaborator": "Colaboradores",
+  "sedici.item.page.sedici.contributor.colaborator": "Colaboradores",
+  
+  // "sedici.item.page.mods.originInfo.place": "Institución de origen",
+  "sedici.item.page.mods.originInfo.place": "Instituição de Origem",
+  
+  // "sedici.item.page.dc.format": "Descripción física",
+  "sedici.item.page.dc.format": "Descrição Física",
+  
+  // "sedici.item.page.dc.format.extent": "Páginas",
+  "sedici.item.page.dc.format.extent": "Páginas",
+  
+  // "sedici.item.page.dc.format.medium": "Materiales/Técnicas",
+  "sedici.item.page.dc.format.medium": "Materiais/Técnicas",
+  
+  // "sedici.item.page.dc.audience": "Contexto de uso",
+  "sedici.item.page.dc.audience": "Contexto de Uso",
+  
+  // "sedici.item.page.dc.publisher.production": "Producción",
+  "sedici.item.page.dc.publisher.production": "Produção",
+  
+  // "sedici.item.page.dc.publisher.editorial": "Editorial",
+  "sedici.item.page.dc.publisher.editorial": "Editorial",
+
+  // "sedici.item.page.dc.relation.ispartof": "Serie/Colección",
+  "sedici.item.page.dc.relation.ispartof": "Série/Coleção",
+  
+  // "sedici.item.page.sedici.subject.materias": "Materias",
+  "sedici.item.page.sedici.subject.materias": "Matérias",
+  
+  // "sedici.item.page.sedici.identifier.uri": "Enlaces externos",
+  "sedici.item.page.sedici.identifier.uri": "Links Externos",
+  
+  // "sedici.item.page.sedici.relation.isRelatedWith": "Documentos relacionados",
+  "sedici.item.page.sedici.relation.isRelatedWith": "Documentos Relacionados",
+
+  // "sedici.item.page.dc.date.issued": "Fecha de publicación",
+  "sedici.item.page.dc.date.issued": "Data de Publicação",
+  
+  // "sedici.item.page.dc.date.created": "Fecha de creación",
+  "sedici.item.page.dc.date.created": "Data de Criação",
+  
+  // "sedici.item.page.sedici.date.exposure": "Fecha de exposición",
+  "sedici.item.page.sedici.date.exposure": "Data de Exposição",
+  
+  // "sedici.item.page.dc.description.filiation": "Filiación del autor",
+  "sedici.item.page.dc.description.filiation": "Afiliação do Autor",
+  
+  // "sedici.item.page.sedici.identifier.expediente": "N° de expediente",
+  "sedici.item.page.sedici.identifier.expediente": "Número do Processo",
+  
+  // "sedici.item.page.mods.location": "Ubicación física",
+  "sedici.item.page.mods.location": "Localização Física",
+  
+  // "sedici.item.page.sedici.subject.ford": "Clasificación FORD",
+  "sedici.item.page.sedici.subject.ford": "Classificação FORD",
+  
+  // "sedici.item.page.dc.language": "Idioma del documento",
+  "sedici.item.page.dc.language": "Idioma do Documento",
+
+  // "sedici.item.page.thesis.degree.name": "Grado alcanzado",
+  "sedici.item.page.thesis.degree.name": "Grau Alcançado",
+
+  // "sedici.item.page.thesis.degree.grantor": "Institución otorgante",
+  "sedici.item.page.thesis.degree.grantor": "Instituição Concedente",
+  
+  // "sedici.item.page.sedici.relation.event": "Evento",
+  "sedici.item.page.sedici.relation.event": "Evento",
+  
+  // "sedici.item.page.sedici.relation.journalTitle": "Título de la revista",
+  "sedici.item.page.sedici.relation.journalTitle": "Título da Revista",
+  
+  // "sedici.item.page.sedici.relation.journalVolumeAndIssue": "Volumen y número",
+  "sedici.item.page.sedici.relation.journalVolumeAndIssue": "Volume e Número",
+  
+  // "sedici.item.page.sedici.relation.bookTitle": "Título del libro",
+  "sedici.item.page.sedici.relation.bookTitle": "Título do Livro",
+ 
+  // "sedici.item.page.sedici.relation.ciclo": "Ciclo",
+  "sedici.item.page.sedici.relation.ciclo": "Ciclo",
+  
+  // "sedici.item.page.dc.date.accessioned": "Creado el",
+  "sedici.item.page.dc.date.accessioned": "Criado em",
+
+  // "sedici.tabs.files": "Archivos",
+  "sedici.tabs.files": "Arquivos",
+  
+  // "sedici.tabs.license": "Licencia",
+  "sedici.tabs.license": "Licença",
+
+  // "sedici.tabs.statistics": "Estadísticas",
+  "sedici.tabs.statistics": "Estatísticas",
+  
+  // "sedici.tabs.moreInformation": "Más información",
+  "sedici.tabs.moreInformation": "Mais informações",
+
+  "sedici.license.free": "Você tem o direito de:",
+
+  "sedici.license.share": "Compartilhar",
+
+  "sedici.license.share.description": "copiar e redistribuir o material em qualquer suporte ou formato",
+  
+  "sedici.license.adapt": "Adaptar",
+  
+  "sedici.license.adapt.description": "remixar, transformar, e criar a partir do material",
+
+  "sedici.license.description": "O licenciante não pode revogar estes direitos desde que você respeite os termos da licença.",
+
+  "sedici.license.terms": "De acordo com os termos seguintes:",
+
+  "sedici.license.attribution": "Atribuição",
+  
+  "sedici.license.attribution.description": " Você deve atribuir o devido crédito, fornecer um link para a licença, e indicar se foram feitas alterações. Você pode fazê-lo de qualquer forma razoável, mas não de uma forma que sugira que o licenciante o apoia ou aprova o seu uso.",
+  
+  "sedici.license.nonCommercial": "Não Comercial",
+  
+  "sedici.license.nonCommercial.description": "Você não pode usar o material para fins comerciais.",
+  
+  "sedici.license.noDerivateWorks": "Sem Obras Derivadas",
+  
+  "sedici.license.noDerivateWorks.description": "Se você remixar, transformar, ou criar a partir do material, não pode distribuir o material modificado.",
+  
+  "sedici.license.shareAlike": "Compartilhar Igual",
+  
+  "sedici.license.shareAlike.description": "Se você remixar, transformar, ou criar a partir do material, tem de distribuir as suas contribuições ao abrigo da mesma licença que o original.",
+
+  "sedici.license.restriction": "Sem restrições adicionais",
+  
+  "sedici.license.restriction.description": "Você não pode aplicar termos jurídicos ou medidas de caráter tecnológico que restrinjam legalmente outros de fazerem algo que a licença permita.",
+
+  // "file-download-link.download": "Download ",
+  "file-download-link.download": "Baixar ",
+
+  // "register-page.registration.aria.label": "Enter your e-mail address",
+  "register-page.registration.aria.label": "Digite seu e-mail",
+
+  // "forgot-email.form.aria.label": "Enter your e-mail address",
+  "forgot-email.form.aria.label": "Digite seu e-mail",
+
+  // "search-facet-option.update.announcement": "The page will be reloaded. Filter {{ filter }} is selected.",
+  "search-facet-option.update.announcement": "A página será recarregada. O filtro {{ filter }} foi selecionado.",
 }

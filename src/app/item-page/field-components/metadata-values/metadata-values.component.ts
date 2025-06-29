@@ -115,8 +115,8 @@ export class MetadataValuesComponent implements OnChanges {
    * definition is metadata browse, or item browse
    * @param value the specific metadata value being linked
    */
-  getQueryParams(value) {
-    const queryParams = { startsWith: value };
+  getQueryParams(value, authority) {
+    const queryParams = { value: value, authority: authority };
     // todo: should compare with type instead?
     // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
     if (this.browseDefinition.getRenderType() === VALUE_LIST_BROWSE_DEFINITION.value) {
@@ -133,5 +133,17 @@ export class MetadataValuesComponent implements OnChanges {
    */
   hasInternalLink(linkValue: string): boolean {
     return linkValue.startsWith(environment.ui.baseUrl);
+  }
+
+  /**
+   * This method performs a validation and determines the target of the url.
+   * @returns - Returns the target url.
+   */
+  getLinkAttributes(urlValue: string): { target: string, rel: string } {
+    if (this.hasInternalLink(urlValue)) {
+      return { target: '_self', rel: '' };
+    } else {
+      return { target: '_blank', rel: 'noopener noreferrer' };
+    }
   }
 }

@@ -5,6 +5,8 @@ import {
 import {
   Component,
   Input,
+  OnDestroy,
+  OnInit,
 } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import {
@@ -24,7 +26,6 @@ import { Item } from '../../../../../core/shared/item.model';
 import { ITEM } from '../../../../../core/shared/item.resource-type';
 import { hasValue } from '../../../../empty.util';
 import { AccessStatusObject } from './access-status.model';
-import { RemoteData } from 'src/app/core/data/remote-data';
 
 @Component({
   selector: 'ds-base-access-status-badge',
@@ -36,7 +37,7 @@ import { RemoteData } from 'src/app/core/data/remote-data';
 /**
  * Component rendering the access status of an item as a badge
  */
-export class AccessStatusBadgeComponent {
+export class AccessStatusBadgeComponent implements OnDestroy, OnInit {
 
   @Input() object: DSpaceObject;
   accessStatus$: Observable<string>;
@@ -61,7 +62,7 @@ export class AccessStatusBadgeComponent {
    *
    * @param {AccessStatusDataService} accessStatusDataService
    */
-  constructor(private accessStatusDataService: AccessStatusDataService) { }
+  constructor(protected accessStatusDataService: AccessStatusDataService) { }
 
   ngOnInit(): void {
     this.showAccessStatus = environment.item.showAccessStatuses;
@@ -71,17 +72,12 @@ export class AccessStatusBadgeComponent {
     }
 
     const item = this.object as Item;
-    let accessStatus$;
-
     if (item.accessStatus == null) {
       // In case the access status has not been loaded, do it individually.
-      accessStatus$ = this.accessStatusDataService.findAccessStatusFor(item);
-    } else {
-      accessStatus$ = item.accessStatus;
+      item.accessStatus = this.accessStatusDataService.findAccessStatusFor(item);
     }
-
-    this.accessStatus$ = accessStatus$.pipe(
-      map((accessStatusRD: RemoteData<AccessStatusObject>) => {
+    this.accessStatus$ = item.accessStatus.pipe(
+      map((accessStatusRD) => {
         if (accessStatusRD.statusCode !== 401 && hasValue(accessStatusRD.payload)) {
           return accessStatusRD.payload;
         } else {

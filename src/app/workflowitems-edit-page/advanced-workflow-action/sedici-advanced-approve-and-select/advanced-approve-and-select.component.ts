@@ -42,7 +42,7 @@ import { ClaimedTaskDataService } from 'src/app/core/tasks/claimed-task-data.ser
 import { ModifyItemOverviewComponent } from '../../../item-page/edit-item-page/modify-item-overview/modify-item-overview.component';
 
 
-export const ADVANCED_WORKFLOW_TASK_OPTION_APPROVE_AND_SELECT = "approve-and-select";
+export const ADVANCED_WORKFLOW_TASK_OPTION_APPROVE_AND_SELECT = "submit_approve_and_select";
 export const ADVANCED_WORKFLOW_ACTION_APPROVE_AND_SELECT = 'editaction';
 
 @Component({
@@ -100,7 +100,7 @@ export class WorkflowApproveAndSelectComponent extends AdvancedWorkflowActionCom
 
   createBody() {
     return {
-      ['submit_approve']: 'true',
+      ['submit_approve_and_select']: 'true',
     };
   }
 

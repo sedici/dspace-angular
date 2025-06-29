@@ -1,0 +1,166 @@
+.main-title {
+  position: relative;
+  text-align: center;
+  color: #666; /* Color grisáceo */
+  margin: 20px 0; /* Espacio arriba y abajo del título */
+}
+
+.explorar-title-container {
+  margin: 2rem 0 1.5rem 0;
+
+  @media screen and (min-width: map-get($grid-breakpoints, md)) {
+    text-align: center;
+  }
+  
+  .explorar-title {
+    color: var(--sedici-color);
+    font-size: 2rem;
+    margin-bottom: 0.2rem;
+  }
+  
+  .explorar-subtitle {
+    color: #666;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    margin: 0;
+  }
+}
+
+.destacado {  
+  .collection-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 15px;
+    height: 100%;
+    border-radius: 5px;
+    box-shadow: 1px 5px rgba(0,0,0,0.1);
+    
+    .icon-container {
+      margin-bottom: 10px;
+      
+      img {
+        width: 80px;
+        height: 80px;
+        object-fit: contain;
+      }
+    }
+    
+    .text-container {
+      h4 {
+        font-size: 1rem;
+        font-weight: bold;
+        margin-bottom: 0;
+      }
+      
+      p {
+        font-size: 0.625rem;
+        color: #666;
+        margin: 0;
+      }
+    }
+  }
+
+  a {
+    color: inherit;
+  }
+  
+  // Estilo para dispositivos medianos y grandes (horizontal)
+  @media (min-width: 768px) {
+    .collection-card {
+      flex-direction: row;
+      text-align: left;
+      
+      .icon-container {
+        margin-right: 15px;
+        margin-bottom: 0;
+      }
+      
+      .text-container {
+        flex: 1;
+      }
+    }
+  }
+
+  // Estilo para dispositivos móviles (grid 2x2) con ícono a la derecha
+  @media (max-width: 767px) {
+    .collection-card {
+      flex-direction: row; // Cambiamos a horizontal para móvil
+      text-align: left;
+      padding: 15px;
+      height: 100%;
+      justify-content: space-between; // Distribuir espaciado
+      align-items: center;
+      
+      .icon-container {
+        order: 2; // Mueve el ícono a la derecha
+        margin-bottom: 0;
+        margin-left: 10px; // Espacio entre texto e icono
+        
+        img {
+          width: 60px; // Un poco más pequeño para ajustar al espacio
+          height: 60px;
+        }
+      }
+      
+      .text-container {
+        order: 1; // Mueve el texto a la izquierda
+        flex: 1;
+      }
+    }
+  }
+}
+
+.help {
+  padding: 20px 10%;
+  background-color: #cecece;
+
+  @media screen and (max-width: map-get($grid-breakpoints, md)) {
+    background-color: white;
+    gap: 3rem;
+    box-shadow: 0 -5px rgba(0,0,0,0.1);
+  }
+
+  i {
+    font-size: 9rem;
+    color:#777777;
+    margin-bottom: 4.5%;
+  }
+}
+
+h5 {
+  font-weight: normal;
+  color: #6c757d; /* Color del texto similar al gris de la imagen */
+}
+
+.aliados-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 300px;
+
+  .aliados-title {
+    flex: 1;
+    text-align: right;
+    background: linear-gradient(to left, #d1d1d1, #f7f7f7 1%,#fdfdfd 3%);
+    height: 100%;
+    padding-right: 2%;
+
+    h2 {
+      font-size: 2rem;
+      color: #777; /* Ajusta el color según tu diseño */
+    }
+  }
+
+  .aliados-logos {
+    flex: 3;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    img {
+      margin: 0 10px;
+    }
+  }
+}

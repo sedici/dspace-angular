@@ -15,11 +15,14 @@ import { HostWindowService } from '../host-window.service';
 import {
   SidebarCollapseAction,
   SidebarExpandAction,
+  SidebarExpandWithModeAction,
+  SidebarMode
 } from './sidebar.actions';
 import { SidebarState } from './sidebar.reducer';
 
 const sidebarStateSelector = (state: AppState) => state.sidebar;
 const sidebarCollapsedSelector = createSelector(sidebarStateSelector, (sidebar: SidebarState) => sidebar.sidebarCollapsed);
+const sidebarModeSelector = createSelector(sidebarStateSelector, (sidebar: SidebarState) => sidebar.mode);
 
 /**
  * Service that performs all actions that have to do with the sidebar
@@ -36,9 +39,12 @@ export class SidebarService {
    */
   private isCollapsedInStore: Observable<boolean>;
 
+  private modeInStore: Observable<SidebarMode>;
+
   constructor(private store: Store<AppState>, private windowService: HostWindowService) {
     this.isXsOrSm$ = this.windowService.isXsOrSm();
     this.isCollapsedInStore = this.store.pipe(select(sidebarCollapsedSelector));
+    this.modeInStore = this.store.pipe(select(sidebarModeSelector));
   }
 
   /**
@@ -54,6 +60,10 @@ export class SidebarService {
     );
   }
 
+  get currentMode(): Observable<SidebarMode> {
+    return this.modeInStore;
+  }
+
   /**
    * Dispatches a collapse action to the store
    */
@@ -66,5 +76,9 @@ export class SidebarService {
    */
   public expand(): void {
     this.store.dispatch(new SidebarExpandAction());
+  }
+
+  public expandWithMode(mode: SidebarMode): void {
+    this.store.dispatch(new SidebarExpandWithModeAction(mode));
   }
 }

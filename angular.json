@@ -30,7 +30,6 @@
               "lodash",
               "jwt-decode",
               "uuid",
-              "webfontloader",
               "zone.js"
             ],
             "outputPath": "dist/browser",
@@ -43,7 +42,7 @@
               "src/assets",
               {
                 "glob": "**/*",
-                "input": "node_modules/ng2-pdfjs-viewer/pdfjs",
+                "input": "./node_modules/ng2-pdfjs-viewer/pdfjs",
                 "output": "/assets/pdfjs"
               },
               "src/robots.txt"
@@ -66,7 +65,10 @@
                 "bundleName": "dspace-theme"
               }
             ],
-            "scripts": [],
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+            ],
             "baseHref": "/"
           },
           "configurations": {

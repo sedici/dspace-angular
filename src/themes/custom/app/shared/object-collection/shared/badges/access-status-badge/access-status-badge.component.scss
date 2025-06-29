@@ -1,0 +1,14 @@
+.access-status-open-access-listelement-badge {
+  color: green;
+  border: 1px solid green;
+  border-radius: 0px;
+}
+
+.access-status-embargo-listelement-badge,
+.access-status-metadata-only-listelement-badge,
+.access-status-restricted-listelement-badge,
+.access-status-unknown-listelement-badge {
+  color: grey;
+  border: 1px solid grey;
+  border-radius: 0px;
+}

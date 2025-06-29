@@ -50,6 +50,7 @@ import { coreSelector } from '../core.selectors';
 import { CoreState } from '../core-state.model';
 import { BundleDataService } from '../data/bundle-data.service';
 import { AuthorizationDataService } from '../data/feature-authorization/authorization-data.service';
+import { FindListOptions } from '../data/find-list-options.model';
 import { PaginatedList } from '../data/paginated-list.model';
 import { RemoteData } from '../data/remote-data';
 import { RootDataService } from '../data/root-data.service';
@@ -93,7 +94,7 @@ const tagsInUseSelector =
 })
 export class HeadTagService {
 
-  private currentObject: BehaviorSubject<DSpaceObject> = new BehaviorSubject<DSpaceObject>(undefined);
+  protected currentObject: BehaviorSubject<DSpaceObject> = new BehaviorSubject<DSpaceObject>(undefined);
 
   /**
    * When generating the citation_pdf_url meta tag for Items with more than one Bitstream (and no primary Bitstream),
@@ -101,7 +102,7 @@ export class HeadTagService {
    * See {@linkcode getFirstAllowedFormatBitstreamLink}
    * @private
    */
-  private readonly CITATION_PDF_URL_MIMETYPES = [
+  protected readonly CITATION_PDF_URL_MIMETYPES = [
     'application/pdf',                                                          // .pdf
     'application/postscript',                                                   // .ps
     'application/msword',                                                       // .doc
@@ -331,6 +332,7 @@ export class HeadTagService {
         'ORIGINAL',
         true,
         true,
+        new FindListOptions(),
         followLink('primaryBitstream'),
         followLink('bitstreams', {
           findListOptions: {
