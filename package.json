@@ -98,6 +98,7 @@
     "http-terminator": "^3.2.0",
     "isbot": "^5.1.21",
     "jquery": "^3.7.1",
+    "jquery-ui": "^1.14.1",
     "js-cookie": "2.2.1",
     "js-yaml": "^4.1.0",
     "json5": "^2.2.3",

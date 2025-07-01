@@ -49,6 +49,8 @@ import {
   collectionFormEntityTypeSelectionConfig,
   collectionFormModels,
 } from './collection-form.models';
+import { AfterViewInit } from '@angular/core'; // Asegurate de importar esto
+
 
 /**
  * Form used for creating and editing collections
@@ -153,6 +155,18 @@ export class CollectionFormComponent extends ComColFormComponent<Collection> imp
       super.ngOnInit();
       this.chd.detectChanges();
     });
-
   }
+
+  ngAfterViewInit(): void {
+    const interval = setInterval(() => {
+      const $desc = $('#description');
+      if ($desc.length > 0) {
+        $desc.metadataGenerator();
+        clearInterval(interval);
+      }
+    }, 100);
+  }
+
 }
+
+declare var $: any;

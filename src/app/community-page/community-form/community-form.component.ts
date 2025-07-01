@@ -34,6 +34,7 @@ import { FormComponent } from '../../shared/form/form.component';
 import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { UploaderComponent } from '../../shared/upload/uploader/uploader.component';
 import { VarDirective } from '../../shared/utils/var.directive';
+import { AfterViewInit } from '@angular/core'; // Asegurate de importar esto
 
 /**
  * Form used for creating and editing communities
@@ -120,4 +121,11 @@ export class CommunityFormComponent extends ComColFormComponent<Community> imple
       super.ngOnInit();
     }
   }
+
+  ngAfterViewInit(): void {
+    // Ejecuta la función JS después de que el DOM esté listo
+    $('#description').metadataGenerator();
+  }
 }
+
+declare var $: any;
