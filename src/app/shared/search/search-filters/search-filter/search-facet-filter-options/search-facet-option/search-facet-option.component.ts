@@ -101,6 +101,7 @@ export class SearchFacetOptionComponent implements OnInit {
     this.addQueryParams$ = this.updateAddParams();
     if (this.filterConfig.name === 'location.coll') {
       this.getCommunityByCollectionUUID(this.filterValue.authorityKey);
+      this.addQueryParams$ = this.updateCollectionParams();
     }
   }
 
@@ -155,6 +156,17 @@ export class SearchFacetOptionComponent implements OnInit {
    */
   updateAddParams(): Observable<Params> {
     return this.searchConfigService.selectNewAppliedFilterParams(this.filterConfig.name, this.getFacetValue());
+  }
+
+  updateCollectionParams(): Observable<Params> {
+    return this.addQueryParams$.pipe(
+        map((params: Params) => {
+          const newParams = {...params};
+          delete newParams[`f.${this.filterConfig.name}`];
+          newParams['scope'] = this.filterValue.authorityKey;
+          return newParams;
+        })
+      );
   }
 
   /**
