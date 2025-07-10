@@ -98,10 +98,10 @@ export class CommunityPageComponent implements OnInit {
   communityPageRoute$: Observable<string>;
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private authService: AuthService,
-    private authorizationDataService: AuthorizationDataService,
+    protected route: ActivatedRoute,
+    protected router: Router,
+    protected authService: AuthService,
+    protected authorizationDataService: AuthorizationDataService,
     public dsoNameService: DSONameService,
   ) {
 
