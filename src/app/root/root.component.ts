@@ -89,6 +89,7 @@ export class RootComponent implements OnInit {
   maxMobileWidth = WidthCategory.SM;
 
   public isHomePage$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public isSubmissionPage$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private routerSubscription: Subscription;
 
   /**
@@ -149,15 +150,18 @@ export class RootComponent implements OnInit {
 
     const currentUrl = this.router.url;
     this.isHomePage$.next(this.isHomeUrl(currentUrl));
+    this.isSubmissionPage$.next(this.isSubmissionUrl(currentUrl));
 
     this.routerSubscription = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
       map((event: NavigationEnd) => {
         const isHome = this.isHomeUrl(event.urlAfterRedirects);
-        return isHome;
+        const isSubmission = this.isSubmissionUrl(event.urlAfterRedirects);
+        return { isHome, isSubmission };
       })
-    ).subscribe(isHome => {
+    ).subscribe(({ isHome, isSubmission }) => {
       this.isHomePage$.next(isHome);
+      this.isSubmissionPage$.next(isSubmission);
     });
   }
 
@@ -172,6 +176,10 @@ export class RootComponent implements OnInit {
     return url === '/' || 
            url === '/home' || 
            url.startsWith('/home?');
+  }
+
+  private isSubmissionUrl(url: string): boolean {
+    return url.startsWith('/workspaceitems') && url.endsWith('/edit');
   }
 
   skipToMainContent() {

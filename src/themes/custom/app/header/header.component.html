@@ -1,4 +1,6 @@
-<header id="main-site-header" [ngClass]="((isMobile$ | async) !== true) || (isHomePage$ | async) ? 'white-header' : 'color-header'">
+<header id="main-site-header" 
+  [ngClass]="((isMobile$ | async) !== true) || (isHomePage$ | async) ? 'white-header' : 'color-header'"
+  [ngClass]="(((isMobile$ | async) !== true) && ((isSubmissionPage$ | async) !== true)) ? 'fixed-header' : ''">
   <!-- Vista Desktop -->
   <div *ngIf="(isMobile$ | async) !== true" class="d-flex align-items-center" id="main-site-header-container">
     <div class="left-container navbar-brand p-2">

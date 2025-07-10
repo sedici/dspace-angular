@@ -39,6 +39,7 @@ import { HostWindowService } from 'src/app/shared/host-window.service';
 export class HeaderComponent extends BaseComponent implements OnInit {
   public isNavBarCollapsed$: Observable<boolean>;
   public isHomePage$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public isSubmissionPage$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private routerSubscription: Subscription;
 
   constructor(protected menuService: MenuService, protected windowService: HostWindowService, private router: Router) {
@@ -52,16 +53,18 @@ export class HeaderComponent extends BaseComponent implements OnInit {
     // Verifica la URL inicial al cargar
     const currentUrl = this.router.url;
     this.isHomePage$.next(this.isHomeUrl(currentUrl));
+    this.isSubmissionPage$.next(this.isSubmissionUrl(currentUrl));
     
-    // Detecta cambios en la URL mientras navegas
     this.routerSubscription = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
       map((event: NavigationEnd) => {
         const isHome = this.isHomeUrl(event.urlAfterRedirects);
-        return isHome;
+        const isSubmission = this.isSubmissionUrl(event.urlAfterRedirects);
+        return { isHome, isSubmission };
       })
-    ).subscribe(isHome => {
+    ).subscribe(({ isHome, isSubmission }) => {
       this.isHomePage$.next(isHome);
+      this.isSubmissionPage$.next(isSubmission);
     });
   }
   
@@ -77,5 +80,9 @@ export class HeaderComponent extends BaseComponent implements OnInit {
     return url === '/' || 
            url === '/home' || 
            url.startsWith('/home?');
+  }
+
+  private isSubmissionUrl(url: string): boolean {
+    return url.startsWith('/workspaceitems') && url.endsWith('/edit');
   }
 }
