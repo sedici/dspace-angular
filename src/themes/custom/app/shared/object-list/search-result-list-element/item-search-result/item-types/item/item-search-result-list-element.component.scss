@@ -6,8 +6,27 @@
   }
 }
 
+.badges-context-container {
+  display: flex;
+  gap: 0.25em;
+}
+
+sedici-context {
+  flex: 1;
+  min-width: 0;
+}
+
+::ng-deep sedici-context div {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
 ::ng-deep ds-badges .badge {
-  padding: .3rem;
+  padding: 0.5em;
+  font-size: 85%;
+  font-weight: var(--font-weight-regular);
 }
 
 .subtitle {

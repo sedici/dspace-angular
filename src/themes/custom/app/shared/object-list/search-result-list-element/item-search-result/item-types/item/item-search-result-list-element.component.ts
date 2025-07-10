@@ -16,7 +16,7 @@ import { ItemSearchResultListElementComponent as BaseComponent } from '../../../
 import { TruncatableComponent } from '../../../../../../../../../app/shared/truncatable/truncatable.component';
 import { TruncatablePartComponent } from '../../../../../../../../../app/shared/truncatable/truncatable-part/truncatable-part.component';
 import { ThemedThumbnailComponent } from '../../../../../../../../../app/thumbnail/themed-thumbnail.component';
-
+import { SediciContextComponent } from 'src/themes/custom/app/item-page/simple/field-components/context/sedici-context.component';
 @listableObjectComponent('PublicationSearchResult', ViewMode.ListElement, Context.Any, 'custom')
 @listableObjectComponent(ItemSearchResult, ViewMode.ListElement, Context.Any, 'custom')
 @Component({
@@ -26,7 +26,7 @@ import { ThemedThumbnailComponent } from '../../../../../../../../../app/thumbna
   templateUrl: './item-search-result-list-element.component.html',
   // templateUrl: '../../../../../../../../../app/shared/object-list/search-result-list-element/item-search-result/item-types/item/item-search-result-list-element.component.html',
   standalone: true,
-  imports: [NgIf, RouterLink, ThemedThumbnailComponent, NgClass, ThemedBadgesComponent, TruncatableComponent, TruncatablePartComponent, NgFor, AsyncPipe],
+  imports: [NgIf, RouterLink, ThemedThumbnailComponent, NgClass, ThemedBadgesComponent, TruncatableComponent, TruncatablePartComponent, NgFor, AsyncPipe, SediciContextComponent],
 
 })
 export class ItemSearchResultListElementComponent extends BaseComponent {
