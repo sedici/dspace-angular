@@ -118,8 +118,36 @@ export class PdfViewerComponent implements AfterViewInit {
     this.isTextSelected = true;
     const range = selection.getRangeAt(0);
     const rect = range.getBoundingClientRect();
-    this.createButtons(rect);
+
+    this.centerSelectionInView(rect);
+
+    // Espero a que termine el scroll para crear los botones con la posición final
+    setTimeout(() => {
+      const updatedRect = selection.getRangeAt(0).getBoundingClientRect();
+      this.createButtons(updatedRect);
+    }, 450);
     this.updateMetadataOptions(event);
+  }
+
+  /**
+   * Centra la selección de texto en el visor de PDF
+   * @param rect Rectángulo que contiene la selección de texto
+   */
+  private centerSelectionInView(rect: DOMRect): void {
+    if (!this.iframe || !this.iframe.contentWindow) return;
+    
+    const viewerContainer = this.iframe.contentWindow.document.getElementById('viewerContainer');
+    if (!viewerContainer) return;
+    
+    const containerHeight = viewerContainer.clientHeight;
+    const selectionTop = rect.top + viewerContainer.scrollTop - this.iframe.getBoundingClientRect().top;
+    const selectionHeight = rect.height;
+    const targetScrollTop = selectionTop - (containerHeight / 2) + (selectionHeight / 2);
+    
+    viewerContainer.scrollTo({
+      top: targetScrollTop,
+      behavior: 'smooth'
+    });
   }
   
   private clearTextSelection(): void {
