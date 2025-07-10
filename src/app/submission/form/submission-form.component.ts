@@ -8,6 +8,7 @@ import {
   Input,
   OnChanges,
   OnDestroy,
+  OnInit,
   SimpleChanges,
 } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -31,6 +32,7 @@ import { SubmissionSectionModel } from '../../core/config/models/config-submissi
 import { Collection } from '../../core/shared/collection.model';
 import { HALEndpointService } from '../../core/shared/hal-endpoint.service';
 import { Item } from '../../core/shared/item.model';
+import { EPerson } from 'src/app/core/eperson/models/eperson.model';
 import { SubmissionObject } from '../../core/submission/models/submission-object.model';
 import { WorkspaceitemSectionsObject } from '../../core/submission/models/workspaceitem-sections.model';
 import {
@@ -78,7 +80,7 @@ import { PdfViewerComponent } from './pdf-viewer.component';
     PdfViewerComponent,
   ],
 })
-export class SubmissionFormComponent implements OnChanges, OnDestroy {
+export class SubmissionFormComponent implements OnChanges, OnDestroy, OnInit {
 
   /**
    * The collection id this submission belonging to
@@ -168,6 +170,8 @@ export class SubmissionFormComponent implements OnChanges, OnDestroy {
 
   public pdfBlobUrl: string | null = null;
 
+  public isAuthorizedForPdfViewer: boolean = false;
+
   /**
    * Initialize instance variables
    *
@@ -185,6 +189,21 @@ export class SubmissionFormComponent implements OnChanges, OnDestroy {
     private submissionService: SubmissionService,
     private sectionsService: SectionsService) {
     this.isActive = true;
+  }
+
+  ngOnInit() {
+    let currentUser$ = this.authService.getAuthenticatedUserFromStore();
+      currentUser$.subscribe((eperson: EPerson) => {
+        if (eperson) {
+          this.http.get(eperson._links?.groups?.href).subscribe((responsePath: any) => {
+            const groups = responsePath._embedded?.groups || [];
+            this.isAuthorizedForPdfViewer = groups.some(group => 
+              group.name === 'Administrator' || group.name === 'SeDiCIAdmin'
+            );
+            this.changeDetectorRef.detectChanges();
+          });
+        }
+      });
   }
 
   /**
@@ -335,6 +354,7 @@ export class SubmissionFormComponent implements OnChanges, OnDestroy {
       const fileUrl = lastFileLoad.url;
       this.http.get(fileUrl, { responseType: 'blob' }).subscribe((blob: Blob) => {
         this.pdfBlobUrl = URL.createObjectURL(blob);
+        this.changeDetectorRef.detectChanges();
       });
     }
   }

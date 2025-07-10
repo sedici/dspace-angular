@@ -1,5 +1,5 @@
 <div class="container-fluid row">
-  <div class="col-6">
+    <div [ngClass]="(pdfBlobUrl && isAuthorizedForPdfViewer) ? 'col-6' : 'col-12'">
     <div *ngIf="(isLoading() | async) !== true" class="submission-form-header mb-3 d-flex flex-wrap position-sticky">
       <div *ngIf="(uploadEnabled$ | async)" class="w-100">
         <ds-submission-upload-files [submissionId]="submissionId"
@@ -39,8 +39,8 @@
     </div>
   </div>
 
-  <div class="col-6">
-    <div *ngIf="pdfBlobUrl" class="position-sticky" style="width: 100%; height: 500px; top: 0; padding-top: 8px;">
+  <div *ngIf="pdfBlobUrl && isAuthorizedForPdfViewer" class="col-6">
+    <div class="position-sticky" style="width: 100%; height: 500px; top: 0; padding-top: 8px;">
       <app-pdf-viewer [pdfUrl]="pdfBlobUrl"></app-pdf-viewer>
     </div>
   </div>
