@@ -72,19 +72,16 @@ export class HomeNewsComponent extends BaseComponent {
   cardItems:Array<CardItem> = [
     {
       title: "Autores",
-      img: "assets/custom/images/autores.png",
+      img: "assets/custom/images/Autores.svg",
       href: "/browse/author",
-      description: "Profesores, investigadores, estudiantes u otros colaboradores",
     } as CardItem,{
       title: "Publicaciones",
-      img: "assets/custom/images/publicaciones.png",
+      img: "assets/custom/images/Publicaciones.svg",
       href: "/search",
-      description: "Revistas, libras, informes tecincos, trabajos de conferencias, tesis ..."
     } as CardItem,{
       title: "Unidades Academicas",
-      img: "assets/custom/images/unidades_academicas.png",
+      img: "assets/custom/images/UAs.svg",
       href: "/handle/10915/1",
-      description: "Facultades, colegios, laboratorios, institutos, centros ..."
     } as CardItem
   ];
 }

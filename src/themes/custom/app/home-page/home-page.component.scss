@@ -1,29 +1,59 @@
 .main-title {
   position: relative;
   text-align: center;
-  color: #666; /* Color grisáceo */
-  margin: 20px 0; /* Espacio arriba y abajo del título */
+  color: #666;
+  margin: 20px 0;
 }
 
-.explorar-title-container {
-  margin: 2rem 0 1.5rem 0;
-
-  @media screen and (min-width: map-get($grid-breakpoints, md)) {
-    text-align: center;
-  }
+.title-container {
+  margin-bottom: 2rem;
+  padding-left: 20%;
+  display: flex;
+  align-items: center;
   
-  .explorar-title {
-    color: var(--sedici-color);
+  .explorar-text {
     font-size: 2rem;
-    margin-bottom: 0.2rem;
+    font-weight: var(--font-weight-bold);
+    margin-right: 0.5rem;
   }
   
-  .explorar-subtitle {
-    color: #666;
-    font-size: 1rem;
-    letter-spacing: 0.5px;
+  .section-title {
+    color: #999;
+    font-size: 2rem;
     margin: 0;
+    margin-right: 1rem;
   }
+  
+  &::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-color: #d4d4d4;
+  }
+}
+
+@media (max-width: 767px) {
+  .title-container {
+    margin-bottom: 0;
+    padding-left: 5%;
+
+    .explorar-text {
+      font-size: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+    }
+
+    &::after {
+      display: none;
+    }
+  }
+}
+
+div.row.container {
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .destacado {  
@@ -113,25 +143,25 @@
 }
 
 .help {
-  padding: 20px 10%;
-  background-color: #cecece;
+  padding: 3rem 8rem;
+  background-color: #52525E;
 
   @media screen and (max-width: map-get($grid-breakpoints, md)) {
-    background-color: white;
+    padding: 1rem;
     gap: 3rem;
     box-shadow: 0 -5px rgba(0,0,0,0.1);
   }
 
-  i {
-    font-size: 9rem;
-    color:#777777;
-    margin-bottom: 4.5%;
+  img {
+    margin-bottom: 1rem;
+    width: 100%;
+    max-width: 60px;
   }
 }
 
 h5 {
   font-weight: normal;
-  color: #6c757d; /* Color del texto similar al gris de la imagen */
+  color: white;
 }
 
 .aliados-section {
@@ -145,11 +175,11 @@ h5 {
     text-align: right;
     background: linear-gradient(to left, #d1d1d1, #f7f7f7 1%,#fdfdfd 3%);
     height: 100%;
-    padding-right: 2%;
 
     h2 {
       font-size: 2rem;
-      color: #777; /* Ajusta el color según tu diseño */
+      padding-right: 1.5rem;
+      color: #777;
     }
   }
 
