@@ -7,21 +7,14 @@
         <header class="comcol-header mr-auto">
           <!-- Community name -->
           <ds-comcol-page-header [name]="dsoNameService.getName(communityPayload)"></ds-comcol-page-header>
-          
-          <!-- Container flex para logo e introductory text -->
-          <div class="d-flex align-items-start">
-            <!-- Community logo -->
-            <div class="logo-container" *ngIf="logo">
-              <ds-comcol-page-logo [logo]="logo.payload" [alternateText]="'community.logo' | translate">
-              </ds-comcol-page-logo>
-            </div>
-            
-            <!-- Introductory text -->
-            <div class="content-container flex-grow-1">
-              <ds-comcol-page-content [content]="communityPayload.introductoryText" [hasInnerHtml]="true">
-              </ds-comcol-page-content>
-            </div>
-          </div>
+
+          <!-- Community logo -->
+          <ds-comcol-page-logo class="float-left" [logo]="logo.payload" [alternateText]="'community.logo' | translate">
+          </ds-comcol-page-logo>
+
+          <!-- Introductory text -->
+          <ds-comcol-page-content [content]="communityPayload.introductoryText" [hasInnerHtml]="true">
+          </ds-comcol-page-content>
 
           <!-- Handle -->
           <ds-comcol-page-handle [content]="communityPayload.handle" [title]="'community.page.handle'">

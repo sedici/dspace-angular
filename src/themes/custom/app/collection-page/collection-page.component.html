@@ -11,19 +11,13 @@
                 [name]="dsoNameService.getName(collection)">
             </ds-comcol-page-header>
 
-            <div class="d-flex align-items-start">
-              <!-- Collection logo -->
-              <div class="logo-container" *ngIf="logo">
-                <ds-comcol-page-logo [logo]="logo.payload" [alternateText]="'collection.logo' | translate">
-                </ds-comcol-page-logo>
-              </div>
-              
-              <!-- Introductory text -->
-              <div class="content-container flex-grow-1">
-                <ds-comcol-page-content [content]="collection.introductoryText" [hasInnerHtml]="true">
-                </ds-comcol-page-content>
-              </div>
-            </div>
+            <!-- Collection logo -->
+            <ds-comcol-page-logo class="float-left" [logo]="logo.payload" [alternateText]="'collection.logo' | translate">
+            </ds-comcol-page-logo>
+            
+            <!-- Introductory text -->
+            <ds-comcol-page-content [content]="collection.introductoryText" [hasInnerHtml]="true">
+            </ds-comcol-page-content>
 
             <!-- Handle -->
             <ds-comcol-page-handle
