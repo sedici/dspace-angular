@@ -1,12 +1,12 @@
-<ng-container *ngTemplateOutlet="itemsGrid; context: { title: 'Colecciones destacadas', items: coleccionesDestacadas, column: false, isSingleRow: true }"></ng-container>
-<ng-container *ngTemplateOutlet="itemsGrid; context: { title: 'Facultades', items: facultades, column: true, isSingleRow: false }"></ng-container>
-<ng-container *ngTemplateOutlet="itemsGrid; context: { title: 'Pregrado', items: pregrado, column: true, isSingleRow: false }"></ng-container>
+<ng-container *ngTemplateOutlet="itemsGrid; context: { title: 'featuredCollections', items: coleccionesDestacadas, column: false, isSingleRow: true }"></ng-container>
+<ng-container *ngTemplateOutlet="itemsGrid; context: { title: 'faculties', items: facultades, column: true, isSingleRow: false }"></ng-container>
+<ng-container *ngTemplateOutlet="itemsGrid; context: { title: 'undergraduate', items: pregrado, column: true, isSingleRow: false }"></ng-container>
 
 <ng-template #itemsGrid let-title="title" let-items="items" let-column="column" let-isSingleRow="isSingleRow">
   <div class="section-destacados">
     <div class="title-container">
-      <span class="explorar-text">Explorar</span>
-      <h2 class="section-title">{{title}}</h2>
+      <span class="explorar-text">{{'home.page.explore' | translate}}</span>
+      <h2 class="section-title">{{'home.page.' + title | translate}}</h2>
     </div>
     <div *ngIf="items" class="section-grid container" [ngClass]="{'d-inline d-sm-flex': column, 'single-row-scroll': isSingleRow}">
       <div *ngFor="let item of items" class="section-item" [ngClass]="isSingleRow ? 'single-row' : 'multi-row'">

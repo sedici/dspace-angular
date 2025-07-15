@@ -7,6 +7,7 @@ import { RouterLink } from '@angular/router';
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HostWindowService, WidthCategory } from 'src/app/shared/host-window.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { HomeNewsComponent as BaseComponent } from '../../../../../app/home-page/home-news/home-news.component';
 import { SearchFormComponent } from '../../shared/search-form/search-form.component';
@@ -28,7 +29,7 @@ export interface CardItem {
   templateUrl: './home-news.component.html',
   //templateUrl: '../../../../../app/home-page/home-news/home-news.component.html',
   imports:[
-    AsyncPipe, NgIf, NgFor, SearchFormComponent, ThemedSearchNavbarComponent, RouterLink,
+    AsyncPipe, NgIf, NgFor, SearchFormComponent, ThemedSearchNavbarComponent, RouterLink, TranslateModule,
   ],
   standalone: true,
 })
@@ -71,15 +72,15 @@ export class HomeNewsComponent extends BaseComponent {
 
   cardItems:Array<CardItem> = [
     {
-      title: "Autores",
+      title: "author",
       img: "assets/custom/images/Autores.svg",
       href: "/browse/author",
     } as CardItem,{
-      title: "Publicaciones",
+      title: "publication",
       img: "assets/custom/images/Publicaciones.svg",
       href: "/search",
     } as CardItem,{
-      title: "Unidades Academicas",
+      title: "academicUnit",
       img: "assets/custom/images/UAs.svg",
       href: "/handle/10915/1",
     } as CardItem

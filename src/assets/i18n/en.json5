@@ -4216,7 +4216,7 @@
 
   "repository.title": "DSpace Repository",
 
-  "repository.title.prefix": "DSpace Repository :: ",
+  "repository.title.prefix": "SEDICI - Repository of the National University of La Plata :: ",
 
   "resource-policies.add.button": "Add",
 
@@ -6798,6 +6798,12 @@
 
   "browse.search-form.placeholder": "Search the repository",
 
+  "search.navbar.placeholder": "Search in SEDICI UNLP",
+
+  "sedici.item.page.sedici.citation": "Cite",
+
+  "sedici.item.page.sedici.share": "Share",
+
   // "sedici.item.page.sedici.creator.corporate": "Autor institucional",
   "sedici.item.page.sedici.creator.corporate": "Institutional Author",
 
@@ -6972,6 +6978,41 @@
   "sedici.license.restriction": "No additional restrictions",
   
   "sedici.license.restriction.description": "You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.",
+  
+  "home.page.search.placeholder": "Search among the {{ totalItems }} resources available in the repository",
+  
+  "home.page.author": "Authors",
+
+  "home.page.publication": "Publications",
+
+  "home.page.academicUnit": "Academic Units",
+
+  "home.page.journals": "Journals",
+  
+  "home.page.events": "Events",
+
+  "home.page.books": "Books",
+
+  "home.page.data": "Data",
+
+  "home.page.explore": "Explore",
+
+  "home.page.production": "UNLP Production",
+
+  "home.page.featuredCollections": "Featured Collections",
+
+  "home.page.faculties": "Faculties",
+
+  "home.page.undergraduate": "Undergraduate",
+
+  "home.page.researcherHelp": "Researcher Help",
+
+  "home.page.depositionObligation": "Deposit Obligation",
+
+  "home.page.growthStatistics": "Growth Statistics",
+
+  "home.page.allies": "Allies",
+  
   "file-download-link.download": "Download ",
 
   "register-page.registration.aria.label": "Enter your e-mail address",

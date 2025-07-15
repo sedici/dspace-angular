@@ -6335,7 +6335,7 @@
   "repository.title": "Repositorio DSpace",
 
   // "repository.title.prefix": "DSpace Repository :: ",
-  "repository.title.prefix": "Repositorio DSpace :: ",
+  "repository.title.prefix": "SEDICI - Repositorio de la Universidad Nacional de La Plata :: ",
 
   // "resource-policies.add.button": "Add",
   "resource-policies.add.button": "Agregar",
@@ -9294,7 +9294,11 @@
   // "collection.page.browse.search.head": "Search",
   "collection.page.browse.search.head": "Buscar",
 
+  "search.navbar.placeholder": "Buscar en SEDICI UNLP",
+
   // Vista del ítem
+  "sedici.item.page.sedici.citation": "Citar",
+  "sedici.item.page.sedici.share": "Compartir",
   "sedici.item.page.sedici.creator.corporate": "Autor institucional",
   "sedici.item.page.sedici.creator.interprete": "Intérprete",
   "sedici.item.page.sedici.contributor.compiler": "Compilador",
@@ -9365,6 +9369,26 @@
   "sedici.license.shareAlike.description": "Si remezcla, transforma o crea a partir del material, debe distribuir su contribución bajo la la misma licencia del original.",
   "sedici.license.restriction": "No hay restricciones adicionales",
   "sedici.license.restriction.description": "No puede aplicar términos legales ni medidas tecnológicas que restrinjan legalmente a otras a hacer cualquier uso permitido por la licencia.",
+  
+  // Home
+  "home.page.search.placeholder": "Busque entre los {{ totalItems }} recursos disponibles en el repositorio",
+  "home.page.author": "Autores",
+  "home.page.publication": "Publicaciones",
+  "home.page.academicUnit": "Unidades Académicas",
+  "home.page.journals": "Revistas",
+  "home.page.events": "Eventos",
+  "home.page.books": "Libros",
+  "home.page.data": "Datos",
+  "home.page.explore": "Explorar",
+  "home.page.production": "Producción de la UNLP",
+  "home.page.featuredCollections": "Colecciones destacadas",
+  "home.page.faculties": "Facultades",
+  "home.page.undergraduate": "Pregrado",
+  "home.page.researcherHelp": "Ayuda para investigadores",
+  "home.page.depositionObligation": "Obligación de depósito en el repositorio",
+  "home.page.growthStatistics": "Estadísticas de crecimiento",
+  "home.page.allies": "Aliados",
+  
   // "vocabulary-treeview.search.form.add": "Add",
   "vocabulary-treeview.search.form.add": "Añadir",
 

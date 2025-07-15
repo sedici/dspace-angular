@@ -22,7 +22,7 @@
         <span role="img" [attr.aria-label]="'file-download-link.download' | translate">
           <i class="fas fa-download"></i>
         </span>
-        <span>Descargar ({{ adaptFileSize((bitstream?.sizeBytes) | dsFileSize:0) }})</span>
+        <span>{{'item.page.filesection.download' | translate}} ({{ adaptFileSize((bitstream?.sizeBytes) | dsFileSize:0) }})</span>
       </div>
       <div *ngIf="!isMobile" class="svg-container">
         <!-- SVG circular (estado inicial) -->
