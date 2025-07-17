@@ -1,7 +1,7 @@
 <header id="main-site-header" [ngClass]="((isMobile$ | async) !== true) || (isHomePage$ | async) ? 'white-header' : 'color-header'">
   <!-- Vista Desktop -->
   <div *ngIf="(isMobile$ | async) !== true" class="d-flex align-items-center" id="main-site-header-container">
-    <div class="left-container navbar-brand p-2">
+    <div class="left-container navbar-brand">
       <a routerLink="/home">
         <img id="header-logo" [src]="'assets/custom/images/SEDICI_2025.svg'" [attr.alt]="'menu.header.image.logo' | translate"/>
       </a>
