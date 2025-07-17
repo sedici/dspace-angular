@@ -8,7 +8,7 @@
       <span class="explorar-text">{{'home.page.explore' | translate}}</span>
       <h2 class="section-title">{{'home.page.' + title | translate}}</h2>
     </div>
-    <div *ngIf="items" class="section-grid container" [ngClass]="{'d-inline d-sm-flex': column, 'single-row-scroll': isSingleRow}">
+    <div *ngIf="items" class="section-grid container" [ngClass]="{'d-sm-flex': column, 'single-row-scroll': isSingleRow}">
       <div *ngFor="let item of items" class="section-item" [ngClass]="isSingleRow ? 'single-row' : 'multi-row'">
         <a [href]="item.href">
           <div class="img-container">

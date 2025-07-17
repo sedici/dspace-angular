@@ -79,6 +79,14 @@
   
   @media (max-width: 767px) {
     .section-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      overflow-x: visible;
+    }
+
+    .section-grid.single-row-scroll {
+      display: flex;
       overflow-x: auto;
 
       .section-item {
@@ -89,6 +97,11 @@
     .section-grid .section-item.multi-row .img-container {
       margin-bottom: 0rem;
       height: auto;
+
+      img {
+        width: 150px;
+        height: 100px;
+      }
     }
   }
 
