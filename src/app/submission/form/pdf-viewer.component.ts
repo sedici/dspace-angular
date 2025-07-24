@@ -46,6 +46,7 @@ export class PdfViewerComponent implements AfterViewInit {
   replaceText: boolean = false;
   
   // Configuración de metadatos
+  metadataFormOptions = [];
   metadataOptions = [];
   repeatableMetadata: string[] = MetadataConfig.REPEATABLE_METADATA;
   repeatableAndExtensibleMetadata: string[] = MetadataConfig.REPEATABLE_AND_EXTENSIBLE_METADATA;
@@ -67,6 +68,7 @@ export class PdfViewerComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.initializeButtons();
     this.interceptFormOperationChanges();
+    this.addFocusTrackingToInputs();
   }
 
   ngAfterViewChecked() {
@@ -100,7 +102,23 @@ export class PdfViewerComponent implements AfterViewInit {
     if (this.elementsAmount !== elements.length) {
       this.elementsAmount = elements.length;
       this.addButtonsToInputs();
+      this.addFocusTrackingToInputs();
     }
+  }
+
+  private addFocusTrackingToInputs(): void {
+    const elements = this.getFormElements();
+
+    elements.forEach(element => {
+      element.addEventListener('focus', (event) => {
+        const targetId = (event.target as HTMLTextAreaElement | HTMLInputElement).id;
+        const excludedIds = MetadataConfig.EXCLUDED_IDS;
+        // Evito el focus en la caja de previsualización de texto y en los campos deplegables
+        if (!excludedIds.has(targetId) && !targetId.includes('input-')) {
+          this.selectedMetadataField = targetId;
+        }
+      });
+    });
   }
 
   onTextSelected(event) {
@@ -126,7 +144,6 @@ export class PdfViewerComponent implements AfterViewInit {
       const updatedRect = selection.getRangeAt(0).getBoundingClientRect();
       this.createButtons(updatedRect);
     }, 450);
-    this.updateMetadataOptions(event);
   }
 
   /**
@@ -157,57 +174,10 @@ export class PdfViewerComponent implements AfterViewInit {
     this.removeButtons();
   }
   
-  private updateMetadataOptions(event: any): void {
-    const elements = this.getFormElements();
-    const excludedIds = MetadataConfig.EXCLUDED_IDS;
-    const uniqueIdParts = new Set<string>();
-    const nameMap = MetadataConfig.NAME_MAP;
-    const visibleElements = elements.filter(element => 
-      window.getComputedStyle(element).visibility === 'visible' && element.id);
-    
-    setTimeout(() => {
-      this.metadataOptions = this.filterAndMapElements(visibleElements, excludedIds, uniqueIdParts, nameMap);
-    }, 100);
-  }
-  
   private getFormElements(): HTMLElement[] {
     const textareas = Array.from(document.querySelectorAll('textarea'));
     const inputs = Array.from(document.querySelectorAll('input'));
     return [...textareas, ...inputs] as HTMLElement[];
-  }
-  
-  private filterAndMapElements(
-    elements: HTMLElement[], 
-    excludedIds: Set<string>, 
-    uniqueIdParts: Set<string>,
-    nameMap: Record<string, string>
-  ): Array<{name: string, value: string}> {
-    return elements
-      .filter(element => this.shouldIncludeElement(element, excludedIds))
-      .filter(element => this.isUniqueMetadataId(element, uniqueIdParts))
-      .map(element => ({
-        name: nameMap[element.id] || element.getAttribute('placeholder') || element.getAttribute('name') || element.id,
-        value: element.id
-      }));
-  }
-  
-  private shouldIncludeElement(element: HTMLElement, excludedIds: Set<string>): boolean {
-    return !excludedIds.has(element.id) && 
-           !element.id.match(/^primaryBitstream\d+$/) && 
-           !element.id.match(/^inputFileUploader-ds-drag-and-drop-uploader\d+$/) && 
-           !element.id.match(/^SL_locer\d+$/) && 
-           !element.id.match(/^SL_BBL_locer\d+$/);
-  }
-  
-  private isUniqueMetadataId(element: HTMLElement, uniqueIdParts: Set<string>): boolean {
-    const match = element.id.match(/(dc|sedici|mods|thesis).*/);
-    const idPart = match ? match[0] : element.id;
-    if (uniqueIdParts.has(idPart)) {
-      return false;
-    } else {
-      uniqueIdParts.add(idPart);
-      return true;
-    }
   }
 
   createButtons(rect: DOMRect): void {
@@ -227,44 +197,30 @@ export class PdfViewerComponent implements AfterViewInit {
   
   private configureButtonComponent(componentRef: ComponentRef<ShortcutsButtonsComponent>, rect: DOMRect): void {
     componentRef.instance.rect = rect;
-    componentRef.instance.buttonClicked.subscribe((event: { idElement: string, multiple: boolean }) => {
-      this.handleButtonClicked(event.idElement, event.multiple);
+    componentRef.instance.buttonClicked.subscribe((event: { idElement: string }) => {
+      this.handleButtonClicked(event.idElement);
     });
   }
   
-  handleButtonClicked(idElement: string, multiple: boolean) {
-    this.selectedMetadataField = idElement;
-    const element = document.getElementById(this.selectedMetadataField) as HTMLTextAreaElement | HTMLInputElement;
-    
-    if (multiple) {
-      this.handleMultipleSelection(element);
-    } else {
-      this.handleSingleSelection(element);
+  handleButtonClicked(idElement: string) {
+    let element: HTMLTextAreaElement | HTMLInputElement;
+
+    if (idElement !== 'focus') {
+      this.selectedMetadataField = idElement;
     }
+    element = document.getElementById(this.selectedMetadataField) as HTMLTextAreaElement | HTMLInputElement;
     
-    this.removeButtons();
-  }
-  
-  private handleMultipleSelection(element: HTMLTextAreaElement | HTMLInputElement): void {
     if (this.selectedMetadataField === 'sedici_creator_person') {
       const authors = filterTransformer.transformPersons(this.selectedText);
       this.processRepeatableMetadata(authors);
-    } else {
+    } else if (this.selectedMetadataField === 'dc_subject') {
       const keywords = filterTransformer.transformKeywords(this.selectedText);
       this.processRepeatableMetadata(keywords);
-    }
-  }
-  
-  private handleSingleSelection(element: HTMLTextAreaElement | HTMLInputElement): void {
-    if (this.selectedMetadataField === 'sedici_creator_person') {
-      const author = filterTransformer.transformPerson(this.selectedText);
-      this.processRepeatableMetadata([author]);
-    } else if (this.selectedMetadataField === 'dc_subject') {
-      const keyword = filterTransformer.transformKeyword(this.selectedText);
-      this.processRepeatableMetadata([keyword]);
     } else {
-      this.setMetadataValue(element, this.selectedText, true);
+      this.copyToMetadataField();
     }
+    
+    this.removeButtons();
   }
   
   removeButtons(): void {
@@ -350,7 +306,9 @@ export class PdfViewerComponent implements AfterViewInit {
   private processExtensibleMetadata(): void {
     const idPart = this.extractIdPart();
     const elementsWithSameId = Array.from(document.querySelectorAll(`[id*="${idPart}"]`))
-      .filter(element => window.getComputedStyle(element).visibility === 'visible');
+      .filter(element => 
+        window.getComputedStyle(element).visibility === 'visible' &&
+        element.getAttribute('id').endsWith('_errors') === false);
     const element = elementsWithSameId[elementsWithSameId.length - 1] as HTMLTextAreaElement | HTMLInputElement;
     this.setMetadataValue(element, this.selectedText, false);
   }
@@ -469,6 +427,8 @@ export class PdfViewerComponent implements AfterViewInit {
   
     // Disparar eventos para notificar cambios
     this.triggerDOMEvents(element);
+    this.isTextSelected = false;
+    this.removeButtons();
   }
   
   private triggerDOMEvents(element: HTMLTextAreaElement | HTMLInputElement): void {
@@ -654,7 +614,7 @@ export class PdfViewerComponent implements AfterViewInit {
   }
   
   private filterFormElements(elements: HTMLElement[]): HTMLElement[] {
-    const excludedIds = MetadataConfig.EXCLUDED_IDS_FOR_BUTTONS;
+    const excludedIds = MetadataConfig.EXCLUDED_IDS;
     const uniqueId = new Set();
     
     return elements
@@ -664,7 +624,9 @@ export class PdfViewerComponent implements AfterViewInit {
                        !element.id.match(/^primaryBitstream\d+$/) && 
                        !element.id.match(/^inputFileUploader-ds-drag-and-drop-uploader\d+$/) && 
                        !element.id.match(/^SL_locer\d+$/) && 
-                       !element.id.match(/^SL_BBL_locer\d+$/))
+                       !element.id.match(/^SL_BBL_locer\d+$/) &&
+                       element.id !== 'cc-license-dropdown' &&
+                       !(element.id).includes('input-'))
       .filter(element => {
         if (uniqueId.has(element.id)) return false;
         uniqueId.add(element.id);
@@ -676,15 +638,27 @@ export class PdfViewerComponent implements AfterViewInit {
     const escapeSelector = (id: string): string => {
       return id.replace(/([!"#$%&'()*+,.\/:;<=>?@[\\\]^`{|}~])/g, '\\$1');
     };
+
+    const nameMap = MetadataConfig.NAME_MAP;
     
-    // Actualizar opciones de metadatos para la vista
+    // Actualizar opciones de metadatos para el previsualizador de texto
     this.metadataOptions = elements.map(element => ({
-      name: element.getAttribute('placeholder') || element.getAttribute('name') || element.id,
+      name: nameMap[element.id] || element.getAttribute('placeholder') || element.getAttribute('name') || element.id,
       value: element.id
     }));
+
+    // Actualizar opciones de metadatos para los campos del formulario
+    const excludedIds = MetadataConfig.EXCLUDED_IDS_FOR_BUTTONS;
+
+    this.metadataFormOptions = elements
+      .filter(element => !excludedIds.has(element.id))
+      .map(element => ({
+        name: element.getAttribute('placeholder') || element.getAttribute('name') || element.id,
+        value: element.id
+      }));
     
     // Seleccionar todos los inputs basados en las opciones filtradas
-    const selector = this.metadataOptions
+    const selector = this.metadataFormOptions
       .map(option => `[id="${escapeSelector(option.value)}"]`)
       .join(', ');
     const inputs = document.querySelectorAll(selector);

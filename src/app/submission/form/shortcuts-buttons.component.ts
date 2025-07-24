@@ -10,37 +10,25 @@ import { CommonModule } from '@angular/common';
 })
 export class ShortcutsButtonsComponent {
   @Input() rect: DOMRect;
-  @Output() buttonClicked = new EventEmitter<{ idElement: string, multiple: boolean }>();
+  @Output() buttonClicked = new EventEmitter<{ idElement: string }>();
 
   buttonsConfig = [
     {
-      text: 'Título',
-      label: 'T',
-      action: () => this.buttonClicked.emit({ idElement: 'dc_title', multiple: false }),
-      color: '#00ff00' // Verde
-    },
-    {
-      text: 'Autor',
-      label: 'A',
-      action: () => this.buttonClicked.emit({ idElement: 'sedici_creator_person', multiple: false }),
-      color: '#0000ff' // Azul
+      text: 'Enviar a',
+      label: '<--',
+      action: () => this.buttonClicked.emit({ idElement: 'focus' }),
+      color: '#000000' // Negro
     },
     {
       text: 'Autores',
       label: 'As',
-      action: () => this.buttonClicked.emit({ idElement: 'sedici_creator_person', multiple: true }),
+      action: () => this.buttonClicked.emit({ idElement: 'sedici_creator_person' }),
       color: '#0000ff' // Azul
-    },
-    {
-      text: 'Palabra clave',
-      label: 'PC',
-      action: () => this.buttonClicked.emit({ idElement: 'dc_subject', multiple: false }),
-      color: '#ff0000' // Rojo
     },
     {
       text: 'Palabras clave',
       label: 'PCs',
-      action: () => this.buttonClicked.emit({ idElement: 'dc_subject', multiple: true }),
+      action: () => this.buttonClicked.emit({ idElement: 'dc_subject' }),
       color: '#ff0000' // Rojo
     }
   ];
