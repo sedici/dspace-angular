@@ -1,7 +1,7 @@
-<!-- <div [ngStyle]="{ height: selectedText ? '500px' : '100vh' }"> --> <!-- Con el vh se 'escapa' por debajo del footer -->
-<!-- <div [ngStyle]="{ height: selectedText ? '500px' : '800px' }"> --> <!-- VER de pasar a porcentajes o vh (calculado) -->
-<div [ngStyle]="{ height: selectedText ? '50vh' : '70vh' }">
-<!-- <div [ngStyle]="{ height: selectedText ? '65vh' : '65vh' }"> -->
+<!-- <div [ngStyle]="{ height: isTextSelected ? '500px' : '100vh' }"> --> <!-- Con el vh se 'escapa' por debajo del footer -->
+<!-- <div [ngStyle]="{ height: isTextSelected ? '500px' : '800px' }"> --> <!-- VER de pasar a porcentajes o vh (calculado) -->
+<div [ngStyle]="{ height: isTextSelected ? '50vh' : '70vh' }">
+<!-- <div [ngStyle]="{ height: isTextSelected ? '65vh' : '65vh' }"> -->
   <!-- VISOR DEL PDF -->
   <ng2-pdfjs-viewer
     viewerId="1"
@@ -37,13 +37,13 @@
         <div class="field">
           <select [(ngModel)]="selectedMetadataField" id="textarea-select">
             <option value="" disabled selected>Seleccionar</option>
-            <option *ngFor="let option of metadataOptions" [value]="option.value">
+            <option *ngFor="let option of metadataOptions" [ngValue]="option.value">
               {{ option.name }}
             </option>
           </select>
         </div>
         
-        <div class="field" *ngIf="!isRepeatableMetadataName(extractIdPart())">
+        <div class="field" *ngIf="!isRepeatableMetadataName(extractIdPart()) && !extractIdPart().includes('date')">
           <select [(ngModel)]="replaceText" id="replaceText">
             <option [ngValue]="null" disabled selected>Seleccionar</option>
             <ng-container *ngIf="isRepeatableAndExtensibleMetadataName(extractIdPart()); else defaultOptions">
@@ -67,7 +67,7 @@
             <button ngbDropdownToggle class="filter-btn">A</button>
             <div ngbDropdownMenu class="dropdown-menu dropdown-transformer-menu">
               <button class="filter-btn" (click)="applyFilter('removeDoubleSpaces')">❌␣␣</button>
-              <button class="filter-btn">2</button>
+              <button class="filter-btn" (click)="applyFilter('capitalize')">Cap</button>
               <button class="filter-btn">3</button>
               <button class="filter-btn">4</button>
               <button class="filter-btn">5</button>
