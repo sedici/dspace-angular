@@ -22,7 +22,7 @@ export const filterTransformer = {
 
   // Convierte la primera letra de cada oración a mayúsculas (COMPLEMENTAR CON NER PARA EL TEMA NOMBRES PROPIOS)
   toCapitalize(text) {
-    return text.toLowerCase().replace(/(^\s*\w|[.!?¿¡]\s*\w)/g, match => match.toUpperCase());
+    return text.toLowerCase().replace(/(^\s*[\p{L}]|[.!?¿¡]\s*[\p{L}])/gu, match => match.toUpperCase());
   },
 
   // Divide el texto por uno o varios delimitadores
