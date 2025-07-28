@@ -197,30 +197,9 @@ export class PdfViewerComponent implements AfterViewInit {
   
   private configureButtonComponent(componentRef: ComponentRef<ShortcutsButtonsComponent>, rect: DOMRect): void {
     componentRef.instance.rect = rect;
-    componentRef.instance.buttonClicked.subscribe((event: { idElement: string }) => {
-      this.handleButtonClicked(event.idElement);
-    });
-  }
-  
-  handleButtonClicked(idElement: string) {
-    let element: HTMLTextAreaElement | HTMLInputElement;
-
-    if (idElement !== 'focus') {
-      this.selectedMetadataField = idElement;
-    }
-    element = document.getElementById(this.selectedMetadataField) as HTMLTextAreaElement | HTMLInputElement;
-    
-    if (this.selectedMetadataField === 'sedici_creator_person') {
-      const authors = filterTransformer.transformPersons(this.selectedText);
-      this.processRepeatableMetadata(authors);
-    } else if (this.selectedMetadataField === 'dc_subject') {
-      const keywords = filterTransformer.transformKeywords(this.selectedText);
-      this.processRepeatableMetadata(keywords);
-    } else {
+    componentRef.instance.onButtonClick = () => {
       this.copyToMetadataField();
-    }
-    
-    this.removeButtons();
+    };
   }
   
   removeButtons(): void {
@@ -235,6 +214,7 @@ export class PdfViewerComponent implements AfterViewInit {
     }
     
     const idPart = this.extractIdPart();
+    const text = this.selectedText.trim();
     
     if (this.showDynamicInputs) {
       this.retrieveInputs();
@@ -242,15 +222,22 @@ export class PdfViewerComponent implements AfterViewInit {
       this.processDateMetadata();
     } else if (idPart === 'sedici_relation_journalVolumeAndIssue') {
       this.processJournalMetadata();
+    } else if (idPart === 'sedici_creator_person') {
+      const authors = filterTransformer.transformPersons(text);
+      this.processRepeatableMetadata(authors);
+    } else if (idPart === 'dc_subject') {
+      const keywords = filterTransformer.transformKeywords(text);
+      this.processRepeatableMetadata(keywords);
     } else if (this.isRepeatableMetadataName(idPart) || 
               (this.isRepeatableAndExtensibleMetadataName(idPart) && this.replaceText)) {
-      this.processRepeatableMetadata([this.selectedText]);
+      this.processRepeatableMetadata([text]);
     } else if (this.isRepeatableAndExtensibleMetadataName(idPart) && !this.replaceText) {
       this.processExtensibleMetadata();
     } else {
       this.processStandardMetadata();
     }
     
+    this.removeButtons();
     this.clearSelection();
   }
   
