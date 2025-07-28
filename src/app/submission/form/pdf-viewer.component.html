@@ -36,7 +36,7 @@
       <div class="row">
         <div class="field">
           <select [(ngModel)]="selectedMetadataField" id="textarea-select">
-            <option value="" disabled selected>Seleccionar</option>
+            <option value="" disabled selected>Seleccionar campo</option>
             <option *ngFor="let option of metadataOptions" [ngValue]="option.value">
               {{ option.name }}
             </option>
@@ -45,14 +45,13 @@
         
         <div class="field" *ngIf="!isRepeatableMetadataName(extractIdPart()) && !extractIdPart().includes('date')">
           <select [(ngModel)]="replaceText" id="replaceText">
-            <option [ngValue]="null" disabled selected>Seleccionar</option>
             <ng-container *ngIf="isRepeatableAndExtensibleMetadataName(extractIdPart()); else defaultOptions">
               <option [ngValue]="true">Nuevo campo</option>
               <option [ngValue]="false">Agregar al campo</option>
             </ng-container>
             <ng-template #defaultOptions>
-              <option [ngValue]="true">Reemplazar</option>
-              <option [ngValue]="false">No reemplazar</option>
+              <option [ngValue]="true">Reemplazar contenido</option>
+              <option [ngValue]="false">No reemplazar contenido</option>
             </ng-template>
           </select>
         </div>
