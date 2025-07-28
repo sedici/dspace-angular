@@ -102,6 +102,14 @@ export const filterTransformer = {
     cleanText = cleanText.replace(/,+/g, ','); // Reemplazar múltiples comas por una sola
     cleanText = cleanText.replace(/,\s*$/, ''); // Remover coma al final
     cleanText = cleanText.replace(/^\s*,/, ''); // Remover coma al inicio
+
+    // Acomodar espacios alrededor de guiones y guiones largos
+    cleanText = cleanText
+    .replace(/(\s)-(?!\s)/g, '$1- ') // Caso: espacio antes pero no después (Palabra -clave → Palabra - clave)
+    .replace(/(?<!\s)-(\s)/g, ' -$1') // Caso: espacio después pero no antes (Palabra- clave → Palabra - clave)
+    .replace(/(\s)–(?!\s)/g, '$1– ') // Caso: espacio antes pero no después (Palabra –clave → Palabra – clave)
+    .replace(/(?<!\s)–(\s)/g, ' –$1'); // Caso: espacio después pero no antes (Palabra– clave → Palabra – clave)
+
     cleanText = cleanText.trim();
     return cleanText;
   },
@@ -204,6 +212,7 @@ export const filterTransformer = {
   },
 
   transformKeywords: (text) => {
+    text = filterTransformer.cleanText(text);
     let keywords = filterTransformer.splitByDelimiter(text);
     keywords = keywords.map(element => {
       element = filterTransformer.transformKeyword(element);
