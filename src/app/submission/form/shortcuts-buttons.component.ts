@@ -14,7 +14,7 @@ export class ShortcutsButtonsComponent {
 
   buttonsConfig = [
     {
-      text: 'Enviar a',
+      text: 'Enviar al campo',
       label: '<--',
       action: () => this.onButtonClick?.(),
       color: '#000000'
