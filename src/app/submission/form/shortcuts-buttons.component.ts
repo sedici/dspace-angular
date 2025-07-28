@@ -10,26 +10,14 @@ import { CommonModule } from '@angular/common';
 })
 export class ShortcutsButtonsComponent {
   @Input() rect: DOMRect;
-  @Output() buttonClicked = new EventEmitter<{ idElement: string }>();
+  @Input() onButtonClick: () => void;
 
   buttonsConfig = [
     {
       text: 'Enviar a',
       label: '<--',
-      action: () => this.buttonClicked.emit({ idElement: 'focus' }),
-      color: '#000000' // Negro
-    },
-    {
-      text: 'Autores',
-      label: 'As',
-      action: () => this.buttonClicked.emit({ idElement: 'sedici_creator_person' }),
-      color: '#0000ff' // Azul
-    },
-    {
-      text: 'Palabras clave',
-      label: 'PCs',
-      action: () => this.buttonClicked.emit({ idElement: 'dc_subject' }),
-      color: '#ff0000' // Rojo
+      action: () => this.onButtonClick?.(),
+      color: '#000000'
     }
   ];
 }
