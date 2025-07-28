@@ -48,6 +48,7 @@ export class DateSplitter {
       { regex: /^([a-zA-Zñ]+)\s+de\s+(\d{4})$/, handler: (m) => ({ month: monthNames[m[1].toLowerCase()], year: m[2] }) }, // M de AAAA
       { regex: /^([a-zA-Zñ]+)\s+(\d{4})$/, handler: (m) => ({ month: monthNames[m[1].toLowerCase()], year: m[2] }) }, // M AAAA
       { regex: /^(\d{4})\s+([a-zA-Zñ]+)$/, handler: (m) => ({ month: monthNames[m[2].toLowerCase()], year: m[1] }) }, // AAAA M
+      { regex: /^([a-zA-Zñ]+),\s*(\d{4})$/, handler: (m) => ({ month: monthNames[m[1].toLowerCase()], year: m[2] }) }, // M, AAAA
       { regex: /^([a-zA-Zñ]+)-([a-zA-Zñ]+)\s+(\d{4})$/, handler: (m) => ({ month: monthNames[m[2].toLowerCase()], year: m[3] }) }, // M-M AAAA
       { regex: /^(\d{1,2})\s+de\s+([a-zA-Zñ]+)\s+de\s+(\d{4})$/, handler: (m) => ({ day: m[1], month: monthNames[m[2].toLowerCase()], year: m[3] }) }, // D de M de AAAA
       { regex: /^(\d{1,2})\s+([a-zA-Zñ]+)\s+de\s+(\d{4})$/, handler: (m) => ({ day: m[1], month: monthNames[m[2].toLowerCase()], year: m[3] }) }, // D M de AAAA
@@ -96,7 +97,7 @@ export class VolumeIssueSplitter {
       const match = data.match(pattern.regex);
       if (match) {
         pattern.fields.forEach((field, index) => {
-          const capturedValue = match.slice(1).find(value => value !== undefined);
+          const capturedValue = match.slice(index + 1).find(value => value !== undefined);
           if (capturedValue && result[field] === undefined) {
             if (field === 'tomo' && pattern.regex.toString().includes('IVXLCDM')) {
               result[field] = this.romanToInt(match[0].toUpperCase()).toString();
