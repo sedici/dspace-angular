@@ -28,10 +28,7 @@ export class MetadataConfig {
     'dcterms_audience',
     'dc_coverage_spatial',
     'dc_coverage_temporal',
-    'dc_description_filiation'
-  ];
-
-  static readonly REPEATABLE_AND_EXTENSIBLE_METADATA: string[] = [
+    'dc_description_filiation',
     'sedici_description_note',
     'dc_description_abstract',
   ];
