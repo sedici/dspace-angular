@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild, ChangeDetectorRef, NgZone, ComponentRef, AfterViewInit, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
-import { NgIf, NgFor, NgStyle } from '@angular/common';
+import { NgIf, NgFor, NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PdfJsViewerModule } from "ng2-pdfjs-viewer";
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
@@ -20,7 +20,7 @@ import { MetadataConfig } from '../models/metadata-config.model';
   imports: [
 		NgIf,
 		NgFor,
-    NgStyle,
+    NgClass,
 		FormsModule,
 		PdfJsViewerModule,
     NgbDropdownModule,
