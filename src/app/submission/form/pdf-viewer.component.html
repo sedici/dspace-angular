@@ -1,7 +1,4 @@
-<!-- <div [ngStyle]="{ height: isTextSelected ? '500px' : '100vh' }"> --> <!-- Con el vh se 'escapa' por debajo del footer -->
-<!-- <div [ngStyle]="{ height: isTextSelected ? '500px' : '800px' }"> --> <!-- VER de pasar a porcentajes o vh (calculado) -->
-<div [ngStyle]="{ height: isTextSelected ? '50vh' : '70vh' }">
-<!-- <div [ngStyle]="{ height: isTextSelected ? '65vh' : '65vh' }"> -->
+<div [ngClass]="isTextSelected ? 'colapsed-viewer' : 'expanded-viewer'">
   <!-- VISOR DEL PDF -->
   <ng2-pdfjs-viewer
     viewerId="1"

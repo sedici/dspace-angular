@@ -1,3 +1,15 @@
+.colapsed-viewer {
+  height: 60vh;
+
+  @media (max-height: 800px) {
+    height: 55vh;
+  }
+}
+
+.expanded-viewer {
+  height: 85vh;
+}
+
 .selection-menu {
   border: 1px solid #ddd;
   border-radius: 5px;
