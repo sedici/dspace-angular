@@ -91,12 +91,11 @@ export const filterTransformer = {
 
   // FIN gestión de espacios y saltos de línea
 
-  
-  // INICIO representación de personas
 
-  // Limpio el texto de una persona post filtro transformPerson
+  // Limpieza general del texto
   cleanText: (text) => {
-    let cleanText = text.trim();
+    let cleanText = filterTransformer.removeSpacesAtStartAndEnd(text);
+    cleanText = filterTransformer.removeDoubleSpaces(cleanText);
 
     // Limpiar comas consecutivas que puedan haber quedado después de remover referencias
     cleanText = cleanText.replace(/,+/g, ','); // Reemplazar múltiples comas por una sola
@@ -113,6 +112,9 @@ export const filterTransformer = {
     cleanText = cleanText.trim();
     return cleanText;
   },
+
+  
+  // INICIO representación de personas
 
   // Detecta si el texto contiene una sola persona o múltiples
   isSinglePerson: (text) => {
@@ -166,7 +168,7 @@ export const filterTransformer = {
 
   // Filtro para eliminar títulos o grados de las personas
   removeTitles: (text) => {
-    return text.replace(/\b(Dr\.|Dra\.|Prof\.|Bec\.|Lic\.|Ing\.|Mg\.|Mag\.|Sc\.|Soc\.|Arq\.)\s*/g, '');
+    return text.replace(/\b(Dr\.|Dra\.|Prof\.|Bec\.|Lic\.|Ing\.|Mg\.|Mag\.|Sc\.|Soc\.|Arq\.|Esp\.)\s*/gi, '');
   },
 
   // Filtro para eliminar referencias asociadas de las personas
@@ -190,17 +192,25 @@ export const filterTransformer = {
   transformPerson: (text) => {
     text = filterTransformer.removeTitles(text);
     text = filterTransformer.removeReferences(text);
-    // AGREGAR otros filtros. EJ: espaciado doble
+    text = filterTransformer.cleanText(text);
     return text;
   },
 
   transformPersons: (text) => {
     text = filterTransformer.transformPerson(text);
-    text = filterTransformer.cleanText(text);
     if (filterTransformer.isSinglePerson(text)) {
-      return [text]; // Si es una sola persona, devolver el texto limpio
+      const reordered = filterTransformer.reorderPerson(text);
+      const person = reordered !== false ? reordered : text;
+      return [person];
+    } else {
+      let persons = filterTransformer.splitByDelimiter(text);
+      persons = persons.map(person => {
+        const reordered = filterTransformer.reorderPerson(person);
+        person = reordered !== false ? reordered : person;
+        return person;
+      });
+      return persons;
     }
-    return filterTransformer.splitByDelimiter(text); // Si es múltiple, dividir por delimitadores
   },
   // FIN acceso rápido personas
 
@@ -212,7 +222,6 @@ export const filterTransformer = {
   },
 
   transformKeywords: (text) => {
-    text = filterTransformer.cleanText(text);
     let keywords = filterTransformer.splitByDelimiter(text);
     keywords = keywords.map(element => {
       element = filterTransformer.transformKeyword(element);
