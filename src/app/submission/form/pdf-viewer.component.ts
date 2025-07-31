@@ -45,6 +45,7 @@ export class PdfViewerComponent implements AfterViewInit {
   selectedMetadataField: string = '';
   replaceText: boolean = false;
   filterAutomatically: boolean = true;
+  concatenateText: boolean = false;
   
   // Configuración de metadatos
   metadataFormOptions = [];
@@ -129,6 +130,7 @@ export class PdfViewerComponent implements AfterViewInit {
       this.handleTextSelection(selection, event);
     } else {
       this.clearTextSelection();
+      this.showDynamicInputs = false;
     }
     this.changeDetectorRef.detectChanges();
   }
@@ -137,6 +139,10 @@ export class PdfViewerComponent implements AfterViewInit {
     let selectionToString = selection.toString();
     if (this.filterAutomatically) {
       selectionToString = filterTransformer.cleanText(selectionToString);
+      if (this.concatenateText) {
+        selectionToString = this.selectedText + ' ' + selectionToString;
+        this.concatenateText = false;
+      }
       if (this.selectedMetadataField !== '') {
         const idPart = this.extractIdPart();
         if (this.peopleMetadata.includes(idPart)) {
@@ -174,6 +180,10 @@ export class PdfViewerComponent implements AfterViewInit {
         this.selectedText = selectionToString;
       }
     } else {
+      if (this.concatenateText) {
+        selectionToString = this.selectedText + ' ' + selectionToString;
+        this.concatenateText = false;
+      }
       this.selectedText = selectionToString;
     }
 
@@ -211,15 +221,19 @@ export class PdfViewerComponent implements AfterViewInit {
     });
   }
   
-  private clearTextSelection(): void {
+  clearTextSelection(): void {
     this.selectedText = '';
     this.isTextSelected = false;
-    this.showDynamicInputs = false;
+    this.concatenateText = false;
     this.removeButtons();
   }
 
   changeFilterAutomatically(): void {
     this.filterAutomatically = !this.filterAutomatically;
+  }
+
+  changeConcatenateText(): void {
+    this.concatenateText = !this.concatenateText;
   }
   
   private getFormElements(): HTMLElement[] {
@@ -278,7 +292,8 @@ export class PdfViewerComponent implements AfterViewInit {
     }
     
     this.removeButtons();
-    this.clearSelection();
+    this.clearTextSelection();
+    this.selectedMetadataField = '';
   }
   
   private processDateMetadata(selectedText: string): string {
@@ -413,13 +428,6 @@ export class PdfViewerComponent implements AfterViewInit {
     return this.repeatableAndExtensibleMetadata.includes(name);
   }
   
-  clearSelection() {
-    this.selectedText = '';
-    this.isTextSelected = false;
-    this.selectedMetadataField = '';
-    this.removeButtons();
-  }
-  
   async addMetadataField(selectedMetadataField: string = this.selectedMetadataField): Promise<void> {
     const selectedInput = document.getElementById(selectedMetadataField);
     if (!selectedInput) {
@@ -505,7 +513,6 @@ export class PdfViewerComponent implements AfterViewInit {
   
     // Disparar eventos para notificar cambios
     this.triggerDOMEvents(element);
-    this.isTextSelected = false;
     this.removeButtons();
   }
   
@@ -606,8 +613,6 @@ export class PdfViewerComponent implements AfterViewInit {
     }
     
     this.showDynamicInputs = false;
-    this.selectedText = '';
-    this.isTextSelected = false;
   }
 
   applyFilter(filter: string, text: string = this.selectedText): string {
