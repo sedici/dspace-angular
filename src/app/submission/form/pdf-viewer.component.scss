@@ -8,10 +8,41 @@
   .section {
     margin-bottom: 10px;
 
-    label {
-      display: block;
-      font-weight: bold;
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 5px;
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 0px;
+    }
+
+    .filter-toggle-btn {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: white;
+  
+      &.active {
+        background-color: #28a745; // Verde para activado
+
+        &:hover {
+          background-color: #259640;
+        }
+      }
+  
+      &.inactive {
+        background-color: #6c757d; // Gris para desactivado
+
+        &:hover {
+          background-color: #4f565c;
+        }
+      }
     }
 
     textarea {

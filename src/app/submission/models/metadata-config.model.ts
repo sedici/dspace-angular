@@ -74,4 +74,17 @@ export class MetadataConfig {
     'dc_date_created_year': 'Fecha de creación',
     'sedici_date_exposure_year': 'Fecha de presentación',
   };
+
+  static readonly PEOPLE_METADATA: string[] = [
+    'sedici_creator_person',
+    'sedici_creator_interprete',
+    'sedici_contributor_colaborator',
+    'sedici_contributor_translator',
+    'sedici_contributor_editor',
+    'sedici_contributor_compiler',
+    'sedici_contributor_director',
+    'sedici_contributor_codirector',
+    'sedici_contributor_juror',
+    'sedici_contributor_inscriber',
+  ];
 }

@@ -18,7 +18,16 @@
   <div *ngIf="isTextSelected" class="selection-menu">
     <!-- SECCIÓN: TEXTO SELECCIONADO -->
     <div class="section" *ngIf="!showDynamicInputs">
-      <label for="selected-text">Texto seleccionado:</label>
+      <div class="section-header">
+        <label for="selected-text">Texto seleccionado:</label>
+        <button 
+          (click)="changeFilterAutomatically()" 
+          [class.active]="filterAutomatically"
+          [class.inactive]="!filterAutomatically"
+          class="filter-toggle-btn">
+          Modo automático
+        </button>
+      </div>
       <textarea
         id="selected-text"
         [(ngModel)]="selectedText"

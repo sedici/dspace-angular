@@ -44,12 +44,14 @@ export class PdfViewerComponent implements AfterViewInit {
   isTextSelected: boolean = false;
   selectedMetadataField: string = '';
   replaceText: boolean = false;
+  filterAutomatically: boolean = true;
   
   // Configuración de metadatos
   metadataFormOptions = [];
   metadataOptions = [];
   repeatableMetadata: string[] = MetadataConfig.REPEATABLE_METADATA;
   repeatableAndExtensibleMetadata: string[] = MetadataConfig.REPEATABLE_AND_EXTENSIBLE_METADATA;
+  peopleMetadata: string[] = MetadataConfig.PEOPLE_METADATA;
 
   // Estado de elementos dinámicos
   showDynamicInputs: boolean = false;
@@ -132,7 +134,49 @@ export class PdfViewerComponent implements AfterViewInit {
   }
   
   private handleTextSelection(selection: Selection, event: any): void {
-    this.selectedText = selection.toString();
+    let selectionToString = selection.toString();
+    if (this.filterAutomatically) {
+      selectionToString = filterTransformer.cleanText(selectionToString);
+      if (this.selectedMetadataField !== '') {
+        const idPart = this.extractIdPart();
+        if (this.peopleMetadata.includes(idPart)) {
+          const parts = filterTransformer.transformPersons(selectionToString);
+          if (parts.length > 1) {
+            this.showDynamicInputs = true;
+            this.changeDetectorRef.detectChanges();
+            setTimeout(() => {
+              this.createInputs(parts);
+            }, 100);
+            this.selectedText = selectionToString;
+          } else {
+            this.selectedText = parts[0];
+          }
+        } else if (idPart === 'dc_subject') {
+          const parts = filterTransformer.transformKeywords(selectionToString);
+          if (parts.length > 1) {
+            this.showDynamicInputs = true;
+            this.changeDetectorRef.detectChanges();
+            setTimeout(() => {
+              this.createInputs(parts);
+            }, 100);
+            this.selectedText = selectionToString;
+          } else {
+            this.selectedText = parts[0];
+          }
+        } else if (idPart === 'sedici_relation_journalVolumeAndIssue') {
+          this.selectedText = this.processJournalMetadata(selectionToString);
+        } else if (idPart.includes('date')) {
+          this.selectedText = this.processDateMetadata(selectionToString);
+        } else {
+          this.selectedText = selectionToString;
+        }
+      } else {
+        this.selectedText = selectionToString;
+      }
+    } else {
+      this.selectedText = selectionToString;
+    }
+
     this.isTextSelected = true;
     const range = selection.getRangeAt(0);
     const rect = range.getBoundingClientRect();
@@ -172,6 +216,10 @@ export class PdfViewerComponent implements AfterViewInit {
     this.isTextSelected = false;
     this.showDynamicInputs = false;
     this.removeButtons();
+  }
+
+  changeFilterAutomatically(): void {
+    this.filterAutomatically = !this.filterAutomatically;
   }
   
   private getFormElements(): HTMLElement[] {
@@ -219,15 +267,7 @@ export class PdfViewerComponent implements AfterViewInit {
     if (this.showDynamicInputs) {
       this.retrieveInputs();
     } else if (idPart.includes('date')) {
-      this.processDateMetadata();
-    } else if (idPart === 'sedici_relation_journalVolumeAndIssue') {
-      this.processJournalMetadata();
-    } else if (idPart === 'sedici_creator_person') {
-      const authors = filterTransformer.transformPersons(text);
-      this.processRepeatableMetadata(authors);
-    } else if (idPart === 'dc_subject') {
-      const keywords = filterTransformer.transformKeywords(text);
-      this.processRepeatableMetadata(keywords);
+      this.saveDateMetadata();
     } else if (this.isRepeatableMetadataName(idPart) || 
               (this.isRepeatableAndExtensibleMetadataName(idPart) && this.replaceText)) {
       this.processRepeatableMetadata([text]);
@@ -241,31 +281,81 @@ export class PdfViewerComponent implements AfterViewInit {
     this.clearSelection();
   }
   
-  private processDateMetadata(): void {
-    const date = new DateSplitter().split(this.selectedText.trim());
+  private processDateMetadata(selectedText: string): string {
+    const date = new DateSplitter().split(selectedText);
+    let formattedText = '';
+
+    if (date.year) {
+      if (date.day && date.month) {
+        // Formato completo: "DIA del MES del AÑO"
+        formattedText = `Día: ${date.day}\nMes: ${date.month}\nAño: ${date.year}`;
+      } else if (date.month) {
+        // Solo mes y año: "MES del AÑO"
+        formattedText = `Mes: ${date.month}\nAño: ${date.year}`;
+      } else {
+        // Solo año: "AÑO"
+        formattedText = `Año: ${date.year}`;
+      }
+      return formattedText;
+    } else {
+      alert('No se encontró un formato de fecha válido');
+      return selectedText;
+    }
+  }
+
+  private saveDateMetadata(): void {
+    let day = '';
+    let month = '';
+    let year = '';
+
+    // Extraer año (4 dígitos después de "Año: ")
+    const yearMatch = this.selectedText.match(/Año:\s*(\d{4})/);
+    if (yearMatch) {
+      year = yearMatch[1];
+    }
+
+    // Extraer mes (1-2 dígitos después de "Mes: ")
+    const monthMatch = this.selectedText.match(/Mes:\s*(\d{1,2})/);
+    if (monthMatch) {
+      month = monthMatch[1];
+    }
+
+    // Extraer día (1-2 dígitos después de "Día: ")
+    const dayMatch = this.selectedText.match(/Día:\s*(\d{1,2})/);
+    if (dayMatch) {
+      day = dayMatch[1];
+    }
+
+    // Si no hay ninguno de los tres, usar DateSplitter
+    if (!year && !month && !day) {
+      const date = new DateSplitter().split(this.selectedText.trim());
+      day = date.day || '';
+      month = date.month || '';
+      year = date.year || '';
+    }
+    
     const metadataYear = document.getElementById(this.selectedMetadataField) as HTMLTextAreaElement | HTMLInputElement;
     const metadataMonth = document.getElementById(this.selectedMetadataField.replace(/_year$/, '_month')) as HTMLTextAreaElement | HTMLInputElement;
     const metadataDay = document.getElementById(this.selectedMetadataField.replace(/_year$/, '_day')) as HTMLTextAreaElement | HTMLInputElement;
     
-    if (date.year) {
-      this.setMetadataValue(metadataYear, date.year, true);
-      if (date.month) {
-        this.setMetadataValue(metadataMonth, date.month, true);
-        if (date.day) {
-          this.setMetadataValue(metadataDay, date.day, true);
+    if (year) {
+      this.setMetadataValue(metadataYear, year, true);
+      if (month) {
+        this.setMetadataValue(metadataMonth, month, true);
+        if (day) {
+          this.setMetadataValue(metadataDay, day, true);
+        } else {
+          metadataDay.value = '';
         }
+      } else {
+        metadataMonth.value = '';
+        metadataDay.value = '';
       }
     }
   }
   
-  private processJournalMetadata(): void {
-    const elements = document.querySelectorAll(`[id*="${this.selectedMetadataField}"]`);
-    const element = Array.from(elements).find(el => 
-      window.getComputedStyle(el).visibility === 'visible' &&
-      el.getAttribute('id').startsWith('label') === false
-    ) as HTMLTextAreaElement | HTMLInputElement;
-    
-    const journalData = new VolumeIssueSplitter().split(this.selectedText);
+  private processJournalMetadata(selectedText: string): string {
+    const journalData = new VolumeIssueSplitter().split(selectedText);
     let formattedText = '';
     
     if (journalData.volume) {
@@ -284,10 +374,10 @@ export class PdfViewerComponent implements AfterViewInit {
       formattedText = `no. ${journalData.issue}`;
     } else {
       alert('No se encontraron año, volumen, tomo o número');
-      return;
+      return selectedText;
     }
     
-    this.setMetadataValue(element, formattedText, true);
+    return formattedText;
   }
   
   private processExtensibleMetadata(): void {
@@ -403,6 +493,7 @@ export class PdfViewerComponent implements AfterViewInit {
     }
     
     element.focus();
+    this.selectedMetadataField = '';
     this.modifiedFieldStyle(element);
     
     // Actualizar el valor
@@ -444,7 +535,10 @@ export class PdfViewerComponent implements AfterViewInit {
       container.appendChild(inputGroup);
     });
     
-    const removeAllButton = this.createRemoveAllButton(container);
+    let removeAllButton = document.querySelector('.dynamic-remove-all-button');
+    if (!removeAllButton) {
+      removeAllButton = this.createRemoveAllButton(container);
+    }
     container.insertAdjacentElement('afterend', removeAllButton);
   }
   
