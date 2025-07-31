@@ -60,19 +60,6 @@
             </option>
           </select>
         </div>
-        
-        <div class="field" *ngIf="!isRepeatableMetadataName(extractIdPart()) && !extractIdPart().includes('date')">
-          <select [(ngModel)]="replaceText" id="replaceText">
-            <ng-container *ngIf="isRepeatableAndExtensibleMetadataName(extractIdPart()); else defaultOptions">
-              <option [ngValue]="true">Nuevo campo</option>
-              <option [ngValue]="false">Agregar al campo</option>
-            </ng-container>
-            <ng-template #defaultOptions>
-              <option [ngValue]="true">Reemplazar contenido</option>
-              <option [ngValue]="false">No reemplazar contenido</option>
-            </ng-template>
-          </select>
-        </div>
     
         <!-- SECCIÓN: BOTONES DE FILTROS -->
         <div class="action-buttons">

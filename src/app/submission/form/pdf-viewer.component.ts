@@ -43,7 +43,6 @@ export class PdfViewerComponent implements AfterViewInit {
   selectedText: string = '';
   isTextSelected: boolean = false;
   selectedMetadataField: string = '';
-  replaceText: boolean = false;
   filterAutomatically: boolean = true;
   concatenateText: boolean = false;
   
@@ -51,7 +50,6 @@ export class PdfViewerComponent implements AfterViewInit {
   metadataFormOptions = [];
   metadataOptions = [];
   repeatableMetadata: string[] = MetadataConfig.REPEATABLE_METADATA;
-  repeatableAndExtensibleMetadata: string[] = MetadataConfig.REPEATABLE_AND_EXTENSIBLE_METADATA;
   peopleMetadata: string[] = MetadataConfig.PEOPLE_METADATA;
 
   // Estado de elementos dinámicos
@@ -282,11 +280,8 @@ export class PdfViewerComponent implements AfterViewInit {
       this.retrieveInputs();
     } else if (idPart.includes('date')) {
       this.saveDateMetadata();
-    } else if (this.isRepeatableMetadataName(idPart) || 
-              (this.isRepeatableAndExtensibleMetadataName(idPart) && this.replaceText)) {
+    } else if (this.isRepeatableMetadataName(idPart)) {
       this.processRepeatableMetadata([text]);
-    } else if (this.isRepeatableAndExtensibleMetadataName(idPart) && !this.replaceText) {
-      this.processExtensibleMetadata();
     } else {
       this.processStandardMetadata();
     }
@@ -354,11 +349,11 @@ export class PdfViewerComponent implements AfterViewInit {
     const metadataDay = document.getElementById(this.selectedMetadataField.replace(/_year$/, '_day')) as HTMLTextAreaElement | HTMLInputElement;
     
     if (year) {
-      this.setMetadataValue(metadataYear, year, true);
+      this.setMetadataValue(metadataYear, year);
       if (month) {
-        this.setMetadataValue(metadataMonth, month, true);
+        this.setMetadataValue(metadataMonth, month);
         if (day) {
-          this.setMetadataValue(metadataDay, day, true);
+          this.setMetadataValue(metadataDay, day);
         } else {
           metadataDay.value = '';
         }
@@ -395,16 +390,6 @@ export class PdfViewerComponent implements AfterViewInit {
     return formattedText;
   }
   
-  private processExtensibleMetadata(): void {
-    const idPart = this.extractIdPart();
-    const elementsWithSameId = Array.from(document.querySelectorAll(`[id*="${idPart}"]`))
-      .filter(element => 
-        window.getComputedStyle(element).visibility === 'visible' &&
-        element.getAttribute('id').endsWith('_errors') === false);
-    const element = elementsWithSameId[elementsWithSameId.length - 1] as HTMLTextAreaElement | HTMLInputElement;
-    this.setMetadataValue(element, this.selectedText, false);
-  }
-  
   private processStandardMetadata(): void {
     const elements = document.querySelectorAll(`[id*="${this.selectedMetadataField}"]`);
     const element = Array.from(elements).find(el => 
@@ -422,10 +407,6 @@ export class PdfViewerComponent implements AfterViewInit {
   
   isRepeatableMetadataName(name: string): boolean {
     return this.repeatableMetadata.includes(name);
-  }
-  
-  isRepeatableAndExtensibleMetadataName(name: string): boolean {
-    return this.repeatableAndExtensibleMetadata.includes(name);
   }
   
   async addMetadataField(selectedMetadataField: string = this.selectedMetadataField): Promise<void> {
@@ -466,7 +447,7 @@ export class PdfViewerComponent implements AfterViewInit {
         element = newElementsWithSameId[newElementsWithSameId.length - 1] as HTMLTextAreaElement | HTMLInputElement;
       }
       
-      this.setMetadataValue(element, item, false);
+      this.setMetadataValue(element, item);
     }
   }
   
@@ -490,11 +471,7 @@ export class PdfViewerComponent implements AfterViewInit {
     return element || null;
   }
 
-  setMetadataValue(
-    element: HTMLTextAreaElement | HTMLInputElement, 
-    value: string, 
-    replaceText: boolean = this.replaceText
-  ): void {
+  setMetadataValue(element: HTMLTextAreaElement | HTMLInputElement, value: string): void {
     if (!element || value === '') {
       alert(`Elemento con ID ${element?.id || 'desconocido'} no encontrado. O valor no válido.`);
       return;
@@ -505,11 +482,7 @@ export class PdfViewerComponent implements AfterViewInit {
     this.modifiedFieldStyle(element);
     
     // Actualizar el valor
-    if (!element.value || replaceText) {
-      element.value = value;
-    } else {
-      element.value = element.value + '\n' + value;
-    }
+    element.value = value;
   
     // Disparar eventos para notificar cambios
     this.triggerDOMEvents(element);
@@ -779,7 +752,7 @@ export class PdfViewerComponent implements AfterViewInit {
     componentRef.instance.filterApplied.subscribe((filter: string) => {
       this.applyFilterToSubmissionField = true;
       const newValue = this.applyFilter(filter, (input as HTMLInputElement).value);
-      this.setMetadataValue(input as HTMLInputElement, newValue, true);
+      this.setMetadataValue(input as HTMLInputElement, newValue);
     });
     
     // Insertar el botón en el DOM
