@@ -20,13 +20,22 @@
     <div class="section" *ngIf="!showDynamicInputs">
       <div class="section-header">
         <label for="selected-text">Texto seleccionado:</label>
-        <button 
-          (click)="changeFilterAutomatically()" 
-          [class.active]="filterAutomatically"
-          [class.inactive]="!filterAutomatically"
-          class="filter-toggle-btn">
-          Modo automático
-        </button>
+        <div class="d-flex gap-1">
+          <button 
+            (click)="changeConcatenateText()" 
+            [class.active]="concatenateText"
+            [class.inactive]="!concatenateText"
+            class="filter-toggle-btn">
+            +
+          </button>
+          <button 
+            (click)="changeFilterAutomatically()" 
+            [class.active]="filterAutomatically"
+            [class.inactive]="!filterAutomatically"
+            class="filter-toggle-btn">
+            Modo automático
+          </button>
+        </div>
       </div>
       <textarea
         id="selected-text"
@@ -91,7 +100,7 @@
       <button (click)="copyToMetadataField()" class="btn btn-primary">
         Agregar
       </button>
-      <button (click)="clearSelection()" class="btn btn-secondary">
+      <button (click)="clearTextSelection()" class="btn btn-secondary">
         Cancelar
       </button>
     </div>
