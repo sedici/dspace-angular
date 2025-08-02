@@ -56,7 +56,9 @@ export class PdfViewerComponent implements AfterViewInit {
   showDynamicInputs: boolean = false;
   isDropdownOpen = false;
   applyFilterToSubmissionField: boolean = false;
-  private elementsAmount: number = 0;
+  private mutationObserver: MutationObserver | null = null;
+  private fieldButtonMap = new Map<string, ComponentRef<DynamicButtonDropdownComponent>>();
+  private globalIdCounters = new Map<string, number>();
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
@@ -67,13 +69,277 @@ export class PdfViewerComponent implements AfterViewInit {
   ) { }
 
   ngAfterViewInit() {
-    this.initializeButtons();
+    this.syncButtonsWithFields();
     this.interceptFormOperationChanges();
-    this.addFocusTrackingToInputs();
+    this.setupMutationObserver();
   }
 
-  ngAfterViewChecked() {
-    this.checkElementsCountAndUpdateButtons();
+  ngOnDestroy() {
+    this.resetButtonCounters();    
+    if (this.mutationObserver) {
+      this.mutationObserver.disconnect();
+      this.mutationObserver = null;
+    }
+  }
+
+  private resetButtonCounters(): void {
+    this.globalIdCounters.clear();
+    this.fieldButtonMap.clear();
+
+    const elementsWithKeys = document.querySelectorAll('[data-unique-key]');
+    elementsWithKeys.forEach(element => {
+      element.removeAttribute('data-unique-key');
+    });
+  }
+
+  private interceptFormOperationChanges(): void {
+    const originalDispatch = this.formOperationsService.dispatchOperationsFromChangeEvent;
+    this.formOperationsService.dispatchOperationsFromChangeEvent = 
+      (pathCombiner: JsonPatchOperationPathCombiner, event: any, previousValue: any, hasStoredValue: boolean) => {
+        if (event?.model?.id === 'dc_type' || event?.model?.id === 'sedici_subtype') {
+          setTimeout(() => {
+            this.syncButtonsWithFields();
+          }, 500);
+        }
+        return originalDispatch.call(this.formOperationsService, pathCombiner, event, previousValue, hasStoredValue);
+    };
+  }
+
+  private addFocusTrackingToInput(element: HTMLElement): void {
+    element.addEventListener('focus', (event) => {
+      const targetId = (event.target as HTMLTextAreaElement | HTMLInputElement).id;
+      const excludedIds = MetadataConfig.EXCLUDED_IDS;
+      // Evito el focus en la caja de previsualización de texto y en los campos deplegables
+      if (!excludedIds.has(targetId) && !targetId.includes('input-')) {
+        this.selectedMetadataField = targetId;
+      }
+    });
+  }
+
+  private setupMutationObserver(): void {
+    this.mutationObserver = new MutationObserver((mutations) => {
+      let hasRelevantChanges = false;
+
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'childList') {
+          // Verificar si se agregaron o eliminaron campos de formulario
+          mutation.addedNodes.forEach((node) => {
+            if (node.nodeType === Node.ELEMENT_NODE) {
+              const element = node as Element;
+              if (this.isFormField(element)) {
+                hasRelevantChanges = true;
+              }
+            }
+          });
+          
+          mutation.removedNodes.forEach((node) => {
+            if (node.nodeType === Node.ELEMENT_NODE) {
+              const element = node as Element;
+              if (this.isFormField(element)) {
+                hasRelevantChanges = true;
+                this.cleanupOrphanedButtons(element);
+              }
+            }
+          });
+        }
+      });
+      
+      if (hasRelevantChanges) {
+        this.debounceUpdateButtons();
+      }
+    });
+
+    const formContainer = document.body;
+    this.mutationObserver.observe(formContainer, {
+      childList: true,
+      subtree: true
+    });
+  }
+
+  private isFormField(element: Element): boolean {
+    const tagName = element.tagName.toLowerCase();
+    return tagName === 'ds-dynamic-onebox' || tagName === 'dynamic-ng-bootstrap-textarea' || tagName === 'dynamic-ng-bootstrap-input';
+  }
+
+  private debounceTimer: any;
+  private debounceUpdateButtons(): void {
+    clearTimeout(this.debounceTimer);
+    this.debounceTimer = setTimeout(() => {
+      this.syncButtonsWithFields();
+    }, 100);
+  }
+
+  private syncButtonsWithFields(): void {
+    const currentFields = this.getCurrentFormFields();
+    const currentFieldKeys = new Set(currentFields.map(field => field.getAttribute('data-unique-key')));
+    
+    // 1. Eliminar botones huérfanos
+    this.removeOrphanedButtons(currentFieldKeys);
+    
+    // 2. Agregar botones a campos nuevos
+    this.addButtonsToNewFields(currentFields);
+    
+    // 3. Actualizar opciones de metadatos
+    this.updateMetadataOptions(currentFields);
+  }
+
+  private removeOrphanedButtons(currentFieldKeys: Set<string>): void {
+    const orphanedKeys: string[] = [];
+    
+    this.fieldButtonMap.forEach((componentRef, fieldKey) => {
+      if (!currentFieldKeys.has(fieldKey)) {
+        componentRef.destroy();
+        orphanedKeys.push(fieldKey);
+      }
+    });
+    
+    orphanedKeys.forEach(key => this.fieldButtonMap.delete(key));
+  }
+
+  private addButtonsToNewFields(currentFields: HTMLElement[]): void {
+    const excludedIds = MetadataConfig.EXCLUDED_IDS_FOR_BUTTONS;
+    currentFields = currentFields
+      .filter(element => !excludedIds.has(element.id))
+
+    currentFields.forEach(field => {
+      const uniqueKey = field.getAttribute('data-unique-key');
+      if (uniqueKey && !this.fieldButtonMap.has(uniqueKey)) {
+        this.createButtonForField(field);
+      }
+    });
+  }
+
+  private createButtonForField(input: HTMLElement): void {
+    if (!input.id) return;
+    
+    const uniqueKey = input.getAttribute('data-unique-key');
+    if (!uniqueKey) return;
+    
+    const parent = input.closest('.col') || input.closest('ds-dynamic-form-control-container');
+    if (!parent) return;
+    
+    const existingButton = parent.querySelector(`app-dynamic-button-dropdown[data-field-key="${uniqueKey}"]`);
+    if (existingButton) {
+      return;
+    }
+
+    // Crear contenedor flex si es necesario
+    let container: HTMLElement | null = null;
+    if (parent.classList.contains('col-sm-12')) {
+      container = this.createFlexContainer(input);
+    }
+
+    // Crear componente de botón
+    const componentRef = this.createButtonComponentt(input);
+    
+    componentRef.location.nativeElement.setAttribute('data-field-key', uniqueKey);
+    
+    // Guardar en el mapa con la clave única
+    this.fieldButtonMap.set(uniqueKey, componentRef);
+    
+    // Insertar en DOM
+    if (container) {
+      container.appendChild(componentRef.location.nativeElement);
+    } else {
+      parent.insertAdjacentElement('afterend', componentRef.location.nativeElement);
+    }
+  }
+
+  private createFlexContainer(input: HTMLElement): HTMLElement {
+    const container = document.createElement('div');
+    container.classList.add('d-flex', 'align-items-center', 'w-100');
+    container.style.gap = '8px';
+    
+    input.classList.add('flex-grow-1');
+    input.parentNode!.insertBefore(container, input);
+    container.appendChild(input);
+    
+    return container;
+  }
+
+  private createButtonComponentt(input: HTMLElement): ComponentRef<DynamicButtonDropdownComponent> {
+    const factory = this.componentFactoryResolver.resolveComponentFactory(DynamicButtonDropdownComponent);
+    const componentRef = this.viewContainerRef.createComponent(factory);
+
+    const match = input.id.match(/(dc|sedici|mods|thesis).*/);
+    componentRef.instance.inputID = match ? match[0] : input.id;
+    
+    componentRef.instance.filterApplied.subscribe((filter: string) => {
+      this.applyFilterToSubmissionField = true;
+      const newValue = this.applyFilter(filter, (input as HTMLInputElement).value);
+      this.setMetadataValue(input as HTMLInputElement, newValue);
+    });
+    
+    return componentRef;
+  }
+
+  private getCurrentFormFields(): HTMLElement[] {
+    const formContainers = document.querySelectorAll('ds-dynamic-form-control-container');
+    const fields: HTMLElement[] = [];
+    const excludedIds = MetadataConfig.EXCLUDED_IDS;
+
+    formContainers.forEach((container) => {
+      const inputs = Array.from(container.querySelectorAll('input, textarea'))
+      .filter((input): input is HTMLElement => input instanceof HTMLElement)
+      .filter(input => input.id)
+      .filter(input => window.getComputedStyle(input).visibility === 'visible')
+      .filter(input => !excludedIds.has(input.id) && 
+                       !input.id.match(/^primaryBitstream\d+$/) && 
+                       !input.id.match(/^inputFileUploader-ds-drag-and-drop-uploader\d+$/) && 
+                       !input.id.match(/^SL_locer\d+$/) && 
+                       !input.id.match(/^SL_BBL_locer\d+$/) &&
+                       input.id !== 'cc-license-dropdown' &&
+                       !(input.id).includes('input-'))
+
+      inputs.forEach((input) => {
+        if (input.id) {
+          const element = input as HTMLElement;
+          let uniqueKey = element.getAttribute('data-unique-key');
+          if (!uniqueKey) {
+            const currentCount = this.globalIdCounters.get(element.id) || 0;
+            this.globalIdCounters.set(element.id, currentCount + 1);
+            uniqueKey = this.generateUniqueKey(element, currentCount + 1);
+            element.setAttribute('data-unique-key', uniqueKey);
+            this.addFocusTrackingToInput(element);
+          }
+          fields.push(element);
+        }
+      });
+    });
+        
+    return fields;
+  }
+
+  private generateUniqueKey(element: HTMLElement, globalInstanceIndex: number): string {
+    return `${element.id}-instance-${globalInstanceIndex}`;
+  }
+
+  private cleanupOrphanedButtons(removedElement: Element): void {
+    const inputs = removedElement.querySelectorAll('input[data-unique-key], textarea[data-unique-key]');
+    inputs.forEach(input => {
+      const uniqueKey = input.getAttribute('data-unique-key');
+      if (uniqueKey && this.fieldButtonMap.has(uniqueKey)) {
+        const componentRef = this.fieldButtonMap.get(uniqueKey);
+        componentRef?.destroy();
+        this.fieldButtonMap.delete(uniqueKey);
+      }
+    });
+  }
+
+  private updateMetadataOptions(elements: HTMLElement[]): void {
+    const uniqueId = new Set();
+    const nameMap = MetadataConfig.NAME_MAP;
+    
+    this.metadataOptions = elements
+    .filter(input => {
+        if (uniqueId.has(input.id)) return false;
+        uniqueId.add(input.id);
+        return true;
+      })
+    .map(element => ({
+      name: nameMap[element.id] || element.getAttribute('placeholder') || element.getAttribute('name') || element.id,
+      value: element.id
+    }));
   }
 
   public pagesLoadedEvent(): void {
@@ -81,45 +347,6 @@ export class PdfViewerComponent implements AfterViewInit {
     this.container = this.iframe.contentDocument.body;
     const pdfApp = this.iframe.contentWindow?.PDFViewerApplication;
     pdfApp.appConfig.viewerContainer.onmouseup = this.onTextSelected.bind(this);
-  }
-  
-  private interceptFormOperationChanges(): void {
-    const originalDispatch = this.formOperationsService.dispatchOperationsFromChangeEvent;
-    this.formOperationsService.dispatchOperationsFromChangeEvent = 
-      (pathCombiner: JsonPatchOperationPathCombiner, event: any, previousValue: any, hasStoredValue: boolean) => {
-        if (event?.model?.id === 'dc_type' || event?.model?.id === 'sedici_subtype') {
-          setTimeout(() => {
-            this.addButtonsToInputs();
-          }, 500);
-        }
-        return originalDispatch.call(this.formOperationsService, pathCombiner, event, previousValue, hasStoredValue);
-    };
-  }
-  
-  private checkElementsCountAndUpdateButtons(): void {
-    const textareas = Array.from(document.querySelectorAll('textarea'));
-    const inputs = Array.from(document.querySelectorAll('input'));
-    const elements = [...textareas, ...inputs];
-    if (this.elementsAmount !== elements.length) {
-      this.elementsAmount = elements.length;
-      this.addButtonsToInputs();
-      this.addFocusTrackingToInputs();
-    }
-  }
-
-  private addFocusTrackingToInputs(): void {
-    const elements = this.getFormElements();
-
-    elements.forEach(element => {
-      element.addEventListener('focus', (event) => {
-        const targetId = (event.target as HTMLTextAreaElement | HTMLInputElement).id;
-        const excludedIds = MetadataConfig.EXCLUDED_IDS;
-        // Evito el focus en la caja de previsualización de texto y en los campos deplegables
-        if (!excludedIds.has(targetId) && !targetId.includes('input-')) {
-          this.selectedMetadataField = targetId;
-        }
-      });
-    });
   }
 
   onTextSelected(event) {
@@ -660,114 +887,6 @@ export class PdfViewerComponent implements AfterViewInit {
     return result;
   }
 
-  initializeButtons(): void {
-    this.addButtonsToInputs();
-  }
-  
-  addButtonsToInputs(): void {
-    this.removeFiltersButtons();
-    const elements = this.getFormElements();
-    const filteredElements = this.filterFormElements(elements);
-    
-    this.applyButtonsToElements(filteredElements);
-  }
-  
-  private filterFormElements(elements: HTMLElement[]): HTMLElement[] {
-    const excludedIds = MetadataConfig.EXCLUDED_IDS;
-    const uniqueId = new Set();
-    
-    return elements
-      .filter(element => window.getComputedStyle(element).visibility === 'visible')
-      .filter(element => element.id)
-      .filter(element => !excludedIds.has(element.id) && 
-                       !element.id.match(/^primaryBitstream\d+$/) && 
-                       !element.id.match(/^inputFileUploader-ds-drag-and-drop-uploader\d+$/) && 
-                       !element.id.match(/^SL_locer\d+$/) && 
-                       !element.id.match(/^SL_BBL_locer\d+$/) &&
-                       element.id !== 'cc-license-dropdown' &&
-                       !(element.id).includes('input-'))
-      .filter(element => {
-        if (uniqueId.has(element.id)) return false;
-        uniqueId.add(element.id);
-        return true;
-      });
-  }
-  
-  private applyButtonsToElements(elements: HTMLElement[]): void {
-    const escapeSelector = (id: string): string => {
-      return id.replace(/([!"#$%&'()*+,.\/:;<=>?@[\\\]^`{|}~])/g, '\\$1');
-    };
-
-    const nameMap = MetadataConfig.NAME_MAP;
-    
-    // Actualizar opciones de metadatos para el previsualizador de texto
-    this.metadataOptions = elements.map(element => ({
-      name: nameMap[element.id] || element.getAttribute('placeholder') || element.getAttribute('name') || element.id,
-      value: element.id
-    }));
-
-    // Actualizar opciones de metadatos para los campos del formulario
-    const excludedIds = MetadataConfig.EXCLUDED_IDS_FOR_BUTTONS;
-
-    this.metadataFormOptions = elements
-      .filter(element => !excludedIds.has(element.id))
-      .map(element => ({
-        name: element.getAttribute('placeholder') || element.getAttribute('name') || element.id,
-        value: element.id
-      }));
-    
-    // Seleccionar todos los inputs basados en las opciones filtradas
-    const selector = this.metadataFormOptions
-      .map(option => `[id="${escapeSelector(option.value)}"]`)
-      .join(', ');
-    const inputs = document.querySelectorAll(selector);
-    
-    // Aplicar botones a cada input
-    inputs.forEach(input => this.attachButtonToInput(input as HTMLElement));
-  }
-  
-  private attachButtonToInput(input: HTMLElement): void {
-    if (!input.id) return;
-    
-    const parent = input.closest('.col') || input.closest('ds-dynamic-form-control-container');
-    if (!parent) return;
-    
-    let container: HTMLElement | null = null;
-    
-    // Si es un contenedor de columna completa, crear un contenedor flex
-    if (parent.classList.contains('col-sm-12')) {
-      container = document.createElement('div');
-      container.classList.add('d-flex', 'align-items-center', 'w-100');
-      container.style.gap = '8px';
-      
-      input.classList.add('flex-grow-1');
-      input.parentNode!.insertBefore(container, input);
-      container.appendChild(input);
-    }
-    
-    // Crear y configurar el componente de botón desplegable
-    const factory = this.componentFactoryResolver.resolveComponentFactory(DynamicButtonDropdownComponent);
-    const componentRef = this.viewContainerRef.createComponent(factory);
-    
-    componentRef.instance.filterApplied.subscribe((filter: string) => {
-      this.applyFilterToSubmissionField = true;
-      const newValue = this.applyFilter(filter, (input as HTMLInputElement).value);
-      this.setMetadataValue(input as HTMLInputElement, newValue);
-    });
-    
-    // Insertar el botón en el DOM
-    if (container) {
-      container.appendChild(componentRef.location.nativeElement);
-    } else {
-      parent.insertAdjacentElement('afterend', componentRef.location.nativeElement);
-    }
-  }
-  
-  removeFiltersButtons(): void {
-    const buttons = document.querySelectorAll('app-dynamic-button-dropdown');
-    buttons.forEach((button) => button.remove());
-  }
-  
   toggleDropdown(): void {
     this.isDropdownOpen = !this.isDropdownOpen;
   }

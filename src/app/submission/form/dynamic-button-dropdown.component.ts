@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2, ViewChild, AfterViewInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, ElementRef, Renderer2, ViewChild, AfterViewInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,8 +9,12 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule]
 })
 export class DynamicButtonDropdownComponent implements AfterViewInit, OnDestroy {
+  @Input() inputID: string;
   @Output() filterApplied = new EventEmitter<string>();
   @ViewChild('dropdown') dropdown!: ElementRef;
+
+  private isDropdownOpen = false;
+  private clickOutsideHandler: (event: Event) => void;
 
   options = [
     { title: 'upperCase\nPasa el texto completo a mayúsculas', filter: 'upperCase', text: 'AA' }, // Mayúsculas
@@ -23,36 +27,57 @@ export class DynamicButtonDropdownComponent implements AfterViewInit, OnDestroy 
     { title: 'Remove spaces between letters\nSaca espacios de donde no van (Ej: T I T U L O)', filter: 'removeSpacesBetweenLetters', icon: 'fa-solid fa-bars' } // Corregir espacios entre letras
   ];
 
-  constructor(private renderer: Renderer2) {}
+  constructor(private renderer: Renderer2) {
+    this.clickOutsideHandler = this.handleClickOutside.bind(this);
+  }
 
   ngAfterViewInit() {
-    // Asegúrate de que el dropdown esté oculto inicialmente
     this.renderer.setStyle(this.dropdown.nativeElement, 'display', 'none');
-
-    // Agregar un EventListener para cerrar el dropdown al hacer clic fuera de él
-    document.addEventListener('click', this.handleClickOutside.bind(this));
   }
 
   ngOnDestroy() {
-    // Eliminar el EventListener cuando el componente se destruya
-    document.removeEventListener('click', this.handleClickOutside.bind(this));
+    this.removeClickOutsideListener();
   }
 
   toggleDropdown(event: Event) {
-    event.preventDefault(); // Evita que el botón reciba foco y cambie estilos
-    event.stopPropagation(); // Evita que el evento se propague y cierre el dropdown inmediatamente
-    const display = this.dropdown.nativeElement.style.display;
-    this.dropdown.nativeElement.style.display = display === 'none' ? 'flex' : 'none';
+    event.preventDefault();
+    event.stopPropagation();
+    
+    this.isDropdownOpen = !this.isDropdownOpen;
+    
+    if (this.isDropdownOpen) {
+      this.renderer.setStyle(this.dropdown.nativeElement, 'display', 'flex');
+      this.addClickOutsideListener();
+    } else {
+      this.renderer.setStyle(this.dropdown.nativeElement, 'display', 'none');
+      this.removeClickOutsideListener();
+    }
   }
 
-  handleClickOutside(event: Event) {
+  private addClickOutsideListener(): void {
+    setTimeout(() => {
+      document.addEventListener('click', this.clickOutsideHandler);
+    }, 0);
+  }
+
+  private removeClickOutsideListener(): void {
+    document.removeEventListener('click', this.clickOutsideHandler);
+  }
+
+  private handleClickOutside(event: Event): void {
     if (this.dropdown && !this.dropdown.nativeElement.contains(event.target as Node)) {
-      this.dropdown.nativeElement.style.display = 'none';
+      this.closeDropdown();
     }
+  }
+
+  private closeDropdown(): void {
+    this.isDropdownOpen = false;
+    this.renderer.setStyle(this.dropdown.nativeElement, 'display', 'none');
+    this.removeClickOutsideListener();
   }
 
   applyFilter(filter: string) {
     this.filterApplied.emit(filter);
-    this.dropdown.nativeElement.style.display = 'none'; // Cerrar el dropdown al seleccionar una opción
+    this.closeDropdown();
   }
 }
