@@ -11,6 +11,7 @@ import { SectionFormOperationsService } from '../sections/form/section-form-oper
 import { JsonPatchOperationPathCombiner } from '../../core/json-patch/builder/json-patch-operation-path-combiner';
 import { DateSplitter, VolumeIssueSplitter } from '../utils/content-splitters';
 import { MetadataConfig } from '../models/metadata-config.model';
+import { FilterInfo, FilterConfig } from '../models/filter-config.model';
 
 @Component({
   selector: 'app-pdf-viewer',
@@ -52,6 +53,12 @@ export class PdfViewerComponent implements AfterViewInit {
   repeatableMetadata: string[] = MetadataConfig.REPEATABLE_METADATA;
   peopleMetadata: string[] = MetadataConfig.PEOPLE_METADATA;
 
+  // Configuración de filtros
+  filterOptions: FilterInfo[];
+  private generalMetadataFilter: FilterInfo[] = FilterConfig.GENERAL_METADATA_FILTER;
+  private repeatableMetadataFilter: FilterInfo[] = FilterConfig.REPEATABLE_METADATA_FILTER;
+  private peopleMetadataFilter: FilterInfo[] = FilterConfig.PEOPLE_METADATA_FILTER;
+
   // Estado de elementos dinámicos
   showDynamicInputs: boolean = false;
   isDropdownOpen = false;
@@ -67,6 +74,24 @@ export class PdfViewerComponent implements AfterViewInit {
     private ngZone: NgZone,
     private formOperationsService: SectionFormOperationsService
   ) { }
+
+  ngOnInit() {
+    this.updateFilterOptions();
+  }
+  
+  updateFilterOptions(): void {
+    this.filterOptions = [...this.generalMetadataFilter];
+    
+    const idPart = this.extractIdPart();
+    
+    if (this.repeatableMetadata.includes(idPart)) {
+      this.filterOptions = this.filterOptions.concat(this.repeatableMetadataFilter);
+    }
+    
+    if (this.peopleMetadata.includes(idPart)) {
+      this.filterOptions = this.filterOptions.concat(this.peopleMetadataFilter);
+    }
+  }
 
   ngAfterViewInit() {
     this.syncButtonsWithFields();
@@ -112,6 +137,8 @@ export class PdfViewerComponent implements AfterViewInit {
       // Evito el focus en la caja de previsualización de texto y en los campos deplegables
       if (!excludedIds.has(targetId) && !targetId.includes('input-')) {
         this.selectedMetadataField = targetId;
+        this.updateFilterOptions();
+        this.changeDetectorRef.detectChanges();
       }
     });
   }

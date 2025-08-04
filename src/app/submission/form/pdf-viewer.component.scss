@@ -136,6 +136,7 @@
       
       .dropdown-menu.show {
         display: flex;
+        min-width: max-content;
       }
     }
   }
