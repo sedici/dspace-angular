@@ -4,12 +4,12 @@
   </button>
 
   <div #dropdown class="dropdown-menu">
-    <div *ngFor="let option of options" (click)="applyFilter(option.filter)" class="dropdown-item" [title]="option.title">
+    <div *ngFor="let option of options" (click)="applyFilter(option.id)" class="dropdown-item" [title]="option.description">
       <ng-container *ngIf="option.icon; else noIcon">
         <i [class]="option.icon"></i>
       </ng-container>
       <ng-template #noIcon>
-        <span>{{ option.text }}</span>
+        <span>{{ option.label }}</span>
       </ng-template>
     </div>
   </div>
