@@ -50,6 +50,7 @@ export class DateSplitter {
       { regex: /^(\d{4})\s+([a-zA-Zñ]+)$/, handler: (m) => ({ month: monthNames[m[2].toLowerCase()], year: m[1] }) }, // AAAA M
       { regex: /^([a-zA-Zñ]+),\s*(\d{4})$/, handler: (m) => ({ month: monthNames[m[1].toLowerCase()], year: m[2] }) }, // M, AAAA
       { regex: /^([a-zA-Zñ]+)-([a-zA-Zñ]+)\s+(\d{4})$/, handler: (m) => ({ month: monthNames[m[2].toLowerCase()], year: m[3] }) }, // M-M AAAA
+      { regex: /^([a-zA-Zñ]+)\s+(\d{1,2}),\s*(\d{4})$/, handler: (m) => ({ month: monthNames[m[1].toLowerCase()], day: m[2], year: m[3] }) }, // M D, AAAA
       { regex: /^(\d{1,2})\s+de\s+([a-zA-Zñ]+)\s+de\s+(\d{4})$/, handler: (m) => ({ day: m[1], month: monthNames[m[2].toLowerCase()], year: m[3] }) }, // D de M de AAAA
       { regex: /^(\d{1,2})\s+([a-zA-Zñ]+)\s+de\s+(\d{4})$/, handler: (m) => ({ day: m[1], month: monthNames[m[2].toLowerCase()], year: m[3] }) }, // D M de AAAA
       { regex: /^(\d{1,2})\s+([a-zA-Zñ]+)\s+(\d{4})$/, handler: (m) => ({ day: m[1], month: monthNames[m[2].toLowerCase()], year: m[3] }) }, // D M AAAA
