@@ -123,11 +123,37 @@ export class PdfViewerComponent implements AfterViewInit {
       (pathCombiner: JsonPatchOperationPathCombiner, event: any, previousValue: any, hasStoredValue: boolean) => {
         if (event?.model?.id === 'dc_type' || event?.model?.id === 'sedici_subtype') {
           setTimeout(() => {
-            this.syncButtonsWithFields();
+            this.debounceUpdateButtons();
+            setTimeout(() => {
+              this.removeDuplicateButtons();
+            }, 100);
           }, 500);
         }
         return originalDispatch.call(this.formOperationsService, pathCombiner, event, previousValue, hasStoredValue);
     };
+  }
+
+  private removeDuplicateButtons(): void {
+    const allButtons = document.querySelectorAll('app-dynamic-button-dropdown[data-field-key]');
+    const seenFieldKeys = new Set<string>();
+    
+    allButtons.forEach((button) => {
+      const fieldKey = button.getAttribute('data-field-key');
+      if (fieldKey) {
+        if (seenFieldKeys.has(fieldKey)) {
+          button.remove();
+          if (this.fieldButtonMap.has(fieldKey)) {
+            const componentRef = this.fieldButtonMap.get(fieldKey);
+            if (componentRef && componentRef.location.nativeElement === button) {
+              componentRef.destroy();
+              this.fieldButtonMap.delete(fieldKey);
+            }
+          }
+        } else {
+          seenFieldKeys.add(fieldKey);
+        }
+      }
+    });
   }
 
   private addFocusTrackingToInput(element: HTMLElement): void {
@@ -200,14 +226,33 @@ export class PdfViewerComponent implements AfterViewInit {
     const currentFields = this.getCurrentFormFields();
     const currentFieldKeys = new Set(currentFields.map(field => field.getAttribute('data-unique-key')));
     
-    // 1. Eliminar botones huérfanos
+    // 1. Limpiar botones huérfanos desde el DOM ANTES de otras operaciones
+    this.removeOrphanedButtonsFromDOM(currentFieldKeys);
+    
+    // 2. Eliminar botones huérfanos del mapa
     this.removeOrphanedButtons(currentFieldKeys);
     
-    // 2. Agregar botones a campos nuevos
+    // 3. Agregar botones a campos nuevos
     this.addButtonsToNewFields(currentFields);
     
-    // 3. Actualizar opciones de metadatos
+    // 4. Actualizar opciones de metadatos
     this.updateMetadataOptions(currentFields);
+  }
+
+  private removeOrphanedButtonsFromDOM(currentFieldKeys: Set<string>): void {
+    const allButtonsInDOM = document.querySelectorAll('app-dynamic-button-dropdown[data-field-key]');
+    
+    allButtonsInDOM.forEach((button) => {
+      const fieldKey = button.getAttribute('data-field-key');
+      if (fieldKey && !currentFieldKeys.has(fieldKey)) {        
+        if (this.fieldButtonMap.has(fieldKey)) {
+          const componentRef = this.fieldButtonMap.get(fieldKey);
+          componentRef?.destroy();
+          this.fieldButtonMap.delete(fieldKey);
+        }
+        button.remove();
+      }
+    });
   }
 
   private removeOrphanedButtons(currentFieldKeys: Set<string>): void {
