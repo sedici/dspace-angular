@@ -137,6 +137,11 @@
       }
     }
   }
+
+  @media print {
+        display: none !important;
+  }
+
 }
 
 ::ng-deep {

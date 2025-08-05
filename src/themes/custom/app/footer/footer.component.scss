@@ -12,7 +12,7 @@
     .footer-left p{
       margin-bottom: 0;
     }
-    
+
     .footer-title {
       font-weight: bold;
       font-size: 1.2rem;
@@ -58,7 +58,7 @@
         text-decoration: none;
       }
     }
-    
+
     .footer-section {
       margin-left: 10px;
 
@@ -81,7 +81,7 @@
         text-decoration: underline;
       }
     }
-    
+
     // Responsive (para móvil)
     @media (max-width: 768px) {
       padding: 1.5rem;
@@ -89,7 +89,7 @@
       .footer-left {
         width: 100%;
       }
-      
+
       .footer-icons {
         flex-direction: column;
         margin-top: 1rem !important;
@@ -99,6 +99,11 @@
       .bottom-footer {
         gap: 0;
       }
+    }
+
+    @media print
+    {
+        display: none !important;
     }
   }
 }

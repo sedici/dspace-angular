@@ -10407,4 +10407,7 @@
 
   // "form.date-picker.placeholder.day": "Day",
   "form.date-picker.placeholder.day": "Día",
+
+  // "item.page.print": "Print item page",
+  "item.page.print": "Generar certificado",
 }
