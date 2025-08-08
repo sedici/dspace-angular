@@ -135,23 +135,44 @@ export class PdfViewerComponent implements AfterViewInit {
 
   private removeDuplicateButtons(): void {
     const allButtons = document.querySelectorAll('app-dynamic-button-dropdown[data-field-key]');
-    const seenFieldKeys = new Set<string>();
+    const fieldKeyGroups = new Map<string, Element[]>();
     
     allButtons.forEach((button) => {
       const fieldKey = button.getAttribute('data-field-key');
       if (fieldKey) {
-        if (seenFieldKeys.has(fieldKey)) {
-          button.remove();
+        if (!fieldKeyGroups.has(fieldKey)) {
+          fieldKeyGroups.set(fieldKey, []);
+        }
+        fieldKeyGroups.get(fieldKey)!.push(button);
+      }
+    });
+    
+    // Procesar grupos con duplicados
+    fieldKeyGroups.forEach((buttons, fieldKey) => {
+      if (buttons.length > 1) {        
+        let notFunctionalButton: Element | null = null;
+        const buttonsToRemove: Element[] = [];
+        
+        buttons.forEach(button => {
           if (this.fieldButtonMap.has(fieldKey)) {
             const componentRef = this.fieldButtonMap.get(fieldKey);
             if (componentRef && componentRef.location.nativeElement === button) {
-              componentRef.destroy();
-              this.fieldButtonMap.delete(fieldKey);
+              notFunctionalButton = button;
+              buttonsToRemove.push(button);
             }
           }
-        } else {
-          seenFieldKeys.add(fieldKey);
+        });
+        
+        // Si no encontramos el notFuncional en el mapa, mantener el primero
+        if (!notFunctionalButton && buttons.length > 0) {
+          notFunctionalButton = buttons[0];
+          buttonsToRemove.splice(0, 1);
         }
+        
+        // Eliminar los botones duplicados
+        buttonsToRemove.forEach(button => {
+          button.remove();
+        });
       }
     });
   }
@@ -888,18 +909,19 @@ export class PdfViewerComponent implements AfterViewInit {
   }
 
   applyFilter(filter: string, text: string = this.selectedText): string {
-    if (this.showDynamicInputs) {
-      return this.applyFilterToDynamicInputs(filter);
-    } else if (this.applyFilterToSubmissionField) {
+    if (this.applyFilterToSubmissionField) {
       this.applyFilterToSubmissionField = false;
       return this.applyFilterToText(text, filter);
+    } else if (this.showDynamicInputs){
+      this.applyFilterToDynamicInputs(filter);
     } else {
       this.selectedText = this.applyFilterToText(text, filter);
       return this.selectedText;
     }
+    return '';
   }
   
-  private applyFilterToDynamicInputs(filter: string): string {
+  private applyFilterToDynamicInputs(filter: string): void {
     const inputs = document.querySelectorAll('.dynamic-input');
     inputs.forEach((input) => {
       const element = input as HTMLTextAreaElement | HTMLInputElement;
@@ -908,7 +930,6 @@ export class PdfViewerComponent implements AfterViewInit {
         element.parentElement?.remove();
       }
     });
-    return '';
   }
   
   applyFilterToText(text: string, filter: string): string {
