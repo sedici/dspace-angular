@@ -26,7 +26,7 @@ export const filterTransformer = {
   },
 
   // Divide el texto por uno o varios delimitadores
-  splitByDelimiter: (text, delimiters = [';', '/', ' - ', ' – ', ' * ', '•', ',', '.'] ) => { // La coma y el punto van al final porque pueden ser parte del texto sin tener que dividirlo
+  splitByDelimiter: (text, delimiters = [';', '/', ' - ', ' – ', ' * ', '•', '●', ',', '.'] ) => { // La coma y el punto van al final porque pueden ser parte del texto sin tener que dividirlo
     // Manejar el caso específico de dividir por el guión '-' y el guión largo '–'
     if (text.includes('-') && text.includes('–')) {
       const parts = text.split(/-|–/).map(item => item.trim()).filter(item => item !== '');
