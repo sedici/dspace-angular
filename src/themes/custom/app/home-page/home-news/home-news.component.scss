@@ -2,8 +2,21 @@
   display: block;
 
   @media screen and (min-width: 1200px) {
-    .container{
+    .background-image-container .container{
       max-width: 1024px;
+    }
+
+    .destacado {
+      .container {
+        background-color: #fff;
+        border-top-left-radius: 50px;
+        border-top-right-radius: 50px;
+
+        .row {
+          max-width: 90%;
+          margin: 0 auto;
+        }
+      }
     }
   }
 
@@ -26,6 +39,10 @@
     align-items: center;
     padding-bottom: 1rem;
     justify-content: space-between;
+
+    .text {
+      color: white;
+    }
   }
 
   @media screen and (min-width: map-get($grid-breakpoints, md)) {
