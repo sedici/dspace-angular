@@ -1,6 +1,7 @@
-import { Component,  Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DSpaceObject } from 'src/app/core/shared/dspace-object.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'sedici-context',
@@ -12,6 +13,12 @@ import { DSpaceObject } from 'src/app/core/shared/dspace-object.model';
 export class SediciContextComponent {
 
   @Input() object: DSpaceObject;
+
+  constructor(private router: Router) {}
+
+  hasRoute(route: string) {
+    return this.router.url.includes(route);
+  }
 
   getThesisInfo(): string {
     const thesisDegreeName = this.object.firstMetadataValue('thesis.degree.name');
@@ -60,6 +67,14 @@ export class SediciContextComponent {
     return '';
   }
 
+  getOriginInfoPlace(): string {
+    const origin = this.object.firstMetadataValue('mods.originInfo.place');
+    if (origin) {
+      return origin;
+    }
+    return '';
+  }
+
   getContextInfo(): string {
     const thesis = this.getThesisInfo();
     if (thesis) {
@@ -83,6 +98,10 @@ export class SediciContextComponent {
     const ciclo = this.getCicloInfo();
     if (ciclo) {
       return ciclo;
+    };
+    const originInfoPlace = this.getOriginInfoPlace();
+    if (originInfoPlace && !this.hasRoute('items')) {
+      return originInfoPlace;
     };
     return '';
   }
