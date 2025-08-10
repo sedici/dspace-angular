@@ -63,6 +63,13 @@ export const filterTransformer = {
       parts.pop(); // Eliminar la última parte
       parts = parts.concat(newParts);
     }
+    
+    // Valido la cantidad de partes para no exceder el límite de elementos en pantalla
+    if (parts.length > 20) {
+      alert(`Se detectaron ${parts.length} elementos después de dividir el texto. Solo se procesarán los primeros 20.`);
+      parts = parts.slice(0, 20);
+    }
+    
     return parts;
   },
 
@@ -176,13 +183,19 @@ export const filterTransformer = {
     return text.replace(/(\d+|\*+|\([a-zA-Z0-9]+\)|(?<![\p{L}])[a-xz](?![\p{L}]))/gu, ''); // Elimina números, asteriscos, paréntesis con letras o números y letras (minúsculas) sueltas excepto 'y'
   },
 
-  // Método para reodenar Nombre Apellido en Apellido, Nombre (SOLO SIRVE CON UNO DE CADA UNO)
+  // Método para reodenar "Nombre/s Apellido/s" en "Apellido/s, Nombre/s"
   reorderPerson: (text) => {
-    const words = text.trim().split(/\s+/);
-    if (words.length === 2) {
-      return `${words[1]}, ${words[0]}`;
+    if (!text.includes(',')) { // Si tiene coma se asume que está en el formato correcto
+      const words = text.trim().split(/\s+/);
+      if (words.length === 2) {
+        return `${words[1]}, ${words[0]}`;
+      } else if (words.length === 3) {
+        return `${words[2]}, ${words[0]} ${words[1]}`; // Asume que el tercer elemento es el apellido
+      } else if (words.length === 4) {
+        return `${words[2]} ${words[3]}, ${words[0]} ${words[1]}`; // Asume que hay dos apellidos y dos nombres
+      }
     }
-    return false;
+    return text; // Si no se puede reordenar, devolver el texto original
   },
 
   // FIN representación de personas

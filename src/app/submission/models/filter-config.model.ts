@@ -21,7 +21,7 @@ export class FilterConfig {
   ];
 
   static readonly PEOPLE_METADATA_FILTER: FilterInfo[] = [
-    { id: 'reorderPerson', icon: 'fa-solid fa-right-left', description: 'Reorder person name\nReodena un "Nombre Apellido" en "Apellido, Nombre" (SOLO SIRVE CON UNO DE CADA UNO)' },
+    { id: 'reorderPerson', icon: 'fa-solid fa-right-left', description: 'Reorder person name\nReodena "Nombre/s Apellido/s" en "Apellido/s, Nombre/s"\nACLARACIÓN:\n*Si hay 3 palabras se toman 2 nombres y 1 apellido\n*Si hay 4 palabras se toman 2 nombres y 2 apellidos' },
     { id: 'removeTitles', label: '❌🎓', description: 'Remove titles\nElimina títulos o grados de las personas (Ej: Lic., Mg.)' },
     { id: 'removeReferences', label: '❌🔢', description: 'Remove references\nElimina referencias asociadas de las personas (Ej: números, asteriscos)' },
   ];

@@ -824,6 +824,19 @@ export class PdfViewerComponent implements AfterViewInit {
     }, 5000);
   }
 
+  modifyPeopleFieldStyle(part: string, element: HTMLTextAreaElement | HTMLInputElement) {
+    if (part.includes(',')) {
+      const length = part.split(",").join(" ").trim().split(/\s+/).filter(Boolean).length;
+      if (length === 2) {
+        element.style.border = '2px solid green';
+      } else if (length > 2 && length <= 4) {
+        element.style.border = '2px solid yellow';
+      }
+    } else {
+      element.style.border = '2px solid red';
+    }
+  }
+
   createInputs(parts: string[]): void {
     const container = document.getElementById('inputsContainer');
     if (!container) return;
@@ -851,6 +864,22 @@ export class PdfViewerComponent implements AfterViewInit {
     input.value = part;
     input.id = `input-${index}`;
     input.classList.add('dynamic-input');
+    input.style.width = '90%';
+
+    const style = document.createElement('style');
+    style.textContent = `
+      .dynamic-input:focus-visible {
+        outline: 2px solid lightblue;
+        background: #f0f8ff;
+        border: none !important;
+      }
+    `;
+    document.head.appendChild(style);
+
+    const idPart = this.extractIdPart();
+    if (this.peopleMetadata.includes(idPart)) {
+      this.modifyPeopleFieldStyle(part, input);
+    }
   
     const removeButton = document.createElement('button');
     removeButton.innerText = 'x';
@@ -925,14 +954,14 @@ export class PdfViewerComponent implements AfterViewInit {
     const inputs = document.querySelectorAll('.dynamic-input');
     inputs.forEach((input) => {
       const element = input as HTMLTextAreaElement | HTMLInputElement;
-      element.value = this.applyFilterToText(element.value, filter);
+      element.value = this.applyFilterToText(element.value, filter, element);
       if (element.value === '') {
         element.parentElement?.remove();
       }
     });
   }
   
-  applyFilterToText(text: string, filter: string): string {
+  applyFilterToText(text: string, filter: string, element?): string {
     switch (filter) {
       case 'camelCase':
         return filterTransformer.toCamelCase(text);
@@ -957,6 +986,9 @@ export class PdfViewerComponent implements AfterViewInit {
       case 'removeReferences':
         return filterTransformer.removeReferences(text);
       case 'reorderPerson':
+        if (element) {
+          return this.handleReorderPerson(text, element);
+        }
         return this.handleReorderPerson(text);
       default:
         return text;
@@ -971,11 +1003,10 @@ export class PdfViewerComponent implements AfterViewInit {
     return text;
   }
   
-  private handleReorderPerson(text: string): string {
+  private handleReorderPerson(text: string, element?): string {
     const result = filterTransformer.reorderPerson(text);
-    if (!result) {
-      alert('El filtro solo se puede aplicar cuando se tiene UN nombre y UN apellido.');
-      return text;
+    if (element) {
+      this.modifyPeopleFieldStyle(result, element);
     }
     return result;
   }
