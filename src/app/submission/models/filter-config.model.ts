@@ -10,6 +10,7 @@ export class FilterConfig {
     { id: 'upperCase', label: 'AA', description: 'upperCase\nPasa el texto completo a mayúsculas' },
     { id: 'lowerCase', label: 'aa', description: 'lowerCase\nPasa el texto completo a minúsculas' },
     { id: 'capitalize', label: 'Aa', description: 'Capitalize\nPasa la primera letra de cada oración a mayúscula' },
+    { id: 'cleanText', label: 'Norm', description: 'cleanText\nHace lo mismo que el viejo norm.php' },
     { id: 'removeDoubleSpaces', label: '❌␣␣', description: 'Remove double spaces\nElimina los espacios dobles' },
     { id: 'removeSpacesBetweenLetters', icon: 'fa-solid fa-bars', description: 'Remove spaces between letters\nSaca espacios de donde no van (Ej: T I T U L O)' },
     { id: 'removeSpacesAtStartAndEnd', icon: 'fa-solid fa-bars', description: 'Remove spaces at start and end\nElimina los espacios al principio y al final del texto' },

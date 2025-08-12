@@ -456,7 +456,7 @@ export class PdfViewerComponent implements AfterViewInit {
   private handleTextSelection(selection: Selection, event: any): void {
     let selectionToString = selection.toString();
     if (this.filterAutomatically) {
-      selectionToString = filterTransformer.cleanText(selectionToString);
+      selectionToString = filterTransformer.cleanText(selectionToString, this.extractIdPart());
       if (this.concatenateText) {
         selectionToString = this.selectedText + ' ' + selectionToString;
         this.concatenateText = false;
@@ -971,6 +971,8 @@ export class PdfViewerComponent implements AfterViewInit {
         return filterTransformer.toLowerCase(text);
       case 'capitalize':
         return filterTransformer.toCapitalize(text);
+      case 'cleanText':
+        return filterTransformer.cleanText(text, this.extractIdPart());
       case 'splitByDelimiter':
         return this.handleSplitByDelimiter(text);
       case 'removeDoubleSpaces':
