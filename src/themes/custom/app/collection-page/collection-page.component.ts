@@ -37,7 +37,7 @@ import { ErrorComponent } from '../../../../app/shared/error/error.component';
 import { ThemedLoadingComponent } from '../../../../app/shared/loading/themed-loading.component';
 import { ObjectCollectionComponent } from '../../../../app/shared/object-collection/object-collection.component';
 import { VarDirective } from '../../../../app/shared/utils/var.directive';
-import { ViewTrackerComponent } from '../../../../app/statistics/angulartics/dspace/view-tracker.component';
+import { ViewTrackerResolverService } from 'src/app/statistics/angulartics/dspace/view-tracker-resolver.service';
 import { RemoteData } from 'src/app/core/data/remote-data';
 import { Collection } from 'src/app/core/shared/collection.model';
 import { Bitstream } from 'src/app/core/shared/bitstream.model';
@@ -73,7 +73,6 @@ import { CollectionDataService } from 'src/app/core/data/collection-data.service
     NgIf,
     ThemedLoadingComponent,
     TranslateModule,
-    ViewTrackerComponent,
     VarDirective,
     AsyncPipe,
     ComcolPageHeaderComponent,

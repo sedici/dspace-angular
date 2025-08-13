@@ -49,7 +49,7 @@ import { ErrorComponent } from '../../shared/error/error.component';
 import { ThemedLoadingComponent } from '../../shared/loading/themed-loading.component';
 import { ListableObjectComponentLoaderComponent } from '../../shared/object-collection/shared/listable-object/listable-object-component-loader.component';
 import { VarDirective } from '../../shared/utils/var.directive';
-import { ViewTrackerComponent } from '../../statistics/angulartics/dspace/view-tracker.component';
+import { ViewTrackerResolverService } from 'src/app/statistics/angulartics/dspace/view-tracker-resolver.service';
 import { ThemedItemAlertsComponent } from '../alerts/themed-item-alerts.component';
 import { getItemPageRoute } from '../item-page-routing-paths';
 import { ItemVersionsComponent } from '../versions/item-versions.component';
@@ -82,7 +82,6 @@ import { SediciCertificate } from '../sedici-item-certificate/sedici-item-certif
     VarDirective,
     ThemedItemAlertsComponent,
     ItemVersionsNoticeComponent,
-    ViewTrackerComponent,
     ListableObjectComponentLoaderComponent,
     ItemVersionsComponent,
     ErrorComponent,

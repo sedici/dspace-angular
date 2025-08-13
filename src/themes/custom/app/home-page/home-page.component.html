@@ -13,10 +13,6 @@
 <ds-suggestions-popup></ds-suggestions-popup>
 
 <ng-template #homeContent>
-  <ng-container *ngIf="(site$ | async) as site">
-    <ds-view-tracker [object]="site"></ds-view-tracker>
-  </ng-container>
-
   <div class="destacado">
     <div class="explorar-title-container">
       <h2 class="explorar-title">Explorar</h2>

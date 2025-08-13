@@ -45,7 +45,7 @@ import { DsoEditMenuComponent } from '../../../../app/shared/dso-page/dso-edit-m
 import { ErrorComponent } from '../../../../app/shared/error/error.component';
 import { ThemedLoadingComponent } from '../../../../app/shared/loading/themed-loading.component';
 import { VarDirective } from '../../../../app/shared/utils/var.directive';
-import { ViewTrackerComponent } from '../../../../app/statistics/angulartics/dspace/view-tracker.component';
+import { ViewTrackerResolverService } from 'src/app/statistics/angulartics/dspace/view-tracker-resolver.service';
 import { getCommunityPageRoute } from 'src/app/community-page/community-page-routing-paths';
 import { getFirstSucceededRemoteDataPayload } from 'src/app/core/shared/operators';
 import { followLink, FollowLinkConfig } from 'src/app/shared/utils/follow-link-config.model';
@@ -74,7 +74,6 @@ import { CommunityDataService } from 'src/app/core/data/community-data.service';
     ComcolPageLogoComponent,
     ComcolPageHeaderComponent,
     AsyncPipe,
-    ViewTrackerComponent,
     VarDirective,
     RouterOutlet,
     RouterModule,

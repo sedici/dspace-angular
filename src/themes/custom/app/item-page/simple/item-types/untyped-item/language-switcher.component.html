@@ -2,7 +2,7 @@
   <div class="language-switcher-container">
     <ds-truncatable [id]="item?.id + 'abstract'">
       <ds-truncatable-part [id]="item?.id + 'abstract'" [minLines]="6">
-        <p class="abstract-text" [innerHTML]="getAbstract()"></p>
+        <span class="abstract-text" [innerHTML]="getAbstract()"></span>
       </ds-truncatable-part>
     </ds-truncatable>
   </div>
