@@ -68,7 +68,7 @@ import { ExpandableMetadataComponent } from './expandable-metadata';
     TabbedContentComponent,
     SediciContextBadgeComponent,
     SediciTruncatableGenericItemPageFieldComponent,
-    SediciContextComponent,    
+    SediciContextComponent,
     SediciCitationComponent,
     NgbModule,
     SediciShareButtonsComponent,
@@ -88,9 +88,11 @@ export class UntypedItemComponent extends BaseComponent {
   }
 
   openModalCitation() {
-    this.modalService.open(SediciCitationComponent, {
+    const meta = this.object.metadataAsList
+    const modalRef = this.modalService.open(SediciCitationComponent, {
       centered: true, // Centra el modal
     });
+    modalRef.componentInstance.metadata = meta;
   }
 
   openModalShareButtons() {

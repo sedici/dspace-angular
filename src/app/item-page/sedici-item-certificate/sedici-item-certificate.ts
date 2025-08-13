@@ -30,7 +30,6 @@ import { TabbedContentComponent } from 'src/themes/custom/app/item-page/simple/i
 import { SediciContextBadgeComponent } from 'src/themes/custom/app/shared/object-collection/shared/badges/sedici-context-badge/sedici-context-badge.component';
 import { SediciTruncatableGenericItemPageFieldComponent } from 'src/themes/custom/app/item-page/simple/item-types/untyped-item/sedici-truncatable-generic-item-page-field';
 import { SediciContextComponent } from 'src/themes/custom/app/item-page/simple/field-components/context/sedici-context.component';
-import { SediciCitationComponent } from 'src/themes/custom/app/item-page/simple/field-components/citation/sedici-citation.component';
 import { SediciShareButtonsComponent } from 'src/themes/custom/app/item-page/simple/field-components/share-buttons/sedici-share-buttons.component';
 import { ExpandableMetadataComponent } from 'src/themes/custom/app/item-page/simple/item-types/untyped-item/expandable-metadata';
 import { TruncatableComponent } from 'src/app/shared/truncatable/truncatable.component';
@@ -63,7 +62,6 @@ import { QRCodeComponent } from 'angularx-qrcode';
     SediciContextBadgeComponent,
     SediciTruncatableGenericItemPageFieldComponent,
     SediciContextComponent,
-    SediciCitationComponent,
     NgbModule,
     SediciShareButtonsComponent,
     ExpandableMetadataComponent,
