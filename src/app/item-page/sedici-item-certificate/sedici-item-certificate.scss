@@ -1,0 +1,185 @@
+@media print
+{
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+}
+
+.container {
+  font-size: .75rem;
+
+  .texto-imprimir{
+    margin-top: 10px;
+    font-size: 1.4rem;
+  }
+}
+
+.jumbotron {
+  padding: 1rem 0 0;
+  margin-bottom: 0;
+  background-color: #f6f6f6;
+}
+
+.badge-title-container {
+  display: flex;
+}
+
+.badge-title-content {
+  display: flex;
+  flex-direction: column;
+
+  .title-content {
+    font-size: 1.75em;
+    font-weight: bold;
+    margin-bottom: 0;
+
+    ::ng-deep .simple-view-element {
+      margin-bottom: 0px;
+    }
+  }
+}
+
+.edit-menu {
+  margin-left: auto;
+}
+
+.title-alternative-content {
+  font-size: 1.33333em;
+  font-weight: var(--font-weight-regular);
+  font-style: italic;
+  color: #555;
+  margin: 0.5rem 0;
+
+  ::ng-deep .simple-view-element {
+    margin-top: 0.5rem;
+  }
+}
+
+.divider {
+  border-top: 1px solid #ccc;
+}
+
+.divider-top {
+  margin-top: 1rem;
+  margin-bottom: .5rem;
+}
+
+.section-divider {
+  border-bottom: 1px solid #D8E8Eb;
+}
+
+sedici-context,
+.author-container {
+  ::ng-deep span, ::ng-deep a {
+    font-size: 1.33333em;
+    font-weight: var(--font-weight-regular);
+  }
+
+  ::ng-deep h6 {
+    font-size: 1.33333em;
+    font-weight: var(--font-weight-bold);
+  }
+}
+
+.author-container {
+  ::ng-deep .simple-view-element {
+    line-height: 1.5;
+  }
+}
+
+.flex-container {
+  @media screen and (min-width: 769px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.item-identifiers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+  margin: 0.5rem 0;
+
+  @media screen and (min-width: 769px) {
+    ::ng-deep .simple-view-element {
+      margin-bottom: 0px;
+    }
+  }
+
+}
+
+.botones-context {
+  display: flex;
+  gap: 0.2rem;
+  flex-shrink: 0;
+
+  @media screen and (max-width: 768px) {
+    gap: 0;
+
+    button {
+      flex: 1 100%;
+      border-radius: 0;
+      border-top: 1px solid #ccc;
+    }
+
+    button + button {
+      border-left: 1px solid #ccc; /* Línea divisoria */
+      padding-left: 0.5rem; /* Espacio después de la línea */
+    }
+  }
+
+  ::ng-deep .btn {
+    font-size: 1.33333em;
+    font-weight: var(--font-weight-light);
+  }
+}
+
+app-expandable-metadata {
+  ::ng-deep .simple-view-element {
+    line-height: 1.5;
+  }
+
+  sedici-truncatable-generic-item-page-field {
+    ::ng-deep .content {
+      line-height: 1.5;
+    }
+  }
+}
+
+.metadata-column {
+  padding: 0 .5rem ;
+
+  ::ng-deep ds-generic-item-page-field,
+  ::ng-deep sedici-truncatable-generic-item-page-field,
+  ::ng-deep ds-item-page-uri-field {
+    h6 {
+      font-size: 1.25em;
+      font-weight: var(--font-weight-bold);
+    }
+
+    span, a {
+      font-size: 1.25em;
+      font-weight: var(--font-weight-regular);
+    }
+  }
+}
+
+// Modifico todos los botones que están incluidos en el componente
+:host ::ng-deep .btn:focus {
+  outline-style: none !important;
+}
+
+.contenedor-qr {
+  //border: 3px solid black;
+  margin-bottom: 2%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contenedor-qr qrcode{
+  border: 3px solid black;
+}

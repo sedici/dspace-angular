@@ -14,7 +14,7 @@
         margin-bottom: 0;
       }
     }
-    
+
     .footer-title {
       font-weight: bold;
       font-size: 1.2rem;
@@ -125,6 +125,11 @@
       .footer-title, .footer-text, .footer-icons, .footer-media-icons, .footer-section {
         padding: 0 !important;
       }
+    }
+
+    @media print
+    {
+        display: none !important;
     }
   }
 }

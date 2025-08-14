@@ -1,3 +1,4 @@
+import { AccessibilitySettingsConfig } from '../app/accessibility/accessibility-settings.config';
 import { AdminNotifyMetricsRow } from '../app/admin/admin-notify-dashboard/admin-notify-metrics/admin-notify-metrics.model';
 import { RestRequestMethod } from '../app/core/data/rest-request-method';
 import { LiveRegionConfig } from '../app/shared/live-region/live-region.config';
@@ -334,6 +335,7 @@ export class DefaultAppConfig implements AppConfig {
 
   // Community Page Config
   community: CommunityPageConfig = {
+    defaultBrowseTab: 'search',
     searchSection: {
       showSidebar: true,
     },
@@ -341,6 +343,7 @@ export class DefaultAppConfig implements AppConfig {
 
   // Collection Page Config
   collection: CollectionPageConfig = {
+    defaultBrowseTab: 'search',
     searchSection: {
       showSidebar: true,
     },
@@ -477,6 +480,7 @@ export class DefaultAppConfig implements AppConfig {
     enableEndUserAgreement: true,
     enablePrivacyStatement: true,
     enableCOARNotifySupport: true,
+    enableCookieConsentPopup: true,
   };
 
   // Whether to enable Markdown (https://commonmark.org/) and MathJax (https://www.mathjax.org/)
@@ -598,5 +602,10 @@ export class DefaultAppConfig implements AppConfig {
   liveRegion: LiveRegionConfig = {
     messageTimeOutDurationMs: 30000,
     isVisible: false,
+  };
+
+  // Accessibility settings configuration, used by the AccessibilitySettingsService
+  accessibility: AccessibilitySettingsConfig = {
+    cookieExpirationDuration: 7,
   };
 }

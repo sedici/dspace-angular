@@ -155,11 +155,12 @@ export class DSOEditMenuResolverService  {
         this.dsoVersioningModalService.getVersioningTooltipMessage(dso, 'item.page.version.hasDraft', 'item.page.version.create'),
         this.authorizationService.isAuthorized(FeatureID.CanSynchronizeWithORCID, dso.self),
         this.authorizationService.isAuthorized(FeatureID.CanClaimItem, dso.self),
+        this.authorizationService.isAuthorized(FeatureID.CanEditMetadata, dso.self),
         this.correctionTypeDataService.findByItem(dso.uuid, true).pipe(
           getFirstCompletedRemoteData(),
           getRemoteDataPayload()),
       ]).pipe(
-        map(([canCreateVersion, disableVersioning, versionTooltip, canSynchronizeWithOrcid, canClaimItem, correction]) => {
+        map(([canCreateVersion, disableVersioning, versionTooltip, canSynchronizeWithOrcid, canClaimItem, canEditItem, correction]) => {
           const isPerson = this.getDsoType(dso) === 'person';
           return [
             {
@@ -230,6 +231,18 @@ export class DSOEditMenuResolverService  {
               } as OnClickMenuItemModel,
               icon: 'eye',
               index: 5,
+            },
+            {
+              id: 'print-certificate',
+              active: false,
+              visible: canEditItem,
+              model: {
+                type: MenuItemType.LINK,
+                text: this.getDsoType(dso) + '.page.print',
+                link: new URLCombiner(getDSORoute(dso), 'print').toString(),
+              } as LinkMenuItemModel,
+              icon: 'print',
+              index: 6,
             },
           ];
         }),

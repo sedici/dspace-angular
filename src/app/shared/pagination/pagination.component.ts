@@ -226,6 +226,11 @@ export class PaginationComponent implements OnChanges, OnDestroy, OnInit {
   public uniqueSortFields: SortOptions[] = [];
 
   /**
+   * Whether the current pagination should show a bottom pages
+   */
+  showBottomPager$: Observable<boolean>;
+
+  /**
    * Array to track all subscriptions and unsubscribe them onDestroy
    * @type {Array}
    */
@@ -259,7 +264,7 @@ export class PaginationComponent implements OnChanges, OnDestroy, OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.collectionSize.currentValue !== changes.collectionSize.previousValue) {
+    if (hasValue(changes.collectionSize)) {
       this.showingDetails$ = this.getShowingDetails(this.collectionSize);
     }
   }
@@ -299,6 +304,7 @@ export class PaginationComponent implements OnChanges, OnDestroy, OnInit {
     this.sortField$ = this.paginationService.getCurrentSort(this.id, sortOptions).pipe(
       map((currentSort) => currentSort.field),
     );
+    this.showBottomPager$ = this.shouldShowBottomPager;
   }
 
   constructor(
