@@ -1,7 +1,6 @@
 import {
   AsyncPipe,
   DatePipe,
-  NgIf,
 } from '@angular/common';
 import { Component, Inject, Optional } from '@angular/core';
 import { RouterLink } from '@angular/router';
@@ -10,7 +9,7 @@ import { Observable } from 'rxjs';
 import { HostWindowService, WidthCategory } from 'src/app/shared/host-window.service';
 
 import { FooterComponent as BaseComponent } from '../../../../app/footer/footer.component';
-import { KlaroService } from 'src/app/shared/cookies/klaro.service';
+import { OrejimeService } from 'src/app/shared/cookies/orejime.service';
 import { AuthorizationDataService } from 'src/app/core/data/feature-authorization/authorization-data.service';
 import { NotifyInfoService } from 'src/app/core/coar-notify/notify-info/notify-info.service';
 import { APP_CONFIG, AppConfig } from 'src/config/app-config.interface';
@@ -22,7 +21,12 @@ import { APP_CONFIG, AppConfig } from 'src/config/app-config.interface';
   templateUrl: './footer.component.html',
   // templateUrl: '../../../../app/footer/footer.component.html',
   standalone: true,
-  imports: [NgIf, RouterLink, AsyncPipe, DatePipe, TranslateModule],
+  imports: [
+    AsyncPipe,
+    DatePipe,
+    RouterLink,
+    TranslateModule,
+  ],
 })
 export class FooterComponent extends BaseComponent {
   public isMobile$: Observable<boolean>;
@@ -31,7 +35,7 @@ export class FooterComponent extends BaseComponent {
 
   constructor(
     protected windowService: HostWindowService,
-    @Optional() public cookies: KlaroService,
+    @Optional() public cookies: OrejimeService,
     protected authorizationService: AuthorizationDataService,
     protected notifyInfoService: NotifyInfoService,
     @Inject(APP_CONFIG) protected appConfig: AppConfig

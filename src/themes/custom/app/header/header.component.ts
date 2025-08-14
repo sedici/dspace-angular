@@ -24,9 +24,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MenuService } from 'src/app/shared/menu/menu.service';
 import { HostWindowService } from 'src/app/shared/host-window.service';
 
-/**
- * Represents the header with the logo and simple navigation
- */
 @Component({
   selector: 'ds-themed-header',
   styleUrls: ['header.component.scss'],

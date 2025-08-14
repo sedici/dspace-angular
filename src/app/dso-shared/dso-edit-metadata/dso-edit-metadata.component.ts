@@ -1,8 +1,4 @@
-import {
-  AsyncPipe,
-  NgFor,
-  NgIf,
-} from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {
   ChangeDetectorRef,
   Component,
@@ -42,6 +38,7 @@ import { ArrayMoveChangeAnalyzer } from '../../core/data/array-move-change-analy
 import { RemoteData } from '../../core/data/remote-data';
 import { UpdateDataService } from '../../core/data/update-data.service';
 import { lazyDataService } from '../../core/lazy-data-service';
+import { Context } from '../../core/shared/context.model';
 import { DSpaceObject } from '../../core/shared/dspace-object.model';
 import { getFirstCompletedRemoteData } from '../../core/shared/operators';
 import { ResourceType } from '../../core/shared/resource-type';
@@ -68,7 +65,19 @@ import { EditItemMenuComponent } from '../../shared/edit-item-menu/edit-item-men
   styleUrls: ['./dso-edit-metadata.component.scss'],
   templateUrl: './dso-edit-metadata.component.html',
   standalone: true,
-  imports: [EditItemMenuComponent, NgIf, DsoEditMetadataHeadersComponent, MetadataFieldSelectorComponent, DsoEditMetadataValueHeadersComponent, DsoEditMetadataValueComponent, NgFor, DsoEditMetadataFieldValuesComponent, AlertComponent, ThemedLoadingComponent, AsyncPipe, TranslateModule, BtnDisabledDirective],
+  imports: [
+    AlertComponent,
+    AsyncPipe,
+    BtnDisabledDirective,
+    DsoEditMetadataFieldValuesComponent,
+    DsoEditMetadataHeadersComponent,
+    DsoEditMetadataValueComponent,
+    DsoEditMetadataValueHeadersComponent,
+    MetadataFieldSelectorComponent,
+    ThemedLoadingComponent,
+    TranslateModule,
+    EditItemMenuComponent,
+  ],
 })
 /**
  * Component showing a table of all metadata on a DSpaceObject and options to modify them
@@ -146,6 +155,8 @@ export class DsoEditMetadataComponent implements OnInit, OnDestroy {
    * Unsubscribed from in ngOnDestroy()
    */
   dsoUpdateSubscription: Subscription;
+
+  public readonly Context = Context;
 
   constructor(protected route: ActivatedRoute,
               protected notificationsService: NotificationsService,
@@ -246,7 +257,7 @@ export class DsoEditMetadataComponent implements OnInit, OnDestroy {
   /**
    * Submit the current changes to the form by retrieving json PATCH operations from the form and sending it to the
    * DSpaceObject's data-service
-   * Display notificiations and reset the form afterwards if successful
+   * Display notifications and reset the form afterwards if successful
    */
   submit(): void {
     this.saving$.next(true);

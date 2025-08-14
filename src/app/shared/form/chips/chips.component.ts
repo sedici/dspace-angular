@@ -2,14 +2,11 @@ import {
   CdkDrag,
   CdkDragDrop,
   CdkDropList,
-  CdkDropListGroup,
   moveItemInArray,
 } from '@angular/cdk/drag-drop';
 import {
   AsyncPipe,
   NgClass,
-  NgForOf,
-  NgIf,
 } from '@angular/common';
 import {
   ChangeDetectorRef,
@@ -40,16 +37,13 @@ import { ChipsItem } from './models/chips-item.model';
   styleUrls: ['./chips.component.scss'],
   templateUrl: './chips.component.html',
   imports: [
-    NgbTooltipModule,
-    NgClass,
-    NgForOf,
     AsyncPipe,
     AuthorityConfidenceStateDirective,
-    NgIf,
-    TranslateModule,
     CdkDrag,
     CdkDropList,
-    CdkDropListGroup,
+    NgbTooltipModule,
+    NgClass,
+    TranslateModule,
   ],
   standalone: true,
 })
@@ -107,17 +101,8 @@ export class ChipsComponent implements OnChanges {
     this.dragged = index;
   }
 
-  onDrop(event: CdkDragDrop<{ index: number }>) {
-    const previousContainerIndex = event.previousContainer.data.index;
-    const currentContainerIndex = event.container.data.index;
-
-    const currentPositionInCurrentContainer = event.currentIndex;
-
-    const directionAdjuster = currentContainerIndex > previousContainerIndex ? -1 : 0;
-
-    moveItemInArray(this.chips.chipsItems.getValue(),
-      previousContainerIndex,
-      currentContainerIndex + currentPositionInCurrentContainer + directionAdjuster);
+  onDrop(event: CdkDragDrop<ChipsItem[]>) {
+    moveItemInArray(this.chips.chipsItems.getValue(), event.previousIndex, event.currentIndex);
     this.dragged = -1;
     this.chips.updateOrder();
     this.isDragging.next(false);

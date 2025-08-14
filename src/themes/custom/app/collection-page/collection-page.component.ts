@@ -1,7 +1,4 @@
-import {
-  AsyncPipe,
-  NgIf,
-} from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -35,7 +32,6 @@ import { ComcolPageLogoComponent } from '../../../../app/shared/comcol/comcol-pa
 import { DsoEditMenuComponent } from '../../../../app/shared/dso-page/dso-edit-menu/dso-edit-menu.component';
 import { ErrorComponent } from '../../../../app/shared/error/error.component';
 import { ThemedLoadingComponent } from '../../../../app/shared/loading/themed-loading.component';
-import { ObjectCollectionComponent } from '../../../../app/shared/object-collection/object-collection.component';
 import { VarDirective } from '../../../../app/shared/utils/var.directive';
 import { ViewTrackerResolverService } from 'src/app/statistics/angulartics/dspace/view-tracker-resolver.service';
 import { RemoteData } from 'src/app/core/data/remote-data';
@@ -68,20 +64,18 @@ import { CollectionDataService } from 'src/app/core/data/collection-data.service
   ],
   standalone: true,
   imports: [
-    ThemedComcolPageContentComponent,
-    ErrorComponent,
-    NgIf,
-    ThemedLoadingComponent,
-    TranslateModule,
-    VarDirective,
     AsyncPipe,
     ComcolPageHeaderComponent,
     ComcolPageLogoComponent,
-    ThemedComcolPageHandleComponent,
     DsoEditMenuComponent,
-    ThemedComcolPageBrowseByComponent,
-    ObjectCollectionComponent,
+    ErrorComponent,
     RouterOutlet,
+    ThemedComcolPageBrowseByComponent,
+    ThemedComcolPageContentComponent,
+    ThemedComcolPageHandleComponent,
+    ThemedLoadingComponent,
+    TranslateModule,
+    VarDirective,
   ],
 })
 /**

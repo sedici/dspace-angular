@@ -1,7 +1,4 @@
-import {
-  AsyncPipe,
-  NgForOf,
-} from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {
   Component,
   Input,
@@ -18,9 +15,8 @@ import { hasValue } from '../../../empty.util';
   selector: 'ds-search-results-skeleton',
   standalone: true,
   imports: [
-    NgxSkeletonLoaderModule,
     AsyncPipe,
-    NgForOf,
+    NgxSkeletonLoaderModule,
   ],
   templateUrl: './search-results-skeleton.component.html',
   styleUrl: './search-results-skeleton.component.scss',

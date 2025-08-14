@@ -1,7 +1,4 @@
-import {
-  AsyncPipe,
-  NgIf,
-} from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -35,10 +32,9 @@ import { FormComponent } from '../../../../shared/form/form.component';
   selector: 'ds-metadata-field-form',
   templateUrl: './metadata-field-form.component.html',
   imports: [
-    NgIf,
+    AsyncPipe,
     FormComponent,
     TranslateModule,
-    AsyncPipe,
   ],
   standalone: true,
 })
@@ -162,11 +158,10 @@ export class MetadataFieldFormComponent implements OnInit, OnDestroy {
       rows: 5,
     });
     this.formModel = [
-      new DynamicFormGroupModel(
-        {
-          id: 'metadatadatafieldgroup',
-          group:[this.element, this.qualifier, this.scopeNote],
-        }),
+      new DynamicFormGroupModel({
+        id: 'metadatadatafieldgroup',
+        group:[this.element, this.qualifier, this.scopeNote],
+      }),
     ];
     this.formGroup = this.formBuilderService.createFormGroup(this.formModel);
     this.registryService.getActiveMetadataField().subscribe((field: MetadataField): void => {

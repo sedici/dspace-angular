@@ -12,7 +12,7 @@ import {
 } from '@ng-dynamic-forms/core';
 import {
   Observable,
-  of as observableOf,
+  of,
 } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -28,6 +28,7 @@ import { DsDynamicInputModel } from './ds-dynamic-input.model';
  */
 @Component({
   selector: 'ds-dynamic-vocabulary',
+  standalone: true,
   template: '',
 })
 export abstract class DsDynamicVocabularyComponent extends DynamicFormControlComponent {
@@ -68,7 +69,7 @@ export abstract class DsDynamicVocabularyComponent extends DynamicFormControlCom
       } else {
         // initEntry$ = this.vocabularyService.getVocabularyEntryByValue(this.model.value.value, this.model.vocabularyOptions);
         // Si no tiene autoridad, crea un Observable que emite un nuevo VocabularyEntry con el valor del modelo
-        initEntry$ = observableOf(Object.assign(new VocabularyEntry(), {value: this.model.value.value}));
+        initEntry$ = of(Object.assign(new VocabularyEntry(), {value: this.model.value.value}));
       }
       initValue$ = initEntry$.pipe(map((initEntry: VocabularyEntry) => {
         if (isNotEmpty(initEntry)) {
@@ -92,7 +93,7 @@ export abstract class DsDynamicVocabularyComponent extends DynamicFormControlCom
         }
       }));
     } else if (isNotEmpty(this.model.value) && (this.model.value instanceof VocabularyEntry)) {
-      initValue$ = observableOf(
+      initValue$ = of(
         new FormFieldMetadataValueObject(
           this.model.value.value,
           null,
@@ -104,7 +105,7 @@ export abstract class DsDynamicVocabularyComponent extends DynamicFormControlCom
         ),
       );
     } else {
-      initValue$ = observableOf(new FormFieldMetadataValueObject(this.model.value));
+      initValue$ = of(new FormFieldMetadataValueObject(this.model.value));
     }
     return initValue$;
   }

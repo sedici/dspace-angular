@@ -1,7 +1,4 @@
-import {
-  AsyncPipe,
-  NgIf,
-} from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -31,7 +28,7 @@ import {
   combineLatest,
   combineLatest as observableCombineLatest,
   Observable,
-  of as observableOf,
+  of,
   Subscription,
 } from 'rxjs';
 import {
@@ -86,16 +83,15 @@ import { ThemedThumbnailComponent } from '../../thumbnail/themed-thumbnail.compo
   templateUrl: './edit-bitstream-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    FormComponent,
-    NgIf,
-    VarDirective,
-    ThemedThumbnailComponent,
     AsyncPipe,
-    RouterLink,
     ErrorComponent,
-    ThemedLoadingComponent,
-    TranslateModule,
     FileSizePipe,
+    FormComponent,
+    RouterLink,
+    ThemedLoadingComponent,
+    ThemedThumbnailComponent,
+    TranslateModule,
+    VarDirective,
   ],
   standalone: true,
 })
@@ -255,7 +251,7 @@ export class EditBitstreamPageComponent implements OnInit, OnDestroy {
     group: [this.iiifLabelModel],
   }, {
     grid: {
-      host: 'form-row',
+      host: 'row',
     },
   });
 
@@ -273,7 +269,7 @@ export class EditBitstreamPageComponent implements OnInit, OnDestroy {
     group: [this.iiifTocModel],
   }, {
     grid: {
-      host: 'form-row',
+      host: 'row',
     },
   });
 
@@ -291,7 +287,7 @@ export class EditBitstreamPageComponent implements OnInit, OnDestroy {
     group: [this.iiifWidthModel],
   }, {
     grid: {
-      host: 'form-row',
+      host: 'row',
     },
   });
 
@@ -309,7 +305,7 @@ export class EditBitstreamPageComponent implements OnInit, OnDestroy {
     group: [this.iiifHeightModel],
   }, {
     grid: {
-      host: 'form-row',
+      host: 'row',
     },
   });
 
@@ -332,7 +328,7 @@ export class EditBitstreamPageComponent implements OnInit, OnDestroy {
       ],
     }, {
       grid: {
-        host: 'form-row',
+        host: 'row',
       },
     }),
     new DynamicFormGroupModel({
@@ -686,7 +682,7 @@ export class EditBitstreamPageComponent implements OnInit, OnDestroy {
       }));
 
     } else {
-      bundle$ = observableOf(this.bundle);
+      bundle$ = of(this.bundle);
     }
     if (isNewFormat) {
       bitstream$ = this.bitstreamService.updateFormat(this.bitstream, this.selectedFormat).pipe(
@@ -703,7 +699,7 @@ export class EditBitstreamPageComponent implements OnInit, OnDestroy {
         }),
       );
     } else {
-      bitstream$ = observableOf(this.bitstream);
+      bitstream$ = of(this.bitstream);
     }
 
     combineLatest([bundle$, bitstream$]).pipe(

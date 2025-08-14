@@ -1,8 +1,4 @@
-import {
-  AsyncPipe,
-  NgForOf,
-  NgIf,
-} from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {
   Component,
   OnInit,
@@ -55,13 +51,11 @@ import { NotificationsService } from '../../shared/notifications/notifications.s
   styleUrls: ['./create-profile.component.scss'],
   templateUrl: './create-profile.component.html',
   imports: [
-    ProfilePageSecurityFormComponent,
-    TranslateModule,
-    NgIf,
     AsyncPipe,
-    ReactiveFormsModule,
-    NgForOf,
     BtnDisabledDirective,
+    ProfilePageSecurityFormComponent,
+    ReactiveFormsModule,
+    TranslateModule,
   ],
   standalone: true,
 })

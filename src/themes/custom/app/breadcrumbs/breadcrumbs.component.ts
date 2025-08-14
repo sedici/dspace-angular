@@ -1,7 +1,5 @@
 import {
   AsyncPipe,
-  NgFor,
-  NgIf,
   NgTemplateOutlet,
 } from '@angular/common';
 import { Component, HostListener } from '@angular/core';
@@ -24,7 +22,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./breadcrumbs.component.scss'],
   // styleUrls: ['../../../../app/breadcrumbs/breadcrumbs.component.scss'],
   standalone: true,
-  imports: [VarDirective, NgIf, NgTemplateOutlet, NgFor, RouterLink, NgbTooltipModule, AsyncPipe, TranslateModule],
+  imports: [
+    AsyncPipe,
+    NgbTooltipModule,
+    NgTemplateOutlet,
+    RouterLink,
+    TranslateModule,
+    VarDirective,
+  ],
 })
 export class BreadcrumbsComponent extends BaseComponent {
   isResponsive: boolean = false;

@@ -18,6 +18,8 @@ import { Context } from '../../../../../../../app/core/shared/context.model';
 import { Item } from '../../../../../../../app/core/shared/item.model';
 import { ViewMode } from '../../../../../../../app/core/shared/view-mode.model';
 import { GenericItemPageFieldComponent } from '../../../../../../../app/item-page/simple/field-components/specific-field/generic/generic-item-page-field.component';
+import { GeospatialItemPageFieldComponent } from '../../../../../../../app/item-page/simple/field-components/specific-field/geospatial/geospatial-item-page-field.component';
+import { ThemedItemPageTitleFieldComponent } from '../../../../../../../app/item-page/simple/field-components/specific-field/title/themed-item-page-field.component';
 import { ItemPageUriFieldComponent } from '../../../../../../../app/item-page/simple/field-components/specific-field/uri/item-page-uri-field.component';
 import { UntypedItemComponent as BaseComponent } from '../../../../../../../app/item-page/simple/item-types/untyped-item/untyped-item.component';
 import { DsoEditMenuComponent } from '../../../../../../../app/shared/dso-page/dso-edit-menu/dso-edit-menu.component';
@@ -73,6 +75,8 @@ import { ExpandableMetadataComponent } from './expandable-metadata';
     NgbModule,
     SediciShareButtonsComponent,
     ExpandableMetadataComponent,
+    GeospatialItemPageFieldComponent,
+    ThemedItemPageTitleFieldComponent
   ],
 })
 export class UntypedItemComponent extends BaseComponent {

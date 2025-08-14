@@ -4,8 +4,14 @@ import {
   NgIf,
 } from '@angular/common';
 import { Component, OnInit, Input } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import {
+  ActivatedRoute,
+  RouterLink,
+} from '@angular/router';
+import {
+  TranslateModule,
+  TranslateService,
+} from '@ngx-translate/core';
 import { FileSizePipe } from 'src/app/shared/utils/file-size-pipe';
 import { FileDownloadLinkComponent } from 'src/app/shared/file-download-link/file-download-link.component';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
@@ -14,7 +20,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import {
   combineLatest as observableCombineLatest,
   Observable,
-  of as observableOf,
+  of,
 } from 'rxjs';
 import { FeatureID } from 'src/app/core/data/feature-authorization/feature-id';
 import { map } from 'rxjs/operators';
@@ -42,25 +48,30 @@ export class SediciFileDownloadLinkComponent extends FileDownloadLinkComponent i
   constructor(
     protected authorizationService: AuthorizationDataService,
     public dsoNameService: DSONameService,
+    protected route: ActivatedRoute,
+    protected translateService: TranslateService,
     private cdr: ChangeDetectorRef
   ) {
-    super(authorizationService, dsoNameService);
+    super(authorizationService, dsoNameService, route, translateService);
   }
 
   ngOnChanges() {
-    this.bitstreamPath$ = this.getBitstreamPathObservable();
+    this.getBitstreamPathObservable();
     this.cdr.detectChanges(); // Forzar la detección de cambios
   }
   
-  private getBitstreamPathObservable(): Observable<{ routerLink: string, queryParams: any }> {
+  private getBitstreamPathObservable(): void {
     if (this.enableRequestACopy) {
+      this.itemRequest = this.route.snapshot.data.itemRequest;
       this.canDownload$ = this.authorizationService.isAuthorized(FeatureID.CanDownload, isNotEmpty(this.bitstream) ? this.bitstream.self : undefined);
-      const canRequestACopy$ = this.authorizationService.isAuthorized(FeatureID.CanRequestACopy, isNotEmpty(this.bitstream) ? this.bitstream.self : undefined);
-      return observableCombineLatest([this.canDownload$, canRequestACopy$]).pipe(
-        map(([canDownload, canRequestACopy]) => this.getBitstreamPath(canDownload, canRequestACopy)),
+      this.canDownloadWithToken$ = of((this.itemRequest && this.itemRequest.acceptRequest && !this.itemRequest.accessExpired) ? (this.itemRequest.allfiles !== false || this.itemRequest.bitstreamId === this.bitstream.uuid) : false);
+      this.canRequestACopy$ = this.authorizationService.isAuthorized(FeatureID.CanRequestACopy, isNotEmpty(this.bitstream) ? this.bitstream.self : undefined);
+       this.bitstreamPath$ = observableCombineLatest([this.canDownload$, this.canDownloadWithToken$, this.canRequestACopy$]).pipe(
+        map(([canDownload, canDownloadWithToken, canRequestACopy]) => this.getBitstreamPath(canDownload, canDownloadWithToken, canRequestACopy)),
       );
     } else {
-      return observableOf(this.getBitstreamDownloadPath());
+      this.bitstreamPath$ = of(this.getBitstreamDownloadPath());
+      this.canDownload$ = of(true);
     }
   }
 

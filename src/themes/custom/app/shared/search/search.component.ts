@@ -1,6 +1,5 @@
 import {
   AsyncPipe,
-  NgIf,
   NgTemplateOutlet,
 } from '@angular/common';
 import {
@@ -34,14 +33,13 @@ import { SortDirection } from 'src/app/core/cache/models/sort-options.model';
   standalone: true,
   imports: [
     AsyncPipe,
-    NgIf,
     NgTemplateOutlet,
     PageWithSidebarComponent,
+    SearchLabelsComponent,
     ThemedSearchFormComponent,
     ThemedSearchResultsComponent,
     ThemedSearchSidebarComponent,
     TranslateModule,
-    SearchLabelsComponent,
     ViewModeSwitchComponent,
     PaginationComponent,
   ],

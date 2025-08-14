@@ -1,8 +1,4 @@
-import {
-  AsyncPipe,
-  NgForOf,
-  NgIf,
-} from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -44,12 +40,10 @@ import { createFailedRemoteDataObjectFromError$ } from '../../../shared/remote-d
   templateUrl: './orcid-auth.component.html',
   styleUrls: ['./orcid-auth.component.scss'],
   imports: [
-    TranslateModule,
-    AsyncPipe,
-    NgIf,
-    NgForOf,
     AlertComponent,
+    AsyncPipe,
     BtnDisabledDirective,
+    TranslateModule,
   ],
   standalone: true,
 })

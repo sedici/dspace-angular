@@ -1,7 +1,4 @@
-import {
-  AsyncPipe,
-  NgIf,
-} from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {
   Component,
   Input,
@@ -41,7 +38,12 @@ import { RemoteData } from 'src/app/core/data/remote-data';
   styleUrls: ['./search-facet-option.component.scss'],
   templateUrl: './search-facet-option.component.html',
   standalone: true,
-  imports: [NgIf, RouterLink, AsyncPipe, TranslateModule, ShortNumberPipe],
+  imports: [
+    AsyncPipe,
+    RouterLink,
+    ShortNumberPipe,
+    TranslateModule,
+  ],
 })
 
 /**

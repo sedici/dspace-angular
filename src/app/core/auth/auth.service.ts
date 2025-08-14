@@ -12,7 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { CookieAttributes } from 'js-cookie';
 import {
   Observable,
-  of as observableOf,
+  of,
 } from 'rxjs';
 import {
   filter,
@@ -58,6 +58,7 @@ import {
   getFirstSucceededRemoteDataPayload,
 } from '../shared/operators';
 import { PageInfo } from '../shared/page-info.model';
+import { URLCombiner } from '../url-combiner/url-combiner';
 import {
   CheckAuthenticationTokenAction,
   RefreshTokenAction,
@@ -257,6 +258,16 @@ export class AuthService {
   }
 
   /**
+   * Returns the authenticated user id from the store
+   * @returns {User}
+   */
+  public getAuthenticatedUserIdFromStore(): Observable<string> {
+    return this.store.pipe(
+      select(getAuthenticatedUserId),
+    );
+  }
+
+  /**
    * Returns an observable which emits the currently authenticated user from the store,
    * or null if the user is not authenticated.
    */
@@ -267,7 +278,7 @@ export class AuthService {
         if (hasValue(id)) {
           return this.epersonService.findById(id).pipe(getFirstSucceededRemoteDataPayload());
         } else {
-          return observableOf(null);
+          return of(null);
         }
       }),
     );
@@ -290,7 +301,7 @@ export class AuthService {
         if (status.hasSucceeded) {
           return status.payload.specialGroups;
         } else {
-          return createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(),[]));
+          return createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), []));
         }
       }),
     );
@@ -354,7 +365,7 @@ export class AuthService {
     if (isNotEmpty(status.authMethods)) {
       authMethods = status.authMethods;
     }
-    return observableOf(authMethods);
+    return of(authMethods);
   }
 
   /**
@@ -588,6 +599,31 @@ export class AuthService {
   }
 
   /**
+   * Returns the external server redirect URL.
+   * @param origin - The origin route.
+   * @param redirectRoute - The redirect route.
+   * @param location - The location.
+   * @returns The external server redirect URL.
+   */
+  getExternalServerRedirectUrl(origin: string, redirectRoute: string, location: string): string {
+    const correctRedirectUrl = new URLCombiner(origin, redirectRoute).toString();
+
+    let externalServerUrl = location;
+    const myRegexp = /\?redirectUrl=(.*)/g;
+    const match = myRegexp.exec(location);
+    const redirectUrlFromServer = (match && match[1]) ? match[1] : null;
+
+    // Check whether the current page is different from the redirect url received from rest
+    if (isNotNull(redirectUrlFromServer) && redirectUrlFromServer !== correctRedirectUrl) {
+      // change the redirect url with the current page url
+      const newRedirectUrl = `?redirectUrl=${correctRedirectUrl}`;
+      externalServerUrl = location.replace(/\?redirectUrl=(.*)/g, newRedirectUrl);
+    }
+
+    return externalServerUrl;
+  }
+
+  /**
    * Clear redirect url
    */
   clearRedirectUrl() {
@@ -648,7 +684,7 @@ export class AuthService {
    */
   getShortlivedToken(): Observable<string> {
     return this.isAuthenticated().pipe(
-      switchMap((authenticated) => authenticated ? this.authRequestService.getShortlivedToken() : observableOf(null)),
+      switchMap((authenticated) => authenticated ? this.authRequestService.getShortlivedToken() : of(null)),
     );
   }
 
@@ -671,5 +707,4 @@ export class AuthService {
       this.store.dispatch(new UnsetUserAsIdleAction());
     }
   }
-
 }

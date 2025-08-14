@@ -1,7 +1,4 @@
-import {
-  AsyncPipe,
-  NgIf,
-} from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -57,11 +54,10 @@ import { RelationshipOptions } from '../../../models/relationship-options.model'
   ],
   imports: [
     AsyncPipe,
-    VarDirective,
-    TranslateModule,
     NgbDropdownModule,
-    NgIf,
     ThemedSearchComponent,
+    TranslateModule,
+    VarDirective,
   ],
   standalone: true,
 })
