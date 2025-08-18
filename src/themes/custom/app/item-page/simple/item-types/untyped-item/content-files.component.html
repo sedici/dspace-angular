@@ -1,167 +1,180 @@
-<div *ngIf="!isLoadingFiles; else loadingFiles">
-  <div class="content-container" *ngIf="files.length > 0; else noFile">
-    <div class="row">
-      <div class="file-list col-lg-3 col-12">
-        <div *ngFor="let file of files" (click)="isPreviewAvailable(file.name) && file.canDownload && handleClick(file, contentTemplate, headerTemplate)" [ngClass]="{'selected-file': file === selectedFile}">          
-          <ng-container *ngIf="isPreviewAvailable(file.name) && file.canDownload; else applyNoPreviewTemplate">
+@if (!isLoadingFiles) {
+  <div>
+    @if (files.length > 0) {
+      <div class="content-container">
+        <div class="row">
+          <div class="file-list col-lg-3 col-12">
+            @for (file of files; track file) {
+              <div (click)="isPreviewAvailable(file.name) && isDownloadable(file) && handleClick(file, contentTemplate, headerTemplate)" [ngClass]="{'selected-file': file === selectedFile}">
+                @if (isPreviewAvailable(file.name) && isDownloadable(file)) {
+                  <div class="file-item row">
+                    <div class="file-icon col-1">
+                      <img [src]="getIconPath(file.name)" alt="File icon"/>
+                    </div>
+                    <div class="col-8">
+                      <span class="file-name">{{ getFileDescription(file) }}</span>
+                    </div>
+                    <div class="col-3 download-button">
+                      <ds-sedici-file-download-link [bitstream]="file" [item]="object"></ds-sedici-file-download-link>
+                    </div>
+                  </div>
+                } @else {
+                  <ng-container *ngTemplateOutlet="noPreviewAvailable; context: { file: file }"></ng-container>
+                }
+                <ng-template #headerTemplate>
+                  <div class="header-template">
+                    <div class="file-name-container">
+                      <span class="file-name">{{ getFileDescription(file) }}</span>
+                    </div>
+                    <div class="button-container">
+                      <ds-sedici-file-download-link [bitstream]="file" [item]="object" [isSticky]="true" [isMobile]="true"></ds-sedici-file-download-link>
+                      <button class="btn" (click)="openModalShareButtons()">
+                        <i class="fa-solid fa-share"></i>
+                        <span> Compartir</span>
+                      </button>
+                    </div>
+                  </div>
+                </ng-template>
+              </div>
+            }
+          </div>
+          <div class="file-preview d-none d-lg-block col-lg-9">
+            @if (selectedFile && isAssetAvailable) {
+              <div>
+                <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+              </div>
+            } @else {
+              @if (!isAssetAvailable) {
+                <div class="no-preview">
+                  <span>OCURRIÓ UN ERROR INESPERADO: PREVISUALIZACIÓN NO DISPONIBLE</span>
+                </div>
+              } @else {
+                <div class="no-preview">
+                  <span>NO HAY ARCHIVO/S CON PREVISUALIZACIÓN DISPONIBLE</span>
+                </div>
+              }
+            }
+          </div>
+        </div>
+        <ng-template #noPreviewAvailable let-file="file">
+          <div class="file-no-preview-available">
             <div class="file-item row">
               <div class="file-icon col-1">
                 <img [src]="getIconPath(file.name)" alt="File icon"/>
               </div>
               <div class="col-8">
                 <span class="file-name">{{ getFileDescription(file) }}</span>
+                <span class="text-no-preview-available">
+                  <i class="fa-solid fa-eye-slash"></i>
+                  Preview no disponible
+                </span>
               </div>
               <div class="col-3 download-button">
                 <ds-sedici-file-download-link [bitstream]="file" [item]="object"></ds-sedici-file-download-link>
               </div>
             </div>
-          </ng-container>
-          
-          <ng-template #applyNoPreviewTemplate>
-            <ng-container *ngTemplateOutlet="noPreviewAvailable; context: { file: file }"></ng-container>
-          </ng-template>
-
-          <ng-template #headerTemplate>
-            <div class="header-template">
-              <div class="file-name-container">
-                <span class="file-name">{{ getFileDescription(file) }}</span>
-              </div>
-              <div class="button-container">
-                <ds-sedici-file-download-link [bitstream]="file" [item]="object" [isSticky]="true" [isMobile]="true"></ds-sedici-file-download-link>
-                <button class="btn" (click)="openModalShareButtons()">
-                  <i class="fa-solid fa-share"></i>
-                  <span> Compartir</span>
-                </button>
-              </div>
-            </div>
-          </ng-template>
-        </div>
-      </div>
-    
-      <div class="file-preview d-none d-lg-block col-lg-9">
-        <div *ngIf="selectedFile && isAssetAvailable; else noAsset">
-          <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
-        </div>
-        <ng-template #noAsset>
-          <div *ngIf="!isAssetAvailable; else noPreview" class="no-preview">
-            <span>OCURRIÓ UN ERROR INESPERADO: PREVISUALIZACIÓN NO DISPONIBLE</span>
           </div>
-          <ng-template #noPreview>
-            <div class="no-preview">
-              <span>NO HAY ARCHIVO/S CON PREVISUALIZACIÓN DISPONIBLE</span>
+        </ng-template>
+        <ng-template #contentTemplate>
+          <div class="content-preview-wrapper">
+            @switch (true) {
+              @case (getFileExtension(selectedFile.name) === 'pdf') {
+                <ng-container *ngTemplateOutlet="pdfTemplate"></ng-container>
+              }
+              @case (isImageFile(getFileExtension(selectedFile.name))) {
+                <ng-container *ngTemplateOutlet="imageTemplate"></ng-container>
+              }
+              @case (getFileExtension(selectedFile.name) === 'zip') {
+                <div style="padding: .5rem 1rem;">
+                  <ng-container *ngTemplateOutlet="zipTemplate"></ng-container>
+                </div>
+              }
+              @default {
+                <div class="fa fa-file">
+                  {{ dsoNameService.getName(selectedFile) }}
+                </div>
+              }
+            }
+            <div class="sticky-download">
+              <ds-sedici-file-download-link [bitstream]="selectedFile" [item]="object" [isSticky]="true"></ds-sedici-file-download-link>
             </div>
+          </div>
+        </ng-template>
+        <ng-template #pdfTemplate>
+          @if (isLoading) {
+            <div class="loading-overlay">
+              <i class="fa-solid fa-spinner fa-spin-pulse loading-spinner"></i>
+            </div>
+          }
+          <div style="width: 100%; height: 90vh;">
+            <ng2-pdfjs-viewer
+              #pdfViewerOnDemand
+              [pdfSrc]="previewUrl"
+              [openFile]="false"
+              [viewBookmark]="false"
+              [pagemode]="'none'"
+              zoom = "page-width"
+              (onDocumentLoad)="onDocLoaded()">
+            </ng2-pdfjs-viewer>
+          </div>
+        </ng-template>
+        <ng-template #imageTemplate>
+          <div style="display: flex; justify-content: center;">
+            <img class="preview-image" [src]="previewUrl" alt="{{ dsoNameService.getName(selectedFile) }}">
+          </div>
+        </ng-template>
+        <ng-template #zipTemplate>
+          <ul>
+            <ng-container *ngTemplateOutlet="renderTree; context: { tree: zipContentTree }"></ng-container>
+          </ul>
+          <ng-template #renderTree let-tree="tree">
+            <ul>
+              @for (key of objectKeys(tree || {}); track key) {
+                <li>
+                  @if (isFolder(tree[key])) {
+                    <i class="fa fa-folder"></i> {{ key }}
+                    <ng-container *ngTemplateOutlet="renderTree; context: { tree: tree[key] }"></ng-container>
+                  } @else {
+                    @switch (getFileExtension(key)) {
+                      @case ('pdf') {
+                        <i class="fa fa-file-pdf"></i>
+                      }
+                      @case ('doc') {
+                        <i class="fa fa-file-word"></i>
+                      }
+                      @case ('docx') {
+                        <i class="fa fa-file-word"></i>
+                      }
+                      @case ('csv') {
+                        <i class="fa fa-file-csv"></i>
+                      }
+                      @case ('jpg') {
+                        <i class="fa fa-file-image"></i>
+                      }
+                      @case ('jpeg') {
+                        <i class="fa fa-file-image"></i>
+                      }
+                      @case ('png') {
+                        <i class="fa fa-file-image"></i>
+                      }
+                      @default {
+                        <i class="fa fa-file"></i>
+                      }
+                    }
+                    {{ key }}
+                  }
+                </li>
+              }
+            </ul>
           </ng-template>
         </ng-template>
       </div>
-    </div>
-
-    <ng-template #noPreviewAvailable let-file="file">
-      <div class="file-no-preview-available">
-        <div class="file-item row">
-          <div class="file-icon col-1">
-            <img [src]="getIconPath(file.name)" alt="File icon"/>
-          </div>
-          <div class="col-8">
-            <span class="file-name">{{ getFileDescription(file) }}</span>
-            <span class="text-no-preview-available">
-              <i class="fa-solid fa-eye-slash"></i>
-              Preview no disponible
-            </span>
-          </div>
-          <div class="col-3 download-button">
-            <ds-sedici-file-download-link [bitstream]="file" [item]="object"></ds-sedici-file-download-link>
-          </div>
-        </div>
-      </div>
-    </ng-template>
-
-    <ng-template #contentTemplate>
-      <div class="content-preview-wrapper">        
-        <ng-container [ngSwitch]="true">
-          <ng-container *ngSwitchCase="getFileExtension(selectedFile.name) === 'pdf'">
-            <ng-container *ngTemplateOutlet="pdfTemplate"></ng-container>
-          </ng-container>
-          <ng-container *ngSwitchCase="isImageFile(getFileExtension(selectedFile.name))">
-            <ng-container *ngTemplateOutlet="imageTemplate"></ng-container>
-          </ng-container>
-          <ng-container *ngSwitchCase="getFileExtension(selectedFile.name) === 'zip'">
-            <div style="padding: .5rem 1rem;">
-              <ng-container *ngTemplateOutlet="zipTemplate"></ng-container>
-            </div>
-          </ng-container>
-          <ng-container *ngSwitchDefault>
-            <div class="fa fa-file">
-              {{ dsoNameService.getName(selectedFile) }}
-            </div>
-          </ng-container>
-        </ng-container>
-
-        <div class="sticky-download">
-          <ds-sedici-file-download-link [bitstream]="selectedFile" [item]="object" [isSticky]="true"></ds-sedici-file-download-link>
-        </div>
-      </div>
-    </ng-template>
-
-    <ng-template #pdfTemplate>
-      <div *ngIf="isLoading" class="loading-overlay">
-        <i class="fa-solid fa-spinner fa-spin-pulse loading-spinner"></i>
-      </div>
-      <div style="width: 100%; height: 90vh;">
-        <ng2-pdfjs-viewer
-          #pdfViewerOnDemand
-          [pdfSrc]="previewUrl"
-          [openFile]="false"
-          [viewBookmark]="false"
-          [pagemode]="'none'"
-          zoom = "page-width"
-          (onDocumentLoad)="onDocLoaded()">
-        </ng2-pdfjs-viewer>
-      </div>
-    </ng-template>
-    
-    <ng-template #imageTemplate>
-      <div style="display: flex; justify-content: center;">
-        <img class="preview-image" [src]="previewUrl" alt="{{ dsoNameService.getName(selectedFile) }}">
-      </div>
-    </ng-template>
-    
-    <ng-template #zipTemplate>
-      <ul>
-        <ng-container *ngTemplateOutlet="renderTree; context: { tree: zipContentTree }"></ng-container>
-      </ul>
-      <ng-template #renderTree let-tree="tree">
-        <ul>
-          <li *ngFor="let key of objectKeys(tree || {})">
-            <ng-container *ngIf="isFolder(tree[key]); else fileTemplate">
-              <i class="fa fa-folder"></i> {{ key }}
-              <ng-container *ngTemplateOutlet="renderTree; context: { tree: tree[key] }"></ng-container>
-            </ng-container>
-            <ng-template #fileTemplate>
-              <ng-container [ngSwitch]="getFileExtension(key)">
-                <i *ngSwitchCase="'pdf'" class="fa fa-file-pdf"></i>
-                <i *ngSwitchCase="'doc'" class="fa fa-file-word"></i>
-                <i *ngSwitchCase="'docx'" class="fa fa-file-word"></i>
-                <i *ngSwitchCase="'csv'" class="fa fa-file-csv"></i>
-                <i *ngSwitchCase="'jpg'" class="fa fa-file-image"></i>
-                <i *ngSwitchCase="'jpeg'" class="fa fa-file-image"></i>
-                <i *ngSwitchCase="'png'" class="fa fa-file-image"></i>
-                <i *ngSwitchDefault class="fa fa-file"></i>
-              </ng-container>
-              {{ key }}
-            </ng-template>
-          </li>
-        </ul>
-      </ng-template>
-    </ng-template>
+    } @else {
+      El ítem seleccionado no tiene archivos disponibles. Si lo desea, puede contactar directamente con el autor. <br>
+      Si usted es el autor y quiere subir los archivos correspondientes puede escribirnos a info&#64;sedici.unlp.edu.ar
+    }
   </div>
-  
-  <ng-template #noFile>
-    El ítem seleccionado no tiene archivos disponibles. Si lo desea, puede contactar directamente con el autor. <br>
-    Si usted es el autor y quiere subir los archivos correspondientes puede escribirnos a info&#64;sedici.unlp.edu.ar
-  </ng-template>
-  
-</div>
-
-<ng-template #loadingFiles>
+} @else {
   Cargando archivos...
-</ng-template>
+}
+

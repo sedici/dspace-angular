@@ -1,9 +1,4 @@
-import {
-  NgClass,
-  NgIf,
-  NgTemplateOutlet,
-  NgFor,
-} from '@angular/common';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
@@ -19,7 +14,7 @@ interface ExploracionDestacada {
   styleUrls: ['./comcol-grid.component.scss'],
   templateUrl: './comcol-grid.component.html',
   standalone: true,
-  imports: [NgTemplateOutlet, NgIf, NgFor, RouterLink, TranslateModule, NgClass],
+  imports: [NgTemplateOutlet, RouterLink, TranslateModule, NgClass],
 })
 export class ComcolGridComponent {
 

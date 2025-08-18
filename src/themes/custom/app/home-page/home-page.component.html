@@ -1,15 +1,19 @@
 <ds-home-news></ds-home-news>
-<ds-configuration-search-page *ngIf="showDiscoverFilters"
-                              [sideBarWidth]="3"
-                              [showViewModes]="false"
-                              [searchEnabled]="false"
-                              [inPlaceSearch]="false"
-                              [showScopeSelector]="false">
-  <ng-container searchContentTop *ngTemplateOutlet="homeContent"></ng-container>
-</ds-configuration-search-page>
-<div *ngIf="!showDiscoverFilters" class="container">
-  <ng-container *ngTemplateOutlet="homeContent"></ng-container>
-</div>
+@if (showDiscoverFilters) {
+  <ds-configuration-search-page
+    [sideBarWidth]="3"
+    [showViewModes]="false"
+    [searchEnabled]="false"
+    [inPlaceSearch]="false"
+    [showScopeSelector]="false">
+    <ng-container searchContentTop *ngTemplateOutlet="homeContent"></ng-container>
+  </ds-configuration-search-page>
+}
+@if (!showDiscoverFilters) {
+  <div class="container">
+    <ng-container *ngTemplateOutlet="homeContent"></ng-container>
+  </div>
+}
 <ds-suggestions-popup></ds-suggestions-popup>
 
 <ng-template #homeContent>
@@ -19,19 +23,21 @@
       <p class="explorar-subtitle">PRODUCCIÓN DE LA <b>UNLP</b></p>
     </div>
     <div class="row">
-      <div *ngFor="let item of exploraciones" class="col-6 col-md-3 mb-4">
-        <a [routerLink]="item.href" [queryParams]="item.queryParams || {}">
-          <div class="collection-card">
-            <div class="icon-container">
-              <img [src]="item.img" alt="{{item.title}}">
+      @for (item of exploraciones; track item) {
+        <div class="col-6 col-md-3 mb-4">
+          <a [routerLink]="item.href" [queryParams]="item.queryParams || {}">
+            <div class="collection-card">
+              <div class="icon-container">
+                <img [src]="item.img" alt="{{item.title}}">
+              </div>
+              <div class="text-container">
+                <h4>{{item.title}}</h4>
+                <p>{{item.description}}</p>
+              </div>
             </div>
-            <div class="text-container">
-              <h4>{{item.title}}</h4>
-              <p>{{item.description}}</p>
-            </div>
-          </div>
-        </a>
-      </div>
+          </a>
+        </div>
+      }
     </div>
   </div>
 </ng-template>

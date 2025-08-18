@@ -1,35 +1,39 @@
 <header id="main-site-header" [ngClass]="((isMobile$ | async) !== true) || (isHomePage$ | async) ? 'white-header' : 'color-header'">
   <!-- Vista Desktop -->
-  <div *ngIf="(isMobile$ | async) !== true" class="d-flex align-items-center" id="main-site-header-container">
-    <div class="left-container navbar-brand p-2">
-      <a routerLink="/home">
-        <img id="header-logo" [src]="'assets/custom/images/SEDICI_2025.svg'" [attr.alt]="'menu.header.image.logo' | translate"/>
-      </a>
-    </div>
-    
-    <div class="right-container">
-      <ds-search-navbar *ngIf="(isHomePage$ | async) !== true"></ds-search-navbar>
-      <ds-navbar></ds-navbar>
-    </div>
-  </div>
-
-  <!-- Vista Mobile -->
-  <div *ngIf="(isMobile$ | async)" class="d-flex align-items-center" id="main-site-header-container">
-    <div class="left-container-mobile">
-      <a routerLink="/home">
-        <img id="header-logo" [src]="'assets/custom/images/SEDICI_2024_mobile.svg'" [attr.alt]="'menu.header.image.logo' | translate"/>
-      </a>
-    </div>
-    
-    <div class="right-container-mobile">
-      <ds-search-navbar></ds-search-navbar>
-      <div id="mobile-navbar-toggler" class="d-block d-lg-none">
-        <button id="navbar-toggler" class="btn p-0 ml-2" type="button" (click)="toggleNavbar()"
-                [attr.aria-label]="'nav.toggle' | translate" aria-controls="collapsible-mobile-navbar" 
-                [attr.aria-expanded]="(isNavBarCollapsed$ | async) !== true">
-          <span class="fas fa-bars fa-fw fa-xl toggler-icon" aria-hidden="true"></span>
-        </button>
+  @if ((isMobile$ | async) !== true) {
+    <div class="d-flex align-items-center" id="main-site-header-container">
+      <div class="left-container navbar-brand p-2">
+        <a routerLink="/home">
+          <img id="header-logo" [src]="'assets/custom/images/SEDICI_2025.svg'" [attr.alt]="'menu.header.image.logo' | translate"/>
+        </a>
+      </div>
+      <div class="right-container">
+        @if ((isHomePage$ | async) !== true) {
+          <ds-search-navbar></ds-search-navbar>
+        }
+        <ds-navbar></ds-navbar>
       </div>
     </div>
-  </div>
+  }
+
+  <!-- Vista Mobile -->
+  @if ((isMobile$ | async)) {
+    <div class="d-flex align-items-center" id="main-site-header-container">
+      <div class="left-container-mobile">
+        <a routerLink="/home">
+          <img id="header-logo" [src]="'assets/custom/images/SEDICI_2024_mobile.svg'" [attr.alt]="'menu.header.image.logo' | translate"/>
+        </a>
+      </div>
+      <div class="right-container-mobile">
+        <ds-search-navbar></ds-search-navbar>
+        <div id="mobile-navbar-toggler" class="d-block d-lg-none">
+          <button id="navbar-toggler" class="btn p-0 ml-2" type="button" (click)="toggleNavbar()"
+            [attr.aria-label]="'nav.toggle' | translate" aria-controls="collapsible-mobile-navbar"
+            [attr.aria-expanded]="(isNavBarCollapsed$ | async) !== true">
+            <span class="fas fa-bars fa-fw fa-xl toggler-icon" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  }
 </header>

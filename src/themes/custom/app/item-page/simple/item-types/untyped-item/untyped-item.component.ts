@@ -1,10 +1,4 @@
-import {
-  AsyncPipe,
-  NgIf,
-  NgFor,
-  NgStyle,
-  NgClass,
-} from '@angular/common';
+import { AsyncPipe, NgStyle, NgClass } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -55,8 +49,6 @@ import { ExpandableMetadataComponent } from './expandable-metadata';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     NgStyle,
     NgClass,
     DsoEditMenuComponent,
@@ -77,7 +69,7 @@ import { ExpandableMetadataComponent } from './expandable-metadata';
     ExpandableMetadataComponent,
     GeospatialItemPageFieldComponent,
     ThemedItemPageTitleFieldComponent
-  ],
+],
 })
 export class UntypedItemComponent extends BaseComponent {
   subtype;

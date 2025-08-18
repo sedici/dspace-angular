@@ -1,37 +1,48 @@
 <div class="tab-container">
   <div class="tab-header">
-    <ng-container *ngFor="let tab of tabs; let i = index">
-      <div 
-        class="tab" 
-        [class.active]="selectedTabIndex === i"
-        (click)="selectTab(i)"
-        *ngIf="tab.visible">
-        {{ tab.label | translate }}
-      </div>
-    </ng-container>
+    @for (tab of tabs; track tab; let i = $index) {
+      @if (tab.visible) {
+        <div
+          class="tab"
+          [class.active]="selectedTabIndex === i"
+          (click)="selectTab(i)"
+          >
+          {{ tab.label | translate }}
+        </div>
+      }
+    }
   </div>
   <div class="tab-content">
-    <ng-container [ngSwitch]="selectedTabIndex">
-      <div *ngSwitchCase="0">
-        <content-files [object]="object"></content-files>
-      </div>
-      <div *ngSwitchCase="1">
-        <sedici-license [object]="object"></sedici-license>
-      </div>
-      <div *ngSwitchCase="2">
-        <div class="row">
-          <div class="col-lg-6 col-md-12">            
-            <lib-lareferencia-widget-embed [widgetType]="'lrw'"></lib-lareferencia-widget-embed>
+    @switch (selectedTabIndex) {
+      @case (0) {
+        <div>
+          <content-files [object]="object"></content-files>
+        </div>
+      }
+      @case (1) {
+        <div>
+          <sedici-license [object]="object"></sedici-license>
+        </div>
+      }
+      @case (2) {
+        <div>
+          <div class="row">
+            <div class="col-lg-6 col-md-12">
+              <lib-lareferencia-widget-embed [widgetType]="'lrw'"></lib-lareferencia-widget-embed>
+            </div>
           </div>
         </div>
-      </div>
-      <div *ngSwitchCase="3">
-        <full-item [object]="object"></full-item>
-      </div>
-      <div *ngSwitchDefault>
-        Selecciona una solapa.
-      </div>
-    </ng-container>
+      }
+      @case (3) {
+        <div>
+          <full-item [object]="object"></full-item>
+        </div>
+      }
+      @default {
+        <div>
+          Selecciona una solapa.
+        </div>
+      }
+    }
   </div>
 </div>
-  

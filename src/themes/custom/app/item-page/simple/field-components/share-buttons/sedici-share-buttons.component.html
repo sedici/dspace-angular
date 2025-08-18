@@ -10,21 +10,23 @@
     <div class="link-bar">
       <input type="text" class="share-link" [value]="link" readonly #elementContentToCopy>
       <button id="copyButton" (click)="copyToClipboard(elementContentToCopy)">Copiar</button>
-      <span id="copySuccessMessage" class="copy-success-message" *ngIf="copySuccess">✓</span>
+      @if (copySuccess) {
+        <span id="copySuccessMessage" class="copy-success-message">✓</span>
+      }
     </div>
 
     <!-- Botones de redes sociales con iconos de Font Awesome -->
     <div class="social-buttons">
       <!-- Botón de ResearchGate -->
-      <a class="social-icon-button" [href]="researchGateLink" title="ResearchGate" target="_blank">  
+      <a class="social-icon-button" [href]="researchGateLink" title="ResearchGate" target="_blank">
         <i class="fa-brands fa-researchgate icon-size"></i>
       </a>
       <!-- Botón de Mendeley -->
-      <a class="social-icon-button" [href]="mendeleyLink" title="Mendeley" target="_blank">  
+      <a class="social-icon-button" [href]="mendeleyLink" title="Mendeley" target="_blank">
         <i class="fa-brands fa-mendeley icon-size"></i>
       </a>
-       <!-- Botón de WhatsApp -->
-      <a class="social-icon-button" [href]="whatsappLink" title="WhatsApp" target="_blank">  
+      <!-- Botón de WhatsApp -->
+      <a class="social-icon-button" [href]="whatsappLink" title="WhatsApp" target="_blank">
         <i class="fa-brands fa-whatsapp icon-size"></i>
       </a>
       <!-- Botón de LinkedIn -->

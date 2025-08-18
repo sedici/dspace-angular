@@ -38,7 +38,7 @@ import { EPerson } from 'src/app/core/eperson/models/eperson.model';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { RouteService } from 'src/app/core/services/route.service';
 import { Router } from '@angular/router';
-import { QRCodeComponent } from 'angularx-qrcode';
+import { QRCodeModule } from 'angularx-qrcode';
 
 @Component({
   selector: 'ds-sedici-certificate',
@@ -68,7 +68,7 @@ import { QRCodeComponent } from 'angularx-qrcode';
     TruncatableComponent,
     TruncatablePartComponent,
     CommonModule,
-    QRCodeComponent,
+    QRCodeModule,
   ], // Solo los necesarios si el HTML nuevo necesita alguno en particular
 })
 export class SediciCertificate extends UntypedItemComponent implements OnInit {

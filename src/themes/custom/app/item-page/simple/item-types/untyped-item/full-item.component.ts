@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { NgFor } from '@angular/common';
+
 import { Item } from 'src/app/core/shared/item.model';
 import { RouterLink } from '@angular/router';
 import { getItemPageRoute } from 'src/app/item-page/item-page-routing-paths';
@@ -20,13 +20,12 @@ interface MetadataMapping {
   templateUrl: './full-item.component.html',
   standalone: true,
   imports: [
-    NgFor,
     RouterLink,
     TranslateModule,
     GenericItemPageFieldComponent,
     CollectionsComponent,
-    ItemPageIdentifierOtherFieldComponent,
-  ],
+    ItemPageIdentifierOtherFieldComponent
+],
 })
 export class FullItemComponent {
   @Input() object: Item;

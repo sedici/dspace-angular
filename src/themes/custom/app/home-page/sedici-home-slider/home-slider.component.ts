@@ -1,12 +1,6 @@
 import { Observable } from 'rxjs';
 import { ComcolPageLogoComponent } from 'src/app/shared/comcol/comcol-page-logo/comcol-page-logo.component';
-import {
-  AsyncPipe,
-  NgClass,
-  NgIf,
-  NgTemplateOutlet,
-  NgForOf,
-} from '@angular/common';
+import { AsyncPipe, NgClass, NgTemplateOutlet } from '@angular/common';
 import {
   Component,
   Input } from '@angular/core';
@@ -23,7 +17,7 @@ import {
   styleUrls: ['./home-slider.component.scss'],
   templateUrl: './home-slider.component.html',
   standalone: true,
-  imports: [NgTemplateOutlet, NgIf,RouterModule, AsyncPipe, TranslateModule, NgClass, NgForOf, ComcolPageLogoComponent],
+  imports: [NgTemplateOutlet, RouterModule, AsyncPipe, TranslateModule, NgClass, ComcolPageLogoComponent],
 })
 export class HomeSliderComponent {
 
@@ -37,7 +31,7 @@ export class HomeSliderComponent {
 
   @Input() items: any;
 
-  @Input() sliderItems: SliderItem2[][];
+  @Input() sliderItems: SliderItem[][];
 
   displayedItems: { title: string, imgUrl: Bitstream }[][] = [];
 
@@ -69,7 +63,7 @@ export class HomeSliderComponent {
 
 export class SliderItem {
   title: string;
-  img: string;
+  img: Observable<RemoteData<Bitstream>>;
   description: string;
   href: string;
 }

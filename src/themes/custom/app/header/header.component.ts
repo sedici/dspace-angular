@@ -1,8 +1,4 @@
-import {
-  AsyncPipe,
-  NgIf,
-  NgClass,
-} from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import {
   Component,
   OnInit,
@@ -31,7 +27,7 @@ import { HostWindowService } from 'src/app/shared/host-window.service';
   templateUrl: 'header.component.html',
   // templateUrl: '../../../../app/header/header.component.html',
   standalone: true,
-  imports: [RouterLink, ThemedLangSwitchComponent, NgbDropdownModule, ThemedSearchNavbarComponent, ThemedNavbarComponent, ContextHelpToggleComponent, ThemedAuthNavMenuComponent, ImpersonateNavbarComponent, TranslateModule, AsyncPipe, NgIf, NgClass, NgbModule],
+  imports: [RouterLink, ThemedLangSwitchComponent, NgbDropdownModule, ThemedSearchNavbarComponent, ThemedNavbarComponent, ContextHelpToggleComponent, ThemedAuthNavMenuComponent, ImpersonateNavbarComponent, TranslateModule, AsyncPipe, NgClass, NgbModule],
 })
 export class HeaderComponent extends BaseComponent implements OnInit {
   public isNavBarCollapsed$: Observable<boolean>;

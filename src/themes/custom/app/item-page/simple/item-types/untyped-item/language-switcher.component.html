@@ -6,11 +6,15 @@
       </ds-truncatable-part>
     </ds-truncatable>
   </div>
-  <div *ngIf="availableLanguages.length > 1" class="language-sidebar">
-    <button *ngFor="let language of availableLanguages" 
-            (click)="changeLanguage(language)" 
-            [class.active]="language === selectedLanguage">
-      {{ language.toUpperCase() }}
-    </button>
-  </div>
+  @if (availableLanguages.length > 1) {
+    <div class="language-sidebar">
+      @for (language of availableLanguages; track language) {
+        <button
+          (click)="changeLanguage(language)"
+          [class.active]="language === selectedLanguage">
+          {{ language.toUpperCase() }}
+        </button>
+      }
+    </div>
+  }
 </div>

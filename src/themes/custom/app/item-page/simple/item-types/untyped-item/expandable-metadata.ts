@@ -1,8 +1,5 @@
 import { Component, Input, ElementRef, Renderer2, AfterViewInit, ViewChild } from '@angular/core';
-import {
-  NgIf,
-  NgClass,
-} from '@angular/common';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-expandable-metadata',
@@ -11,14 +8,16 @@ import {
     <div #containerRef [class.truncated]="isTruncated && !expanded">
       <ng-content></ng-content>
     </div>
-
-    <div class="button-container" *ngIf="isTruncated" (click)="toggleExpand()">
-      <div class="line"></div>
-      <div class="arrow-container">
-        <i class="fa-solid">{{ expanded ? '\u2303' : '\u2304' }}</i>
+    
+    @if (isTruncated) {
+      <div class="button-container" (click)="toggleExpand()">
+        <div class="line"></div>
+        <div class="arrow-container">
+          <i class="fa-solid">{{ expanded ? '\u2303' : '\u2304' }}</i>
+        </div>
       </div>
-    </div>
-  `,
+    }
+    `,
   styles: [`
     div.truncated {
       position: relative;
@@ -53,9 +52,8 @@ import {
     }
   `],
   imports: [
-    NgIf,
-    NgClass,
-  ],
+    NgClass
+],
 })
 export class ExpandableMetadataComponent implements AfterViewInit {
   @ViewChild('containerRef', { static: false }) containerRef!: ElementRef;

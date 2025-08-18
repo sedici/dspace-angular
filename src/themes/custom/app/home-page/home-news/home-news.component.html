@@ -1,6 +1,6 @@
 <div class="background-image-container mt-ncs">
   <div class="container">
-    <div class="jumbotron jumbotron-fluid">
+    <div class="jumbotron">
       <div class="sedici-logo-container d-md-none">
         <img [src]="'assets/custom/images/escudoUNLP.svg'" alt="Escudo UNLP">
       </div>
@@ -13,28 +13,36 @@
         </div>
         <span class="text"><b>El Servicio de Difusión de la Creación Intelectual</b> es el Repositorio Institucional de la <b>Universidad Nacional de La Plata</b>, un servicio libre y gratuito creado para albergar, preservar y dar visibilidad a las producciones de las Unidades Académicas de la Universidad.</span>
       </div>
-      <ds-themed-search-form *ngIf="(isMobile$ | async) !== true" [searchPlaceholder]="'Busque entre los ' + totalItems + ' recursos disponibles en el repositorio'"></ds-themed-search-form>
-      <ds-search-navbar *ngIf="(isMobile$ | async)"></ds-search-navbar>
+      @if ((isMobile$ | async) !== true) {
+        <ds-themed-search-form [searchPlaceholder]="'Busque entre los ' + totalItems + ' recursos disponibles en el repositorio'"></ds-themed-search-form>
+      }
+      @if ((isMobile$ | async)) {
+        <ds-search-navbar></ds-search-navbar>
+      }
     </div>
   </div>
 
   <div class="destacado container">
     <div class="row">
-      <div *ngFor="let item of cardItems" class="col-12 col-md-4">
-        <div class="collection-card">
-          <div class="icon-container">
-            <a [routerLink]="item.href">
-              <img [src]="item.img" alt="{{item.title}}">
-            </a>
-          </div>
-          <div class="text-container">
-            <a [routerLink]="item.href">
-              <h4>{{item.title}}</h4>
-              <p *ngIf="(isMobile$ | async) !== true">{{item.description}}</p>
-            </a>
+      @for (item of cardItems; track item) {
+        <div class="col-12 col-md-4">
+          <div class="collection-card">
+            <div class="icon-container">
+              <a [routerLink]="item.href">
+                <img [src]="item.img" alt="{{item.title}}">
+              </a>
+            </div>
+            <div class="text-container">
+              <a [routerLink]="item.href">
+                <h4>{{item.title}}</h4>
+                @if ((isMobile$ | async) !== true) {
+                  <p>{{item.description}}</p>
+                }
+              </a>
+            </div>
           </div>
         </div>
-      </div>
+      }
     </div>
   </div>
 </div>

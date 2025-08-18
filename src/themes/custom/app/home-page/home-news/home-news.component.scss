@@ -63,7 +63,7 @@
 
   .jumbotron {
     background-color: transparent;
-    padding-bottom: 0px;
+    padding-top: 4rem;
     margin-bottom: 0px;
 
     @media screen and (max-width: map-get($grid-breakpoints, md)) {

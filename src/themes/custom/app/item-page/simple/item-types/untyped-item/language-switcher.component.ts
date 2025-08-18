@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { NgIf, NgFor } from '@angular/common';
+
 import { TranslateModule } from '@ngx-translate/core';
 import { TruncatableComponent } from 'src/app/shared/truncatable/truncatable.component';
 import { TruncatablePartComponent } from 'src/app/shared/truncatable/truncatable-part/truncatable-part.component';
@@ -11,12 +11,10 @@ import { TruncatablePartComponent } from 'src/app/shared/truncatable/truncatable
   templateUrl: './language-switcher.component.html',
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     TranslateModule,
     TruncatableComponent,
-    TruncatablePartComponent,
-  ],
+    TruncatablePartComponent
+],
 })
 export class LanguageSwitcherComponent {
   @Input() item: any;

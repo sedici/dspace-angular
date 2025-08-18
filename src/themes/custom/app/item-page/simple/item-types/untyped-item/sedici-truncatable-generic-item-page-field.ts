@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Item } from 'src/app/core/shared/item.model';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { NgIf } from '@angular/common';
+
 import { TranslateModule } from '@ngx-translate/core';
 import { TruncatableComponent } from 'src/app/shared/truncatable/truncatable.component';
 import { SediciTruncatablePartComponent } from 'src/themes/custom/app/shared/truncatable/truncatable-part/sedici-truncatable-part.component';
@@ -11,11 +11,10 @@ import { SediciTruncatablePartComponent } from 'src/themes/custom/app/shared/tru
   templateUrl: './sedici-truncatable-generic-item-page-field.html',
   standalone: true,
   imports: [
-    NgIf,
     TranslateModule,
     TruncatableComponent,
-    SediciTruncatablePartComponent,
-  ],
+    SediciTruncatablePartComponent
+],
 })
 export class SediciTruncatableGenericItemPageFieldComponent {
   @Input() item: Item;

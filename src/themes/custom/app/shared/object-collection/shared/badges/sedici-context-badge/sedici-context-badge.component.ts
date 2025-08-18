@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+
 import { Component } from '@angular/core';
 import { BadgesComponent as BaseComponent } from '../badges.component';
 
@@ -12,7 +12,7 @@ import { ThemedTypeBadgeComponent } from 'src/app/shared/object-collection/share
   styleUrls: ['./sedici-context-badge.component.scss'],
   templateUrl: './sedici-context-badge.component.html',
   standalone: true,
-  imports: [ThemedStatusBadgeComponent, NgIf, ThemedMyDSpaceStatusBadgeComponent, ThemedTypeBadgeComponent, ThemedAccessStatusBadgeComponent],
+  imports: [ThemedStatusBadgeComponent, ThemedMyDSpaceStatusBadgeComponent, ThemedTypeBadgeComponent, ThemedAccessStatusBadgeComponent],
 })
 export class SediciContextBadgeComponent extends BaseComponent {
 

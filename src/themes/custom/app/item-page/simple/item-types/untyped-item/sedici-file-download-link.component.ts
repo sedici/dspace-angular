@@ -1,8 +1,4 @@
-import {
-  AsyncPipe,
-  NgClass,
-  NgIf,
-} from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { Component, OnInit, Input } from '@angular/core';
 import {
   ActivatedRoute,
@@ -34,12 +30,11 @@ import { DSONameService } from 'src/app/core/breadcrumbs/dso-name.service';
   imports: [
     AsyncPipe,
     NgClass,
-    NgIf,
     RouterLink,
     TranslateModule,
     FileSizePipe,
-    NgbTooltipModule,
-  ],
+    NgbTooltipModule
+],
 })
 export class SediciFileDownloadLinkComponent extends FileDownloadLinkComponent implements OnInit {
   @Input() isSticky: boolean = false;

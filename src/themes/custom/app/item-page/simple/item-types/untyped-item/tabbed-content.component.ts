@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CommonModule, NgIf } from '@angular/common';
+
 import { Item } from 'src/app/core/shared/item.model';
 import { FullItemComponent } from './full-item.component';
 import { ContentFilesComponent } from './content-files.component';
@@ -11,14 +11,12 @@ import { lareferenciaWidgetEmbedModule } from 'lareferencia-widget-embed';
   selector: 'ds-tabbed-content',
   standalone: true,
   imports: [
-    CommonModule,
-    NgIf,
     FullItemComponent,
     ContentFilesComponent,
     SediciLicenseComponent,
     TranslateModule,
-    lareferenciaWidgetEmbedModule,
-  ],
+    lareferenciaWidgetEmbedModule
+],
   templateUrl: './tabbed-content.component.html',
   styleUrls: ['./tabbed-content.component.scss']
 })

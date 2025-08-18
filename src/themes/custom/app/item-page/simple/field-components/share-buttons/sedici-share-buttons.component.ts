@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, ViewChild, ElementRef, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { HostWindowService } from 'src/app/shared/host-window.service';
@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
   templateUrl: './sedici-share-buttons.component.html',
   styleUrls: ['./sedici-share-buttons.component.scss'],
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
 })
 export class SediciShareButtonsComponent {
 

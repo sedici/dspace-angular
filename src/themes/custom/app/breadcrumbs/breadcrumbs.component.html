@@ -1,26 +1,30 @@
 <ng-container *ngVar="(breadcrumbs$ | async) as breadcrumbs">
-  <nav *ngIf="breadcrumbs && (showBreadcrumbs$ | async)" aria-label="breadcrumb" class="nav-breadcrumb">
-    <ol class="container breadcrumb my-0">
-      <ng-container *ngIf="isResponsive">
-        <li *ngIf="breadcrumbs.length > 2" class="breadcrumb-item">...</li>
-        <ng-container *ngIf="breadcrumbs.length > 1">
-          <ng-container *ngIf="isItemView">
-            <ng-container *ngTemplateOutlet="breadcrumb; context: breadcrumbs[breadcrumbs.length - 3]"></ng-container>
-          </ng-container>
-          <ng-container *ngIf="!isItemView">
-            <ng-container *ngTemplateOutlet="breadcrumb; context: breadcrumbs[breadcrumbs.length - 2]"></ng-container>
-          </ng-container>
-        </ng-container>
-      </ng-container>
-      <ng-container *ngIf="!isResponsive">
-        <ng-container *ngFor="let bc of breadcrumbs; let i = index; let last = last;">
-          <ng-container *ngIf="!last && (i >= breadcrumbs.length - 3 || !isResponsive)">
-            <ng-container *ngTemplateOutlet="breadcrumb; context: bc"></ng-container>
-          </ng-container>
-        </ng-container>
-      </ng-container>
-    </ol>
-  </nav>
+  @if (breadcrumbs && (showBreadcrumbs$ | async)) {
+    <nav aria-label="breadcrumb" class="nav-breadcrumb">
+      <ol class="container breadcrumb my-0">
+        @if (isResponsive) {
+          @if (breadcrumbs.length > 2) {
+            <li class="breadcrumb-item">...</li>
+          }
+          @if (breadcrumbs.length > 1) {
+            @if (isItemView) {
+              <ng-container *ngTemplateOutlet="breadcrumb; context: breadcrumbs[breadcrumbs.length - 3]"></ng-container>
+            }
+            @if (!isItemView) {
+              <ng-container *ngTemplateOutlet="breadcrumb; context: breadcrumbs[breadcrumbs.length - 2]"></ng-container>
+            }
+          }
+        }
+        @if (!isResponsive) {
+          @for (bc of breadcrumbs; track bc; let i = $index; let last = $last) {
+            @if (!last && (i >= breadcrumbs.length - 3 || !isResponsive)) {
+              <ng-container *ngTemplateOutlet="breadcrumb; context: bc"></ng-container>
+            }
+          }
+        }
+      </ol>
+    </nav>
+  }
 
   <ng-template #breadcrumb let-text="text" let-url="url">
     <li class="breadcrumb-item">

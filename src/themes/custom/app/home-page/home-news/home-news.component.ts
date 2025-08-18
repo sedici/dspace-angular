@@ -1,8 +1,4 @@
-import {
-  AsyncPipe,
-  NgIf,
-  NgFor,
-} from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -27,9 +23,12 @@ export interface CardItem {
   //styleUrls: ['../../../../../app/home-page/home-news/home-news.component.scss'],
   templateUrl: './home-news.component.html',
   //templateUrl: '../../../../../app/home-page/home-news/home-news.component.html',
-  imports:[
-    AsyncPipe, NgIf, NgFor, SearchFormComponent, ThemedSearchNavbarComponent, RouterLink,
-  ],
+  imports: [
+    AsyncPipe,
+    SearchFormComponent,
+    ThemedSearchNavbarComponent,
+    RouterLink
+],
   standalone: true,
 })
 

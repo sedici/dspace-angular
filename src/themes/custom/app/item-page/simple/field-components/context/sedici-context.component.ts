@@ -1,11 +1,11 @@
 import { Component,  Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { DSpaceObject } from 'src/app/core/shared/dspace-object.model';
 
 @Component({
   selector: 'sedici-context',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './sedici-context.component.html',
   styleUrls: ['./sedici-context.component.scss']
 })

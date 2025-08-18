@@ -1,10 +1,4 @@
-import {
-  AsyncPipe,
-  NgClass,
-  NgComponentOutlet,
-  NgFor,
-  NgIf,
-} from '@angular/common';
+import { AsyncPipe, NgClass, NgComponentOutlet } from '@angular/common';
 import { Component } from '@angular/core';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
@@ -27,7 +21,7 @@ import { ThemedLangSwitchComponent } from 'src/app/shared/lang-switch/themed-lan
   // templateUrl: '../../../../app/navbar/navbar.component.html',
   animations: [slideMobileNav],
   standalone: true,
-  imports: [NgbDropdownModule, NgClass, NgIf, ThemedUserMenuComponent, NgFor, NgComponentOutlet, AsyncPipe, TranslateModule, ImpersonateNavbarComponent, ThemedAuthNavMenuComponent, ThemedLangSwitchComponent],
+  imports: [NgbDropdownModule, NgClass, ThemedUserMenuComponent, NgComponentOutlet, AsyncPipe, TranslateModule, ImpersonateNavbarComponent, ThemedAuthNavMenuComponent, ThemedLangSwitchComponent],
 })
 export class NavbarComponent extends BaseComponent {
 }

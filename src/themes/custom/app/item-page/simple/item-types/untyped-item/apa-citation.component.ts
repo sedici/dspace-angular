@@ -1,10 +1,10 @@
 import { Component, Input, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'ds-apa-citation',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './apa-citation.component.html',
   styleUrls: ['./apa-citation.component.scss']
 })

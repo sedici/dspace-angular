@@ -24,23 +24,25 @@
         <a href="https://x.com/sedici_unlp" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
         <a href="https://www.youtube.com/@sediciUNLP" target="_blank"><i class="fa-brands fa-youtube"></i></a>
       </div>
-      <div *ngIf="(isMobile$ | async) !== true" class="footer-section">
-        <h5 class="footer-subtitle">Busqueda de material</h5>
-        <a href="#">Ayuda</a>
-        <a href="#">Obligacion de deposito</a>
-        <a href="#">Estadisticas</a>
-      </div>
-      <div *ngIf="(isMobile$ | async) !== true" class="footer-section">
-        <h5 class="footer-subtitle">Institucional</h5>
-        <a href="#">Politicas</a>
-        <a href="#">Blog</a>
-      </div>
-      <div *ngIf="(isMobile$ | async) !== true" class="footer-section">
-        <h5 class="footer-subtitle">Preguntas frecuentes</h5>
-        <a href="#">Como agregar trabajos</a>
-        <a href="#">Que hacemos en SEDICI</a>
-        <a href="#">Acerca de</a>
-      </div>
+      @if ((isMobile$ | async) !== true) {
+        <div class="footer-section">
+          <h5 class="footer-subtitle">Busqueda de material</h5>
+          <a href="#">Ayuda</a>
+          <a href="#">Obligacion de deposito</a>
+          <a href="#">Estadisticas</a>
+        </div>
+        <div class="footer-section">
+          <h5 class="footer-subtitle">Institucional</h5>
+          <a href="#">Politicas</a>
+          <a href="#">Blog</a>
+        </div>
+        <div class="footer-section">
+          <h5 class="footer-subtitle">Preguntas frecuentes</h5>
+          <a href="#">Como agregar trabajos</a>
+          <a href="#">Que hacemos en SEDICI</a>
+          <a href="#">Acerca de</a>
+        </div>
+      }
     </div>
   </div>
 </footer>

@@ -5,17 +5,21 @@
 <ng-template #itemsGrid let-title="title" let-items="items" let-column="column" let-isSingleRow="isSingleRow">
   <div class="section-destacados">
     <h2 class="section-title">{{title}}</h2>
-    <div *ngIf="items" class="section-grid container" [ngClass]="{'d-inline d-sm-flex': column, 'single-row-scroll': isSingleRow}">
-      <div *ngFor="let item of items" class="section-item" [ngClass]="isSingleRow ? 'single-row' : 'multi-row'">
-        <a [href]="item.href">
-          <div class="img-container">
-            <img [src]="item.img" [alt]="item.title">
+    @if (items) {
+      <div class="section-grid container" [ngClass]="{'d-inline d-sm-flex': column, 'single-row-scroll': isSingleRow}">
+        @for (item of items; track item) {
+          <div class="section-item" [ngClass]="isSingleRow ? 'single-row' : 'multi-row'">
+            <a [href]="item.href">
+              <div class="img-container">
+                <img [src]="item.img" [alt]="item.title">
+              </div>
+              <div class="section-texto">
+                <p>{{item.description}}</p>
+              </div>
+            </a>
           </div>
-          <div class="section-texto">
-            <p>{{item.description}}</p>
-          </div>
-        </a>
+        }
       </div>
-    </div>
+    }
   </div>
 </ng-template>

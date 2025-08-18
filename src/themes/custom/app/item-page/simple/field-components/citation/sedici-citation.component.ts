@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnInit, ViewChild, Input, ElementRef } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { plugins, Cite } from '@citation-js/core';
@@ -11,7 +11,7 @@ import { MetadatumViewModel } from 'src/app/core/shared/metadata.models';
   templateUrl: './sedici-citation.component.html',
   styleUrls: ['./sedici-citation.component.scss'],
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
 })
 export class SediciCitationComponent implements OnInit {
 

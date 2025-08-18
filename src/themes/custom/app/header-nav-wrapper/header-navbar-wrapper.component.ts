@@ -1,8 +1,4 @@
-import {
-  AsyncPipe,
-  NgClass,
-  NgIf,
-} from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -17,7 +13,7 @@ import { ThemedNavbarComponent } from '../../../../app/navbar/themed-navbar.comp
   templateUrl: './header-navbar-wrapper.component.html',
   // templateUrl: '../../../../app/header-nav-wrapper/header-navbar-wrapper.component.html',
   standalone: true,
-  imports: [NgClass, ThemedHeaderComponent, ThemedNavbarComponent, AsyncPipe, TranslateModule, NgIf],
+  imports: [NgClass, ThemedHeaderComponent, ThemedNavbarComponent, AsyncPipe, TranslateModule],
 })
 export class HeaderNavbarWrapperComponent extends BaseComponent {
 }

@@ -1,27 +1,53 @@
 <ds-metadata-field-wrapper [label]="label | translate" [inlineLabel]="false">
-  <a href="{{ badgeUrl }}" target="_blank" *ngIf="badgeUrl else badge">
-    <ng-container *ngTemplateOutlet="badge"></ng-container>
-  </a>
+  @if (badgeUrl) {
+    <a href="{{ badgeUrl }}" target="_blank">
+      <!-- Mueve el bucle aquí adentro, en lugar de usar ngTemplateOutlet -->
+      @for (mdValue of mdValues; track mdValue) {
+        <div class="badge-group" [ngClass]="{'group-inline-block': badgeLabel}">
+          @if (badgeLabel) {
+            <span class="badge badge-label" [ngClass]="badgeLabelType">
+              {{badgeLabel}}
+            </span>
+          }
+          <span class="badge {{badgeType}}" [ngClass]="{'badge-content': badgeLabel}">
+            <span class="plainText">
+              {{ mdValue.value }}
+            </span>
+            @if (copyToClipboardButton) {
+              <span class="d-none" #elementContentToCopy>{{mdValue.value}}</span>
+              <span class="copy-button-wrapper" title="Copiar" (click)="copyToClipboard(elementContentToCopy, 'copyButton-' + mdValue.value)">
+                <i id="copyButton-{{mdValue.value}}" class="copyButton fa fa-copy" aria-hidden="true"></i>
+              </span>
+            }
+          </span>
+        </div>
+      }
+    </a>
+  } @else {
+    <!-- Repite la misma lógica del bucle aquí para el caso 'else' -->
+    @for (mdValue of mdValues; track mdValue) {
+      <div class="badge-group" [ngClass]="{'group-inline-block': badgeLabel}">
+        @if (badgeLabel) {
+          <span class="badge badge-label" [ngClass]="badgeLabelType">
+            {{badgeLabel}}
+          </span>
+        }
+        <span class="badge {{badgeType}}" [ngClass]="{'badge-content': badgeLabel}">
+          @if (url) {
+            <a href="{{ url }}" target="_blank" class="no-format">{{ mdValue.value }}</a>
+          } @else {
+            <span class="plainText">
+              {{ mdValue.value }}
+            </span>
+          }
+          @if (copyToClipboardButton) {
+            <span class="d-none" #elementContentToCopy>{{mdValue.value}}</span>
+            <span class="copy-button-wrapper" title="Copiar" (click)="copyToClipboard(elementContentToCopy, 'copyButton-' + mdValue.value)">
+              <i id="copyButton-{{mdValue.value}}" class="copyButton fa fa-copy" aria-hidden="true"></i>
+            </span>
+          }
+        </span>
+      </div>
+    }
+  }
 </ds-metadata-field-wrapper>
-
-<ng-template #badge>
-  <div class="badge-group" [ngClass]="{'group-inline-block': badgeLabel}" *ngFor="let mdValue of mdValues">
-    <span class="badge badge-label" [ngClass]="badgeLabelType" *ngIf="badgeLabel">
-      {{badgeLabel}}
-    </span>
-    <span class="badge {{badgeType}}" [ngClass]="{'badge-content': badgeLabel}">
-      <a *ngIf="url; else plainText" href="{{ url }}" target="_blank" class="no-format">{{ mdValue.value }}</a>
-      <ng-template #plainText>
-        <span class="plainText">
-          {{ mdValue.value }}
-        </span>
-      </ng-template>
-      <ng-container *ngIf="copyToClipboardButton">
-        <span class="d-none" #elementContentToCopy>{{mdValue.value}}</span>
-        <span class="copy-button-wrapper" title="Copiar" (click)="copyToClipboard(elementContentToCopy, 'copyButton-' + mdValue.value)">
-          <i id="copyButton-{{mdValue.value}}" class="copyButton fa fa-copy" aria-hidden="true"></i>
-        </span>
-      </ng-container>
-    </span>
-  </div>
-</ng-template>

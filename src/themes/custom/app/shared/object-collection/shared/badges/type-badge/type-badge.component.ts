@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+
 import { Component, Input } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { getResourceTypeValueFor } from 'src/app/core/cache/object-cache.reducer';
@@ -13,9 +13,8 @@ import { TypeBadgeComponent as BaseComponent } from 'src/app/shared/object-colle
   // templateUrl: '../../../../../../../../app/shared/object-collection/shared/badges/type-badge/type-badge.component.html',
   standalone: true,
   imports: [
-    TranslateModule,
-    NgIf,
-  ],
+    TranslateModule
+],
 })
 export class TypeBadgeComponent extends BaseComponent {
 

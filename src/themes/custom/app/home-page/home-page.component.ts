@@ -1,9 +1,4 @@
-import {
-  AsyncPipe,
-  NgTemplateOutlet,
-  NgIf,
-  NgFor,
-} from '@angular/common';
+import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
@@ -36,7 +31,7 @@ interface ExploracionDestacada {
   templateUrl: './home-page.component.html',
   // templateUrl: '../../../../app/home-page/home-page.component.html',
   standalone: true,
-  imports: [ThemedHomeNewsComponent, ComcolPageLogoComponent, NgTemplateOutlet, NgIf, NgFor, RouterLink, ThemedSearchFormComponent, ThemedTopLevelCommunityListComponent, RecentItemListComponent, AsyncPipe, TranslateModule, SuggestionsPopupComponent, ThemedConfigurationSearchPageComponent, PageWithSidebarComponent, HomeCoarComponent, HomeSliderComponent, ComcolGridComponent],
+  imports: [ThemedHomeNewsComponent, ComcolPageLogoComponent, NgTemplateOutlet, RouterLink, ThemedSearchFormComponent, ThemedTopLevelCommunityListComponent, RecentItemListComponent, AsyncPipe, TranslateModule, SuggestionsPopupComponent, ThemedConfigurationSearchPageComponent, PageWithSidebarComponent, HomeCoarComponent, HomeSliderComponent, ComcolGridComponent],
 })
 export class HomePageComponent extends BaseComponent {
 

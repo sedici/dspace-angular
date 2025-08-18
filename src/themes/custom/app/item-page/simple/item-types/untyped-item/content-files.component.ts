@@ -1,5 +1,5 @@
 import { Component, Input, Inject, ViewChild, ElementRef } from '@angular/core';
-import { NgFor, NgIf, NgStyle, NgClass, NgSwitch, NgSwitchCase, NgSwitchDefault, NgTemplateOutlet, AsyncPipe } from '@angular/common';
+import { NgStyle, NgClass, NgTemplateOutlet, AsyncPipe } from '@angular/common';
 import { Item } from 'src/app/core/shared/item.model';
 import { BitstreamDataService } from 'src/app/core/data/bitstream-data.service';
 import { APP_CONFIG, AppConfig } from 'src/config/app-config.interface';
@@ -31,20 +31,15 @@ import { SediciShareButtonsComponent } from '../../field-components/share-button
   templateUrl: './content-files.component.html',
   standalone: true,
   imports: [
-    NgFor,
-    NgIf,
     NgStyle,
     NgClass,
-    NgSwitch,
-    NgSwitchCase,
-    NgSwitchDefault,
     NgTemplateOutlet,
     AsyncPipe,
     FileSizePipe,
     SediciFileDownloadLinkComponent,
     SediciViewerComponent,
-    PdfJsViewerModule,
-  ],
+    PdfJsViewerModule
+],
 })
 export class ContentFilesComponent {
   @Input() object: Item;

@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+
 import {
   Component,
   Input,
@@ -15,10 +15,9 @@ import { TruncatablePartComponent } from "src/app/shared/truncatable/truncatable
   styleUrls: ['./sedici-truncatable-part.component.scss'],
   standalone: true,
   imports: [
-    NgIf,
     TranslateModule,
-    DragClickDirective,
-  ],
+    DragClickDirective
+],
 })
 
 export class SediciTruncatablePartComponent extends TruncatablePartComponent {
