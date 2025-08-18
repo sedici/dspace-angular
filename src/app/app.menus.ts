@@ -33,6 +33,7 @@ import { StatisticsMenuProvider } from './shared/menu/providers/statistics.menu'
 import { SystemWideAlertMenuProvider } from './shared/menu/providers/system-wide-alert.menu';
 import { WithdrawnReinstateItemMenuProvider } from './shared/menu/providers/withdrawn-reinstate-item.menu';
 import { WorkflowMenuProvider } from './shared/menu/providers/workflow.menu';
+import { DSpaceObjectPrintCertificateMenuProvider } from './shared/menu/providers/dso-print-certificate.menu';
 
 /**
  * Represents and builds the menu structure for the three available menus (public navbar, admin sidebar and the dso edit
@@ -94,6 +95,9 @@ export const MENUS = buildMenuStructure({
         MenuRoute.ITEM_PAGE,
       ),
       ClaimMenuProvider.onRoute(
+        MenuRoute.ITEM_PAGE,
+      ),
+      DSpaceObjectPrintCertificateMenuProvider.onRoute(
         MenuRoute.ITEM_PAGE,
       ),
     ]),
