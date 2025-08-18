@@ -1,5 +1,6 @@
 import { Component, Input, Inject, ViewChild, ElementRef } from '@angular/core';
 import { NgStyle, NgClass, NgTemplateOutlet, AsyncPipe } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 import { Item } from 'src/app/core/shared/item.model';
 import { BitstreamDataService } from 'src/app/core/data/bitstream-data.service';
 import { APP_CONFIG, AppConfig } from 'src/config/app-config.interface';
@@ -35,6 +36,7 @@ import { SediciShareButtonsComponent } from '../../field-components/share-button
     NgClass,
     NgTemplateOutlet,
     AsyncPipe,
+    TranslateModule,
     FileSizePipe,
     SediciFileDownloadLinkComponent,
     SediciViewerComponent,

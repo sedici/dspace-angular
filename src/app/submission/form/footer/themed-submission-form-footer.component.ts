@@ -5,6 +5,7 @@ import {
 
 import { ThemedComponent } from '../../../shared/theme-support/themed.component';
 import { SubmissionFormFooterComponent } from './submission-form-footer.component';
+import { Item } from 'src/app/core/shared/item.model';
 
 @Component({
   selector: 'ds-submission-form-footer',
@@ -18,7 +19,9 @@ import { SubmissionFormFooterComponent } from './submission-form-footer.componen
 export class ThemedSubmissionFormFooterComponent extends ThemedComponent<SubmissionFormFooterComponent> {
   @Input() submissionId: string;
 
-  protected inAndOutputNames: (keyof SubmissionFormFooterComponent & keyof this)[] = ['submissionId'];
+  @Input() item: Item;
+
+  protected inAndOutputNames: (keyof SubmissionFormFooterComponent & keyof this)[] = ['submissionId', 'item'];
 
   protected getComponentName(): string {
     return 'SubmissionFormFooterComponent';

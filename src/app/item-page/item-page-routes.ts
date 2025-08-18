@@ -81,6 +81,11 @@ export const ROUTES: Route[] = [
           menu: accessTokenResolver,
         },
       },
+      {
+        path: ITEM_PRINT_CERTIFICATE,
+        component: PrintableCertificate,
+        canActivate: [authenticatedGuard],
+      },
     ],
   },
   {

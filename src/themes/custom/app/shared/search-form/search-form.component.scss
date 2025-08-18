@@ -2,7 +2,7 @@
   background-color: transparent; // Fondo transparente
   border: none; // Sin borde
   padding: 0; // Sin padding
-  margin-left: 10px; // Ajuste para que la lupa esté más cerca del borde del input
+  margin-left: 10px !important; // Ajuste para que la lupa esté más cerca del borde del input
   display: flex;
   align-items: center;
   justify-content: center;

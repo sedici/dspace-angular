@@ -18,20 +18,20 @@
 
 <ng-template #homeContent>
   <div class="destacado">
-    <div class="explorar-title-container">
-      <h2 class="explorar-title">Explorar</h2>
-      <p class="explorar-subtitle">PRODUCCIÓN DE LA <b>UNLP</b></p>
+    <div class="title-container">
+      <span class="explorar-text">{{'home.page.explore' | translate}}</span>
+      <h2 class="section-title">{{'home.page.production' | translate}}</h2>
     </div>
-    <div class="row">
+    <div class="row container">
       @for (item of exploraciones; track item) {
         <div class="col-6 col-md-3 mb-4">
           <a [routerLink]="item.href" [queryParams]="item.queryParams || {}">
             <div class="collection-card">
               <div class="icon-container">
-                <img [src]="item.img" alt="{{item.title}}">
+                <img [src]="item.img" alt="{{'home.page.' + item.title | translate}}">
               </div>
               <div class="text-container">
-                <h4>{{item.title}}</h4>
+                <h4>{{'home.page.' + item.title | translate}}</h4>
                 <p>{{item.description}}</p>
               </div>
             </div>
@@ -45,24 +45,24 @@
 <comcol-grid></comcol-grid>
 
 <div class="help text-center d-flex flex-column flex-md-row justify-content-around align-items-center">
-  <div class="p-2 bd-highlight">
-    <i class="fa-solid fa-circle-info"></i>
-    <h5>Ayuda para investigadores</h5>
+  <div class="p-2">
+    <img src="assets/custom/images/ayuda.svg" alt="{{'home.page.researcherHelp' | translate}}">
+    <h5>{{'home.page.researcherHelp' | translate}}</h5>
   </div>
-  <div class="p-2 bd-highlight">
-    <i class="fa-solid fa-scale-balanced"></i>
-    <h5>Obligación de depósito en el repositorio</h5>
+  <div class="p-2">
+    <img src="assets/custom/images/obligacion.svg" alt="{{'home.page.depositionObligation' | translate}}">
+    <h5>{{'home.page.depositionObligation' | translate}}</h5>
   </div>
-  <div class="p-2 bd-highlight">
-    <i class="fa-solid fa-chart-simple"></i>
-    <h5>Estadísticas de crecimiento</h5>
+  <div class="p-2">
+    <img src="assets/custom/images/stats.svg" alt="{{'home.page.growthStatistics' | translate}}">
+    <h5>{{'home.page.growthStatistics' | translate}}</h5>
   </div>
 </div>
 
 <div class="aliados-section align-items-center d-none d-md-flex">
   <div class="aliados-title d-flex align-items-center justify-content-end">
     <div>
-      <h2>Aliados</h2>
+      <h2>{{'home.page.allies' | translate}}</h2>
     </div>
   </div>
   <div class="aliados-logos">

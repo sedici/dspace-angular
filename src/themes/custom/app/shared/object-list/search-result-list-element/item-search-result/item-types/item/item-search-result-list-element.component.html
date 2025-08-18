@@ -17,9 +17,10 @@
     </div>
   }
   <div [ngClass]="showThumbnails ? 'col-9' : 'col-md-12'">
-    <div class="d-flex">
+    <div class="badges-context-container">
       @if (showLabel) {
         <ds-badges [object]="dso" [context]="context" [showAccessStatus]="true"></ds-badges>
+        <sedici-context [object]="dso"></sedici-context>
       }
     </div>
 

@@ -125,20 +125,21 @@ export class SubmissionFormFooterComponent implements OnChanges {
         map((isValid: boolean) => isValid === false),
       );
 
-      if (!this.showDepositAndDiscard){
-        this.wfService.findById(this.submissionId).subscribe(workflowItem =>{
-          this.wfi = workflowItem.payload; // Esto asume que payload es de tipo WorkflowIte
-        })
-        this.ctService.findByItem(this.item.uuid).subscribe(claimedTask =>{
-          this.ctobject = claimedTask.payload;
-        });
-      }
-
-
       this.processingSaveStatus = this.submissionService.getSubmissionSaveProcessingStatus(this.submissionId);
       this.processingDepositStatus = this.submissionService.getSubmissionDepositProcessingStatus(this.submissionId);
       this.showDepositAndDiscard = of(this.submissionService.getSubmissionScope() === SubmissionScopeType.WorkspaceItem);
       this.hasUnsavedModification = this.submissionService.hasUnsavedModification();
+
+      this.showDepositAndDiscard.subscribe((showDepositAndDiscard) => {
+        if (!showDepositAndDiscard){
+          this.wfService.findById(this.submissionId).subscribe(workflowItem =>{
+            this.wfi = workflowItem.payload; // Esto asume que payload es de tipo WorkflowItem
+          })
+          this.ctService.findByItem(this.item.uuid).subscribe(claimedTask =>{
+            this.ctobject = claimedTask.payload;
+          });
+        }
+      });
     }
   }
 

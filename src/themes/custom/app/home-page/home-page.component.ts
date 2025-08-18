@@ -37,19 +37,19 @@ export class HomePageComponent extends BaseComponent {
 
   exploraciones:Array<ExploracionDestacada> = [
     {
-      title: "Revistas",
+      title: "journals",
       img: "assets/custom/images/revistas.png",
       href: "/handle/10915/51",
       description: "123.456",
     } as ExploracionDestacada,
     {
-      title: "Eventos",
+      title: "events",
       img: "assets/custom/images/eventos.png",
       href: "/handle/10915/1038",
       description: "123.456"
     } as ExploracionDestacada,
     {
-      title: "Libros",
+      title: "books",
       img: "assets/custom/images/libros2.png",
       href: "/search",
       description: "123.456",
@@ -61,7 +61,7 @@ export class HomePageComponent extends BaseComponent {
       }
     } as ExploracionDestacada,
     {
-      title: "Datos",
+      title: "data",
       img: "assets/custom/images/datos.png",
       href: "/search",
       description: "123.456",

@@ -3,6 +3,12 @@
   cursor: pointer;
   line-height: 0;
 
+  .facet-logo {
+    max-width: 24px;
+    max-height: 24px;
+    margin-right: .25em;
+  }
+
   .search-filter-wrapper {
     line-height: var(--bs-line-height-base);
     &.closed {

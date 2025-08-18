@@ -1,30 +1,39 @@
 :host {
   footer {
-    background-color: #5b89c6;
     color: white;
-    padding: 1rem 2rem;
 
     .bottom-footer {
       display: flex;
-      gap: 7rem;
     }
 
-    .footer-left p{
-      margin-bottom: 0;
+    .footer-left {
+      flex: 1;
+      border-top-right-radius: 75px;
+
+      p {
+        margin-bottom: 0;
+      }
     }
 
     .footer-title {
       font-weight: bold;
       font-size: 1.2rem;
+      padding: 1rem 2rem 0 2rem;
+    }
+
+    .footer-text {
+      padding: 0 2rem;
     }
 
     .footer-icons {
       display: flex;
       gap: 1rem;
+      padding: 0 2rem 1rem 2rem;
 
       @media (max-width: 768px) {
         img {
           max-width: 100px;
+          max-height: 100px;
         }
       }
 
@@ -36,16 +45,17 @@
     }
 
     .footer-right {
-      flex: 2;
+      flex: 3;
       display: flex;
       justify-content: space-between;
-      text-align: left;
+      border-top-left-radius: 75px;
 
       .footer-media-icons {
         display: flex;
         flex-direction: column;
         align-items: center;
         margin-left: 1%;
+        padding: 1rem 2rem;
       }
 
       .footer-media-icons i {
@@ -59,8 +69,13 @@
       }
     }
 
+    .footer-left, .footer-right {
+      background-color: #5b89c6;
+    }
+    
     .footer-section {
       margin-left: 10px;
+      padding: 1rem 2rem;
 
       .footer-subtitle {
         font-size: 1.2rem;
@@ -81,15 +96,22 @@
         text-decoration: underline;
       }
     }
-
-    // Responsive (para móvil)
+    
     @media (max-width: 768px) {
-      padding: 1.5rem;
-
       .footer-left {
+        flex: unset;
         width: 100%;
       }
 
+      .footer-right {
+        flex: 2;
+      }
+
+      .footer-left, .footer-right {
+        border-radius: 0;
+        padding: 1rem;
+      }
+      
       .footer-icons {
         flex-direction: column;
         margin-top: 1rem !important;
@@ -98,6 +120,10 @@
 
       .bottom-footer {
         gap: 0;
+      }
+
+      .footer-title, .footer-text, .footer-icons, .footer-media-icons, .footer-section {
+        padding: 0 !important;
       }
     }
 

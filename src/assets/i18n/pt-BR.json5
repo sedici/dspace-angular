@@ -6818,8 +6818,8 @@
   // "repository.title": "DSpace Repository",
   "repository.title": "Repositório DSpace",
 
-  // "repository.title.prefix": "DSpace Repository :: ",
-  "repository.title.prefix": "Repositório DSpace :: ",
+  // "repository.title.prefix": "SEDICI - Repository of the National University of La Plata :: ",
+  "repository.title.prefix": "SEDICI - Repositório da Universidade Nacional de La Plata :: ",
 
   // "resource-policies.add.button": "Add",
   "resource-policies.add.button": "Adicionar",
@@ -10935,6 +10935,12 @@
   // "browse.search-form.placeholder": "Search the repository",
   "browse.search-form.placeholder": "Buscar no repositório",
 
+  "search.navbar.placeholder": "Buscar no SEDICI UNLP",
+
+  "sedici.item.page.sedici.citation": "Citar",
+
+  "sedici.item.page.sedici.share": "Compartilhar",
+
   // "sedici.item.page.sedici.creator.corporate": "Autor institucional",
   "sedici.item.page.sedici.creator.corporate": "Autor Institucional",
   
@@ -11109,6 +11115,40 @@
   "sedici.license.restriction": "Sem restrições adicionais",
   
   "sedici.license.restriction.description": "Você não pode aplicar termos jurídicos ou medidas de caráter tecnológico que restrinjam legalmente outros de fazerem algo que a licença permita.",
+
+  "home.page.search.placeholder": "Busque entre os {{ totalItems }} recursos disponíveis no repositório",
+
+  "home.page.author": "Autores",
+
+  "home.page.publication": "Publicações",
+
+  "home.page.academicUnit": "Unidades Acadêmicas",
+
+  "home.page.journals": "Periódicos",
+
+  "home.page.events": "Eventos",
+
+  "home.page.books": "Livros",
+
+  "home.page.data": "Dados",
+
+  "home.page.explore": "Explorar",
+
+  "home.page.production": "Produção UNLP",
+
+  "home.page.featuredCollections": "Coleções em Destaque",
+
+  "home.page.faculties": "Faculdades",
+
+  "home.page.undergraduate": "Graduação",
+
+  "home.page.researcherHelp": "Ajuda para Pesquisadores",
+
+  "home.page.depositionObligation": "Obrigação de Depósito no Repositório",
+
+  "home.page.growthStatistics": "Estatísticas de Crescimento",
+
+  "home.page.allies": "Aliados",
 
   // "file-download-link.download": "Download ",
   "file-download-link.download": "Baixar ",

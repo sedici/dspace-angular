@@ -14,32 +14,29 @@
         <span class="text"><b>El Servicio de Difusión de la Creación Intelectual</b> es el Repositorio Institucional de la <b>Universidad Nacional de La Plata</b>, un servicio libre y gratuito creado para albergar, preservar y dar visibilidad a las producciones de las Unidades Académicas de la Universidad.</span>
       </div>
       @if ((isMobile$ | async) !== true) {
-        <ds-themed-search-form [searchPlaceholder]="'Busque entre los ' + totalItems + ' recursos disponibles en el repositorio'"></ds-themed-search-form>
+        <ds-themed-search-form [searchPlaceholder]="'home.page.search.placeholder' | translate:{totalItems: totalItems}"></ds-themed-search-form>
       }
       @if ((isMobile$ | async)) {
         <ds-search-navbar></ds-search-navbar>
       }
     </div>
   </div>
+</div>
 
-  <div class="destacado container">
+<div class="destacado">
+  <div class="container">
     <div class="row">
       @for (item of cardItems; track item) {
-        <div class="col-12 col-md-4">
+        <div class="col-4">
           <div class="collection-card">
-            <div class="icon-container">
-              <a [routerLink]="item.href">
-                <img [src]="item.img" alt="{{item.title}}">
-              </a>
-            </div>
-            <div class="text-container">
-              <a [routerLink]="item.href">
-                <h4>{{item.title}}</h4>
-                @if ((isMobile$ | async) !== true) {
-                  <p>{{item.description}}</p>
-                }
-              </a>
-            </div>
+            <a [href]="item.href">
+              <div class="icon-container">
+                <img [src]="item.img" alt="{{'home.page.' + item.title | translate}}">
+              </div>
+              <div class="text-container">
+                <h4>{{'home.page.' + item.title | translate}}</h4>
+              </div>
+            </a>
           </div>
         </div>
       }

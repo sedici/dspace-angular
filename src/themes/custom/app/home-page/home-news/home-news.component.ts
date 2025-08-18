@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HostWindowService, WidthCategory } from 'src/app/shared/host-window.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { HomeNewsComponent as BaseComponent } from '../../../../../app/home-page/home-news/home-news.component';
 import { SearchFormComponent } from '../../shared/search-form/search-form.component';
@@ -27,7 +28,8 @@ export interface CardItem {
     AsyncPipe,
     SearchFormComponent,
     ThemedSearchNavbarComponent,
-    RouterLink
+    RouterLink,
+    TranslateModule,
 ],
   standalone: true,
 })
@@ -70,20 +72,17 @@ export class HomeNewsComponent extends BaseComponent {
 
   cardItems:Array<CardItem> = [
     {
-      title: "Autores",
-      img: "assets/custom/images/autores.png",
+      title: "author",
+      img: "assets/custom/images/Autores.svg",
       href: "/browse/author",
-      description: "Profesores, investigadores, estudiantes u otros colaboradores",
     } as CardItem,{
-      title: "Publicaciones",
-      img: "assets/custom/images/publicaciones.png",
+      title: "publication",
+      img: "assets/custom/images/Publicaciones.svg",
       href: "/search",
-      description: "Revistas, libras, informes tecincos, trabajos de conferencias, tesis ..."
     } as CardItem,{
-      title: "Unidades Academicas",
-      img: "assets/custom/images/unidades_academicas.png",
+      title: "academicUnit",
+      img: "assets/custom/images/UAs.svg",
       href: "/handle/10915/1",
-      description: "Facultades, colegios, laboratorios, institutos, centros ..."
     } as CardItem
   ];
 }
