@@ -1,7 +1,7 @@
 :host {
   display: block;
 
-  @media screen and (min-width: 1200px) {
+  @media screen and (min-width: 1200px) and (max-width: 1499px) {
     .background-image-container .container{
       max-width: 1024px;
     }

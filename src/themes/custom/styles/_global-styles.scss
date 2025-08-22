@@ -4,7 +4,7 @@
 @import '../../../styles/_global-styles.scss';
 
 .container {
-  @media screen and (min-width: 1200px) {
+  @media screen and (min-width: 1200px) and (max-width: 1499px) {
     max-width: 90%;
   }
 
