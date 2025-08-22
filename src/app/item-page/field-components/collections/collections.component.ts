@@ -17,6 +17,7 @@ import {
   scan,
   startWith,
   switchMap,
+  take,
   tap,
   withLatestFrom,
 } from 'rxjs/operators';
@@ -35,6 +36,8 @@ import {
 } from '../../../core/shared/operators';
 import { hasValue } from '../../../shared/empty.util';
 import { MetadataFieldWrapperComponent } from '../../../shared/metadata-field-wrapper/metadata-field-wrapper.component';
+import { FollowLinkConfig, followLink } from 'src/app/shared/utils/follow-link-config.model';
+import { Community } from 'src/app/core/shared/community.model';
 
 /**
  * This component renders the parent collections section of the item
@@ -93,13 +96,19 @@ export class CollectionsComponent implements OnInit {
    * as well as any number of pages of mapped collections.
    */
   collections$: Observable<Collection[]>;
+  collections: { collection: Collection, parentCommunity: Community }[] = [];
 
   constructor(
     private cds: CollectionDataService,
     public dsoNameService: DSONameService,
     protected cdr: ChangeDetectorRef,
+    protected collectionService: CollectionDataService,
   ) {
   }
+
+  collinksToFollow: FollowLinkConfig<Collection>[] = [
+    followLink('parentCommunity'),
+  ];
 
   ngOnInit(): void {
     const owningCollection$: Observable<Collection> = this.cds.findOwningCollectionFor(this.item).pipe(
@@ -147,6 +156,41 @@ export class CollectionsComponent implements OnInit {
       }),
     );
     this.cdr.detectChanges();
+
+    this.collections$.subscribe((collections: Collection[]) => {
+      this.collections = [];
+      if (collections.length > 0) {
+        for (const collection of collections) {
+          if (this.collections.find(c => c.collection.id === collection.id)) {
+            continue;
+          }
+          if (!hasValue(collection.parentCommunity)) {
+            let fullCollection = this.collectionService.findById(
+              collection.id,
+              true,
+              false,
+              ...this.collinksToFollow,
+            );
+            fullCollection.pipe(
+              getFirstSucceededRemoteDataPayload(),
+              take(1),
+            ).subscribe((collectionWithLink: Collection) => {
+              if (hasValue(collectionWithLink.parentCommunity)) {
+                collectionWithLink.parentCommunity.pipe(
+                  getFirstSucceededRemoteDataPayload(),
+                  take(1),
+                ).subscribe((parentCommunity: Community) => {
+                  if (!this.collections.find(c => c.collection.id === collectionWithLink.id)) {
+                    this.collections.push({ collection: collectionWithLink, parentCommunity: parentCommunity });
+                    this.cdr.detectChanges();
+                  }
+                });
+              }
+            });
+          }
+        }
+      }
+    });
   }
 
   handleLoadMore() {
