@@ -102,6 +102,10 @@ sedici-context,
   gap: 0.2rem;
   flex-shrink: 0;
 
+  .btn {
+    box-shadow: none;
+  }
+
   @media screen and (max-width: 768px) {
     gap: 0;
 
