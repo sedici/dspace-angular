@@ -4,12 +4,12 @@
   </div>
   <button class="btn btn-link p-0 expandButton" dsDragClick (actualClick)="toggle()">
     <i class="fas fa-angle-down"></i>
-    <span class="ml-1">{{ 'item.truncatable-part.show-more' | translate }}</span>
+    <span class="ms-1">{{ 'item.truncatable-part.show-more' | translate }}</span>
   </button>
   @if (expand && expandable && showCollapseButton) {
     <button class="btn btn-link p-0 collapseButton" dsDragClick (actualClick)="toggle()">
       <i class="fas fa-angle-up"></i>
-      <span class="ml-1">{{ 'item.truncatable-part.show-less' | translate }}</span>
+      <span class="ms-1">{{ 'item.truncatable-part.show-less' | translate }}</span>
     </button>
   }
 </div>

@@ -1,5 +1,5 @@
 @if ((isMobile$ | async) === false) {
-  <div class="navbar-nav mr-auto" data-test="auth-nav">
+  <div class="navbar-nav me-auto" data-test="auth-nav">
     @if ((isAuthenticated$ | async) === false && showAuth$ | async) {
       <div
         class="nav-item"
@@ -16,7 +16,7 @@
             ngbDropdownToggle>
             {{ 'nav.login' | translate }}
           </button>
-          <div id="loginDropdownMenu" [ngClass]="{'pl-3 pr-3': (loading | async)}" ngbDropdownMenu
+          <div id="loginDropdownMenu" [ngClass]="{'ps-3 pe-3': (loading | async)}" ngbDropdownMenu
             role="dialog"
             aria-modal="true"
             [attr.aria-label]="'nav.login' | translate">
