@@ -30,6 +30,8 @@
           <span class="d-none d-sm-inline">&nbsp;{{ dsoType + '.edit.metadata.discard-button' | translate }}</span>
         </button>
       }
+      <ds-context-menu-edit-item [contextMenuObject]="dso">
+      </ds-context-menu-edit-item>
     </div>
     <div role="table" [attr.aria-label]="'item.edit.head' | translate">
       <ds-dso-edit-metadata-headers [dsoType]="dsoType"></ds-dso-edit-metadata-headers>
