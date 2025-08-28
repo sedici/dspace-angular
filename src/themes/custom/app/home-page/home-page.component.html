@@ -25,17 +25,31 @@
     <div class="row container">
       @for (item of exploraciones; track item) {
         <div class="col-6 col-md-3 mb-4">
-          <a [routerLink]="item.href" [queryParams]="item.queryParams || {}">
-            <div class="collection-card">
-              <div class="icon-container">
-                <img [src]="item.img" alt="{{'home.page.' + item.title | translate}}">
+          @if (item.href.startsWith('/handle')) {
+            <a [href]="item.href">
+              <div class="collection-card">
+                <div class="icon-container">
+                  <img [src]="item.img" alt="{{'home.page.' + item.title | translate}}">
+                </div>
+                <div class="text-container">
+                  <h4>{{'home.page.' + item.title | translate}}</h4>
+                  <p>{{ item.description }}</p>
+                </div>
               </div>
-              <div class="text-container">
-                <h4>{{'home.page.' + item.title | translate}}</h4>
-                <p>{{item.description}}</p>
+            </a>
+          } @else {
+            <a [routerLink]="item.href" [queryParams]="item.queryParams || {}">
+              <div class="collection-card">
+                <div class="icon-container">
+                  <img [src]="item.img" alt="{{'home.page.' + item.title | translate}}">
+                </div>
+                <div class="text-container">
+                  <h4>{{'home.page.' + item.title | translate}}</h4>
+                  <p>{{ item.description }}</p>
+                </div>
               </div>
-            </div>
-          </a>
+            </a>
+          }
         </div>
       }
     </div>
