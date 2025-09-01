@@ -1,30 +1,33 @@
 <ds-metadata-field-wrapper [label]="label | translate">
-  <div class="collections">
+  <ul class="collections">
     @for (c of this.collections; track c; let last = $last) {
-      <a [routerLink]="['/collections', c.collection.id]" role="button" tabindex="0">
-        <span>{{ dsoNameService.getName(c.parentCommunity) }} > {{ dsoNameService.getName(c.collection) }}</span>@if (!last) {
-        <span [innerHTML]="separator"></span>
-      }
+      <li>
+        <a [routerLink]="['/collections', c.collection.id]" role="button" tabindex="0">
+          <span>{{ dsoNameService.getName(c.parentCommunity) }} > {{ dsoNameService.getName(c.collection) }}</span>
+          @if (!last) {
+            <span [innerHTML]="separator"></span>
+          }
+        </a>
+      </li>
+    }
+  </ul>
+
+  @if (isLoading$ | async) {
+    <div>
+      {{'item.page.collections.loading' | translate}}
+    </div>
+  }
+
+  @if ((isLoading$ | async) !== true && (hasMore$ | async)) {
+    <a
+      (click)="$event.preventDefault(); handleLoadMore()"
+      class="load-more-btn btn btn-sm btn-outline-secondary"
+      role="button"
+      href="javascript:void(0);"
+      role="button"
+      tabindex="0"
+      >
+      {{'item.page.collections.load-more' | translate}}
     </a>
   }
-</div>
-
-@if (isLoading$ | async) {
-  <div>
-    {{'item.page.collections.loading' | translate}}
-  </div>
-}
-
-@if ((isLoading$ | async) !== true && (hasMore$ | async)) {
-  <a
-    (click)="$event.preventDefault(); handleLoadMore()"
-    class="load-more-btn btn btn-sm btn-outline-secondary"
-    role="button"
-    href="javascript:void(0);"
-    role="button"
-    tabindex="0"
-    >
-    {{'item.page.collections.load-more' | translate}}
-  </a>
-}
 </ds-metadata-field-wrapper>
