@@ -1,9 +1,109 @@
-@media print
-{
-    .no-print, .no-print *
-    {
-        display: none !important;
+@media print {
+  .no-print, .no-print * {
+    display: none !important;
+  }
+  
+  // Ajustes específicos para impresión
+  body, html {
+    font-size: 12px !important; // Reducir tamaño base
+  }
+  
+  .container {
+    font-size: 0.6rem !important; // Más pequeño que .75rem
+    margin: 0 !important;
+    padding: 0 10px !important;
+    max-width: 100% !important;
+  }
+  
+  .jumbotron {
+    padding: 0.5rem 0 !important;
+    margin: 0 !important;
+    background-color: #f6f6f6 !important;
+  }
+  
+  .title-content {
+    font-size: 1.4em !important; // Reducido de 1.75em
+    line-height: 1.2 !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .title-alternative-content {
+    font-size: 1.1em !important; // Reducido de 1.33333em
+    margin: 0.25rem 0 !important;
+    line-height: 1.2 !important;
+  }
+  
+  sedici-context,
+  .author-container {
+    ::ng-deep span, ::ng-deep a {
+      font-size: 1.1em !important; // Reducido de 1.33333em
+      line-height: 1.3 !important;
     }
+    
+    ::ng-deep h6 {
+      font-size: 1.1em !important;
+      margin-bottom: 0.25rem !important;
+    }
+  }
+  
+  .metadata-column {
+    padding: 0 0.25rem !important;
+    
+    ::ng-deep ds-generic-item-page-field,
+    ::ng-deep sedici-truncatable-generic-item-page-field,
+    ::ng-deep ds-item-page-uri-field {
+      span, a, h6 {
+        font-size: 1em !important; // Reducido de 1.25em
+      }
+    }
+  }
+  
+  .texto-imprimir {
+    margin-top: 5px !important;
+    font-size: 1.1rem !important; // Reducido de 1.4rem
+    line-height: 1.3 !important;
+      
+    p {
+      margin-bottom: 0.5rem !important;
+    }
+  }
+  
+  .contenedor-qr {
+    margin-bottom: 1% !important;
+    margin-top: 10px !important;
+      
+    qrcode {
+      transform: scale(0.8) !important; // Reducir tamaño del QR
+    }
+  }
+  
+  .divider-top {
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+  
+  .item-identifiers {
+    margin: 0.25rem 0 !important;
+  }
+  
+  // Reducir espaciado general
+  .row {
+    margin: 0 !important;
+  }
+  
+  .col-12, .col-lg-4, .col-lg-8, .col-md-12 {
+    padding: 0 0.25rem !important;
+  }
+  
+  // Asegurar que el contenido entre en una página
+  .badge-title-content,
+  .metadata-column,
+  app-expandable-metadata {
+    ::ng-deep .simple-view-element {
+      margin-bottom: 0.2rem !important;
+      line-height: 1.3 !important;
+    }
+  }
 }
 
 .container {

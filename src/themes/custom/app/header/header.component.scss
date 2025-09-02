@@ -85,6 +85,10 @@
       width: 100%;
       max-width: 450px;
     }
+
+    @media print {
+      display: none !important;
+    }
   }
 
   ::ng-deep ds-navbar .container{
