@@ -6,7 +6,11 @@
   .facet-logo {
     max-width: 24px;
     max-height: 24px;
-    margin-right: .25em;
+    margin: auto .25em auto 0;
+  }
+
+  .filter-name-text {
+    color: #42a5f5;
   }
 
   .search-filter-wrapper {
