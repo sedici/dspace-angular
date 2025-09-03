@@ -38,21 +38,18 @@ export class HomePageComponent extends BaseComponent {
   exploraciones:Array<ExploracionDestacada> = [
     {
       title: "journals",
-      img: "assets/custom/images/revistas.png",
+      img: "assets/custom/images/revistas.svg",
       href: "/handle/10915/51",
-      description: "123.456",
     } as ExploracionDestacada,
     {
       title: "events",
-      img: "assets/custom/images/eventos.png",
+      img: "assets/custom/images/eventos.svg",
       href: "/handle/10915/1038",
-      description: "123.456"
     } as ExploracionDestacada,
     {
       title: "books",
-      img: "assets/custom/images/libros2.png",
+      img: "assets/custom/images/libros.svg",
       href: "/search",
-      description: "123.456",
       queryParams: {
         "spc.page": 1,
         "f.itemtype": "Libro,equals",
@@ -62,9 +59,8 @@ export class HomePageComponent extends BaseComponent {
     } as ExploracionDestacada,
     {
       title: "data",
-      img: "assets/custom/images/datos.png",
+      img: "assets/custom/images/datos.svg",
       href: "/search",
-      description: "123.456",
       queryParams: {
         "spc.page": 1,
         "f.itemtype": "Conjunto de datos,equals",
@@ -73,4 +69,11 @@ export class HomePageComponent extends BaseComponent {
       }
     } as ExploracionDestacada,
   ];
+
+  getHoverImageSrc(originalSrc: string): string {
+    const lastDotIndex = originalSrc.lastIndexOf('.');
+    const basePath = originalSrc.substring(0, lastDotIndex);
+    const extension = originalSrc.substring(lastDotIndex);
+    return `${basePath}-w${extension}`;
+  }
 }

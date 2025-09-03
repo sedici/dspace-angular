@@ -56,52 +56,66 @@ div.row.container {
   margin-left: auto;
 }
 
-.destacado {  
+.destacado {
   .collection-card {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    text-align: center;
-    padding: 15px;
-    height: 100%;
-    border-radius: 5px;
-    box-shadow: 1px 5px rgba(0,0,0,0.1);
+    text-align: left;
+    padding: 2rem 2rem 2.75rem 2rem;
+    border: 1px solid #373734;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    
+    &:hover {
+      background-color: #42a5f5;
+      color: white;
+      
+      .text-container h2 {
+        color: white;
+      }
+      
+      .icon-container .hover-image {
+        display: block;
+      }
+      
+      .icon-container .default-image {
+        display: none;
+      }
+    }
     
     .icon-container {
       margin-bottom: 10px;
       
       img {
-        width: 80px;
-        height: 80px;
+        width: 30px;
+        height: 30px;
         object-fit: contain;
+      }
+
+      .hover-image {
+        display: none;
       }
     }
     
     .text-container {
-      h4 {
-        font-size: 1rem;
+      h2 {
         font-weight: bold;
         margin-bottom: 0;
-      }
-      
-      p {
-        font-size: 0.625rem;
-        color: #666;
-        margin: 0;
       }
     }
   }
 
   a {
     color: inherit;
+
+    &:hover {
+      text-decoration: none;
+    }
   }
   
   // Estilo para dispositivos medianos y grandes (horizontal)
   @media (min-width: 768px) {
-    .collection-card {
-      flex-direction: row;
-      text-align: left;
-      
+    .collection-card {     
       .icon-container {
         margin-right: 15px;
         margin-bottom: 0;
@@ -115,27 +129,25 @@ div.row.container {
 
   // Estilo para dispositivos móviles (grid 2x2) con ícono a la derecha
   @media (max-width: 767px) {
-    .collection-card {
-      flex-direction: row; // Cambiamos a horizontal para móvil
-      text-align: left;
+    .collection-card {     
       padding: 15px;
       height: 100%;
-      justify-content: space-between; // Distribuir espaciado
+      justify-content: space-between;
       align-items: center;
       
       .icon-container {
-        order: 2; // Mueve el ícono a la derecha
+        order: 2;
         margin-bottom: 0;
-        margin-left: 10px; // Espacio entre texto e icono
+        margin-left: 10px;
         
         img {
-          width: 60px; // Un poco más pequeño para ajustar al espacio
-          height: 60px;
+          width: 40px;
+          height: 40px;
         }
       }
       
       .text-container {
-        order: 1; // Mueve el texto a la izquierda
+        order: 1;
         flex: 1;
       }
     }

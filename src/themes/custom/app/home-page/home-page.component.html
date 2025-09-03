@@ -29,11 +29,11 @@
             <a [href]="item.href">
               <div class="collection-card">
                 <div class="icon-container">
-                  <img [src]="item.img" alt="{{'home.page.' + item.title | translate}}">
+                  <img class="default-image" [src]="item.img" alt="{{'home.page.' + item.title | translate}}">
+                  <img class="hover-image" [src]="getHoverImageSrc(item.img)" alt="{{'home.page.' + item.title | translate}}">
                 </div>
                 <div class="text-container">
-                  <h4>{{'home.page.' + item.title | translate}}</h4>
-                  <p>{{ item.description }}</p>
+                  <h2>{{'home.page.' + item.title | translate}}</h2>
                 </div>
               </div>
             </a>
@@ -41,11 +41,11 @@
             <a [routerLink]="item.href" [queryParams]="item.queryParams || {}">
               <div class="collection-card">
                 <div class="icon-container">
-                  <img [src]="item.img" alt="{{'home.page.' + item.title | translate}}">
+                  <img class="default-image" [src]="item.img" alt="{{'home.page.' + item.title | translate}}">
+                  <img class="hover-image" [src]="getHoverImageSrc(item.img)" alt="{{'home.page.' + item.title | translate}}">
                 </div>
                 <div class="text-container">
-                  <h4>{{'home.page.' + item.title | translate}}</h4>
-                  <p>{{ item.description }}</p>
+                  <h2>{{'home.page.' + item.title | translate}}</h2>
                 </div>
               </div>
             </a>
