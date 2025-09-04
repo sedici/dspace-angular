@@ -1,0 +1,9 @@
+@media screen and (min-width: map-get($grid-breakpoints, md))  {
+  .collection-logo-content-container {
+    display: flex;
+
+    .collection-text {
+      flex: 1;
+    }
+  }
+}

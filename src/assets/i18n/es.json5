@@ -2435,10 +2435,10 @@
   "community.search.results.head": "Resultados de la búsqueda",
 
   // "community.sub-collection-list.head": "Collections in this community",
-  "community.sub-collection-list.head": "Colecciones de esta comunidad",
+  "community.sub-collection-list.head": "Colecciones",
 
   // "community.sub-community-list.head": "Communities in this Community",
-  "community.sub-community-list.head": "Comunidades de esta comunidad",
+  "community.sub-community-list.head": "Comunidades",
 
   // "cookies.consent.accept-all": "Accept all",
   "cookies.consent.accept-all": "Aceptar todo",

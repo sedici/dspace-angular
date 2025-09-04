@@ -8,10 +8,10 @@ import { ComcolPageBrowseByComponent as BaseComponent } from '../../../../../../
 
 @Component({
   selector: 'ds-themed-comcol-page-browse-by',
-  // styleUrls: ['./comcol-page-browse-by.component.scss'],
-  styleUrls: ['../../../../../../app/shared/comcol/comcol-page-browse-by/comcol-page-browse-by.component.scss'],
-  // templateUrl: './comcol-page-browse-by.component.html'
-  templateUrl: '../../../../../../app/shared/comcol/comcol-page-browse-by/comcol-page-browse-by.component.html',
+  styleUrls: ['./comcol-page-browse-by.component.scss'],
+  // styleUrls: ['../../../../../../app/shared/comcol/comcol-page-browse-by/comcol-page-browse-by.component.scss'],
+  templateUrl: './comcol-page-browse-by.component.html',
+  // templateUrl: '../../../../../../app/shared/comcol/comcol-page-browse-by/comcol-page-browse-by.component.html',
   standalone: true,
   imports: [
     AsyncPipe,

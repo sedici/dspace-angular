@@ -1,0 +1,11 @@
+.list-group-item {
+  border: none;
+  border-bottom: 1px solid #dee2e6;
+
+  &.active {
+    z-index: 2;
+    color: black;
+    background-color: lightblue;
+    border: none;
+  }
+}

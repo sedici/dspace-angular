@@ -5,8 +5,8 @@ import { ComcolPageContentComponent as BaseComponent } from '../../../../../../a
 
 @Component({
   selector: 'ds-themed-comcol-page-content',
-  // styleUrls: ['./comcol-page-content.component.scss'],
-  styleUrls: ['../../../../../../app/shared/comcol/comcol-page-content/comcol-page-content.component.scss'],
+  styleUrls: ['./comcol-page-content.component.scss'],
+  // styleUrls: ['../../../../../../app/shared/comcol/comcol-page-content/comcol-page-content.component.scss'],
   // templateUrl: './comcol-page-content.component.html',
   templateUrl: '../../../../../../app/shared/comcol/comcol-page-content/comcol-page-content.component.html',
   imports: [

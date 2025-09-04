@@ -1,5 +1,5 @@
 <ng-container *ngVar="(breadcrumbs$ | async) as breadcrumbs">
-  @if (breadcrumbs && (showBreadcrumbs$ | async)) {
+  @if (breadcrumbs && breadcrumbs.length > 1 && (showBreadcrumbs$ | async)) {
     <nav aria-label="breadcrumb" class="nav-breadcrumb">
       <ol class="container breadcrumb my-0">
         @if (isResponsive) {
@@ -22,6 +22,17 @@
             }
           }
         }
+      </ol>
+    </nav>
+  } @else if (breadcrumbs && breadcrumbs.length === 1 && (showBreadcrumbs$ | async)) {
+    <!-- Espacio vacío para mantener el layout cuando no hay breadcrumbs -->
+    <nav aria-label="breadcrumb" class="nav-breadcrumb" style="visibility: hidden;">
+      <ol class="container breadcrumb my-0">
+        <li class="breadcrumb-item">
+          <div class="breadcrumb-item-limiter">
+            <span class="text-truncate">&nbsp;</span>
+          </div>
+        </li>
       </ol>
     </nav>
   }

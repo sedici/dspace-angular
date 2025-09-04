@@ -6,6 +6,7 @@ import { Component, HostListener } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
+import { map } from 'rxjs/operators';
 
 import { BreadcrumbsComponent as BaseComponent } from '../../../../app/breadcrumbs/breadcrumbs.component';
 import { VarDirective } from '../../../../app/shared/utils/var.directive';
@@ -51,6 +52,26 @@ export class BreadcrumbsComponent extends BaseComponent {
     this.checkResponsive();
     const currentUrl = this.router.url;
     this.isItemView = currentUrl.includes('/items/');
+    
+    this.breadcrumbs$ = this.breadcrumbs$.pipe(
+      map(breadcrumbs => {
+        if (!breadcrumbs || breadcrumbs.length === 0) {
+          return breadcrumbs;
+        }
+        const filtered = breadcrumbs.filter(breadcrumb => {
+          const url = breadcrumb.url;
+          if (url && (
+            url.includes('/subcoms-cols') ||
+            url.includes('/search') ||
+            url.includes('/browse/')
+          )) {
+            return false;
+          }
+          return true;
+        });
+        return filtered;
+      })
+    );
   }
 
   checkResponsive() {

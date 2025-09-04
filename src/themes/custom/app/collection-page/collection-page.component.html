@@ -5,28 +5,32 @@
       <div @fadeInOut>
         @if (collectionRD?.payload; as collection) {
           <div>
-            <div class="d-flex flex-row border-bottom mb-4 pb-4">
+            <div class="d-flex flex-row pb-4">
               <header class="comcol-header me-auto">
                 <!-- Collection Name -->
                 <ds-comcol-page-header
                     [name]="dsoNameService.getName(collection)">
                 </ds-comcol-page-header>
 
-                <!-- Collection logo -->
-                @if (logo) {
-                  <ds-comcol-page-logo class="float-start" [logo]="logo.payload" [alternateText]="'collection.logo' | translate">
-                  </ds-comcol-page-logo>
-                }
-                
-                <!-- Introductory text -->
-                <ds-comcol-page-content [content]="collection.introductoryText" [hasInnerHtml]="true">
-                </ds-comcol-page-content>
+                <div class="collection-logo-content-container">
+                  <!-- Collection logo -->
+                  @if (logo) {
+                    <ds-comcol-page-logo [logo]="logo.payload" [alternateText]="'collection.logo' | translate">
+                    </ds-comcol-page-logo>
+                  }
+                  
+                  <div class="collection-text">
+                    <!-- Introductory text -->
+                    <ds-comcol-page-content [content]="collection.introductoryText" [hasInnerHtml]="true">
+                    </ds-comcol-page-content>
 
-                <!-- Handle -->
-                <ds-comcol-page-handle
-                    [content]="collection.handle"
-                    [title]="'collection.page.handle'">
-                </ds-comcol-page-handle>
+                    <!-- Handle -->
+                    <ds-comcol-page-handle
+                        [content]="collection.handle"
+                        [title]="'collection.page.handle'">
+                    </ds-comcol-page-handle>
+                  </div>
+                </div>
 
                 <!-- News -->
                 <ds-comcol-page-content
@@ -36,6 +40,10 @@
                 </ds-comcol-page-content>
               </header>
               <ds-dso-edit-menu></ds-dso-edit-menu>
+            </div>
+
+            <div class="pb-4">
+              <img [src]="'assets/custom/images/detallegradiente.png'" alt="Gradiente">
             </div>
 
             <section class="comcol-page-browse-section">
