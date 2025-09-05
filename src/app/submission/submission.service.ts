@@ -572,6 +572,18 @@ export class SubmissionService {
     ).subscribe();
   }
 
+  redirectToItemView() {
+    const currentUrl = this.router.url;
+    const uuidMatch = currentUrl.match(/\/([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})\//);
+    const itemUuid = uuidMatch ? uuidMatch[1] : null;
+    
+    if (itemUuid) {
+      this.router.navigate([`/items/${itemUuid}`]);
+    } else {
+      console.warn('No se pudo obtener el UUID del ítem para la redirección');
+    }
+  }
+
   /**
    * Dispatch a new [CancelSubmissionFormAction]
    */

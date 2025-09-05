@@ -45,16 +45,24 @@
           (click)="save($event)">
           <span><i class="fas fa-save"></i> {{'submission.general.save' | translate}}</span>
         </button>
-        <button type="button"
-          [class.btn-primary]="(showDepositAndDiscard | async) !== true"
-          [class.btn-secondary]="(showDepositAndDiscard | async)"
-          class="btn"
-          id="saveForLater"
-          [attr.data-test]="'save-for-later' | dsBrowserOnly"
-          [dsBtnDisabled]="(processingSaveStatus | async) || (processingDepositStatus | async)"
-          (click)="saveLater($event)">
-          <span><i class="fas fa-save"></i> {{'submission.general.save-later' | translate}}</span>
-        </button>
+        @if ((showSaveEditItem | async) !== true) {
+          <button type="button"
+            [class.btn-primary]="(showDepositAndDiscard | async) !== true"
+            [class.btn-secondary]="(showDepositAndDiscard | async)"
+            class="btn"
+            id="saveForLater"
+            [attr.data-test]="'save-for-later' | dsBrowserOnly"
+            [dsBtnDisabled]="(processingSaveStatus | async) || (processingDepositStatus | async)"
+            (click)="saveLater($event)">
+            <span><i class="fas fa-save"></i> {{'submission.general.save-later' | translate}}</span>
+          </button>
+        } @else {
+          <button type="button"
+            class="btn btn-secondary"
+            (click)="saveEditItem($event)">
+            <span><i class="fas fa-save"></i> {{'submission.general.save-edit-item' | translate}}</span>
+          </button>
+        }
         @if ((showDepositAndDiscard | async)) {
           <button
             type="button"
@@ -66,7 +74,7 @@
             <span><i class="fas fa-plus"></i> {{'submission.general.deposit' | translate}}</span>
           </button>
         }
-        @if ((showDepositAndDiscard | async) !== true) {
+        @if (((showDepositAndDiscard | async) !== true) && ((showSaveEditItem | async) !== true)) {
           <button
             ngbTooltip="{{ 'accept-and-select-collection-help' | translate }}"
             class="selectCollectionAction btn btn-primary"

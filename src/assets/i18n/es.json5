@@ -7727,6 +7727,9 @@
   // "submission.general.save-later": "Save for later",
   "submission.general.save-later": "Guardar para más adelante",
 
+  // "submission.general.save-edit-item": "Save changes",
+  "submission.general.save-edit-item": "Guardar y volver al ítem",
+
   // "submission.general.saving": "Saving...",
   "submission.general.saving": "Guardando...",
 

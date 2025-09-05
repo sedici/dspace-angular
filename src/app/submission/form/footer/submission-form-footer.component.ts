@@ -23,6 +23,7 @@ import {
   map,
   mergeMap,
   tap,
+  find,
 } from 'rxjs/operators';
 
 import { SubmissionRestService } from '../../../core/submission/submission-rest.service';
@@ -80,6 +81,8 @@ export class SubmissionFormFooterComponent implements OnChanges {
    */
   public showDepositAndDiscard: Observable<boolean>;
 
+  public showSaveEditItem: Observable<boolean>;
+
   /**
    * A boolean representing if submission form is valid or not
    * @type {Observable<boolean>}
@@ -128,6 +131,7 @@ export class SubmissionFormFooterComponent implements OnChanges {
       this.processingSaveStatus = this.submissionService.getSubmissionSaveProcessingStatus(this.submissionId);
       this.processingDepositStatus = this.submissionService.getSubmissionDepositProcessingStatus(this.submissionId);
       this.showDepositAndDiscard = of(this.submissionService.getSubmissionScope() === SubmissionScopeType.WorkspaceItem);
+      this.showSaveEditItem = of(this.submissionService.getSubmissionScope() === SubmissionScopeType.EditItem);
       this.hasUnsavedModification = this.submissionService.hasUnsavedModification();
 
       this.showDepositAndDiscard.subscribe((showDepositAndDiscard) => {
@@ -148,6 +152,18 @@ export class SubmissionFormFooterComponent implements OnChanges {
    */
   save(event) {
     this.submissionService.dispatchSave(this.submissionId, true);
+  }
+
+  saveEditItem(event){
+    this.submissionService.dispatchSave(this.submissionId, true);
+
+    this.submissionService.getSubmissionSaveProcessingStatus(this.submissionId).pipe(
+      find((isPending: boolean) => !isPending),
+    ).subscribe(() => {
+      setTimeout(() => {
+        this.submissionService.redirectToItemView();
+      }, 1000);
+    });
   }
 
   redirect(){
