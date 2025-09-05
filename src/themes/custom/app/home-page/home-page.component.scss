@@ -63,7 +63,7 @@ div.row.container {
     align-items: center;
     text-align: left;
     padding: 2rem 2rem 2.75rem 2rem;
-    border: 1px solid #373734;
+    border: 1px solid #cdcdcd;
     transition: background-color 0.3s ease, color 0.3s ease;
     
     &:hover {
@@ -99,7 +99,6 @@ div.row.container {
     
     .text-container {
       h2 {
-        font-weight: bold;
         margin-bottom: 0;
       }
     }
