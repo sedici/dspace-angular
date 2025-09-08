@@ -67,7 +67,7 @@ div.row.container {
     transition: background-color 0.3s ease, color 0.3s ease;
     
     &:hover {
-      background-color: #42a5f5;
+      background-color: var(--sedici-color);
       color: white;
       
       .text-container h2 {
