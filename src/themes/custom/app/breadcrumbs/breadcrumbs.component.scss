@@ -3,6 +3,10 @@
   padding-bottom: calc(var(--ds-content-spacing) / 2);
   padding-top: calc(var(--ds-content-spacing) / 2);
   background-color: var(--ds-breadcrumb-bg);
+
+  @media print{
+    display: none !important;
+  }
 }
 
 li.breadcrumb-item {
