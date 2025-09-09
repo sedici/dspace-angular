@@ -5,26 +5,51 @@
   
   // Ajustes específicos para impresión
   body, html {
-    font-size: 12px !important; // Reducir tamaño base
+    // font-size: 1.2rem !important; // Reducir tamaño base
+    font-family: Verdana, Geneva, Tahoma, sans-serif !important;
+    font-size: 12px !important;
+    line-height: 1.4 !important;
   }
   
   .container {
-    font-size: 0.6rem !important; // Más pequeño que .75rem
+    font-size: 1rem !important; // Más pequeño que .75rem
     margin: 0 !important;
-    padding: 0 10px !important;
     max-width: 100% !important;
   }
   
   .jumbotron {
-    padding: 0.5rem 0 !important;
+    padding: 0 !important;
     margin: 0 !important;
     background-color: #f6f6f6 !important;
+    font-size: 1rem !important; // Reducir tamaño base
+
+    .container {
+      .texto-handler {
+        padding-top: 1.2rem !important;
+        font-size: 0.85rem !important;
+
+        a {
+          display: inline !important;
+          visibility: visible !important;
+          color: #0066cc !important;
+          text-decoration: underline !important;
+        }
+      }
+    }
   }
+
+  .jumbotron.container {
+    padding: 0 !important;
+    font-size: 1rem !important; // Reducir tamaño base
+  }
+
+
   
   .title-content {
     font-size: 1.4em !important; // Reducido de 1.75em
     line-height: 1.2 !important;
-    margin-bottom: 0.5rem !important;
+    //margin-bottom: 0.5rem !important;
+    font-weight: bold !important;
   }
   
   .title-alternative-content {
@@ -32,49 +57,72 @@
     margin: 0.25rem 0 !important;
     line-height: 1.2 !important;
   }
-  
-  sedici-context,
+
+  .generic-item-page-field {
+    font-size: 1em !important; // Reducido de 1.25em
+  }
+
   .author-container {
     ::ng-deep span, ::ng-deep a {
-      font-size: 1.1em !important; // Reducido de 1.33333em
+      font-size: 0.9em !important; // Reducido de 1.33333em
       line-height: 1.3 !important;
+      margin-top: 0em !important;
+      margin-bottom: 0em !important;
+      padding: 0em !important;
+    }
+
+    ::ng-deep .simple-view-element{
+      margin-bottom: 0rem !important; // Espacio entre campos
+      margin-top: 0rem !important;
+      padding: 0rem !important;
+      font-size: 0.9em !important; // Reducido de 1.2em
     }
     
     ::ng-deep h6 {
-      font-size: 1.1em !important;
-      margin-bottom: 0.25rem !important;
+      margin-top: 0em !important;
+      margin-bottom: 0em !important;      
+      padding-top: 0em !important;
+      padding-bottom: 0em !important;
+      font-size: 0.9em !important;
+      font-weight: normal !important; // Labels no en negrita
     }
   }
-  
-  .metadata-column {
-    padding: 0 0.25rem !important;
-    
-    ::ng-deep ds-generic-item-page-field,
+
+  .metadata-column{
+    padding-left: 0 !important;
+    font-size: 0.5em !important; // Reducido de 1.25em
+  }
+
+  .metadata-column {    
+    ::ng-deep ds-generic-item-page-field
     ::ng-deep sedici-truncatable-generic-item-page-field,
     ::ng-deep ds-item-page-uri-field {
-      span, a, h6 {
-        font-size: 1em !important; // Reducido de 1.25em
+      
+      h6 {
+        font-size: 0.9em !important; // Labels más pequeños
+        font-weight: bold !important;
+      }
+      
+      span, a {
+        font-size: 0.9em !important; // Contenido de metadatos más pequeño
+        line-height: 1.3 !important;
+        font-weight: normal !important;
       }
     }
+
   }
-  
-  .texto-imprimir {
-    margin-top: 5px !important;
-    font-size: 1.1rem !important; // Reducido de 1.4rem
-    line-height: 1.3 !important;
-      
-    p {
-      margin-bottom: 0.5rem !important;
+
+  .item-identifiers {
+    margin: 0.25rem 0 !important;
+    
+    ::ng-deep .badge {
+      font-size: 0.85em !important; // Badges más pequeños
+      font-weight: normal !important;
     }
   }
-  
-  .contenedor-qr {
-    margin-bottom: 1% !important;
-    margin-top: 10px !important;
-      
-    qrcode {
-      transform: scale(0.8) !important; // Reducir tamaño del QR
-    }
+
+  .texto-qr{
+    font-size: 0.85rem !important; // Reducido de 1em
   }
   
   .divider-top {
@@ -89,10 +137,7 @@
   // Reducir espaciado general
   .row {
     margin: 0 !important;
-  }
-  
-  .col-12, .col-lg-4, .col-lg-8, .col-md-12 {
-    padding: 0 0.25rem !important;
+    font-size: 1.1em;
   }
   
   // Asegurar que el contenido entre en una página
@@ -102,23 +147,26 @@
     ::ng-deep .simple-view-element {
       margin-bottom: 0.2rem !important;
       line-height: 1.3 !important;
+      font-size: 1.2em !important;
     }
   }
+
 }
 
+// ===== ESTILOS ORDENADOS SEGÚN HTML =====
+
 .container {
-  font-size: .75rem;
+  font-size: 1em;
 
   .texto-imprimir{
     margin-top: 10px;
-    font-size: 1.4rem;
   }
-}
 
-.jumbotron {
-  padding: 1rem 0 0;
-  margin-bottom: 0;
-  background-color: #f6f6f6;
+  .texto-imprimir.p{
+    text-align: center;
+    font-size: 1em;
+  }
+
 }
 
 .badge-title-container {
@@ -138,10 +186,24 @@
       margin-bottom: 0px;
     }
   }
+
+}
+
+.certificate-title {
+  font-size: 2em;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  text-align: center;
 }
 
 .edit-menu {
   margin-left: auto;
+}
+
+.item-title {
+  font-size: 1.9em;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
 }
 
 .title-alternative-content {
@@ -169,22 +231,22 @@
   border-bottom: 1px solid #D8E8Eb;
 }
 
+.author-container {
+  ::ng-deep .simple-view-element {
+    line-height: 1.5;
+  }
+}
+
 sedici-context,
 .author-container {
   ::ng-deep span, ::ng-deep a {
-    font-size: 1.33333em;
+    font-size: 1.2em;
     font-weight: var(--font-weight-regular);
   }
 
   ::ng-deep h6 {
-    font-size: 1.33333em;
+    font-size: 1.2em;
     font-weight: var(--font-weight-bold);
-  }
-}
-
-.author-container {
-  ::ng-deep .simple-view-element {
-    line-height: 1.5;
   }
 }
 
@@ -209,6 +271,63 @@ sedici-context,
   }
 
 }
+
+.jumbotron {
+  padding: 1rem 0 0;
+  margin-bottom: 0;
+}
+
+.metadata-column {
+  padding: 0 .5rem ;
+
+  ::ng-deep ds-generic-item-page-field,
+  ::ng-deep sedici-truncatable-generic-item-page-field,
+  ::ng-deep ds-item-page-uri-field {
+    h6 {
+      font-size: 1.2em;
+      font-weight: var(--font-weight-bold);
+    }
+
+    span, a {
+      font-size: 1.25em;
+      font-weight: var(--font-weight-regular);
+    }
+  }
+}
+
+app-expandable-metadata {
+  ::ng-deep .simple-view-element {
+    line-height: 1.5;
+  }
+
+  sedici-truncatable-generic-item-page-field {
+    ::ng-deep .content {
+      line-height: 1.5;
+    }
+  }
+}
+
+.contenedor-qr {
+  //border: 3px solid black;
+  margin-bottom: 2%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container.tex
+
+.contenedor-qr qrcode{
+  border: 3px solid black;
+}
+
+.texto-qr{
+  text-align: center;
+  font-size: 1em;
+}
+
+// ===== ESTILOS ADICIONALES =====
 
 .botones-context {
   display: flex;
@@ -236,50 +355,15 @@ sedici-context,
   }
 }
 
-app-expandable-metadata {
-  ::ng-deep .simple-view-element {
-    line-height: 1.5;
-  }
+// .col-12, .col-lg-4, .col-lg-8, .col-md-12 {
+//     padding-left: 0.5rem !important;
+// }
 
-  sedici-truncatable-generic-item-page-field {
-    ::ng-deep .content {
-      line-height: 1.5;
-    }
-  }
-}
-
-.metadata-column {
-  padding: 0 .5rem ;
-
-  ::ng-deep ds-generic-item-page-field,
-  ::ng-deep sedici-truncatable-generic-item-page-field,
-  ::ng-deep ds-item-page-uri-field {
-    h6 {
-      font-size: 1.25em;
-      font-weight: var(--font-weight-bold);
-    }
-
-    span, a {
-      font-size: 1.25em;
-      font-weight: var(--font-weight-regular);
-    }
-  }
+.col-12{
+  padding: 0 !important;
 }
 
 // Modifico todos los botones que están incluidos en el componente
 :host ::ng-deep .btn:focus {
   outline-style: none !important;
-}
-
-.contenedor-qr {
-  //border: 3px solid black;
-  margin-bottom: 2%;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.contenedor-qr qrcode{
-  border: 3px solid black;
 }

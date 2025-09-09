@@ -25,11 +25,17 @@ body {
     @media screen and (max-width: map-get($grid-breakpoints, md)) {   
         margin-bottom: 60px; //AJUSTAR SEGÚN BOTTOM-NAV-BAR
     }
+
+    @media print {
+        // Para que no cree una seguna página vacía
+        min-height: 0% !important;
+    }
 }
 
 .margin-header {
     margin-top: 75px; //AJUSTAR SEGÚN HEADER
 }
+
 
 #main-content {
     flex: 1 1 100%;
