@@ -72,7 +72,7 @@
             [label]="'sedici.item.page.sedici.contributor.inscriber'">
           </ds-generic-item-page-field>
         </div>
-        <sedici-context [object]="object"></sedici-context>
+        <sedici-context class="sedici-context" [object]="object"></sedici-context>
         <div class="flex-container">
           <div class="item-identifiers">
             <ng-container *ngFor="let idValue of itemIdentifiers">
@@ -108,7 +108,7 @@
     <div class="container">
       <div class="row">
         <div class="col-12">
-          <app-expandable-metadata>
+          <!-- <app-expandable-metadata> -->
             <div class="d-flex flex-wrap responsive-columns">
               <div class="metadata-column col-lg-4 col-md-12" [ngClass]="{'col-lg-12': !hasMetadata}">
                 <ds-generic-item-page-field [item]="object"
@@ -160,35 +160,39 @@
                   [fields]="['dc.coverage.temporal']"
                   [label]="'sedici.item.page.dc.coverage.temporal'">
                 </ds-generic-item-page-field>
-                <sedici-truncatable-generic-item-page-field [item]="object"
+                <ds-generic-item-page-field [item]="object"
+                  [fields]="['dc.coverage.spatial']"
+                  [label]="'sedici.item.page.dc.coverage.spatial'">
+                </ds-generic-item-page-field>
+                <sedici-truncatable-generic-item-page-field [item]="object" class="no-print"
                   [fields]="['dc.subject']"
                   [label]="'sedici.item.page.dc.subject'"
                   [minLines]="3">
                 </sedici-truncatable-generic-item-page-field>
-                <ds-generic-item-page-field [item]="object"
+                <ds-generic-item-page-field [item]="object" class="no-print"
                   [fields]="['sedici.subject.materias']"
                   [separator]="'; '"
                   [label]="'sedici.item.page.sedici.subject.materias'">
                 </ds-generic-item-page-field>
-                <ds-generic-item-page-field [item]="object"
+                <ds-generic-item-page-field [item]="object" class="no-print"
                   [fields]="['dc.publisher']"
                   [label]="subtype === ('Discurso' || 'Entrevista') ? ('sedici.item.page.dc.publisher.production') : ('sedici.item.page.dc.publisher.editorial')">
                 </ds-generic-item-page-field>
-                <ds-generic-item-page-field [item]="object"
+                <ds-generic-item-page-field class="no-print" [item]="object"
                   [fields]="['dc.relation.ispartof']"
                   [label]="'sedici.item.page.dc.relation.ispartof'">
                 </ds-generic-item-page-field>
-                <ds-item-page-uri-field [item]="object"
+                <ds-item-page-uri-field class="no-print" [item]="object"
                   [fields]="['sedici.identifier.uri']"
                   [label]="'sedici.item.page.sedici.identifier.uri'">
                 </ds-item-page-uri-field>
-                <ds-item-page-uri-field [item]="object"
+                <ds-item-page-uri-field class="no-print"[item]="object"
                   [fields]="['sedici.relation.isRelatedWith']"
                   [label]="'sedici.item.page.sedici.relation.isRelatedWith'">
                 </ds-item-page-uri-field>
               </div>
               <div class="metadata-column col-lg-8 col-md-12" *ngIf="hasMetadata">
-                <ds-generic-item-page-field [item]="object"
+                <ds-generic-item-page-field class="no-print" [item]="object"
                   [fields]="['sedici.description.note']"
                   [separator]="'<br/>'"
                   [label]="'sedici.item.page.sedici.description.note'">
@@ -205,7 +209,7 @@
                 </ds-generic-item-page-field>
               </div>
             </div>
-          </app-expandable-metadata>
+          <!-- </app-expandable-metadata> -->
         </div>
       </div>
       <p class="texto-handler">Puede acceder a la obra a través del siguiente <a [href]="itemIdentifiers[0].url">enlace</a> o a través del qr a continuación:</p>
