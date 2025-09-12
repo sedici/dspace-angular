@@ -45,9 +45,10 @@ export const filterTransformer = {
     }
 
     // VER CASO PALABRAS CLAVES 'mito; leer; historia; teseo y el minotauro'
-    // Verificar si la última parte contiene ' y ', ' & ' o ' and '
+    // Verificar si la última parte contiene ' y ', ' Y ', ' & ' o ' and '
     const lastPart = parts[parts.length - 1];
     if (lastPart.includes(' y ') || 
+        lastPart.includes(' Y ') || 
         lastPart.includes(' & ') || 
         lastPart.includes(' and ') ||
         lastPart.match(/^and\s/) ||
@@ -56,7 +57,7 @@ export const filterTransformer = {
         lastPart.match(/\sand\s/)) {
       
       // Usar una expresión regular más completa para el split
-      const newParts = lastPart.split(/\s*(?:\s+y\s+|\s+&\s+|\s+and\s+|^and\s+|^&\s+)\s*/)
+      const newParts = lastPart.split(/\s*(?:\s+y\s+|\s+Y\s+|\s+&\s+|\s+and\s+|^and\s+|^&\s+)\s*/)
         .map(item => item.trim())
         .filter(item => item !== '');
       
@@ -93,7 +94,16 @@ export const filterTransformer = {
 
   // Elimina los saltos de línea
   removeLineBreaks: (text) => {
-    return text.replace(/(\r\n|\n|\r)/gm, '');
+    // Primero eliminar guiones de división de palabras al final de línea
+    text = text.replace(/\s*-\s*(\r\n|\n|\r)\s*/g, ''); // Guión + salto de línea = unir palabras
+    
+    // Luego eliminar saltos de línea normales
+    text = text.replace(/(\r\n|\n|\r)/gm, ' '); // Reemplazar por espacio para mantener separación entre palabras
+    
+    // Limpiar espacios dobles que puedan haber quedado
+    text = text.replace(/\s{2,}/g, ' ');
+    
+    return text;
   },
 
   // FIN gestión de espacios y saltos de línea
@@ -203,10 +213,75 @@ export const filterTransformer = {
     return text;
   },
 
+  fixMisplacedAccents: (text) => {
+    // Casos por si el texto viene de otro visualizador o fuente
+
+    if (text.includes('´')) {
+      text = text.replace(/´\s*(\n|\r\n|\r)/g, '\n'); // Acento al final de línea (no se puede saber a quién pertenece)
+      text = text.replace(/\s*´\s*([aAeEiIıoOuUnN])/g, (match, vowel) => { // Acento separado por espacios de la vocal
+        const map = {
+          'a': 'á', 'A': 'Á',
+          'e': 'é', 'E': 'É',
+          'i': 'í', 'I': 'Í', 'ı': 'í',
+          'o': 'ó', 'O': 'Ó',
+          'u': 'ú', 'U': 'Ú',
+          'n': 'ñ', 'N': 'Ñ',
+        };
+        return map[vowel] || vowel;
+      });
+      text = text.replace(/\s*´\s*([í])/g, '$1'); // Caso especial de í con acento separado por espacio
+    }
+
+    if (text.includes('˜')) {
+      text = text.replace(/˜\s*(\n|\r\n|\r)/g, '\n');
+      text = text.replace(/˜\s*([nN])/g, (match, letter) => {
+        const map = {
+          'n': 'ñ',
+          'N': 'Ñ'
+        };
+        return map[letter] || letter;
+      });
+    }
+
+    // Casos por si el texto se extrae del visualizador PDF del submission
+
+    if (text.includes('\u0301')) {
+      text = text.replace(/ ?\u0301([aAeEiIıoOuU])/g, (match, vowel) => {
+        const map = {
+          'a': 'á', 'A': 'Á',
+          'e': 'é', 'E': 'É',
+          'i': 'í', 'I': 'Í', 'ı': 'í',
+          'o': 'ó', 'O': 'Ó',
+          'u': 'ú', 'U': 'Ú',
+        };
+        return map[vowel] || vowel;
+      });
+    }
+
+    if (text.includes('\u0303')) {
+      text = text.replace(/ ?\u0303([nN])/g, (match, letter) => {
+        const map = {
+          'n': 'ñ',
+          'N': 'Ñ'
+        };
+        return map[letter] || letter;
+      });
+    }
+
+    if (text.includes('\u0327')) {
+      text = text.replace(/ ?\u0327/g, 'ü');
+    }
+
+    return text;
+  },
+
   // Limpieza general del texto
   cleanText: (text, selectedMetadataField = '') => {
     let cleanText = filterTransformer.removeSpacesAtStartAndEnd(text);
     cleanText = filterTransformer.removeDoubleSpaces(cleanText);
+
+    // Acomodar acentos mal puestos
+    cleanText = filterTransformer.fixMisplacedAccents(cleanText);
 
     // Limpiar comas consecutivas que puedan haber quedado después de remover referencias
     cleanText = cleanText.replace(/,+/g, ','); // Reemplazar múltiples comas por una sola
