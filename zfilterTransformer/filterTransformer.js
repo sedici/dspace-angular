@@ -296,7 +296,7 @@ export const filterTransformer = {
     .replace(/(?<!\s)–(\s)/g, ' –$1'); // Caso: espacio después pero no antes (Palabra– clave → Palabra – clave)
 
     const escapeLessThanAndGreaterThan = ((selectedMetadataField !== 'dc_title') && (selectedMetadataField !== 'dc_description_abstract') && (selectedMetadataField !== 'dc_description_note')) ? true : false;
-    if (selectedMetadataField && selectedMetadataField !== 'dc_subject') {
+    if (selectedMetadataField && selectedMetadataField !== 'dc_subject' && selectedMetadataField !== 'sedici_creator_person') {
       cleanText = filterTransformer.normalizeText(cleanText, escapeLessThanAndGreaterThan);
     }
     
