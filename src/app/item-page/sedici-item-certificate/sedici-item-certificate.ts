@@ -92,7 +92,6 @@ export class SediciCertificate extends UntypedItemComponent implements OnInit {
     super.ngOnInit();
     this.fechaActual = new Date();
     this.user$ = this.authService.getAuthenticatedUserFromStore();
-    this.ruta = window.location.href;
-    this.ruta = this.ruta.split('/').slice(0, -1).join('/');
+    this.ruta = this.itemIdentifiers?.find(id => id.label === 'handle')?.url;
   }
 }
