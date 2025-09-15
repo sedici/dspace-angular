@@ -113,6 +113,11 @@ export class ComcolPageBrowseByComponent implements OnDestroy, OnInit {
             });
           }
 
+          // Dejo el botón de "buscar" por delante de los otros tipos de browse
+          if (this.appConfig[this.contentType].defaultBrowseTab !== 'search') {
+            allOptions.push(allOptions.shift());
+          }
+
           allOptions.push(...browseDefListRD.payload.page.map((config: BrowseDefinition) => ({
             id: `browse_${config.id}`,
             label: `browse.comcol.by.${config.id}`,
@@ -121,9 +126,9 @@ export class ComcolPageBrowseByComponent implements OnDestroy, OnInit {
 
           // When the default tab is not the "search" tab, the "search" tab is moved
           // at the end of the tabs ribbon for aesthetics purposes.
-          if (this.appConfig[this.contentType].defaultBrowseTab !== 'search') {
-            allOptions.push(allOptions.shift());
-          }
+          // if (this.appConfig[this.contentType].defaultBrowseTab !== 'search') {
+          //   allOptions.push(allOptions.shift());
+          // }
         }
         return allOptions;
       }),
