@@ -5606,7 +5606,7 @@
   "mydspace.show.workflow": "Tareas del flujo de trabajo",
 
   // "mydspace.show.workspace": "Your submissions",
-  "mydspace.show.workspace": "Sus envíos",
+  "mydspace.show.workspace": "Mis envíos",
 
   // "mydspace.show.supervisedWorkspace": "Supervised items",
   "mydspace.show.supervisedWorkspace": "Ítems supervisados",
@@ -5616,7 +5616,7 @@
   "mydspace.status": "My DSpace status:",
 
   // "mydspace.status.mydspaceArchived": "Archived",
-  "mydspace.status.mydspaceArchived": "Archivado",
+  "mydspace.status.mydspaceArchived": "Publicado",
 
   // "mydspace.status.mydspaceValidation": "Validation",
   "mydspace.status.mydspaceValidation": "Validación",
@@ -7450,7 +7450,7 @@
   "search.filters.discoverable.false": "Sí",
 
   // "search.filters.namedresourcetype.Archived": "Archived",
-  "search.filters.namedresourcetype.Archived": "Archivado",
+  "search.filters.namedresourcetype.Archived": "Publicado",
 
   // "search.filters.namedresourcetype.Validation": "Validation",
   "search.filters.namedresourcetype.Validation": "Validación",
@@ -9183,7 +9183,7 @@
   "supervisedWorkspace.search.results.head": "Ítems supervisados",
 
   // "workspace.search.results.head": "Your submissions",
-  "workspace.search.results.head": "Sus envíos",
+  "workspace.search.results.head": "Mis envíos",
 
   // "workflowAdmin.search.results.head": "Administer Workflow",
   "workflowAdmin.search.results.head": "Administrar flujo de trabajo",
