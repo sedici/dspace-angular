@@ -7066,6 +7066,9 @@
   // "search.filters.applied.f.itemtype": "Type",
   "search.filters.applied.f.itemtype": "Tipo",
 
+  // "search.filters.applied.f.itemsubtype": "Subtype",
+  "search.filters.applied.f.itemsubtype": "Subtipo",
+
   // "search.filters.applied.f.namedresourcetype": "Status",
   "search.filters.applied.f.namedresourcetype": "Estado",
 
@@ -7264,6 +7267,15 @@
 
   // "search.filters.filter.itemtype.label": "Search type",
   "search.filters.filter.itemtype.label": "Búsqueda de Tipo",
+
+  // "search.filters.filter.itemsubtype.head": "Subtype",
+  "search.filters.filter.itemsubtype.head": "Subtipo",
+
+  // "search.filters.filter.itemsubtype.placeholder": "Subtype",
+  "search.filters.filter.itemsubtype.placeholder": "Subtipo",
+
+  // "search.filters.filter.itemsubtype.label": "Search subtype",
+  "search.filters.filter.itemsubtype.label": "Búsqueda de Subtipo",
 
   // "search.filters.filter.jobTitle.head": "Job Title",
   "search.filters.filter.jobTitle.head": "Puesto de trabajo",
