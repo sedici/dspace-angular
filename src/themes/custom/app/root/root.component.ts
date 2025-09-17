@@ -20,8 +20,8 @@ import { BottomNavigationBarComponent } from '../bottom-navigation-bar/bottom-na
 
 @Component({
   selector: 'ds-themed-root',
-  // styleUrls: ['./root.component.scss'],
-  styleUrls: ['../../../../app/root/root.component.scss'],
+  styleUrls: ['./root.component.scss'],
+  // styleUrls: ['../../../../app/root/root.component.scss'],
   templateUrl: './root.component.html',
   // templateUrl: '../../../../app/root/root.component.html',
   animations: [slideSidebarPadding],

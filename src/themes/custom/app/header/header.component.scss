@@ -23,9 +23,30 @@
     }
   }
 
+  .transparent-header {
+    background: transparent;
+    padding: 1.5rem 3rem;
+    border-bottom: none !important;
+    position: relative !important;
+
+    ::ng-deep ds-navbar #main-navbar {
+      background: transparent;
+
+      ::ng-deep ds-navbar-section a, ::ng-deep ds-expandable-navbar-section span, ::ng-deep ds-expandable-navbar-section .ds-menu-toggler-wrapper, ::ng-deep ds-auth-nav-menu button , ::ng-deep ds-lang-switch a {
+        color: white;
+
+        &:hover, &:focus {
+          color: var(--sedici-color);
+        }
+      }
+    }
+  }
+
   img#header-logo {
-    height: 100vh;
-    max-height: var(--ds-header-logo-height);
+    @media (max-width: 767px) {
+      height: 100vh;
+      max-height: var(--ds-header-logo-height);
+    }
 
     @media print {
         margin-left: 47px;

@@ -7,39 +7,38 @@
       <div class="sedici-logo-container d-md-none">
         <img [src]="'assets/custom/images/SEDICIUNLP.svg'" alt="Logo UNLP">
       </div>
-      <div class="sedici-description">
-        <div class="escudo-container d-none d-md-block">
-          <img [src]="'assets/custom/images/escudoUNLP.svg'" alt="Escudo UNLP">
-        </div>
-        <span class="text"><b>El Servicio de Difusión de la Creación Intelectual</b> es el Repositorio Institucional de la <b>Universidad Nacional de La Plata</b>, un servicio libre y gratuito creado para albergar, preservar y dar visibilidad a las producciones de las Unidades Académicas de la Universidad.</span>
-      </div>
-      @if ((isMobile$ | async) !== true) {
-        <ds-themed-search-form [searchPlaceholder]="'home.page.search.placeholder' | translate:{totalItems: totalItems}"></ds-themed-search-form>
-      }
       @if ((isMobile$ | async)) {
+        <div class="sedici-description-mobile">
+          <p class="text"><b>El Servicio de Difusión de la Creación Intelectual</b>, repositorio institucional central de la <b>UNLP</b>, alberga, preserva, difunde y da visibilidad a nivel mundial a toda la producción científica e intelectual de la universidad.</p>
+        </div>
         <ds-search-navbar></ds-search-navbar>
+      } @else {     
+        <div class="sedici-description">
+          <div class="content-left">
+            <p class="title">Explorá toda la producción de la Universidad Nacional de La Plata</p>
+            <p class="text"><b>El Servicio de Difusión de la Creación Intelectual</b>, repositorio institucional central de la <b>UNLP</b>, alberga, preserva, difunde y da visibilidad a nivel mundial a toda la producción científica e intelectual de la universidad.</p>
+            <ds-themed-search-form [searchPlaceholder]="'home.page.search.placeholder' | translate:{totalItems: totalItems}"></ds-themed-search-form>
+          </div>
+          <div class="escudo-container">
+            <img [src]="'assets/custom/images/EscudoUNLPDer.svg'" alt="Escudo UNLP">
+          </div>
+        </div>
       }
     </div>
   </div>
 </div>
 
 <div class="destacado">
-  <div class="container">
-    <div class="row">
-      @for (item of cardItems; track item) {
-        <div class="col-4">
-          <div class="collection-card">
-            <a [href]="item.href">
-              <div class="icon-container">
-                <img [src]="item.img" alt="{{'home.page.' + item.title | translate}}">
-              </div>
-              <div class="text-container">
-                <h4>{{'home.page.' + item.title | translate}}</h4>
-              </div>
-            </a>
-          </div>
+  @for (item of cardItems; track item) {
+    <div class="collection-card">
+      <a [href]="item.href">
+        <div class="icon-container">
+          <img [src]="item.img" alt="{{'home.page.' + item.title | translate}}">
         </div>
-      }
+        <div class="text-container">
+          <h4>{{'home.page.' + item.title | translate}}</h4>
+        </div>
+      </a>
     </div>
-  </div>
+  }
 </div>

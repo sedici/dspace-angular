@@ -1,13 +1,9 @@
-<button (click)="skipToMainContent()" class="sr-only" id="skip-to-main-content">
-  {{ 'root.skip-to-content' | translate }}
-</button>
-
 <div class="outer-wrapper" [class.d-none]="shouldShowFullscreenLoader" [ngClass]="browserOsClasses.asObservable() | async" [@slideSidebarPadding]="{
      value: ((isSidebarVisible$ | async) !== true ? 'hidden' : (slideSidebarOver$ | async) ? 'unpinned' : 'pinned'),
      params: { collapsedWidth: (collapsedSidebarWidth$ | async), expandedWidth: (expandedSidebarWidth$ | async) }
     }">
   <ds-admin-sidebar [expandedSidebarWidth$]="expandedSidebarWidth$" [collapsedSidebarWidth$]="collapsedSidebarWidth$"></ds-admin-sidebar>
-  <div class="inner-wrapper" [ngClass]="{'margin-header': ((isMobile$ | async) !== true) || ((isMobile$ | async) && ((isHomePage$ | async) !== true))}">
+  <div class="inner-wrapper" [ngClass]="{'margin-header': ((isHomePage$ | async) !== true)}">
     <ds-system-wide-alert-banner></ds-system-wide-alert-banner>
     @if (((isMobile$ | async) !== true) || ((isMobile$ | async) && ((isHomePage$ | async) !== true))) {
       <ds-header-navbar-wrapper></ds-header-navbar-wrapper>
