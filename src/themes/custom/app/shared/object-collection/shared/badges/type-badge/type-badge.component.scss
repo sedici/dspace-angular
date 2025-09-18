@@ -1,6 +1,9 @@
 .badge {
-  color: white;
-  background-color: var(--sedici-color);
-  border: 1px solid var(--sedici-color);
-  border-radius: 0px;
+  color: #000000d1;
+  //background-color: var(--sedici-color);
+  //border: 1px solid var(--sedici-color);
+  background-color: #dee1ff;
+  border-radius: 2.5px;
+  padding: 0.4em 0.6em;
+  font-weight: var(--font-weight-regular);
 }

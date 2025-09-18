@@ -4,29 +4,16 @@
   (keydown.arrowup)="shiftFocusUp($event)" (keydown.esc)="close()"
   (dsClickOutside)="close();">
   <div class="mb-3 mb-0">
-    @if (label) {
-      <label class="form-label" class="mb-0 w-100">
-        <span class="fw-bold">
-          {{label}}
-        </span>
-        <ng-container *ngTemplateOutlet="searchInput"></ng-container>
-      </label>
-    } @else {
-      <input #inputField type="text" [(ngModel)]="value" [name]="name"
-        class="form-control suggestion_input"
-        [ngClass]="{'is-invalid': !valid}"
-        [dsDebounce]="debounceTime" (onDebounce)="find($event)"
-        [placeholder]="placeholder"
-        [ngModelOptions]="{standalone: true}" autocomplete="off"
-        />
-    }
+    <ng-container *ngTemplateOutlet="searchInput"></ng-container> <!-- Esta es la búsqueda por tipo -->
+    <button class="search-icon btn" type="submit" attr.aria-label="{{ 'nav.search.submit' | translate }}">
+        <i class="fas fa-search"></i>
+    </button>
   </div>
   <ng-template #searchInput>
     <input #inputField type="text" [(ngModel)]="value" [name]="name"
-      class="form-control suggestion_input"
+      class="search-input"
       [ngClass]="{'is-invalid': !valid}"
       [dsDebounce]="debounceTime" (onDebounce)="find($event)"
-      [placeholder]="placeholder"
       [ngModelOptions]="{standalone: true}" autocomplete="off"
       />
   </ng-template>

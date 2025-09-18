@@ -25,8 +25,10 @@ sedici-context {
 
 ::ng-deep ds-badges .badge {
   padding: 0.5em;
-  font-size: 85%;
-  font-weight: var(--font-weight-regular);
+  font-size: 0.88em;
+  vertical-align: text-bottom; // Para que el badge quede alineado con el sedici-context
+
+  // font-weight: var(--font-weight-regular);
 }
 
 .subtitle {

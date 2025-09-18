@@ -14,3 +14,23 @@
 form {
     position: relative;
 }
+
+.search-input{
+    border: none;
+    border-bottom: 1px solid #7597b9;
+
+    &:focus {
+        outline: none; 
+        border-bottom-color: #007bff;
+    }
+}
+
+.search-icon {
+  position: absolute;   
+  box-shadow: none;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  z-index: 2;
+  cursor: pointer;
+}
