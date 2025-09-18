@@ -79,7 +79,7 @@ export class RoleService {
         // Get the item information
         const item = itemRD.payload;
         // The submitter is not a followLink for Item, so we get it manually
-        const submitter_link = (item._links as any).submitter;
+        const submitter_link = item._links.submitter;
 
         if (submitter_link?.href) {
           // Call to the submitter link to get the EPerson

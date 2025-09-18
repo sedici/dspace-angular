@@ -88,6 +88,7 @@ export class Item extends DSpaceObject implements ChildHALResource, HandleObject
     thumbnail: HALLink;
     accessStatus: HALLink;
     identifiers: HALLink;
+    submitter?: HALLink;
     self: HALLink;
   };
 
