@@ -31,14 +31,25 @@
 <div class="destacado">
   @for (item of cardItems; track item) {
     <div class="collection-card">
-      <a [href]="item.href">
-        <div class="icon-container">
-          <img [src]="item.img" alt="{{'home.page.' + item.title | translate}}">
-        </div>
-        <div class="text-container">
-          <h4>{{'home.page.' + item.title | translate}}</h4>
-        </div>
-      </a>
+      @if (item.href.startsWith('#')) {
+        <a (click)="scrollToSection(item.href.substring(1))" style="cursor: pointer;">
+          <div class="icon-container">
+            <img [src]="item.img" alt="{{'home.page.' + item.title | translate}}">
+          </div>
+          <div class="text-container">
+            <h4>{{'home.page.' + item.title | translate}}</h4>
+          </div>
+        </a>
+      } @else {
+        <a [href]="item.href">
+          <div class="icon-container">
+            <img [src]="item.img" alt="{{'home.page.' + item.title | translate}}">
+          </div>
+          <div class="text-container">
+            <h4>{{'home.page.' + item.title | translate}}</h4>
+          </div>
+        </a>
+      }
     </div>
   }
 </div>

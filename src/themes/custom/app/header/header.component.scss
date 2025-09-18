@@ -23,11 +23,23 @@
     }
   }
 
+  .white-header, .color-header {
+    img#header-logo {
+      height: 100vh;
+      max-height: var(--ds-header-logo-height);
+    }
+  }
+
   .transparent-header {
     background: transparent;
     padding: 1.5rem 3rem;
+    z-index: 1020 !important;
     border-bottom: none !important;
     position: relative !important;
+
+    img#header-logo {
+      height: auto;
+    }
 
     ::ng-deep ds-navbar #main-navbar {
       background: transparent;
@@ -43,11 +55,6 @@
   }
 
   img#header-logo {
-    @media (max-width: 767px) {
-      height: 100vh;
-      max-height: var(--ds-header-logo-height);
-    }
-
     @media print {
         margin-left: 47px;
         padding-left: 0;

@@ -72,18 +72,29 @@ export class HomeNewsComponent extends BaseComponent {
 
   cardItems:Array<CardItem> = [
     {
-      title: "author",
-      img: "assets/custom/images/Autores.svg",
-      href: "/browse/author",
-    } as CardItem,{
       title: "publication",
       img: "assets/custom/images/Publicaciones.svg",
       href: "/search",
     } as CardItem,{
       title: "academicUnit",
       img: "assets/custom/images/UAs.svg",
-      href: "/handle/10915/1",
+      href: "#faculties-section",
+    } as CardItem,
+    {
+      title: "author",
+      img: "assets/custom/images/Autores.svg",
+      href: "/browse/author",
     } as CardItem
   ];
+
+  scrollToSection(sectionId: string): void {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      });
+    }
+  }
 }
 

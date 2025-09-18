@@ -1,5 +1,7 @@
 <ng-container *ngTemplateOutlet="itemsGrid; context: { title: 'featuredCollections', items: coleccionesDestacadas, column: false, isSingleRow: true }"></ng-container>
-<ng-container *ngTemplateOutlet="itemsGrid; context: { title: 'faculties', items: facultades, column: true, isSingleRow: false }"></ng-container>
+<div id="faculties-section">
+  <ng-container *ngTemplateOutlet="itemsGrid; context: { title: 'faculties', items: facultades, column: true, isSingleRow: false }"></ng-container>
+</div>
 <ng-container *ngTemplateOutlet="itemsGrid; context: { title: 'undergraduate', items: pregrado, column: true, isSingleRow: false }"></ng-container>
 
 <ng-template #itemsGrid let-title="title" let-items="items" let-column="column" let-isSingleRow="isSingleRow">

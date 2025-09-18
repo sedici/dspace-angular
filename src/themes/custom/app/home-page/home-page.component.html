@@ -18,10 +18,10 @@
 
 <ng-template #homeContent>
   <div class="destacado">
-    <div class="title-container">
+    <!-- <div class="title-container">
       <span class="explorar-text">{{'home.page.explore' | translate}}</span>
       <h2 class="section-title">{{'home.page.production' | translate}}</h2>
-    </div>
+    </div> -->
     <div class="row container">
       @for (item of exploraciones; track item) {
         <div class="col-6 col-md-3 mb-4">
@@ -73,13 +73,7 @@
   </div>
 </div>
 
-<div class="aliados-section align-items-center d-none d-md-flex">
-  <div class="aliados-title d-flex align-items-center justify-content-end">
-    <div>
-      <h2>{{'home.page.allies' | translate}}</h2>
-    </div>
-  </div>
-  <div class="aliados-logos">
+<div class="aliados-section d-none d-md-flex">
     <a href="https://repositoriosdigitales.mincyt.gob.ar/vufind/" target="_blank">
       <img src="assets/custom/images/SNRD.png" alt="SNRD Logo">
     </a>
@@ -89,5 +83,7 @@
     <a href="https://coar-repositories.org/" target="_blank">
       <img src="assets/custom/images/COAR.png" alt="COAR Logo">
     </a>
-  </div>
+    <a href="https://hera.sedici.unlp.edu.ar/" target="_blank">
+      <img src="assets/custom/images/HERA.png" alt="HERA Logo" style="width: 325px;">
+    </a>
 </div>

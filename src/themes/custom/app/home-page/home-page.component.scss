@@ -59,12 +59,10 @@ div.row.container {
 .destacado {
   .collection-card {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    text-align: left;
-    padding: 2rem 2rem 2.75rem 2rem;
-    border: 1px solid #cdcdcd;
+    padding: 2rem;
+    border: 1px solid var(--sedici-color);
     transition: background-color 0.3s ease, color 0.3s ease;
+    justify-content: center;
     
     &:hover {
       background-color: var(--sedici-color);
@@ -119,10 +117,6 @@ div.row.container {
         margin-right: 15px;
         margin-bottom: 0;
       }
-      
-      .text-container {
-        flex: 1;
-      }
     }
   }
 
@@ -176,32 +170,7 @@ h5 {
 }
 
 .aliados-section {
-  display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
-  height: 300px;
-
-  .aliados-title {
-    flex: 1;
-    text-align: right;
-    background: linear-gradient(to left, #d1d1d1, #f7f7f7 1%,#fdfdfd 3%);
-    height: 100%;
-
-    h2 {
-      font-size: 2rem;
-      padding-right: 1.5rem;
-      color: #777;
-    }
-  }
-
-  .aliados-logos {
-    flex: 3;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-
-    img {
-      margin: 0 10px;
-    }
-  }
+  height: 250px;
 }
