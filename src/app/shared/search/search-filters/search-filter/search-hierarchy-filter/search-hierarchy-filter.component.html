@@ -1,4 +1,17 @@
 <div>
+  @if ((isAvailableForShowSearchText | async) === false) {
+    <ds-filter-input-suggestions [suggestions]="(filterSearchResults$ | async)"
+      [placeholder]="'search.filters.filter.' + filterConfig.name + '.placeholder' | translate"
+      [label]="'search.filters.filter.' + filterConfig.name + '.label' | translate"
+      [action]="currentUrl"
+      [name]="filterConfig.paramName"
+      [(ngModel)]="filter"
+      (submitSuggestion)="onSubmit($event)"
+      (clickSuggestion)="onClick($event)"
+      (findSuggestions)="findSuggestions($event)"
+      ngDefaultControl
+    ></ds-filter-input-suggestions>
+  }
   <div class="filters py-2">
     @for (value of (selectedAppliedFilters$ | async); track value) {
       <ds-search-facet-selected-option [selectedValue]="value" [filterConfig]="filterConfig" [inPlaceSearch]="inPlaceSearch"></ds-search-facet-selected-option>
@@ -25,19 +38,6 @@
       }
     </div>
   </div>
-  @if ((isAvailableForShowSearchText | async) === false) {
-    <ds-filter-input-suggestions [suggestions]="(filterSearchResults$ | async)"
-      [placeholder]="'search.filters.filter.' + filterConfig.name + '.placeholder' | translate"
-      [label]="'search.filters.filter.' + filterConfig.name + '.label' | translate"
-      [action]="currentUrl"
-      [name]="filterConfig.paramName"
-      [(ngModel)]="filter"
-      (submitSuggestion)="onSubmit($event)"
-      (clickSuggestion)="onClick($event)"
-      (findSuggestions)="findSuggestions($event)"
-      ngDefaultControl
-    ></ds-filter-input-suggestions>
-  }
 </div>
 
 @if (vocabularyExists$ | async) {

@@ -24,16 +24,11 @@
       </option>
     }
   </select>
-  <ds-filter-input-suggestions [suggestions]="(filterSearchResults$ | async)"
+  <input type="text" class="form-control" id="advanced-search-value"
     [placeholder]="'search.filters.filter.' + currentFilter + '.placeholder' | translate"
-    [label]="'search.filters.filter.' + currentFilter + '.label' | translate"
-    [action]="router.url"
-    [name]="'f.' + currentFilter"
+    [attr.aria-label]="'search.filters.filter.' + currentFilter + '.label' | translate"
     [(ngModel)]="currentValue"
-    (submitSuggestion)="applyFilter()"
-    (findSuggestions)="findSuggestions($event)"
-    ngDefaultControl>
-  </ds-filter-input-suggestions>
+    (keyup.enter)="applyFilter()"/>
   <button (click)="applyFilter()" [dsBtnDisabled]="currentValue === ''" class="btn btn-primary mt-2">
     {{ 'search.sidebar.advanced-search.add' | translate }}
   </button>
