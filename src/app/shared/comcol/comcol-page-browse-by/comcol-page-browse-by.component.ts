@@ -161,19 +161,6 @@ export class ComcolPageBrowseByComponent implements OnDestroy, OnInit {
       }
     }));
 
-    if (this.router.url?.split('?')[0] === comColRoute) {
-      this.allOptions$.pipe(
-        take(1),
-      ).subscribe((allOptions: ComColPageNavOption[]) => {
-        for (const option of allOptions) {
-          if (option.id === this.appConfig[this.contentType].defaultBrowseTab) {
-            this.currentOption$.next(option[0]);
-            void this.router.navigate([option.routerLink], { queryParams: option.params });
-            break;
-          }
-        }
-      });
-    }
   }
 
   ngOnDestroy(): void {
