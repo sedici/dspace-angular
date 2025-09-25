@@ -7611,10 +7611,10 @@
   "sorting.DESC": "Descendente",
 
   // "sorting.dc.title.ASC": "Title Ascending",
-  "sorting.dc.title.ASC": "Título Ascendente",
+  "sorting.dc.title.ASC": "Título: A → Z",
 
   // "sorting.dc.title.DESC": "Title Descending",
-  "sorting.dc.title.DESC": "Título Descendente",
+  "sorting.dc.title.DESC": "Título: Z → A",
 
   // "sorting.score.ASC": "Least Relevant",
   "sorting.score.ASC": "Menos relevante",
@@ -7623,16 +7623,16 @@
   "sorting.score.DESC": "Lo más relevante",
 
   // "sorting.dc.date.issued.ASC": "Date Issued Ascending",
-  "sorting.dc.date.issued.ASC": "Fecha de publicación Ascendente",
+  "sorting.dc.date.issued.ASC": "Publicación: antiguos primeros",
 
   // "sorting.dc.date.issued.DESC": "Date Issued Descending",
-  "sorting.dc.date.issued.DESC": "Fecha de publicación Descendente",
+  "sorting.dc.date.issued.DESC": "Publicación: recientes primeros",
 
   // "sorting.dc.date.accessioned.ASC": "Accessioned Date Ascending",
-  "sorting.dc.date.accessioned.ASC": "Fecha de envío Ascendente",
+  "sorting.dc.date.accessioned.ASC": "Ingreso: antiguos primeros",
 
   // "sorting.dc.date.accessioned.DESC": "Accessioned Date Descending",
-  "sorting.dc.date.accessioned.DESC": "Fecha de envío Descendente",
+  "sorting.dc.date.accessioned.DESC": "Ingreso: recientes primeros",
 
   // "sorting.lastModified.ASC": "Last modified Ascending",
   "sorting.lastModified.ASC": "Última modificación Ascendente",
