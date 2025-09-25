@@ -3,6 +3,7 @@ import {
   NgClass,
 } from '@angular/common';
 import { Component } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { RouterLink } from '@angular/router';
 
 import { Context } from '../../../../../../../../../app/core/shared/context.model';
@@ -27,6 +28,7 @@ import { SediciContextComponent } from 'src/themes/custom/app/item-page/simple/f
   imports: [
     AsyncPipe,
     NgClass,
+    TranslateModule,
     RouterLink,
     ThemedBadgesComponent,
     ThemedThumbnailComponent,
@@ -36,4 +38,27 @@ import { SediciContextComponent } from 'src/themes/custom/app/item-page/simple/f
   ],
 })
 export class ItemSearchResultListElementComponent extends BaseComponent {
+  authors: string[] = [];
+
+  ngOnInit(): void {
+    super.ngOnInit();
+    this.getFirstAvailableAuthors();
+  }
+
+  getFirstAvailableAuthors(): void {
+    const creators = this.dso.allMetadata(['sedici.creator.*']);
+    if (creators.length > 0) {
+      this.authors = this.allMetadataValues(['sedici.creator.*']);
+    } else {
+      const compilers = this.dso.allMetadata(['sedici.contributor.compiler']);
+      if (compilers.length > 0) {
+        this.authors = this.allMetadataValues(['sedici.contributor.compiler']);
+      } else {
+        const editors = this.dso.allMetadata(['sedici.contributor.editor']);
+        if (editors.length > 0) {
+          this.authors = this.allMetadataValues(['sedici.contributor.editor']);
+        }
+      }
+    }  
+  }
 }

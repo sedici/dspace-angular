@@ -54,9 +54,9 @@
               <span class="item-list-date" [innerHTML]="firstMetadataValue('dc.date.issued').slice(0,4)"></span>
               })
             }
-            @if (dso.allMetadata(['dc.contributor.author', 'dc.creator', 'dc.contributor.*', 'sedici.creator.person']).length > 0) {
+            @if (authors.length > 0) {
               <span class="item-list-authors">
-                @for (author of allMetadataValues(['dc.contributor.author', 'dc.creator', 'dc.contributor.*', 'sedici.creator.person']); track author; let last = $last) {
+                @for (author of authors; track author; let last = $last) {
                   <span>
                     <span [innerHTML]="author"><span [innerHTML]="author"></span></span>
                     @if (!last) {
@@ -65,6 +65,8 @@
                   </span>
                 }
               </span>
+            } @else {
+              <span>{{ 'sedici.item.page.unknown.author' | translate }}</span>
             }
           </ds-truncatable-part>
         </span>

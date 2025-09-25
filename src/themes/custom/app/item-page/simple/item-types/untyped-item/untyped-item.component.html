@@ -42,6 +42,9 @@
   </div>
   <hr class="divider divider-top">
   <div class="author-container">
+    @if (object.allMetadata(['sedici.creator.*', 'sedici.contributor.compiler', 'sedici.contributor.editor']).length === 0) {
+      <span>{{ 'sedici.item.page.unknown.author' | translate }}</span>
+    }
     <ds-generic-item-page-field [item]="object"
       [fields]="['sedici.creator.person']"
       [separator]="' | '">
