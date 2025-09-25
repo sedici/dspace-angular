@@ -13,12 +13,9 @@
   display: flex;
   gap: 0.5rem;
 
-  ::ng-deep ds-pagination ngb-pagination, ::ng-deep ds-pagination ds-rss {
-    display: none;
-  }
-
-  ::ng-deep ds-pagination #paginationControlsDropdownMenu {
-    top: auto !important;
-    transform: none !important;
+  .config-right {
+    display: flex;
+    gap: 0.5rem;
+    margin-left: auto;
   }
 }

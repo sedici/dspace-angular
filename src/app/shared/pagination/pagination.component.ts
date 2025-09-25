@@ -238,8 +238,6 @@ export class PaginationComponent implements OnChanges, OnDestroy, OnInit {
 
   public showingDetails$: Observable<PaginationDetails>;
 
-  public uniqueSortFields: SortOptions[] = [];
-
   /**
    * Whether the current pagination should show a bottom pages
    */
@@ -271,11 +269,6 @@ export class PaginationComponent implements OnChanges, OnDestroy, OnInit {
       }));
     this.checkConfig(this.paginationOptions);
     this.initializeConfig();
-
-    this.uniqueSortFields = this.sortOptionsList.filter(
-      (option, index, self) => 
-        self.findIndex(o => o.field === option.field) === index
-    );
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -363,6 +356,11 @@ export class PaginationComponent implements OnChanges, OnDestroy, OnInit {
 
   public doSortFieldChange(field: string) {
     this.updateParams({ page: 1, sortField: field });
+    this.emitPaginationChange();
+  }
+
+  public doSortOptionsChange(option: SortOptions) {
+    this.updateParams({ page: 1, sortField: option.field, sortDirection: option.direction });
     this.emitPaginationChange();
   }
 

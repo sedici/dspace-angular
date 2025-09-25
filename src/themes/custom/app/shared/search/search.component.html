@@ -38,25 +38,25 @@
             <ds-view-mode-switch [viewModeList]="viewModeList"
             [inPlaceSearch]="inPlaceSearch"></ds-view-mode-switch>
           }
-          <ds-pagination
-            [paginationOptions]="(searchOptions$ | async)?.pagination"
-            [collectionSize]="(resultsRD$ | async)?.payload?.totalElements"
-            [objects]="resultsRD$ | async"
-            [sortOptions]="currentSortOptions$ | async"
-            [hideGear]="false"
-            [hidePagerWhenSinglePage]="true"
-            [hidePaginationDetail]="true"
-            [showPaginator]="true"
-            [sortOptionsList]="(sortOptionsList$ | async)"
-            (pageChange)="onPageChange($event)"
-            (pageSizeChange)="onPageSizeChange($event)"
-            (sortDirectionChange)="onSortDirectionChange($event)"
-            (sortFieldChange)="onSortFieldChange($event)"
-            (paginationChange)="onPaginationChange($event)"
-            (prev)="goPrev()"
-            (next)="goNext()">
-          </ds-pagination>
-          <div class="ml-auto">
+          <div class="config-right">
+            <ds-pagination
+              [paginationOptions]="(searchOptions$ | async)?.pagination"
+              [collectionSize]="(resultsRD$ | async)?.payload?.totalElements"
+              [objects]="resultsRD$ | async"
+              [sortOptions]="currentSortOptions$ | async"
+              [hideGear]="false"
+              [hidePagerWhenSinglePage]="true"
+              [hidePaginationDetail]="true"
+              [showPaginator]="true"
+              [sortOptionsList]="(sortOptionsList$ | async)"
+              (pageChange)="onPageChange($event)"
+              (pageSizeChange)="onPageSizeChange($event)"
+              (sortDirectionChange)="onSortDirectionChange($event)"
+              (sortFieldChange)="onSortFieldChange($event)"
+              (paginationChange)="onPaginationChange($event)"
+              (prev)="goPrev()"
+              (next)="goNext()">
+            </ds-pagination>
             <button (click)="openFiltersSidebar()" aria-controls="#search-body"
               class="btn btn-outline-primary open-sidebar">
               <i class="fas fa-sliders"></i> {{"search.sidebar.open" | translate}}
