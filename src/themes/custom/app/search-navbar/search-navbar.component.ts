@@ -1,4 +1,6 @@
 import { Component, Input } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import {
   FormsModule,
   ReactiveFormsModule,
@@ -32,6 +34,7 @@ export class SearchNavbarComponent extends BaseComponent {
 
   private localRouter: Router;
   private localSearchService: SearchService;
+  private destroy$ = new Subject<void>();
 
   constructor(
     formBuilder: UntypedFormBuilder, 
@@ -50,12 +53,22 @@ export class SearchNavbarComponent extends BaseComponent {
       this.isExpanded = 'expanded';
     }
 
-    const currentQuery = this.activatedRoute.snapshot.queryParams?.query;
-    if (currentQuery) {
-      this.searchForm.patchValue({
-        query: currentQuery
-      });
-    }
+    this.activatedRoute.queryParams.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(params => {
+      const currentQuery = params?.query || '';
+      
+      if (this.searchForm.get('query')?.value !== currentQuery) {
+        this.searchForm.patchValue({
+          query: currentQuery
+        }, { emitEvent: false });
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   /**
@@ -72,15 +85,23 @@ export class SearchNavbarComponent extends BaseComponent {
     
     const queryParams = {
       ...currentParams,
-      query: data.query
+      query: data.query,
+      'spc.page': 1
     };
-    
-    if (!data.query) {
-      delete queryParams.query;
-    }
-    
+
     const linkToNavigateTo = [this.localSearchService.getSearchLink().replace('/', '')];
 
+    if (!data.query) {
+      delete queryParams.query;
+      
+      this.localRouter.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.localRouter.navigate(linkToNavigateTo, {
+          queryParams: queryParams,
+        });
+      });
+      return;
+    }
+    
     this.localRouter.navigate(linkToNavigateTo, {
       queryParams: queryParams,
     });
