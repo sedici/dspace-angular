@@ -21,6 +21,7 @@ import { LinkMenuItemModel } from '../menu-item/models/link.model';
 import { MenuItemType } from '../menu-item-type.model';
 import { PartialMenuSection } from '../menu-provider.model';
 import { DSpaceObjectPageMenuProvider } from './helper-providers/dso.menu';
+import { RoleService } from '../../../core/roles/role.service';
 
 /**
  * Menu provider to create the "Edit" option in the DSO edit menu
@@ -29,6 +30,7 @@ import { DSpaceObjectPageMenuProvider } from './helper-providers/dso.menu';
 export class DSpaceObjectPrintCertificateMenuProvider extends DSpaceObjectPageMenuProvider {
   constructor(
     protected authorizationDataService: AuthorizationDataService,
+    protected roleService: RoleService,
   ) {
     super();
   }
@@ -36,11 +38,12 @@ export class DSpaceObjectPrintCertificateMenuProvider extends DSpaceObjectPageMe
   public getSectionsForContext(dso: DSpaceObject): Observable<PartialMenuSection[]> {
     return combineLatest([
       this.authorizationDataService.isAuthorized(FeatureID.CanEditMetadata, dso.self),
+      this.roleService.isSubmitterOfItem(dso),
     ]).pipe(
-      map(([canEditItem]) => {
+      map(([canEditItem, isSubmitter]) => {
         return [
           {
-            visible: canEditItem,
+            visible: canEditItem || isSubmitter, // Show if user can edit OR is submitter
             model: {
               type: MenuItemType.LINK,
               text: this.getDsoType(dso) + '.page.print',
