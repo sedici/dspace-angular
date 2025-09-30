@@ -54,8 +54,10 @@ export class FilterInputSuggestionsComponent extends InputSuggestionsComponent {
   @Input() suggestions: InputSuggestion[] = [];
 
   onSubmit(data) {
-    this.value = data;
-    this.submitSuggestion.emit(data);
+    if (this.suggestions.map((s) => s.value).includes(data)) {
+      this.value = data;
+      this.submitSuggestion.emit(data);
+    }
   }
 
   onClickSuggestion(data: InputSuggestion) {
