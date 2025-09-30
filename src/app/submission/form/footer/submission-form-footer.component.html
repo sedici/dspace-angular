@@ -78,8 +78,18 @@
           <button
             ngbTooltip="{{ 'accept-and-select-collection-help' | translate }}"
             class="selectCollectionAction btn btn-primary"
+            [dsBtnDisabled]="(processingSaveStatus | async) || (processingDepositStatus | async)"
             (click)="redirect()">
             {{'accept-and-select-collection' | translate}}
+          </button>
+        }
+        @if (((showDepositAndDiscard | async) !== true) && ((showSaveEditItem | async) !== true)) {
+          <button
+            ngbTooltip="{{ 'accept-and-not-select-collection-help' | translate }}"
+            class="selectCollectionAction btn btn-primary"
+            [dsBtnDisabled]="(processingSaveStatus | async) || (processingDepositStatus | async)"
+            (click)="notSelect()">
+            {{'accept-and-not-select-collection' | translate}}
           </button>
         }
       </div>

@@ -42,7 +42,8 @@ import { RemoteData } from 'src/app/core/data/remote-data';
 import { LinkService } from 'src/app/core/cache/builders/link.service';
 import { followLink } from 'src/app/shared/utils/follow-link-config.model';
 import { getAdvancedWorkflowRoute } from 'src/app/workflowitems-edit-page/workflowitems-edit-page-routing-paths';
-
+import { ProcessTaskResponse } from 'src/app/core/tasks/models/process-task-response';
+import { URLCombiner } from 'src/app/core/url-combiner/url-combiner';
 /**
  * This component represents submission form footer bar.
  */
@@ -174,6 +175,20 @@ export class SubmissionFormFooterComponent implements OnChanges {
       }
     };
     this.router.navigate([getAdvancedWorkflowRoute(this.wfi.id)], navigationExtras);
+  }
+
+  notSelect(){
+    const body =  {
+        ['submit_approve_not_select']: 'true',
+    };
+    console.log(this.item.id)
+    this.router.navigate(["items/"+this.item.id]);
+    this.ctService.submitTask(this.ctobject.id, body).subscribe( (processTaskResponse: ProcessTaskResponse) =>{
+      // Redirigir en caso de submitear con éxito
+      if (processTaskResponse.hasSucceeded) {
+        this.router.navigate(["items/"+this.item.id]);
+      }
+    });
   }
 
   /**

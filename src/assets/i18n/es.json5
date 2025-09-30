@@ -9914,6 +9914,10 @@
 
   "accept-and-select-collection": "Aprobar y elegir coleccion",
 
+  "accept-and-not-select-collection-help": "Aprueba la publicación y redirige al item publicado",
+
+  "accept-and-not-select-collection": "Aprobar y ver",
+
   "publish-and-workflow": "Publicar y volver",
 
   "publish-and-move": "Publicar y ver",
@@ -10023,7 +10027,7 @@
   "sedici.license.shareAlike.description": "Si remezcla, transforma o crea a partir del material, debe distribuir su contribución bajo la la misma licencia del original.",
   "sedici.license.restriction": "No hay restricciones adicionales",
   "sedici.license.restriction.description": "No puede aplicar términos legales ni medidas tecnológicas que restrinjan legalmente a otras a hacer cualquier uso permitido por la licencia.",
-  
+
   // Home
   "home.page.search.placeholder": "Busque entre los {{ totalItems }} recursos disponibles en el repositorio",
   "home.page.author": "Autores",
@@ -10042,7 +10046,7 @@
   "home.page.depositionObligation": "Obligación de depósito en el repositorio",
   "home.page.growthStatistics": "Estadísticas de crecimiento",
   "home.page.allies": "Aliados",
-  
+
   // "vocabulary-treeview.search.form.add": "Add",
   "vocabulary-treeview.search.form.add": "Añadir",
 
