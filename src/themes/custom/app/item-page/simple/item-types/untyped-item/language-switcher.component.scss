@@ -65,6 +65,17 @@
   text-align: justify;
 }
 
+.no-abstract {
+  color: #413f3f;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.info-icon {
+    color: #706f6f;
+    margin-right: 4px;
+}
+
 ::ng-deep .language-switcher-wrapper ds-truncatable-part .collapseButton,
 ::ng-deep .language-switcher-wrapper ds-truncatable-part .expandButton {
   margin-left: auto;

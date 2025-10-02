@@ -7112,6 +7112,10 @@
 
   "sedici.item.page.unknown.author": "Unknown Author",
 
+  // "sedici.item.page.dc.description.no_abstract": "Este item no posee resumen",
+  "sedici.item.page.dc.description.no_abstract": "This item has no abstract",
+
+
   "sedici.item.page.sedici.citation": "Cite",
 
   "sedici.item.page.sedici.share": "Share",
