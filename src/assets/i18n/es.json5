@@ -9954,6 +9954,7 @@
   "search.navbar.placeholder": "Buscar en SEDICI UNLP",
 
   // Vista del ítem
+  "sedici.item.page.dc.description.no_abstract": "Este item no posee resumen",
   "sedici.item.page.unknown.author": "Autor desconocido",
   "sedici.item.page.sedici.citation": "Citar",
   "sedici.item.page.sedici.share": "Compartir",

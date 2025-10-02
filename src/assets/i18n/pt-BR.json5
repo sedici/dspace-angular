@@ -10937,6 +10937,9 @@
 
   "search.navbar.placeholder": "Buscar no SEDICI UNLP",
 
+  // "sedici.item.page.dc.description.no_abstract": "This item has no abstract",
+  "sedici.item.page.dc.description.no_abstract": "Este item não possui resumo",
+
   "sedici.item.page.unknown.author": "Autor desconhecido",
 
   "sedici.item.page.sedici.citation": "Citar",

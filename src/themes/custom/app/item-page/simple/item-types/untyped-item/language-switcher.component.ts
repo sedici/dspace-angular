@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-
 import { TranslateModule } from '@ngx-translate/core';
 import { TruncatableComponent } from 'src/app/shared/truncatable/truncatable.component';
 import { TruncatablePartComponent } from 'src/app/shared/truncatable/truncatable-part/truncatable-part.component';
@@ -27,6 +26,10 @@ export class LanguageSwitcherComponent {
     const langValue = this.item.metadata['dc.language']?.[0]?.value;
     this.selectedLanguage = !langValue || langValue === 'other' ? '??' : langValue;
     this.availableLanguages = this.getAvailableLanguages();
+  }
+
+  hasAbstract(): boolean {
+    return !!this.item.metadata['dc.description.abstract'];
   }
 
   getAbstract(): SafeHtml {

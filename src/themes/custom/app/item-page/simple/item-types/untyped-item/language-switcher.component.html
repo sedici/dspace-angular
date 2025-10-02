@@ -1,8 +1,13 @@
 <div class="language-switcher-wrapper">
   <div class="language-switcher-container">
     <ds-truncatable [id]="item?.id + 'abstract'">
-      <ds-truncatable-part [id]="item?.id + 'abstract'" [minLines]="6">
-        <span class="abstract-text" [innerHTML]="getAbstract()"></span>
+      <ds-truncatable-part [id]="item?.id + 'abstract'" [minLines]="6" class="abstract-part">
+        @if (!hasAbstract()) {
+          <i class="fa-solid fa-circle-exclamation info-icon"></i>
+          <span class="no-abstract">{{'sedici.item.page.dc.description.no_abstract' | translate}}</span>
+        } @else {
+          <span class="abstract-text" [innerHTML]="getAbstract()"></span>
+        }
       </ds-truncatable-part>
     </ds-truncatable>
   </div>
