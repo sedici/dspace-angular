@@ -19,26 +19,27 @@ export class LanguageSwitcherComponent {
   @Input() item: any;
   selectedLanguage: string;
   availableLanguages: any[];
+  abstracts: any[];
 
   constructor(private sanitizer: DomSanitizer) {}
 
   ngOnInit() {
     const langValue = this.item.metadata['dc.language']?.[0]?.value;
     this.selectedLanguage = !langValue || langValue === 'other' ? '??' : langValue;
+    this.abstracts = this.item.metadata['dc.description.abstract'];
     this.availableLanguages = this.getAvailableLanguages();
   }
 
   hasAbstract(): boolean {
-    return !!this.item.metadata['dc.description.abstract'];
+    return this.abstracts && this.abstracts.length > 0;
   }
 
   getAbstract(): SafeHtml {
-    const abstracts = this.item.metadata['dc.description.abstract'];
-    if (abstracts) {
-      let abstract = abstracts.find((abstract: any) => (abstract.language || '??') === this.selectedLanguage)?.value || '';
+    if (this.abstracts) {
+      let abstract = this.abstracts.find((abstract: any) => (abstract.language || '??') === this.selectedLanguage)?.value || '';
       if (!abstract) {
-        abstract = abstracts[0].value;
-        this.selectedLanguage = abstracts[0].language;
+        abstract = this.abstracts[0].value;
+        this.selectedLanguage = this.abstracts[0].language;
       }
       return this.sanitizer.bypassSecurityTrustHtml(abstract);
     }
@@ -50,9 +51,8 @@ export class LanguageSwitcherComponent {
   }
 
   getAvailableLanguages() {
-    const abstracts = this.item.metadata['dc.description.abstract'];
-    if (abstracts) {
-      return [...new Set(abstracts.map((abstract: any) => (abstract.language || '??')))];
+    if (this.abstracts) {
+      return [...new Set(this.    abstracts.map((abstract: any) => (abstract.language || '??')))];
     }
     return [];
   }
