@@ -162,6 +162,8 @@ export class ContentFilesComponent {
                 }  
                 this.isLoading = false;
               });
+            } else {
+              this.embargoedFile = true;
             }
             this.isLoading = false;
             this.cdr.detectChanges();
