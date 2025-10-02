@@ -309,6 +309,7 @@ export class ContentFilesComponent {
           }
         }
         this.isLoadingFiles = false;
+        this.cdr.detectChanges();
       }
     },
     (err) => {
