@@ -52,7 +52,7 @@ export class LanguageSwitcherComponent {
 
   getAvailableLanguages() {
     if (this.abstracts) {
-      return [...new Set(this.    abstracts.map((abstract: any) => (abstract.language || '??')))];
+      return [...new Set(this.abstracts.map((abstract: any) => (abstract.language || '??')))];
     }
     return [];
   }
