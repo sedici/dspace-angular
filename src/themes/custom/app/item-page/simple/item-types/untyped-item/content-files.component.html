@@ -39,7 +39,7 @@
             }
           </div>
           <div class="file-preview d-none d-lg-block col-lg-9">
-            @if (selectedFile && isAssetAvailable) {
+            @if (selectedFile && isAssetAvailable && !embargoedFile) {
               <div>
                 <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
               </div>
@@ -47,6 +47,10 @@
               @if (!isAssetAvailable) {
                 <div class="no-preview">
                   <span>OCURRIÓ UN ERROR INESPERADO: PREVISUALIZACIÓN NO DISPONIBLE</span>
+                </div>
+              } @else if (embargoedFile) {
+                <div class="no-preview">
+                  <span>ARCHIVO EMBARGADO</span>
                 </div>
               } @else {
                 <div class="no-preview">
