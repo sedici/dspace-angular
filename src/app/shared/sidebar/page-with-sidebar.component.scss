@@ -43,7 +43,6 @@
 
 @include media-breakpoint-up(md) {
   .sidebar-content {
-    position: sticky;
     position: -webkit-sticky;
     top: 0;
     z-index: var(--bs-zindex-sticky);
