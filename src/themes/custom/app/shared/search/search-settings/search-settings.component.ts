@@ -10,8 +10,8 @@ import { SidebarDropdownComponent } from '../../../../../../app/shared/sidebar/s
 
 @Component({
   selector: 'ds-themed-search-settings',
-  styleUrls: ['./search-settings.component.scss'],
-  // styleUrls: ['../../../../../../app/shared/search/search-settings/search-settings.component.scss'],
+  // styleUrls: ['./search-settings.component.scss'],
+  styleUrls: ['../../../../../../app/shared/search/search-settings/search-settings.component.scss'],
   // templateUrl: './search-settings.component.html',
   templateUrl: '../../../../../../app/shared/search/search-settings/search-settings.component.html',
   providers: [
