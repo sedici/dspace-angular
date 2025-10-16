@@ -17,6 +17,21 @@
   @if (showCsvExport) {
     <ds-search-export-csv [searchConfig]="searchConfig"></ds-search-export-csv>
   }
+  @if (sortOptionsList && sortOptionsList?.length > 0) {
+    <ds-search-dropdown
+      [id]="'search-sidebar-sort'"
+      (changed)="reloadOrder($event)">
+      @for (sortOptionsEntry of sortOptionsList; track sortOptionsEntry) {
+        <option
+          [value]="sortOptionsEntry.field + ',' + sortOptionsEntry.direction.toString()"
+          [selected]="sortOptionsEntry.field === currentSortOption?.field && sortOptionsEntry.direction === (currentSortOption?.direction)? 'selected': null">
+          {{'sorting.' + sortOptionsEntry.field + '.' + sortOptionsEntry.direction | translate}}
+        </option>
+      }
+    </ds-search-dropdown>
+  } @else {
+    <h4>No hay opciones de ordenamiento disponibles</h4>
+  }
 </div>
 @if (searchResults && searchResults?.hasSucceeded && !searchResults?.isLoading && searchResults?.payload?.page.length > 0) {
   <div @fadeIn>

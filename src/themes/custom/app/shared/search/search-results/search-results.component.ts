@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input, Inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
@@ -13,11 +13,18 @@ import { ObjectCollectionComponent } from '../../../../../../app/shared/object-c
 import { SearchExportCsvComponent } from '../../../../../../app/shared/search/search-export-csv/search-export-csv.component';
 import { SearchResultsComponent as BaseComponent } from '../../../../../../app/shared/search/search-results/search-results.component';
 import { SearchResultsSkeletonComponent } from '../../../../../../app/shared/search/search-results/search-results-skeleton/search-results-skeleton.component';
+import { SidebarDropdownComponent } from '../../../../../../app/shared/sidebar/sidebar-dropdown.component';
+import { SortOptions } from 'src/app/core/cache/models/sort-options.model';
+import { PaginationService } from 'src/app/core/pagination/pagination.service';
+import { SearchConfigurationService } from 'src/app/core/shared/search/search-configuration.service';
+import { SearchService } from 'src/app/core/shared/search/search.service';
+import { SEARCH_CONFIG_SERVICE } from 'src/app/my-dspace-page/my-dspace-configuration.service';
+import { SortDirection } from 'src/app/core/cache/models/sort-options.model';
+import { SearchDropdownComponent } from './search-dropdown/search-dropdown.component';
 
 @Component({
   selector: 'ds-themed-search-results',
   templateUrl: './search-results.component.html',
-  // templateUrl: '../../../../../../app/shared/search/search-results/search-results.component.html',
   styleUrls: ['../../../../../../app/shared/search/search-results/search-results.component.scss'],
   animations: [
     fadeIn,
@@ -33,7 +40,32 @@ import { SearchResultsSkeletonComponent } from '../../../../../../app/shared/sea
     SearchExportCsvComponent,
     SearchResultsSkeletonComponent,
     TranslateModule,
+    SearchDropdownComponent,
   ],
 })
 export class SearchResultsComponent extends BaseComponent {
+  @Input() sortOptionsList: SortOptions[];
+  @Input() currentSortOption: SortOptions;
+
+  constructor(
+    @Inject(SEARCH_CONFIG_SERVICE) public searchConfigurationService: SearchConfigurationService,
+    protected searchService: SearchService,
+    protected paginationService: PaginationService,
+  ) {
+    super(searchConfigurationService, searchService);
+  }
+
+  /**
+   * Method to change the current sort field and direction
+   * @param {Event} event Change event containing the sort direction and sort field
+   */
+  reloadOrder(event: Event) {
+    const values = (event.target as HTMLInputElement).value.split(',');
+    
+    this.paginationService.updateRoute(this.searchConfigurationService.paginationID, {
+      sortField: values[0],
+      sortDirection: values[1] as SortDirection,
+      page: 1,
+    });
+  }
 }
