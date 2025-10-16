@@ -7672,6 +7672,12 @@
   // "statistics.table.no-name": "(object name could not be loaded)",
   "statistics.table.no-name": "(o nome do objeto não pôde ser carregado)",
 
+  //"submission.privacy.warning.title": "Aviso sobre Información Personal",
+  "submission.privacy.warning.title": "Aviso sobre Informação Pessoal",
+
+  //"submission.privacy.warning.message": "Por favor, revise que los documentos no contengan información personal innecesaria (números de documento, número de teléfono de línea y/o celular, direcciones privadas, datos bancarios, etc.).",
+  "submission.privacy.warning.message": "Por favor, revise se os documentos não contêm informações pessoais desnecessárias (números de documento, número de telefone fixo e/ou celular, endereços privados, dados bancários, etc.).",
+  
   // "submission.edit.breadcrumbs": "Edit Submission",
   "submission.edit.breadcrumbs": "Editar Submissão",
 

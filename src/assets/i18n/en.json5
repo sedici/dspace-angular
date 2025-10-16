@@ -5000,6 +5000,12 @@
 
   "statistics.table.no-name": "(object name could not be loaded)",
 
+  // "submission.privacy.warning.title": "Aviso sobre Información Personal",
+  "submission.privacy.warning.title": "Warning about Personal Information",
+
+  // "submission.privacy.warning.message": "Por favor, revise que los documentos no contengan información personal innecesaria (números de documento, número de teléfono de línea y/o celular, direcciones privadas, datos bancarios, etc.).",
+  "submission.privacy.warning.message": "Please check that the documents do not contain unnecessary personal information (document numbers, landline and/or mobile phone numbers, private addresses, bank details, etc.).",
+
   "submission.edit.breadcrumbs": "Edit Submission",
 
   "submission.edit.title": "Edit Submission",

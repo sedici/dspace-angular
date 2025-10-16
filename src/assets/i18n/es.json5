@@ -7694,6 +7694,10 @@
   // "statistics.table.no-name": "(object name could not be loaded)",
   "statistics.table.no-name": "(el nombre del objeto no pudo ser cargado)",
 
+  "submission.privacy.warning.title": "Aviso sobre Información Personal",
+  
+  "submission.privacy.warning.message": "Por favor, revise que los documentos no contengan información personal innecesaria (números de documento, número de teléfono de línea y/o celular, direcciones privadas, datos bancarios, etc.).",
+
   // "submission.edit.breadcrumbs": "Edit Submission",
   "submission.edit.breadcrumbs": "Editar envío",
 
