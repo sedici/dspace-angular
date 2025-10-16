@@ -77,6 +77,8 @@
           [selectable]="selectable"
           [selectionConfig]="selectionConfig"
           [showCsvExport]="showCsvExport"
+          [sortOptionsList]="(sortOptionsList$ | async)"
+          [currentSortOption]="(currentSortOptions$ | async)"
           [showThumbnails]="showThumbnails"
           (contentChange)="onContentChange($event)"
           (deselectObject)="deselectObject.emit($event)"
