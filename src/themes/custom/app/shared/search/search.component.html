@@ -31,6 +31,11 @@
         <ng-content select="[additionalSearchOptions]"></ng-content>
       </div>
     }
+    @if (showCsvExport) {
+      <div class="col-12 text-end mb-2 mt-2">
+        <ds-search-export-csv [searchConfig]="searchOptions$ | async"></ds-search-export-csv>
+      </div>
+    }
     <div id="search-content" class="col-12">
       <div class="d-block d-md-none search-controls clearfix">
         <div class="config-view-container">
@@ -137,10 +142,10 @@
     [inPlaceSearch]="inPlaceSearch"
     [searchPlaceholder]="searchFormPlaceholder | translate">
   </ds-search-form>
-  <div class="row mb-3 mb-md-1">
+  <!-- <div class="row mb-3 mb-md-1">
     <div class="labels col-12">
       <ds-search-labels [inPlaceSearch]="inPlaceSearch">
       </ds-search-labels>
     </div>
-  </div>
+  </div> -->
 </ng-template>

@@ -1,12 +1,10 @@
 @if (showAccessStatus) {
   @if (accessStatus$ | async; as accessStatus) {
-    <span>
+    <div class="access-status-container">
+      <i class="fa-solid fa-circle" [class]="'status-icon ' + accessStatusClass"></i>
       <span [class]="'badge access-status-list-element-badge ' + accessStatusClass">
-        @if (accessStatusClass === 'access-status-embargo-listelement-badge') {
-          <i class="fa fa-lock" aria-hidden="true"></i> <!-- Ícono de candado -->
-        }
         {{ accessStatus | translate }}
       </span>
-    </span>
+    </div>
   }
 }

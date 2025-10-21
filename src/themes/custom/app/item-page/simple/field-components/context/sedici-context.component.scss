@@ -1,7 +1,12 @@
 span {
-  line-height: 1.5;
-  font-size: 1.2em;
+  font-size: 0.9rem;
+  color: #484848e8;
+
+  @media screen and (max-width: 768px) {
+    font-size: 0.8rem;
+  }
 }
+
 
 @media print{
   span {

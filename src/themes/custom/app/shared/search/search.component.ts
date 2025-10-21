@@ -21,6 +21,7 @@ import { ViewModeSwitchComponent } from '../../../../../app/shared/view-mode-swi
 import { SidebarMode } from '../../../../../app/shared/sidebar/sidebar.actions';
 import { PaginationComponent } from 'src/app/shared/pagination/pagination.component';
 import { SortDirection } from 'src/app/core/cache/models/sort-options.model';
+import { SearchExportCsvComponent } from 'src/app/shared/search/search-export-csv/search-export-csv.component';
 
 @Component({
   selector: 'ds-themed-search',
@@ -42,6 +43,7 @@ import { SortDirection } from 'src/app/core/cache/models/sort-options.model';
     TranslateModule,
     ViewModeSwitchComponent,
     PaginationComponent,
+    SearchExportCsvComponent,
   ],
 })
 export class SearchComponent extends BaseComponent {

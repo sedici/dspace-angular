@@ -63,6 +63,8 @@ export class ThemedSearchResultsComponent extends ThemedComponent<SearchResultsC
 
   @Input() context: Context;
 
+  @Input() inPlaceSearch: boolean;
+
   @Input() hidePaginationDetail: boolean;
 
   @Input() selectionConfig: SelectionConfig;

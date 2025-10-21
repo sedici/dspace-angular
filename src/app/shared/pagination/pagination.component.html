@@ -1,6 +1,6 @@
 @if (currentPageState === undefined || currentPageState === (currentPage$|async)) {
   <div [id]="'p-' + id">
-    @if ((!hidePaginationDetail && collectionSize > 0) || !hideGear) {
+    <!-- @if ((!hidePaginationDetail && collectionSize > 0) || !hideGear) {
       <div class="pagination-masked clearfix top">
         <div class="row">
           @if (!hidePaginationDetail && collectionSize > 0) {
@@ -53,7 +53,7 @@
           </div>
         </div>
       </div>
-    }
+    } Comento hasta ver que se hace con esto-->
     <ng-content></ng-content>
     @if (showBottomPager$ | async) {
       <div>

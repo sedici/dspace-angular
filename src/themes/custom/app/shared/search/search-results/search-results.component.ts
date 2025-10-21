@@ -21,11 +21,13 @@ import { SearchService } from 'src/app/core/shared/search/search.service';
 import { SEARCH_CONFIG_SERVICE } from 'src/app/my-dspace-page/my-dspace-configuration.service';
 import { SortDirection } from 'src/app/core/cache/models/sort-options.model';
 import { SearchDropdownComponent } from './search-dropdown/search-dropdown.component';
+import { SearchLabelsComponent } from '../../../../../../app/shared/search/search-labels/search-labels.component';
 
 @Component({
   selector: 'ds-themed-search-results',
   templateUrl: './search-results.component.html',
-  styleUrls: ['../../../../../../app/shared/search/search-results/search-results.component.scss'],
+  // styleUrls: ['../../../../../../app/shared/search/search-results/search-results.component.scss'],
+  styleUrls: [ './search-results.component.scss' ],
   animations: [
     fadeIn,
     fadeInOut,
@@ -41,11 +43,13 @@ import { SearchDropdownComponent } from './search-dropdown/search-dropdown.compo
     SearchResultsSkeletonComponent,
     TranslateModule,
     SearchDropdownComponent,
+    SearchLabelsComponent,
   ],
 })
 export class SearchResultsComponent extends BaseComponent {
   @Input() sortOptionsList: SortOptions[];
   @Input() currentSortOption: SortOptions;
+  @Input() inPlaceSearch: boolean;
 
   constructor(
     @Inject(SEARCH_CONFIG_SERVICE) public searchConfigurationService: SearchConfigurationService,
