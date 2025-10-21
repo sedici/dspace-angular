@@ -1,5 +1,17 @@
 // @import '../../../../../../../styles/variables';
 
+.row{
+  margin-left: 12px;
+  padding: 1.4rem;
+  margin: 12px;
+  background-color: white;  
+  box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.1);
+}
+
+.without-thumbnails {
+  padding-left: 0 !important;
+}
+
 .item-list-supervision {
   a {
    cursor: pointer;
@@ -8,12 +20,71 @@
 
 .badges-context-container {
   display: flex;
-  gap: 0.25em;
+  gap: 0.25rem;
+  align-items: baseline;
 }
 
 sedici-context {
   flex: 1;
   min-width: 0;
+}
+
+
+.item-list-title{
+  font-family:serif;
+  font-size: 1.65rem;
+  color: black;
+  line-height: 38px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 1.25rem;
+    line-height: 0%;
+  }
+}
+
+.item-list-abstract{
+  // font-family: sans-serif;
+  font-family: 'Roboto', sans-serif  ;
+  font-size: medium;
+  font-weight: 300;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+
+
+  @media screen and (max-width: 768px) {
+    font-size: small;
+  }
+}
+
+.item-list-publisher {
+  margin-right: 6px;
+}
+
+.item-year {
+  color: black;
+  font-size: large; 
+  margin-left: 8px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 0.8rem;
+  }
+}
+
+.author-icon, .building-icon {
+  margin-right: 6px;
+  color: #ADADAD;
+}
+
+.text-muted-custom {
+  color: #131313;
+  font-size: 1rem;
+
+  @media screen and (max-width: 768px) {
+    font-size: 0.9rem;
+  }
 }
 
 ::ng-deep sedici-context div {
@@ -26,8 +97,7 @@ sedici-context {
 ::ng-deep ds-badges .badge {
   padding: 0.5em;
   font-size: 0.88em;
-  vertical-align: text-bottom; // Para que el badge quede alineado con el sedici-context
-
+  
   // font-weight: var(--font-weight-regular);
 }
 

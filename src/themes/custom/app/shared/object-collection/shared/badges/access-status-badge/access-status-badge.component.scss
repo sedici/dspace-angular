@@ -1,14 +1,47 @@
-.access-status-open-access-listelement-badge {
-  color: green;
-  border: 1px solid green;
-  border-radius: 0px;
+
+.status-icon, .access-status-list-element-badge {
+  &.access-status-open-access-listelement-badge {
+    color: #4CAF50;
+  }
+  
+  &.access-status-restricted-listelement-badge {
+    color: #dc3545;
+  }
+
+  &.access-status-metadata-only-listelement-badge,
+  &.access-status-embargo-listelement-badge {
+    color: #6c757d;
+  }
+
+  @media screen and (max-width: 768px) {
+      font-size: small;
+    }
 }
 
-.access-status-embargo-listelement-badge,
-.access-status-metadata-only-listelement-badge,
-.access-status-restricted-listelement-badge,
-.access-status-unknown-listelement-badge {
-  color: grey;
-  border: 1px solid grey;
-  border-radius: 0px;
+
+.badge {
+  font-size: small;
+  font-weight: 300;
+
+  @media screen and (max-width: 768px) {
+    font-size: small;
+  }
 }
+
+.access-status-container {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem; 
+  margin: 0.5rem 0;
+  font-family: "Roboto";
+}
+
+
+// .access-status-embargo-listelement-badge,
+// .access-status-metadata-only-listelement-badge,
+// .access-status-restricted-listelement-badge,
+// .access-status-unknown-listelement-badge {
+//   color: grey;
+//   border: 1px solid grey;
+//   border-radius: 0px;
+// }

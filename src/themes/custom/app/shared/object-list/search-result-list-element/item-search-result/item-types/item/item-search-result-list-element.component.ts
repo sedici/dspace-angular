@@ -16,6 +16,8 @@ import { TruncatableComponent } from '../../../../../../../../../app/shared/trun
 import { TruncatablePartComponent } from '../../../../../../../../../app/shared/truncatable/truncatable-part/truncatable-part.component';
 import { ThemedThumbnailComponent } from '../../../../../../../../../app/thumbnail/themed-thumbnail.component';
 import { SediciContextComponent } from 'src/themes/custom/app/item-page/simple/field-components/context/sedici-context.component';
+import { ThemedAccessStatusBadgeComponent } from 'src/app/shared/object-collection/shared/badges/access-status-badge/themed-access-status-badge.component';
+
 @listableObjectComponent('PublicationSearchResult', ViewMode.ListElement, Context.Any, 'custom')
 @listableObjectComponent(ItemSearchResult, ViewMode.ListElement, Context.Any, 'custom')
 @Component({
@@ -35,6 +37,7 @@ import { SediciContextComponent } from 'src/themes/custom/app/item-page/simple/f
     TruncatableComponent,
     TruncatablePartComponent,
     SediciContextComponent,
+    ThemedAccessStatusBadgeComponent,
   ],
 })
 export class ItemSearchResultListElementComponent extends BaseComponent {
@@ -43,6 +46,19 @@ export class ItemSearchResultListElementComponent extends BaseComponent {
   ngOnInit(): void {
     super.ngOnInit();
     this.getFirstAvailableAuthors();
+  }
+
+  getYear(): string | null {
+    const dateValue = this.firstMetadataValue('dc.date.issued');
+    if (!dateValue) {
+      return null;
+    }
+    const regex = /^\d{4}/;
+    const match = dateValue.match(regex);
+    if (match) {
+      return match[0];
+    }
+    return dateValue;
   }
 
   getFirstAvailableAuthors(): void {
