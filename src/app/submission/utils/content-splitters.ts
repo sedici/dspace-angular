@@ -115,7 +115,7 @@ export class VolumeIssueSplitter {
   private getIssuePatterns(): Array<{ regex: RegExp; fields: string[] }> {
     return [
       {
-        regex: /(?:\bN[º°.\s]*\s*(\d+)|\((?:N[º°.\s]*?)?\s*(\d+)\)|N\.(\d+)|(?:Número|número|Number|number|Núm\.|núm\.)\s*(\d+)|\((\d+)\))/i,
+        regex: /(?:\bN[º°.\s]*\s*(\d+)|No\.\s*(\d+)|\((?:N[º°.\s]*?)?\s*(\d+)\)|N\.(\d+)|(?:Número|número|Number|number|Núm\.|núm\.)\s*(\d+)|\((\d+)\))/i,
         fields: ['issue'],
       }
     ];
