@@ -110,13 +110,14 @@
             }
           }
 
-          .card-texto {
+          .card-text {
             border-top: 1px solid #e0e0e0;
             padding: 0.5rem 1.5rem;
             width: 100%;
             min-height: 70px;
 
             p {
+              font-size: 1rem;
               color: #666;
               margin: 0;
             }
@@ -165,6 +166,7 @@
       .section-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
 
         .card-item.multi-row {
           .card-body {
@@ -177,11 +179,11 @@
               }
             }
 
-            .card-texto {
+            .card-text {
               padding: 0.5rem 1rem 1rem;
 
               p {
-                font-size: 0.8rem;
+                font-size: 0.9rem;
               }
             }
           }
@@ -207,8 +209,16 @@
       .section-grid {
         align-items: center;
 
+        .section-item .img-container {
+          height: 120px;
+
+          img {
+            max-height: 120px
+          }
+        }
+
         .single-row {
-          flex: 0 0 150px;
+          flex: 1;
         }
       }
     }

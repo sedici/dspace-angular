@@ -1,6 +1,9 @@
 import { NgClass, NgTemplateOutlet } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { filter, map, take, switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { CommunityDataService } from 'src/app/core/data/community-data.service';
 import { TranslateModule } from '@ngx-translate/core';
 
 interface ExploracionDestacada {
@@ -16,12 +19,76 @@ interface ExploracionDestacada {
   standalone: true,
   imports: [NgTemplateOutlet, RouterLink, TranslateModule, NgClass],
 })
-export class ComcolGridComponent {
+export class ComcolGridComponent implements OnInit {
+
+  apiBase = '/api';
+  defaultColor = '#cccccc';
+
+  constructor(
+    private communityDataService: CommunityDataService,
+    private cdr: ChangeDetectorRef,
+  ) {}
+
+  ngOnInit(): void {
+    this.assignColorsFromCommunities();
+  }
+
+  private parseHandleFromHref(href: string): string | null {
+    const m = href?.match(/\/handle\/([^\/]+\/[^\/\?]+)/);
+    return m ? m[1] : null;
+  }
+
+  private assignColorsFromMap(handleColor: Map<string, string|null>): void {
+    const all = [...this.facultades, ...this.pregrado];
+    all.forEach(item => {
+      const h = this.parseHandleFromHref(item.href);
+      const color = h ? (handleColor.get(h) ?? null) : null;
+      (item as any).color = color ?? this.defaultColor;
+    });
+    this.cdr.detectChanges();
+  }
+
+  private assignColorsFromCommunities(): void {
+    this.communityDataService.findTop({ elementsPerPage: 15 }).pipe(
+      filter((rd: any) => !!rd && rd.hasSucceeded),
+      take(1),
+      map((rd: any) => {
+        const list = rd.payload?.page ?? [];
+        return list.find((c: any) => {
+          const uri = c?.metadata?.['dc.identifier.uri']?.[0]?.value;
+          const handle = this.parseHandleFromHref(uri);
+          return handle === '10915/1';
+        }) ?? null;
+      }),
+      switchMap((parent: any) => {
+        const parentUUID = parent?.uuid ?? parent?.id ?? null;
+        return this.communityDataService.getEndpoint().pipe(
+          take(1),
+          map((endpoint: string) => `${endpoint}/${parentUUID}/subcommunities`),
+          switchMap((href: string) => this.communityDataService.findListByHref(href, { elementsPerPage: 500 }, true, true)),
+          filter((rd: any) => !!rd && rd.hasSucceeded),
+          take(1),
+          map((rd: any) => rd.payload?._embedded?.communities ?? rd.payload?.page ?? [])
+        );
+      })
+    ).subscribe((communities: any[]) => {
+      const handleColor = new Map<string, string|null>();
+      communities.forEach(c => {
+        const handle: string | undefined = c?.handle;
+        const color = c?.metadata?.['sedici.comcol.color']?.[0]?.value ?? null;
+        if (handle) handleColor.set(this.parseHandleFromHref(handle), color);
+      });
+      this.assignColorsFromMap(handleColor);
+    }, err => {
+      console.error('Error recuperando communities hijas', err);
+      [...this.facultades, ...this.pregrado].forEach(i => (i as any).color = this.defaultColor);
+    });
+  }
 
   coleccionesDestacadas:Array<ExploracionDestacada> = [
     {
       title: "Red de Museos de la UNLP",
-      img: "assets/custom/images/ComCol/redmuseos.png",
+      img: "assets/custom/images/ComCol/redmuseos.svg",
       href: "handle/10915/27268",
     } as ExploracionDestacada,
     {
@@ -31,7 +98,7 @@ export class ComcolGridComponent {
     } as ExploracionDestacada,
     {
       title: "Radio Universidad Nacional de La Plata",
-      img: "assets/custom/images/ComCol/Logo_Radio_Universidad.png",
+      img: "assets/custom/images/ComCol/radiouniversidad.svg",
       href: "handle/10915/25224",
     } as ExploracionDestacada,
     {

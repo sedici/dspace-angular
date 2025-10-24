@@ -37,14 +37,14 @@
         @for (item of items; track item) {
           <div class="card-item multi-row">
             <a [href]="item.href">
-              <div class="card-header" [style.background-color]="item.color || '#0066A1'">
+              <div class="card-header" [style.background-color]="item.color || defaultColor">
                 <!-- Barra de color superior -->
               </div>
               <div class="card-body">
                 <div class="img-container">
                   <img [src]="item.img" [alt]="item.title">
                 </div>
-                <div class="card-texto">
+                <div class="card-text">
                   <p>{{item.description}}</p>
                 </div>
               </div>
