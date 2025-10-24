@@ -25,7 +25,7 @@
     }
     <ds-truncatable [id]="dso.id">
       <ds-truncatable-part [id]="dso.id" [minLines]="3" type="h4">
-        <h4 class="card-title" [innerHTML]="dsoTitle"></h4>
+        <h3 class="card-title" [innerHTML]="dsoTitle"></h3>
       </ds-truncatable-part>
       @if (dso.hasMetadata(['dc.contributor.author', 'dc.creator', 'dc.contributor.*'])) {
         <ds-truncatable-part [id]="dso.id" [minLines]="1">
@@ -49,12 +49,12 @@
         </ds-truncatable-part>
       }
     </ds-truncatable>
-    @if (linkType !== linkTypes.None) {
+    <!-- @if (linkType !== linkTypes.None) {
       <div class="text-center">
         <a [target]="(linkType === linkTypes.ExternalLink) ? '_blank' : '_self'" [attr.rel]="(linkType === linkTypes.ExternalLink) ? 'noopener noreferrer' : null" [routerLink]="[itemPageRoute]"
         class="lead btn btn-primary viewButton">{{ 'search.results.view-result' | translate}}</a>
       </div>
-    }
+    } -->
   </div>
   <ng-content></ng-content>
 </div>
