@@ -1,24 +1,12 @@
-<header id="main-site-header" [ngClass]="{
-  'white-header': ((isMobile$ | async) !== true) || (isHomePage$ | async),
-  'color-header': !(((isMobile$ | async) !== true) || (isHomePage$ | async)),
-  'transparent-header': ((isMobile$ | async) !== true) && (isHomePage$ | async)
-}">
+<header id="main-site-header" class="background-image-header" [ngClass]="{'home-header': ((isMobile$ | async) !== true) && (isHomePage$ | async)}">
   <!-- Vista Desktop -->
   @if ((isMobile$ | async) !== true) {
     <div class="d-flex align-items-center" id="main-site-header-container">
-      @if ((isHomePage$ | async)) {
-        <div class="left-container navbar-brand">
-          <a routerLink="/home">
-            <img id="header-logo" [src]="'assets/custom/images/LogoSEDICI.svg'" [attr.alt]="'menu.header.image.logo' | translate"/>
-          </a>
-        </div>
-      } @else {
-        <div class="left-container navbar-brand p-2">
-          <a routerLink="/home">
-            <img id="header-logo" [src]="'assets/custom/images/LogoSEDICI_positivo.svg'" [attr.alt]="'menu.header.image.logo' | translate"/>
-          </a>
-        </div>
-      }
+      <div class="left-container navbar-brand" [ngClass]="{'p-2': (isHomePage$ | async) !== true}">
+        <a routerLink="/home">
+          <img id="header-logo" [src]="'assets/custom/images/LogoSEDICI.svg'" [attr.alt]="'menu.header.image.logo' | translate"/>
+        </a>
+      </div>
       <div class="right-container">
         @if ((isHomePage$ | async) !== true) {
           <ds-search-navbar></ds-search-navbar>

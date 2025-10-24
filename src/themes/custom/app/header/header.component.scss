@@ -12,25 +12,41 @@
       border-bottom: 0px;
       padding: 10px;
     }
-    
-  }
 
-  .color-header {
-    background-color: var(--sedici-color);
-
-    .toggler-icon {
-      color: white;
-    }
-  }
-
-  .white-header, .color-header {
     img#header-logo {
       height: 100vh;
       max-height: var(--ds-header-logo-height);
     }
   }
 
-  .transparent-header {
+  .background-image-header {
+    background-image: url('/assets/custom/images/Fondo_home.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    ::ng-deep ds-navbar #main-navbar {
+      background: transparent;
+
+      ::ng-deep ds-navbar-section a, 
+      ::ng-deep ds-expandable-navbar-section span, 
+      ::ng-deep ds-expandable-navbar-section .ds-menu-toggler-wrapper, 
+      ::ng-deep ds-auth-nav-menu button, 
+      ::ng-deep ds-lang-switch a {
+        color: white;
+
+        &:hover, &:focus {
+          color: var(--sedici-color);
+        }
+      }
+    }
+
+    .toggler-icon {
+      color: white;
+    }
+  }
+
+  .home-header {
     background: transparent;
     padding: 1.5rem 3rem;
     z-index: 1020 !important;
@@ -39,18 +55,6 @@
 
     img#header-logo {
       height: auto;
-    }
-
-    ::ng-deep ds-navbar #main-navbar {
-      background: transparent;
-
-      ::ng-deep ds-navbar-section a, ::ng-deep ds-expandable-navbar-section span, ::ng-deep ds-expandable-navbar-section .ds-menu-toggler-wrapper, ::ng-deep ds-auth-nav-menu button , ::ng-deep ds-lang-switch a {
-        color: white;
-
-        &:hover, &:focus {
-          color: var(--sedici-color);
-        }
-      }
     }
   }
 
