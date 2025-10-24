@@ -7486,7 +7486,7 @@
   "search.filters.head": "Filtros",
 
   // "search.filters.reset": "Reset filters",
-  "search.filters.reset": "Restablecer filtros",
+  "search.filters.reset": "Descartar filtros",
 
   // "search.filters.search.submit": "Submit",
   "search.filters.search.submit": "Enviar",

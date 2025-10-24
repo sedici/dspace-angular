@@ -43,7 +43,7 @@
           [innerHTML]="dsoTitle"></span>
         }
         <span class="text-muted-custom">
-          <ds-truncatable-part [id]="dso.id" [minLines]="1">
+          <div class="authors-container">
             @if (dso.firstMetadataValue('dc.publisher')) {
               <i class="building-icon fa-solid fa-building-columns"></i>
               <span class="item-list-publisher" [innerHTML]="firstMetadataValue('dc.publisher')"></span>
@@ -66,7 +66,7 @@
               <i class="fa-solid fa-user author-icon me-1"></i>
               <span>{{ 'sedici.item.page.unknown.author' | translate }}</span>
             }
-          </ds-truncatable-part>
+          </div>
         </span>
         @if (dso.firstMetadataValue('dc.description.abstract')) {
           <div class="item-list-abstract">
