@@ -1,3 +1,12 @@
+#faculties-section {
+  background-color: #eee;
+  
+  .section-destacados {
+    margin-bottom: 0;
+    padding-bottom: 2rem;
+  }
+}
+
 .section-destacados {
   margin: 2rem 0;
 
@@ -35,6 +44,90 @@
     }
   }
 
+  .section-grid {
+    display: flex;
+    gap: 2rem;
+  }
+
+  // ESTILOS PARA GRID SIMPLE (colecciones destacadas)
+  &.simple-grid {
+    .section-grid {
+      .section-item {
+        .img-container {
+          margin-bottom: 1rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100px;
+
+          img {
+            max-width: 100%;
+            max-height: 100px;
+          }
+        }
+      }
+    }
+  }
+
+  // ESTILOS PARA CARDS (facultades y pregrado)
+  &.card-grid {
+    .section-grid {
+      gap: 1.5rem;
+
+      .card-item {
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background: white;
+
+        &:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+          height: 10px;
+          width: 100%;
+        }
+
+        .card-body {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+
+          .img-container {
+            margin: 1.5rem 1.5rem 1rem;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            img {
+              max-width: 100%;
+              max-height: 100px;
+            }
+          }
+
+          .card-text {
+            border-top: 1px solid #e0e0e0;
+            padding: 0.5rem 1.5rem;
+            width: 100%;
+            min-height: 70px;
+
+            p {
+              font-size: 1rem;
+              color: #666;
+              margin: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // RESPONSIVE - MOBILE
   @media (max-width: 767px) {
     .title-container {
       margin-bottom: 0;
@@ -53,84 +146,102 @@
         display: none;
       }
     }
-  }
-  
-  .section-grid {
-    display: flex;
-    gap: 2rem;
-    
-    .section-item {
-      text-align: center;
-      
-      .img-container {
-        margin-bottom: 1rem;
-        height: 100px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        
-        img {
-          max-width: 100%;
-          max-height: 100px;
-          object-fit: contain;
-        }
-      }
-      
-      .section-texto {
-        p {
-          color: #666;
-          font-size: 1rem;
+
+    // Grid simple en mobile
+    &.simple-grid {
+      .section-grid {
+        &.single-row-scroll {
+          display: flex;
+          overflow-x: auto;
+
+          .section-item {
+            min-width: 33vw;
+          }
         }
       }
     }
-  }
-  
-  @media (max-width: 767px) {
-    .section-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      overflow-x: visible;
-    }
 
-    .section-grid.single-row-scroll {
-      display: flex;
-      overflow-x: auto;
+    // Cards en mobile
+    &.card-grid {
+      .section-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
 
-      .section-item {
-        min-width: 33vw; // Me aseguro que aparazcan 2 y 1/2 para que sepa que se puede deslizar
+        .card-item.multi-row {
+          .card-body {
+            .img-container {
+              padding: 1rem 1rem 0.5rem;
+              height: 80px;
+
+              img {
+                max-height: 80px;
+              }
+            }
+
+            .card-text {
+              padding: 0.5rem 1rem 1rem;
+
+              p {
+                font-size: 0.9rem;
+              }
+            }
+          }
+        }
       }
     }
-
-    .section-grid .section-item.multi-row .img-container {
-      margin-bottom: 0rem;
-      height: auto;
-
-      img {
-        width: 150px;
-        height: 100px;
-      }
-    }
   }
 
+  // RESPONSIVE - DESKTOP
   @media (min-width: 768px) {
     .section-grid {
       flex-wrap: wrap;
       justify-content: space-around;
-      align-items: center;
+
+      &.single-row-scroll {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+      }
     }
 
-    .section-grid.single-row-scroll {
-      overflow-x: auto;
-      flex-wrap: nowrap;
+    // Grid simple en desktop
+    &.simple-grid {
+      .section-grid {
+        align-items: center;
+
+        .section-item .img-container {
+          height: 120px;
+
+          img {
+            max-height: 120px
+          }
+        }
+
+        .single-row {
+          flex: 1;
+        }
+      }
     }
 
-    .single-row {
-      flex: 0 0 150px;
+    // Cards en desktop
+    &.card-grid {
+      .section-grid {
+        .multi-row {
+          flex: 0 1 calc(25% - 1.5rem);
+          min-width: 200px;
+          max-width: 250px;
+        }
+      }
     }
+  }
 
-    .multi-row {
-      flex: 0 1 17%;
+  @media (min-width: 1200px) {
+    &.card-grid {
+      .section-grid {
+        .multi-row {
+          flex: 0 1 calc(20% - 1.5rem);
+        }
+      }
     }
   }
 }
