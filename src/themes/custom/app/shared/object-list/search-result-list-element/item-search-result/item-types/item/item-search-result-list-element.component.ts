@@ -49,7 +49,7 @@ export class ItemSearchResultListElementComponent extends BaseComponent {
   }
 
   getYear(): string | null {
-    const dateValue = this.firstMetadataValue('dc.date.issued');
+    const dateValue = this.firstMetadataValue('dc.date.issued') || this.firstMetadataValue('dc.date.created') || this.firstMetadataValue('dc.date.available') || this.firstMetadataValue('dc.date.exposure');
     if (!dateValue) {
       return null;
     }
@@ -60,6 +60,15 @@ export class ItemSearchResultListElementComponent extends BaseComponent {
     }
     return dateValue;
   }
+
+  get displayedAuthors(): string[] {
+    return this.authors.slice(0, 4);
+  }
+
+  get hasMoreAuthors(): boolean {
+    return this.authors.length > 4;
+  }
+
 
   getFirstAvailableAuthors(): void {
     const creators = this.dso.allMetadata(['sedici.creator.*']);
