@@ -1,0 +1,21 @@
+<div class="submission-submit-container" >
+  <!-- Aviso de privacidad -->
+  <div class="privacy-alert">
+    <div class="privacy-alert-icon">
+      <i class="fas fa-info-circle"></i>
+    </div>
+    <div class="privacy-alert-content">
+      <h6 class="privacy-alert-title">{{ 'submission.privacy.warning.title' | translate }}</h6>
+      <p class="privacy-alert-text">{{ 'submission.privacy.warning.message' | translate }}</p>
+    </div>
+  </div>
+
+  <ds-submission-form [collectionId]="collectionId"
+                      [sections]="sections"
+                      [selfUrl]="selfUrl"
+                      [submissionDefinition]="submissionDefinition"
+                      [submissionErrors]="submissionErrors"
+                      [item]="item"
+                      [collectionModifiable]="collectionModifiable"
+                      [submissionId]="submissionId"></ds-submission-form>
+</div>
