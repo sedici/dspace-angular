@@ -25,12 +25,13 @@
 
   .view-modes-and-sort {
     display: flex;
+    align-items: center;
     gap: 1rem;
     flex-shrink: 0;
   }
 }
 
 .labels {
-    align-content: center;
-    margin-left: 12px;
+  align-content: center;
+  margin-left: 12px;
 }

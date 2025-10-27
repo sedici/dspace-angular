@@ -7,6 +7,8 @@
 
 .row{
   background-color: rgb(128 128 128 / 6%);
+  margin-right: calc(-50vw + 50%); /* Extiende hasta el borde derecho */
+  padding-right: calc(50vw - 50%); /* Compensa el margen para el contenido */
 }
 
 ::ng-deep .search-controls {

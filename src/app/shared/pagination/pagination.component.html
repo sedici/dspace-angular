@@ -1,12 +1,13 @@
 @if (currentPageState === undefined || currentPageState === (currentPage$|async)) {
   <div [id]="'p-' + id">
-    <!-- @if ((!hidePaginationDetail && collectionSize > 0) || !hideGear) {
+    @if ((!hidePaginationDetail && collectionSize > 0) || !hideGear) {
       <div class="pagination-masked clearfix top">
         <div class="row">
           @if (!hidePaginationDetail && collectionSize > 0) {
             <div class="col-auto pagination-info">
-              <span class="align-middle hidden-xs-down">{{ 'pagination.showing.label' | translate }}</span>
-              <span class="align-middle">{{ 'pagination.showing.detail' | translate:(showingDetails$ | async)}}</span>
+              <!-- <span class="align-middle hidden-xs-down">{{ 'pagination.showing.label' | translate }}</span>
+              <span class="align-middle">{{ 'pagination.showing.detail' | translate:(showingDetails$ | async)}}</span> -->
+              <span class="align-middle hidden-xs-down">{{ 'pagination.showing.label' | translate }} {{  (showingDetails$ | async)?.total }} resultados</span> <!--SEDICI -->
             </div>
           }
           <div class="col">
@@ -53,7 +54,7 @@
           </div>
         </div>
       </div>
-    } Comento hasta ver que se hace con esto-->
+    } 
     <ng-content></ng-content>
     @if (showBottomPager$ | async) {
       <div>
