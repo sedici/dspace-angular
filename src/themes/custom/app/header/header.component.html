@@ -2,7 +2,7 @@
   <!-- Vista Desktop -->
   @if ((isMobile$ | async) !== true) {
     <div class="d-flex align-items-center" id="main-site-header-container">
-      <div class="left-container navbar-brand" [ngClass]="{'p-2': (isHomePage$ | async) !== true}">
+      <div class="left-container navbar-brand" [ngClass]="{ 'padding-logo': (isHomePage$ | async) !== true }">
         <a routerLink="/home">
           <img id="header-logo" [src]="'assets/custom/images/LogoSEDICI.svg'" [attr.alt]="'menu.header.image.logo' | translate"/>
         </a>

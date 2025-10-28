@@ -75,6 +75,10 @@
     padding: 0px;
   }
 
+  .padding-logo {
+    padding: 1rem 0rem 1rem 1rem;
+  }
+
   #navbar-toggler {
     border: none;
     color: var(--ds-header-icon-color);
@@ -121,8 +125,7 @@
     flex-basis: 100%;
 
     ds-search-navbar {
-      width: 100%;
-      max-width: 450px;
+      width: 60%;
     }
 
     @media print {
