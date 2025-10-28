@@ -1,7 +1,10 @@
+.card {
+  height: 100%;
+}
+
 .card-body{
     display: flex;
     flex-direction: column;
-    align-items: center;
 
     ds-badges {
       margin-bottom: 0.6rem;
@@ -11,13 +14,18 @@
     ::ng-deep .badge {
       font-size: 1rem;
     }
+
+    ds-access-status-badge {
+      margin-top: auto;
+    }
 }
 
 .card-title{
     font-family: serif;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     color: black;
-    text-align: center;
+    line-height: 1.3;
+    margin-bottom: 0;
 
     @media screen and (max-width: 768px) {
       font-size: 1.25rem;
@@ -36,4 +44,49 @@
     @media screen and (max-width: 768px) {
       font-size: small;
     }
+}
+
+.thumbnail-container {
+  position: relative;
+  display: block;
+}
+
+.item-type-overlay {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 2;
+}
+
+.item-year-overlay {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 2;
+  color: #333;
+}
+
+.author-icon, .building-icon {
+  margin-right: 6px;
+  color: #ADADAD;
+}
+
+.authors-container {
+  color: #131313;
+  font-size: .8rem;
+  line-height: 1.4;
+
+  .info-row {
+    display: flex;
+    align-items: baseline; 
+  }
+
+  .author-icon,
+  .building-icon {
+    flex-shrink: 0;
+  }
+
+  @media screen and (max-width: 768px) {
+    font-size: 0.9rem;
+  }
 }

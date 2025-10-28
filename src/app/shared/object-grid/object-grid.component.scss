@@ -39,10 +39,9 @@
       transform: translateY(-4px);
     }
 
-    .card custom-card-style{
-    padding: var(--ds-wrapper-grid-spacing);
-    border: none !important;
-    box-shadow: none !important;
+    .card.custom-card-style {
+      display: block;
+      height: 100%;
     }
   }
 

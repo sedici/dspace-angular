@@ -20,6 +20,7 @@ import { TruncatableComponent } from '../../../../truncatable/truncatable.compon
 import { TruncatableService } from '../../../../truncatable/truncatable.service';
 import { TruncatablePartComponent } from '../../../../truncatable/truncatable-part/truncatable-part.component';
 import { SearchResultGridElementComponent } from '../../search-result-grid-element.component';
+import { ThemedAccessStatusBadgeComponent } from 'src/app/shared/object-collection/shared/badges/access-status-badge/themed-access-status-badge.component';
 
 @listableObjectComponent('PublicationSearchResult', ViewMode.GridElement)
 @listableObjectComponent(ItemSearchResult, ViewMode.GridElement)
@@ -37,6 +38,7 @@ import { SearchResultGridElementComponent } from '../../search-result-grid-eleme
     TranslateModule,
     TruncatableComponent,
     TruncatablePartComponent,
+    ThemedAccessStatusBadgeComponent,
   ],
 })
 /**
@@ -50,6 +52,8 @@ export class ItemSearchResultGridElementComponent extends SearchResultGridElemen
 
   dsoTitle: string;
 
+  authors: string[] = [];
+
   constructor(
     public dsoNameService: DSONameService,
     protected truncatableService: TruncatableService,
@@ -62,5 +66,31 @@ export class ItemSearchResultGridElementComponent extends SearchResultGridElemen
     super.ngOnInit();
     this.itemPageRoute = getItemPageRoute(this.dso);
     this.dsoTitle = this.dsoNameService.getHitHighlights(this.object, this.dso);
+    this.getFirstAvailableAuthors();
+  }
+
+  getYear(): string {
+    let dateString = this.firstMetadataValue('dc.date.issued') || this.firstMetadataValue('dc.date.created') || this.firstMetadataValue('sedici.date.exposure');
+    if (dateString) {
+      return dateString.split('-')[0];
+    }
+    return '';
+  }
+
+  getFirstAvailableAuthors(): void {
+    const creators = this.dso.allMetadata(['sedici.creator.person']);
+    if (creators.length > 0) {
+      this.authors = this.allMetadataValues(['sedici.creator.person']);
+    } else {
+      const compilers = this.dso.allMetadata(['sedici.contributor.compiler']);
+      if (compilers.length > 0) {
+        this.authors = this.allMetadataValues(['sedici.contributor.compiler']);
+      } else {
+        const editors = this.dso.allMetadata(['sedici.contributor.editor']);
+        if (editors.length > 0) {
+          this.authors = this.allMetadataValues(['sedici.contributor.editor']);
+        }
+      }
+    }  
   }
 }
