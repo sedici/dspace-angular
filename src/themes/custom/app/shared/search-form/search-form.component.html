@@ -1,6 +1,6 @@
 <form #form="ngForm" (ngSubmit)="onSubmit(form.value)" action="/search">
   <div>
-    <div class="search-bar-container">
+    <div [ngClass]="(isHomePage$ | async) ? 'input-group' : 'search-bar-container'">
       @if (showScopeSelector) {
         <div class="input-group-prepend">
           <button class="scope-button btn btn-outline-secondary text-truncate"
@@ -10,10 +10,10 @@
           </button>
         </div>
       }
-      <input type="text" [(ngModel)]="query" name="query" class="form-control"
+      <input type="text" [(ngModel)]="query" name="query" class="form-control" [ngClass]="{ ' community-form-control': !(isHomePage$ | async) }"
         [attr.aria-label]="searchPlaceholder" [attr.data-test]="'search-box' | dsBrowserOnly"
         [placeholder]="searchPlaceholder">
-      <button type="submit" class="search-button" [attr.data-test]="'search-button' | dsBrowserOnly">
+      <button type="submit" [ngClass]="(isHomePage$ | async) ? 'search-button' : 'community-search-button'" [attr.data-test]="'search-button' | dsBrowserOnly">
         <i class="fas fa-search"></i>
       </button>
     </div>
