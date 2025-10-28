@@ -39,6 +39,10 @@ export class ThemedSearchResultsComponent extends ThemedComponent<SearchResultsC
 
   @Input() linkType: CollectionElementLinkType;
 
+  @Input() showViewModes: boolean;
+
+  @Input() viewModeList: string[];
+
   @Input() searchResults: RemoteData<PaginatedList<SearchResult<DSpaceObject>>>;
 
   @Input() searchConfig: PaginatedSearchOptions;

@@ -48,20 +48,29 @@
               <i class="building-icon fa-solid fa-building-columns"></i>
               <span class="item-list-publisher" [innerHTML]="firstMetadataValue('dc.publisher')"></span>
             }
+            <i [class]="authors.length === 1 ? 'fa-solid fa-user' : 'fa-solid fa-users'" class="author-icon"></i>
             @if (authors.length > 0) {
-              <i [class]="authors.length === 1 ? 'fa-solid fa-user' : 'fa-solid fa-users'" class="author-icon"></i>
-              @if (authors.length > 0) {
-                <span class="item-list-authors">
-                  @for (author of authors; track author; let last = $last) {
-                    <span>
-                      <span [innerHTML]="author"></span>
-                      @if (!last) {
-                        <span>; </span>
-                      }
-                    </span>
-                  }
-                </span>
-              }
+              <!-- Versión desktop: hasta 4 autores -->
+              <span class="item-list-authors authors-desktop">
+                @for (author of authors.slice(0, 4); track author; let last = $last) {
+                  <span>
+                    <span [innerHTML]="author"></span>
+                    @if (!last) {
+                      <span>; </span>
+                    }
+                  </span>
+                }
+                @if (authors.length > 4) {
+                  <span>, et al.</span>
+                }
+              </span>
+              <!-- Versión mobile: solo 1 autor -->
+              <span class="item-list-authors authors-mobile">
+                <span [innerHTML]="authors[0]"></span>
+                @if (authors.length > 1) {
+                  <span>, et al.</span>
+                }
+              </span>
             } @else {
               <i class="fa-solid fa-user author-icon me-1"></i>
               <span>{{ 'sedici.item.page.unknown.author' | translate }}</span>

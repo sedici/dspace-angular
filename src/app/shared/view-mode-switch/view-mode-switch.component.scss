@@ -1,0 +1,33 @@
+.view-toggle-container {
+  display: flex;
+  align-items: center;
+}
+
+.view-toggle-button {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background-color: #e0e0e0;
+  transition: all 0.2s ease;
+}
+
+.view-toggle-button:hover {
+  background-color: #d0d0d0;
+}
+
+.view-toggle-button.active {
+  background-color: #c0c0c0;
+}
+
+.view-toggle-button i {
+  font-size: 20px;
+  color: #ffffff;
+}
+
+/* Versión con ícono más pequeño para el segundo botón */
+.view-toggle-button.grid-view i {
+  font-size: 18px;
+}

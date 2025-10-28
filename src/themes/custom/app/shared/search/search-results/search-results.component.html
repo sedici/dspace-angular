@@ -10,7 +10,7 @@
   </div>
 }
 
-<div class="d-flex justify-content-between search-results-header">
+<div class="search-results-header">
   <!-- @if (!disableHeader) {
     <h1>{{ (configuration ? configuration + '.search.results.head' : 'search.results.head') | translate }}</h1>
   } Comentado hasta ver si se va o no-->
@@ -20,21 +20,28 @@
       </ds-search-labels>
     </div>
   </div>
-  @if (sortOptionsList && sortOptionsList?.length > 0) {
-    <ds-search-dropdown
-      [id]="'search-sidebar-sort'"
-      (changed)="reloadOrder($event)">
-      @for (sortOptionsEntry of sortOptionsList; track sortOptionsEntry) {
-        <option
-        [value]="sortOptionsEntry.field + ',' + sortOptionsEntry.direction.toString()"
-        [selected]="sortOptionsEntry.field === currentSortOption?.field && sortOptionsEntry.direction === (currentSortOption?.direction)? 'selected': null">
-        {{'sorting.' + sortOptionsEntry.field + '.' + sortOptionsEntry.direction | translate}}
-      </option>
+  <div class="view-modes-and-sort">
+    @if (showViewModes) {
+      <ds-view-mode-switch class="d-none d-md-block"
+        [viewModeList]="viewModeList"
+      (changeViewMode)="changeViewMode.emit($event)"></ds-view-mode-switch>
+    } @else {
+      <h5> Opciones de vista deshabilitadas</h5>
     }
-  </ds-search-dropdown>
-  } @else {
-    <h4>No hay opciones de ordenamiento disponibles</h4>
-  }
+    @if (sortOptionsList && sortOptionsList?.length > 0) {
+      <ds-search-dropdown
+        [id]="'search-sidebar-sort'"
+        (changed)="reloadOrder($event)">
+        @for (sortOptionsEntry of sortOptionsList; track sortOptionsEntry) {
+          <option
+          [value]="sortOptionsEntry.field + ',' + sortOptionsEntry.direction.toString()"
+          [selected]="sortOptionsEntry.field === currentSortOption?.field && sortOptionsEntry.direction === (currentSortOption?.direction)? 'selected': null">
+          {{'sorting.' + sortOptionsEntry.field + '.' + sortOptionsEntry.direction | translate}}
+          </option>
+        }
+      </ds-search-dropdown>
+    }
+  </div>
 </div>
 @if (searchResults && searchResults?.hasSucceeded && !searchResults?.isLoading && searchResults?.payload?.page.length > 0) {
   <div @fadeIn>

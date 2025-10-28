@@ -33,6 +33,26 @@ sedici-context {
   white-space: nowrap; /* Para que el texto no se divida en varias lineas */
   overflow: hidden;         
   text-overflow: ellipsis;
+
+  @media screen and (max-width: 768px) {
+    display: flex;
+    align-items: baseline;
+  }
+}
+
+
+.authors-mobile {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .authors-desktop {
+    display: none;
+  }
+  
+  .authors-mobile {
+    display: block;
+  }
 }
 
 .item-list-title{

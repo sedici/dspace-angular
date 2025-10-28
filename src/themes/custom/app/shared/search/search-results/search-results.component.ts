@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, Input, Inject, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
@@ -22,6 +22,8 @@ import { SEARCH_CONFIG_SERVICE } from 'src/app/my-dspace-page/my-dspace-configur
 import { SortDirection } from 'src/app/core/cache/models/sort-options.model';
 import { SearchDropdownComponent } from './search-dropdown/search-dropdown.component';
 import { SearchLabelsComponent } from '../../../../../../app/shared/search/search-labels/search-labels.component';
+import { ViewModeSwitchComponent } from 'src/app/shared/view-mode-switch/view-mode-switch.component';
+import { ViewMode } from 'src/app/core/shared/view-mode.model';
 
 @Component({
   selector: 'ds-themed-search-results',
@@ -44,12 +46,16 @@ import { SearchLabelsComponent } from '../../../../../../app/shared/search/searc
     TranslateModule,
     SearchDropdownComponent,
     SearchLabelsComponent,
+    ViewModeSwitchComponent,
   ],
 })
 export class SearchResultsComponent extends BaseComponent {
-  @Input() sortOptionsList: SortOptions[];
-  @Input() currentSortOption: SortOptions;
   @Input() inPlaceSearch: boolean;
+  @Input() showViewModes = true;
+  @Input() viewModeList: string[];
+
+  @Output() changeViewMode = new EventEmitter<ViewMode>();
+
 
   constructor(
     @Inject(SEARCH_CONFIG_SERVICE) public searchConfigurationService: SearchConfigurationService,
