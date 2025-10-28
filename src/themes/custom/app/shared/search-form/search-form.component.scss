@@ -7,23 +7,32 @@
   align-items: center;
   justify-content: center;
 
-  i {
-    color: black; // Color blanco para la lupa
-    font-size: 2.7rem; // Tamaño de la lupa, ajusta según necesites
-  }
-
-  &:hover {
-      cursor: pointer; // Cambia el cursor al pasar sobre la lupa
-  }
+    i {
+      color: black; // Color blanco para la lupa
+      font-size: 2.7rem; // Tamaño de la lupa, ajusta según necesites
+    }
 }
 
 .form-control {
   background-color: rgba(0, 0, 0, 0.2); // Fondo negro con transparencia
   border: none; // Sin borde
-  border-radius: 0; // Sin bordes redondeados en el input
+  //border-radius: 0; // Sin bordes redondeados en el input
   box-shadow: none; // Sin sombra en el input
   font-size: 1.7rem; // Ajusta el tamaño del texto
   font-style: italic;
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    box-shadow: 0 0 0 30px white inset !important;
+    border-radius: 25px !important;
+    border: 1px solid #e0e0e0 !important;
+    -webkit-text-fill-color: inherit !important;
+    caret-color: inherit !important;
+  }
+
 }
 
 

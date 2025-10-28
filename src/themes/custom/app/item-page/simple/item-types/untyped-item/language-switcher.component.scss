@@ -57,12 +57,18 @@
   border-radius: 0.5rem;
   background-color: #ffffff;
   width: 100%;
+
 }
+
+::ng-deep .content{
+  text-align: justify;
+}
+
 
 .abstract-text {
   font-weight: var(--font-weight-regular);
   white-space: pre-wrap;
-  text-align: justify;
+  //text-align: justify;
 }
 
 .no-abstract {
