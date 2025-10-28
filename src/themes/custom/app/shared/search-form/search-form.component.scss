@@ -1,26 +1,28 @@
 .search-button {
-  background-color: transparent; // Fondo transparente
-  border: none; // Sin borde
-  padding: 0; // Sin padding
-  margin-left: 10px !important; // Ajuste para que la lupa esté más cerca del borde del input
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  z-index: 2;
+  background-color: transparent;
+  border: none;
+  margin-right: 10px;
+}
+
+.search-bar-container {
+  width: 100%;
+  position: relative;
   display: flex;
-  align-items: center;
-  justify-content: center;
-
-  i {
-    color: black; // Color blanco para la lupa
-    font-size: 2.7rem; // Tamaño de la lupa, ajusta según necesites
-  }
-
-  &:hover {
-      cursor: pointer; // Cambia el cursor al pasar sobre la lupa
-  }
+  flex-direction: row-reverse;
 }
 
 .form-control {
-  background-color: rgba(0, 0, 0, 0.2); // Fondo negro con transparencia
-  border: none; // Sin borde
-  border-radius: 0; // Sin bordes redondeados en el input
-  box-shadow: none; // Sin sombra en el input
-  font-style: italic;
+  border-radius: 10px;
+  padding: 10px 0px 10px 20px;
+  font-size: 14px;
+  height: auto;
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  width: 100%;
 }
