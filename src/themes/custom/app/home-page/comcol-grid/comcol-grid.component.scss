@@ -8,7 +8,7 @@
 }
 
 .section-destacados {
-  margin: 2rem 0;
+  margin: 1rem 0;
 
   .title-container {
     margin-bottom: 2rem;
@@ -58,11 +58,11 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          height: 100px;
+          height: 120px;
 
           img {
             max-width: 100%;
-            max-height: 100px;
+            max-height: 120px;
           }
         }
       }
@@ -84,6 +84,10 @@
         &:hover {
           transform: translateY(-4px);
           box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+
+          a {
+            text-decoration: none;
+          }
         }
 
         .card-header {
