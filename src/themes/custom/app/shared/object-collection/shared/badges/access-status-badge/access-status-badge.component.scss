@@ -1,7 +1,7 @@
 
 .status-icon, .access-status-list-element-badge {
   &.access-status-open-access-listelement-badge {
-    color: #4CAF50;
+    color: #248D28;
   }
   
   &.access-status-restricted-listelement-badge {
@@ -21,7 +21,7 @@
 
 .badge {
   font-size: medium;
-  font-weight: 300;
+  font-weight: 400;
 
   @media screen and (max-width: 768px) {
     font-size: small;

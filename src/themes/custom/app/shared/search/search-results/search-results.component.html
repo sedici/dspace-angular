@@ -29,7 +29,7 @@
       <h5> Opciones de vista deshabilitadas</h5>
     }
     @if (sortOptionsList && sortOptionsList?.length > 0) {
-      <ds-search-dropdown
+      <ds-search-dropdown class="search-sidebar-sort"
         [id]="'search-sidebar-sort'"
         (changed)="reloadOrder($event)">
         @for (sortOptionsEntry of sortOptionsList; track sortOptionsEntry) {

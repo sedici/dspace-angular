@@ -68,7 +68,7 @@ div.row.container {
       background-color: var(--sedici-color);
       color: white;
       
-      .text-container h2 {
+      .text-container span {
         color: white;
       }
       
@@ -96,7 +96,8 @@ div.row.container {
     }
     
     .text-container {
-      h2 {
+      span {
+        font-size: 1.5rem;
         margin-bottom: 0;
       }
     }
@@ -125,7 +126,6 @@ div.row.container {
     .collection-card {     
       padding: 15px;
       height: 100%;
-      justify-content: space-between;
       align-items: center;
       
       .icon-container {
@@ -134,14 +134,18 @@ div.row.container {
         margin-left: 10px;
         
         img {
-          width: 40px;
-          height: 40px;
+          width: 30px;
+          height: 30px;
         }
       }
       
       .text-container {
         order: 1;
         flex: 1;
+
+        span {
+          font-size: 1.1rem;
+        }
       }
     }
   }

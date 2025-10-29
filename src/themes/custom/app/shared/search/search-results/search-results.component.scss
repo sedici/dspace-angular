@@ -35,3 +35,9 @@
   align-content: center;
   margin-left: 12px;
 }
+
+.search-sidebar-sort{
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
+}

@@ -134,8 +134,8 @@
         z-index: 15;
         position: relative;
         
-        h4 {
-          font-size: 1.2rem;
+        span {
+          font-size: 1.3125rem;
           margin-bottom: 0.5rem;
           color: #333;
         }
@@ -162,19 +162,23 @@
     
     @media (max-width: 767px) {      
       .collection-card {
+        flex: 1;
+        padding: 0;
+
         .icon-container {
-          width: 100px;
-          height: 100px;
+          width: 80px;
+          height: 80px;
           
           img {
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
           }
         }
         
         .text-container {
-          h4 {
-            font-size: 1rem;
+          span {
+            font-size: 1.05rem;
+            line-height: normal;
           }
         }
       }
