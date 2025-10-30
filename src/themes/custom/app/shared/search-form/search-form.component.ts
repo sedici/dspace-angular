@@ -1,5 +1,5 @@
 import { NgClass, AsyncPipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
@@ -28,11 +28,13 @@ import { BrowserOnlyPipe } from '../../../../../app/shared/utils/browser-only.pi
 })
 export class SearchFormComponent extends BaseComponent implements OnInit {
 
+  @Input() variant: 'home' | 'community' = 'home';
+
   public isHomePage$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private routerSubscription: Subscription;
 
   ngOnInit(): void {
-        // Verifica la URL inicial al cargar
+    // Verifica la URL inicial al cargar
     const currentUrl = this.router.url;
     this.isHomePage$.next(this.isHomeUrl(currentUrl));
     
