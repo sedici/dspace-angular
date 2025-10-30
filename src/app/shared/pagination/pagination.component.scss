@@ -1,12 +1,37 @@
 :host {
-    .dropdown-toggle::after {
-        display: none;
+  .dropdown-toggle::after {
+    display: none;
+  }
+  .dropdown-item {
+    font-style: italic;
+  }
+
+  // Estilos para la paginación de ng-bootstrap
+  ::ng-deep {
+    .pagination {
+      .page-item .page-link {
+        border: none;
+        background-color: transparent;
+
+        @media screen and (min-width: 768px) {
+          padding: 0.5625rem 0.9375rem;
+        }
+      }
+
+      .page-item.active .page-link {
+        background-color: var(--bs-pagination-active-bg);
+        color: var(--bs-pagination-active-color);
+        border-radius: 4px;
+      }
+
+      .page-item:not(.active):not(.disabled) .page-link:hover {
+        background-color: #e9ecef;
+        border-radius: 4px;
+      }
     }
-    .dropdown-item {
-        font-style: italic;
-    }
+  }
 }
 
-.row{
-    margin-left: inherit;
+.row {
+  margin-left: inherit;
 }
