@@ -187,6 +187,8 @@ export class PaginationComponent implements OnChanges, OnDestroy, OnInit {
    */
   @Input() public showRSS: SortOptions | boolean = false;
 
+  @Input() public hideBottomPager = false;
+
   /**
    * Current page.
    */
@@ -311,7 +313,11 @@ export class PaginationComponent implements OnChanges, OnDestroy, OnInit {
     this.sortField$ = this.paginationService.getCurrentSort(this.id, sortOptions).pipe(
       map((currentSort) => currentSort.field),
     );
-    this.showBottomPager$ = this.shouldShowBottomPager;
+    if (this.hideBottomPager) {
+      this.showBottomPager$ = of(false);
+    } else {
+      this.showBottomPager$ = this.shouldShowBottomPager;
+    }
   }
 
   constructor(
