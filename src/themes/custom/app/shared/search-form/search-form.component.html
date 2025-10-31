@@ -10,10 +10,10 @@
           </button>
         </div>
       }
-      <input type="text" [(ngModel)]="query" name="query" class="form-control" [ngClass]="{ ' community-form-control': !(isHomePage$ | async) }"
+      <input type="text" [(ngModel)]="query" name="query" [class]="'form-control form-control--' + variant"
         [attr.aria-label]="searchPlaceholder" [attr.data-test]="'search-box' | dsBrowserOnly"
         [placeholder]="searchPlaceholder">
-      <button type="submit" [ngClass]="(isHomePage$ | async) ? 'search-button' : 'community-search-button'" [attr.data-test]="'search-button' | dsBrowserOnly">
+      <button type="submit" [class]="'search-button--' + variant" [attr.data-test]="'search-button' | dsBrowserOnly">
         <i class="fas fa-search"></i>
       </button>
     </div>
