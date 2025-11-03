@@ -128,11 +128,12 @@ div.row.container {
       padding: 15px;
       height: 100%;
       align-items: center;
+      flex-direction: row-reverse;
       
       .icon-container {
         order: 2;
         margin-bottom: 0;
-        margin-left: 10px;
+        margin-right: 10px;
         
         img {
           width: 30px;
