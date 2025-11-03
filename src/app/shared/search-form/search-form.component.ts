@@ -97,7 +97,7 @@ export class SearchFormComponent implements OnChanges {
   /**
    * The variant of the search form
    */
-  @Input() variant: 'home' | 'community' = 'home';
+  @Input() variant: 'home' | 'community' | 'navbar' = 'home';
 
   /**
    * Output the search data on submit

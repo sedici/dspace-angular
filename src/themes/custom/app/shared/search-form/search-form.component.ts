@@ -28,7 +28,7 @@ import { BrowserOnlyPipe } from '../../../../../app/shared/utils/browser-only.pi
 })
 export class SearchFormComponent extends BaseComponent implements OnInit {
 
-  @Input() variant: 'home' | 'community' = 'home';
+  @Input() variant: 'home' | 'community' | 'navbar' = 'home';
 
   public isHomePage$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private routerSubscription: Subscription;

@@ -1,6 +1,9 @@
 <form #form="ngForm" (ngSubmit)="onSubmit(form.value)" action="/search">
   <div>
-    <div [ngClass]="(isHomePage$ | async) ? 'input-group' : 'search-bar-container'">
+    <div [ngClass]="{
+      'input-group': variant === 'home' || variant === 'navbar',
+      'search-bar-container': variant === 'community'
+    }">
       @if (showScopeSelector) {
         <div class="input-group-prepend">
           <button class="scope-button btn btn-outline-secondary text-truncate"
