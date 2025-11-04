@@ -6,10 +6,10 @@ import { LogOutComponent } from '../../../../app/shared/log-out/log-out.componen
 
 @Component({
   selector: 'ds-themed-logout-page',
-  // styleUrls: ['./logout-page.component.scss'],
-  styleUrls: ['../../../../app/logout-page/logout-page.component.scss'],
-  // templateUrl: './logout-page.component.html'
-  templateUrl: '../../../../app/logout-page/logout-page.component.html',
+  styleUrls: ['./logout-page.component.scss'],
+  // styleUrls: ['../../../../app/logout-page/logout-page.component.scss'],
+  templateUrl: './logout-page.component.html',
+  // templateUrl: '../../../../app/logout-page/logout-page.component.html',
   standalone: true,
   imports: [
     LogOutComponent,
