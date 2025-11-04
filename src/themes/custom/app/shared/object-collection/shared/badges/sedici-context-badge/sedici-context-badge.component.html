@@ -5,7 +5,7 @@
 <div class="badge-container">
   <ds-type-badge class="pe-1" [object]="object"></ds-type-badge>
   @if (showAccessStatus) {
-    <ds-access-status-badge class="pe-1" [object]="object"></ds-access-status-badge>
+    <ds-access-status-badge class="pe-1" [object]="object" [view]="'item'"></ds-access-status-badge>
   }
   <span class="year">{{ getYear() }}</span>
 </div>

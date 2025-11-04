@@ -1,5 +1,8 @@
 .content-container {
 
+  padding-left: 0px;
+  padding-right: 0px;
+
   .file-list {
     flex: 1;
     display: flex;
@@ -101,7 +104,7 @@
 }
 
 .selected-file .file-item{
-  background-color: #aaa;
+  background-color: #aaaaaa85;
 }
 
 .file-item {
@@ -119,7 +122,7 @@
   }
 
   .file-name {
-    font-size: .75rem;
+    font-size: 0.9rem;
     overflow: hidden; // Oculta el texto que se desborda
     text-overflow: ellipsis; // Agrega puntos suspensivos al texto que se desborda
     display: -webkit-box; // Necesario para line-clamp

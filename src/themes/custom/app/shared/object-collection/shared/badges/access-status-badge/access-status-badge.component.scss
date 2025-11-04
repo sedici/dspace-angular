@@ -1,5 +1,8 @@
 
-.status-icon, .access-status-list-element-badge {
+// Ícono de estado (solo para vista de lista)
+.status-icon {
+  font-size: 0.8em;
+  
   &.access-status-open-access-listelement-badge {
     color: #248D28;
   }
@@ -12,16 +15,65 @@
   &.access-status-embargo-listelement-badge {
     color: #6c757d;
   }
-
-  @media screen and (max-width: 768px) {
-      font-size: small;
-    }
 }
 
+// Badge del access status
+.access-status-badge {
+  font-size: medium;
+  font-weight: 400;
+
+  @media screen and (max-width: 768px) {
+    font-size: small;
+  }
+}
+
+// Vista de lista (texto con color, sin background)
+.list-view {
+  background: transparent;
+  border: none;
+  
+  &.access-status-open-access-listelement-badge {
+    color: #248D28;
+  }
+  
+  &.access-status-restricted-listelement-badge {
+    color: #dc3545;
+  }
+
+  &.access-status-metadata-only-listelement-badge,
+  &.access-status-embargo-listelement-badge {
+    color: #6c757d;
+  }
+}
+
+// Vista de item (background con color, texto blanco)
+.item-view {
+  color: white !important;
+  font-weight: 500;
+  padding: 0.3rem;
+  
+  &.access-status-open-access-listelement-badge {
+    background-color: #248D28;
+  }
+  
+  &.access-status-restricted-listelement-badge {
+    background-color: #dc3545;
+  }
+
+  &.access-status-metadata-only-listelement-badge,
+  &.access-status-embargo-listelement-badge {
+    background-color: #6c757d;
+  }
+}
 
 .badge {
   font-size: medium;
   font-weight: 400;
+  border-radius: 2.5px;
+  font-size: 0.9rem;
+  font-family: "Roboto";
+  font-weight: var(--font-weight-regular);
+
 
   @media screen and (max-width: 768px) {
     font-size: small;
@@ -31,17 +83,8 @@
 .access-status-container {
   display: flex;
   align-items: center;
-  gap: 0.15rem; 
+  gap: 0.35rem; 
   margin: 0.5rem 0;
   font-family: "Roboto";
 }
 
-
-// .access-status-embargo-listelement-badge,
-// .access-status-metadata-only-listelement-badge,
-// .access-status-restricted-listelement-badge,
-// .access-status-unknown-listelement-badge {
-//   color: grey;
-//   border: 1px solid grey;
-//   border-radius: 0px;
-// }

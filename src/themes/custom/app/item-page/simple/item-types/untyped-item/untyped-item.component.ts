@@ -75,6 +75,7 @@ export class UntypedItemComponent extends BaseComponent {
   subtype;
   identifierOtherMetadataName = ['dc.identifier.uri', 'sedici.identifier.other'];
   itemIdentifiers: { mdValue: MetadataValue, label: string, url: string }[];
+  totalAuthors: number = 0;
 
   @ViewChild('tabbedContent', { read: ElementRef }) tabbedContentElement: ElementRef;
   @ViewChild('tabbedContent') tabbedContentComponent: TabbedContentComponent;
@@ -116,5 +117,18 @@ export class UntypedItemComponent extends BaseComponent {
     super.ngOnInit();
     this.subtype = this.object.metadata['sedici.subtype'][0]?.value;
     this.itemIdentifiers = setPersistentIdentifiers(this.object, this.identifierOtherMetadataName);
+    
+    // Calcular el total de autores
+    this.totalAuthors = this.calculateTotalAuthors();
+  }
+
+  private calculateTotalAuthors(): number {
+    // Solo contar sedici.creator.person como autores
+    const metadata = this.object.metadata['sedici.creator.person'];
+    return metadata && metadata.length > 0 ? metadata.length : 0;
+  }
+
+  getAuthorCount(): number {
+    return this.totalAuthors;
   }
 }
