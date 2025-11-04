@@ -41,6 +41,7 @@ import { AccessStatusObject } from './access-status.model';
 export class AccessStatusBadgeComponent implements OnDestroy, OnInit {
 
   @Input() object: Item | Bitstream;
+  @Input() view: 'item' | 'list' = 'list';
 
   accessStatus$: Observable<string>;
   embargoDate$: Observable<string>;

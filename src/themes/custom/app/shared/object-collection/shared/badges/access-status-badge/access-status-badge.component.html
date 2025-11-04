@@ -1,8 +1,15 @@
 @if (showAccessStatus) {
   @if (accessStatus$ | async; as accessStatus) {
     <div class="access-status-container">
-      <i class="fa-solid fa-circle" [class]="'status-icon ' + accessStatusClass"></i>
-      <span [class]="'badge access-status-list-element-badge ' + accessStatusClass">
+      @if (view !== 'item') {
+        <i class="fa-solid fa-circle status-icon" [ngClass]="accessStatusClass"></i>
+      }
+      <span [ngClass]="[
+        view === 'item' ? 'item-view' : 'list-view',
+        'access-status-badge',
+        accessStatusClass,
+        'badge'
+      ]">
         {{ accessStatus | translate }}
       </span>
     </div>

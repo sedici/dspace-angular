@@ -21,8 +21,9 @@ import { AccessStatusBadgeComponent } from './access-status-badge.component';
 })
 export class ThemedAccessStatusBadgeComponent extends ThemedComponent<AccessStatusBadgeComponent> {
   @Input() object: DSpaceObject;
+  @Input() view: 'item' | 'list' = 'list';
 
-  protected inAndOutputNames: (keyof AccessStatusBadgeComponent & keyof this)[] = ['object'];
+  protected inAndOutputNames: (keyof AccessStatusBadgeComponent & keyof this)[] = ['object', 'view'];
 
   protected getComponentName(): string {
     return 'AccessStatusBadgeComponent';
