@@ -99,7 +99,7 @@ div.row.container {
     
     .text-container {
       span {
-        font-size: 1.5rem;
+        font-size: 1.3125rem;
         margin-bottom: 0;
       }
     }
@@ -129,10 +129,8 @@ div.row.container {
       padding: 15px;
       height: 100%;
       align-items: center;
-      flex-direction: row-reverse;
       
       .icon-container {
-        order: 2;
         margin-bottom: 0;
         margin-right: 10px;
         
@@ -142,13 +140,8 @@ div.row.container {
         }
       }
       
-      .text-container {
-        order: 1;
-        flex: 1;
-
-        span {
-          font-size: 1.1rem;
-        }
+      .text-container span {
+       font-size: 1.1rem;
       }
     }
   }
@@ -176,8 +169,23 @@ h5 {
   color: white;
 }
 
-.aliados-section {
-  justify-content: space-around;
-  align-items: center;
-  height: 250px;
+.projects-container {
+  h2 {
+    display: flex;
+    justify-content: center;
+    color: #999;
+    font-size: 2rem;
+    margin: 1rem 0;
+  }
+
+  .projects-section {
+    height: 200px;
+    width: 100%;
+    align-items: center;
+    justify-content: space-evenly;
+
+    a img {
+      max-width: 250px;
+    }
+  }
 }

@@ -18,10 +18,6 @@
 
 <ng-template #homeContent>
   <div class="destacado">
-    <!-- <div class="title-container">
-      <span class="explorar-text">{{'home.page.explore' | translate}}</span>
-      <h2 class="section-title">{{'home.page.production' | translate}}</h2>
-    </div> -->
     <div class="row container">
       @for (item of exploraciones; track item) {
         <div class="col-6 col-md-3 mb-4">
@@ -73,17 +69,23 @@
   </div>
 </div>
 
-<div class="aliados-section d-none d-md-flex">
-    <a href="https://repositoriosdigitales.mincyt.gob.ar/vufind/" target="_blank">
-      <img src="assets/custom/images/SNRD.png" alt="SNRD Logo">
+<div class="projects-container">
+  <h2>Nuestros proyectos</h2>
+  <div class="projects-section d-none d-md-flex">
+    <a href="https://sitios.sedici.unlp.edu.ar/" target="_blank">
+      <img src="assets/custom/images/logoSITIOS_positivo.svg" alt="Sitios UNLP Logo" style="min-width: 250px;">
     </a>
-    <a href="https://www.lareferencia.info/es/" target="_blank">
-      <img src="assets/custom/images/La referencia.png" alt="La Referencia Logo">
+    <a href="https://libros.unlp.edu.ar/index.php/unlp" target="_blank">
+      <img src="assets/custom/images/logoLIBROS.png" alt="Portal de libros UNLP Logo">
     </a>
-    <a href="https://coar-repositories.org/" target="_blank">
-      <img src="assets/custom/images/COAR.png" alt="COAR Logo">
+    <a href="https://congresos.unlp.edu.ar/" target="_blank">
+      <img src="assets/custom/images/logoCONGRESOS.png" alt="Portal de congresos UNLP Logo">
+    </a>
+    <a href="https://portalderevistas.unlp.edu.ar/" target="_blank">
+      <img src="assets/custom/images/logoREVISTAS.png" alt="Portal de revistas UNLP Logo">
     </a>
     <a href="https://hera.sedici.unlp.edu.ar/" target="_blank">
-      <img src="assets/custom/images/HERA.png" alt="HERA Logo" style="width: 325px;">
+      <img src="assets/custom/images/HERA.png" alt="HERA Logo">
     </a>
+  </div>
 </div>
