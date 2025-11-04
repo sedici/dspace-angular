@@ -5,13 +5,7 @@
 
   .year {
     font-weight: var(--font-weight-regular);
-    font-size: 1.66667em;
+    font-size: 1.1rem;
     padding-left: 0.25rem;
   }
-}
-
-:host ::ng-deep .badge {
-  font-size: 1.16667em;
-  font-weight: var(--font-weight-regular);
-  padding: .5em;
 }

@@ -21,8 +21,6 @@
 .access-status-badge {
   font-size: medium;
   font-weight: 400;
-  padding: 0.25rem 0  rem;
-  border-radius: 0.25rem;
 
   @media screen and (max-width: 768px) {
     font-size: small;
@@ -52,6 +50,7 @@
 .item-view {
   color: white !important;
   font-weight: 500;
+  padding: 0.3rem;
   
   &.access-status-open-access-listelement-badge {
     background-color: #248D28;
@@ -70,6 +69,11 @@
 .badge {
   font-size: medium;
   font-weight: 400;
+  border-radius: 2.5px;
+  font-size: 0.9rem;
+  font-family: "Roboto";
+  font-weight: var(--font-weight-regular);
+
 
   @media screen and (max-width: 768px) {
     font-size: small;
