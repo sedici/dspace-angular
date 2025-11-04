@@ -2,6 +2,7 @@ import { AsyncPipe, NgClass } from '@angular/common';
 import {
   Component,
   OnInit,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { Router, RouterLink, NavigationEnd } from '@angular/router';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
@@ -19,6 +20,9 @@ import { ThemedNavbarComponent } from '../../../../app/navbar/themed-navbar.comp
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MenuService } from 'src/app/shared/menu/menu.service';
 import { HostWindowService } from 'src/app/shared/host-window.service';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { SearchFormComponent } from '../shared/search-form/search-form.component'; 
 
 @Component({
   selector: 'ds-themed-header',
@@ -27,18 +31,23 @@ import { HostWindowService } from 'src/app/shared/host-window.service';
   templateUrl: 'header.component.html',
   // templateUrl: '../../../../app/header/header.component.html',
   standalone: true,
-  imports: [RouterLink, ThemedLangSwitchComponent, NgbDropdownModule, ThemedSearchNavbarComponent, ThemedNavbarComponent, ContextHelpToggleComponent, ThemedAuthNavMenuComponent, ImpersonateNavbarComponent, TranslateModule, AsyncPipe, NgClass, NgbModule],
+  imports: [RouterLink, SearchFormComponent, ThemedLangSwitchComponent, NgbDropdownModule, ThemedSearchNavbarComponent, ThemedNavbarComponent, ContextHelpToggleComponent, ThemedAuthNavMenuComponent, ImpersonateNavbarComponent, TranslateModule, AsyncPipe, NgClass, NgbModule],
 })
 export class HeaderComponent extends BaseComponent implements OnInit {
   public isNavBarCollapsed$: Observable<boolean>;
   public isHomePage$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private routerSubscription: Subscription;
 
-  constructor(protected menuService: MenuService, protected windowService: HostWindowService, private router: Router) {
+  constructor(protected menuService: MenuService,
+    protected windowService: HostWindowService, 
+    private router: Router,
+    private http: HttpClient,
+    private cdr: ChangeDetectorRef) {
     super(menuService, windowService);
   }
 
   ngOnInit() {
+    this.loadItemCount();
     super.ngOnInit();
     this.isNavBarCollapsed$ = this.menuService.isMenuCollapsed(this.menuID);
     
@@ -57,6 +66,22 @@ export class HeaderComponent extends BaseComponent implements OnInit {
       this.isHomePage$.next(isHome);
     });
   }
+
+  totalItems = '';
+    
+  private loadItemCount(): void {
+    const searchUrl = `${environment.rest.baseUrl}/api/discover/search/objects?size=1&page=0`;
+    
+    this.http.get(searchUrl).subscribe((response: any) => {
+      if (response._embedded.searchResult.page.totalElements !== undefined) {
+        this.totalItems = response._embedded.searchResult.page.totalElements;
+        this.cdr.detectChanges();
+      }
+    }, (error) => {
+      console.error('Error al cargar el conteo de items:', error);
+    });
+  }
+  
   
   ngOnDestroy() {
     // Importante: limpiar la suscripción para evitar pérdidas de memoria

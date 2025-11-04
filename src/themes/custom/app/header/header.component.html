@@ -9,7 +9,7 @@
       </div>
       <div class="right-container">
         @if ((isHomePage$ | async) !== true) {
-          <ds-search-navbar></ds-search-navbar>
+          <ds-themed-search-form [searchPlaceholder]="'home.page.search.placeholder' | translate:{totalItems: totalItems}" [variant]="'navbar'" style="width: 57%;"></ds-themed-search-form>
         }
         <ds-navbar></ds-navbar>
       </div>

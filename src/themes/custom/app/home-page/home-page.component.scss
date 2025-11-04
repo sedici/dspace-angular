@@ -59,7 +59,7 @@ div.row.container {
 .destacado {
   .collection-card {
     display: flex;
-    padding: 2rem;
+    padding: 1.3rem 0rem 1.3rem 0rem;
     border: 1px solid var(--sedici-color);
     transition: background-color 0.3s ease, color 0.3s ease;
     justify-content: center;
@@ -71,6 +71,7 @@ div.row.container {
       
       .text-container span {
         color: white;
+        font-size: 1.3125rem;
       }
       
       .icon-container .hover-image {
@@ -128,11 +129,12 @@ div.row.container {
       padding: 15px;
       height: 100%;
       align-items: center;
+      flex-direction: row-reverse;
       
       .icon-container {
         order: 2;
         margin-bottom: 0;
-        margin-left: 10px;
+        margin-right: 10px;
         
         img {
           width: 30px;

@@ -188,44 +188,4 @@
   .destacado + * {
     padding-top: 2rem;
   }
-
-  ::ng-deep ds-themed-search-form {
-    .input-group {
-      border: 2px solid var(--sedici-color);
-      border-radius: 25px;
-      background-color: white;
-    }
-
-    .form-control {
-      background-color: transparent;
-      font-size: 1.2rem;
-      padding-left: 2rem;
-      
-      &:focus {
-        outline: none !important;
-        box-shadow: none !important;
-      }
-    }
-
-    .search-button {
-      position: absolute;
-      right: 5px;
-      top: 50%;
-      transform: translateY(-50%);
-      background-color: #4A90E2;
-      border-radius: 50% !important;
-      width: 40px;
-      height: 40px;
-      z-index: 10;
-
-      i {
-        color: white !important;
-        font-size: 1.2rem !important;
-      }
-
-      &:hover {
-        background-color: #357ABD !important;
-      }
-    }
-  }
 }
