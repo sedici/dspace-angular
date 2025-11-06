@@ -11,10 +11,10 @@
                     <div class="file-icon col-1">
                       <img [src]="getIconPath(file.name)" alt="File icon"/>
                     </div>
-                    <div class="col-8">
+                    <div class="col-7">
                       <span class="file-name">{{ getFileDescription(file) }}</span>
                     </div>
-                    <div class="col-3 download-button">
+                    <div class="col-4 download-button">
                       <ds-sedici-file-download-link [bitstream]="file" [item]="object"></ds-sedici-file-download-link>
                     </div>
                   </div>

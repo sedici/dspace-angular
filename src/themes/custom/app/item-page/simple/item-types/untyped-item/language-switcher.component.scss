@@ -51,8 +51,15 @@
   }
 }
 
+.language-switcher-container {
+  padding: 1rem 1.5rem;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  background-color: #ffffff;
+  width: 100%;
+}
 
-::ng-deep .content{
+:host ::ng-deep .content {
   text-align: justify;
 }
 
@@ -61,7 +68,6 @@
   font-weight: var(--font-weight-regular);
   white-space: pre-wrap;
   font-size: 0.97rem;
-  //text-align: justify;
 }
 
 .no-abstract {
