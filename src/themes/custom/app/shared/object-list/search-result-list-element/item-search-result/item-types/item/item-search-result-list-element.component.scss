@@ -21,7 +21,6 @@
 .badges-context-container {
   display: flex;
   gap: 0.25rem;
-  align-items: baseline;
 }
 
 sedici-context {
@@ -91,7 +90,7 @@ sedici-context {
 
 .item-year {
   color: rgba(72, 72, 72, 0.9098039216);
-  font-size: large; 
+  font-size: medium; 
   margin-left: 8px;
 
   @media screen and (max-width: 768px) {
@@ -121,10 +120,8 @@ sedici-context {
 }
 
 ::ng-deep ds-badges .badge {
-  padding: 0.5em;
+  padding: 0.5em !important;
   font-size: 0.88em;
-  
-  // font-weight: var(--font-weight-regular);
 }
 
 .subtitle {
