@@ -22,9 +22,9 @@ body {
     width: 100%;
     position: relative;
 
-    @media screen and (max-width: map-get($grid-breakpoints, md)) {   
-        margin-bottom: 60px; //AJUSTAR SEGÚN BOTTOM-NAV-BAR
-    }
+    // @media screen and (max-width: map-get($grid-breakpoints, md)) {   
+    //     margin-bottom: 60px; //AJUSTAR SEGÚN BOTTOM-NAV-BAR
+    // }
 
     @media print {
         // Para que no cree una seguna página vacía
