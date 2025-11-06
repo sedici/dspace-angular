@@ -3903,7 +3903,7 @@
 
   "pagination.showing.detail": "{{ range }} of {{ total }}",
 
-  "pagination.showing.label": "Now showing ",
+  "pagination.showing.label": "Found {{ total }} results",
 
   "pagination.sort-direction": "Sort Options",
 

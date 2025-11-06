@@ -7,7 +7,7 @@
             <div class="col-auto pagination-info">
               <!-- <span class="align-middle hidden-xs-down">{{ 'pagination.showing.label' | translate }}</span>
               <span class="align-middle">{{ 'pagination.showing.detail' | translate:(showingDetails$ | async)}}</span> -->
-              <span class="align-middle hidden-xs-down">{{ 'pagination.showing.label' | translate }} {{  (showingDetails$ | async)?.total }} resultados</span> <!--SEDICI -->
+              <span class="align-middle hidden-xs-down">{{ 'pagination.showing.label' | translate: { total: (showingDetails$ | async)?.total } }}</span> <!--SEDICI -->
             </div>
           }
           <div class="col">

@@ -5996,8 +5996,8 @@
   // "pagination.showing.detail": "{{ range }} of {{ total }}",
   "pagination.showing.detail": "{{ range }} de {{ total }}",
 
-  // "pagination.showing.label": "Now showing ",
-  "pagination.showing.label": "Agora exibindo ",
+  // "pagination.showing.label": "Found {{ total }} results",
+  "pagination.showing.label": "{{ total }} resultados encontrados",
 
   // "pagination.sort-direction": "Sort Options",
   "pagination.sort-direction": "Opções de Ordenação",
