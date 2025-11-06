@@ -1,4 +1,17 @@
 <div class="background-image-container mt-ncs">
+  @if ((isMobile$ | async)) {
+    <div id="mobile-navbar-toggler" class="d-block d-lg-none">
+      <button id="navbar-toggler" class="btn p-0 ms-2" type="button" (click)="toggleNavbar()"
+        [attr.aria-label]="'nav.toggle' | translate" aria-controls="collapsible-mobile-navbar"
+        [attr.aria-expanded]="(isNavBarCollapsed$ | async) !== true">
+        <!-- <span class="fas fa-bars fa-fw fa-xl toggler-icon" aria-hidden="true"></span> -->
+        <span class="fas fa-bars fa-fw fa-xl toggler-icon" 
+              [style.color]="(isNavBarCollapsed$ | async) ? '#ffffff' : '#000000'"
+              aria-hidden="true"></span>
+      </button>
+    </div>
+    <ds-navbar></ds-navbar>
+  }
   <div class="container">
     <div class="jumbotron">
       <div class="sedici-logo-container d-md-none">

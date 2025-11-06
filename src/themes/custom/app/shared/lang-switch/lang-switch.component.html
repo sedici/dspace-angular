@@ -8,6 +8,7 @@
       ngbDropdownToggle
       tabindex="0"
       class="text-uppercase">
+      <i class="fa-solid fa-earth-americas fa-lg"></i>
       {{translate.currentLang}}
     </a>
     <ul ngbDropdownMenu class="dropdown-menu" [attr.aria-label]="'nav.language' |translate" id="language-menu-list" role="menu">
@@ -17,7 +18,7 @@
           (keyup.enter)="useLang(lang)"
           (click)="useLang(lang)"
           [class.active]="lang === translate.currentLang">
-          {{ langLabel(lang) }}
+          {{ langLabel(lang) }} <span class="text-uppercase">({{ lang }})</span>
         </li>
       }
     </ul>

@@ -52,6 +52,7 @@
         <a routerLink="/login" routerLinkActive="active" class="loginLink px-0.5"
           role="link"
           tabindex="0">
+          <i class="fa-solid fa-user fa-lg"></i>
           {{ 'nav.login' | translate }}<span class="sr-only">(current)</span>
         </a>
       }
@@ -59,7 +60,7 @@
         <a role="link" [attr.aria-label]="'nav.logout' |translate"
           [title]="'nav.logout' | translate" routerLink="/logout" routerLinkActive="active" class="logoutLink px-1"
           tabindex="0">
-          <i class="fas fa-sign-out-alt fa-lg fa-fw"></i>
+          <i class="fas fa-sign-out-alt fa-lg"></i>
           <span class="sr-only">(current)</span>
         </a>
       }

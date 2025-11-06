@@ -15,7 +15,7 @@
       position: fixed;
       overflow: hidden;
       height: 0;
-      z-index: var(--ds-nav-z-index);
+      z-index: 30;
       &.open {
         height: auto;
         border-bottom: 3px var(--sedici-color) solid; // open navbar covers header-navbar-wrapper border

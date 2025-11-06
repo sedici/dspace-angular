@@ -16,6 +16,28 @@
     background-repeat: no-repeat;
   }
 
+  #mobile-navbar-toggler {
+    position: absolute;
+    z-index: 100;
+    right: 0.5rem;
+    top: 1.5rem;
+
+    #navbar-toggler {
+      border: none;
+      color: var(--ds-header-icon-color);
+
+      .toggler-icon {
+        width: 1.5em;
+        height: 1.5em;
+        line-height: 1.5;
+      }
+    }
+  }
+
+  ds-navbar ::ng-deep #main-navbar {
+    padding-top: 1rem;
+  }
+
   .sedici-description-mobile {
     display: flex;
     padding-bottom: 1rem;

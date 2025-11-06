@@ -1,9 +1,9 @@
 .dropdown-toggle {
   color: var(--ds-header-icon-color);
 
-  &:hover, &:focus {
-    color: var(--ds-header-icon-color-hover);
-  }
+  // &:hover, &:focus {
+  //   color: var(--ds-header-icon-color-hover);
+  // }
 }
 
 .dropdown-item {
@@ -18,5 +18,27 @@
 @media screen and (max-width: map-get($grid-breakpoints, md)) {
   .dropdown-menu {
     transform: translateY(-100%) !important;
+  }
+}
+
+:host {
+  .navbar-nav {
+    @media screen and (max-width: map-get($grid-breakpoints, md)-0.02) {      
+      .dropdown-menu {
+        position: static !important;
+        transform: none !important;
+        border: none;
+        box-shadow: none;
+      }
+
+      .dropdown-item {
+        color: var(--ds-navbar-link-color);
+        
+        &.active {
+          background-color: var(--bs-primary);
+          color: white;
+        }
+      }
+    }
   }
 }
