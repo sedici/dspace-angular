@@ -5,7 +5,7 @@
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1025;
+    z-index: 1020;
 
     @media (max-width: 767px) {
       border-bottom: 0px;
@@ -16,6 +16,10 @@
       height: 100vh;
       max-height: var(--ds-header-logo-height);
     }
+  }
+
+  :host-context(:has(.sidebar-full-width-container)) #main-site-header {
+    left: var(--ds-admin-sidebar-fixed-element-width);
   }
 
   .background-image-header {
@@ -51,6 +55,7 @@
     z-index: 1020 !important;
     border-bottom: none !important;
     position: relative !important;
+    left: 0;
 
     img#header-logo {
       height: auto;
