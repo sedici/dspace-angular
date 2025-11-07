@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  Input,
+} from '@angular/core';
 import { BadgesComponent as BaseComponent } from 'src/app/shared/object-collection/shared/badges/badges.component';
 
 import { ThemedAccessStatusBadgeComponent } from '../../../../../../../app/shared/object-collection/shared/badges/access-status-badge/themed-access-status-badge.component';
@@ -10,8 +13,8 @@ import { ThemedTypeBadgeComponent } from '../../../../../../../app/shared/object
   selector: 'ds-themed-badges',
   // styleUrls: ['./badges.component.scss'],
   styleUrls: ['../../../../../../../app/shared/object-collection/shared/badges/badges.component.scss'],
-  // templateUrl: './badges.component.html',
-  templateUrl: '../../../../../../../app/shared/object-collection/shared/badges/badges.component.html',
+  templateUrl: './badges.component.html',
+  // templateUrl: '../../../../../../../app/shared/object-collection/shared/badges/badges.component.html',
   standalone: true,
   imports: [
     ThemedAccessStatusBadgeComponent,
@@ -21,4 +24,11 @@ import { ThemedTypeBadgeComponent } from '../../../../../../../app/shared/object
   ],
 })
 export class BadgesComponent extends BaseComponent {
+  /**
+   * The view of the badges component
+   * It's used to determine the styling of the badges depending on where they are used
+   * @default 'list'
+   * The 'view' property is a custom addition and is not part of the base BadgesComponent.
+   */
+  @Input() view: 'item-page' | 'list' = 'list';
 }

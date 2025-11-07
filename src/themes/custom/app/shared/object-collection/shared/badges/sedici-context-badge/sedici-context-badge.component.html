@@ -3,7 +3,7 @@
   <ds-my-dspace-status-badge [context]="context"></ds-my-dspace-status-badge>
 }
 <div class="badge-container">
-  <ds-type-badge class="pe-1" [object]="object"></ds-type-badge>
+  <ds-type-badge class="pe-1" [object]="object" [view]="'item-page'"></ds-type-badge>
   @if (showAccessStatus) {
     <ds-access-status-badge class="pe-1" [object]="object" [view]="'item'"></ds-access-status-badge>
   }

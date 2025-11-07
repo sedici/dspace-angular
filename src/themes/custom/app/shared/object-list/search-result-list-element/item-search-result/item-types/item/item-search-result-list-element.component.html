@@ -19,12 +19,11 @@
   <div [ngClass]="showThumbnails ? 'col-9' : 'without-thumbnails'">
     <div class="badges-context-container">
       @if (showLabel) {
-        <ds-badges [object]="dso" [context]="context" [showAccessStatus]="true"></ds-badges>
+        <ds-badges [object]="dso" [context]="context" [showAccessStatus]="true" [view]="'list'"></ds-badges>
         <sedici-context [object]="dso"></sedici-context>
         <span class="item-year">{{ getYear() }}</span>
       }
     </div>
-
     @if (object !== undefined && object !== null) {
       <ds-truncatable [id]="dso.id">
         @if (linkType !== linkTypes.None) {

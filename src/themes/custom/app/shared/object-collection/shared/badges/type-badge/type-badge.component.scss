@@ -5,9 +5,16 @@
   font-size: 0.9rem;
   font-family: 'Roboto';
   font-weight: var(--font-weight-regular);
-  padding: 0.3rem;
-
+  
   @media screen and (max-width: 768px) {
     font-size: 0.8rem;
   }
+}
+
+.item-page-view {
+  padding: 0.3rem;
+}
+
+.list-view {
+  padding: 0.5em;
 }
