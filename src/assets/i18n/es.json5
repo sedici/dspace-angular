@@ -3509,10 +3509,12 @@
   "info.feedback.head": "Sugerencias",
 
   // "info.feedback.title": "Feedback",
-  "info.feedback.title": "Sugerencias",
+  "info.feedback.title": "Sugerencias y contacto",
 
   // "info.feedback.info": "Thanks for sharing your feedback about the DSpace system. Your comments are appreciated!",
   "info.feedback.info": "Gracias por compartir sus sugerencias sobre el repositorio. ¡Tendremos en cuenta sus comentarios!",
+
+  "info.feedback.email-placeholder": "yo@correo.org.ar",
 
   // "info.feedback.email_help": "This address will be used to follow up on your feedback.",
   "info.feedback.email_help": "Esta dirección se usará para el seguimiento de su sugerencia.",
@@ -3530,7 +3532,7 @@
   "info.feedback.create.success": "Envío exitoso de sugerencia",
 
   // "info.feedback.error.email.required": "A valid email address is required",
-  "info.feedback.error.email.required": "se requiere una dirección válida de correo electrónico",
+  "info.feedback.error.email.required": "Se requiere una dirección válida de correo electrónico",
 
   // "info.feedback.error.message.required": "A comment is required",
   "info.feedback.error.message.required": "Se requiere un comentario",

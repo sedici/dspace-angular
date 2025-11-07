@@ -14,6 +14,9 @@ import { AuthorizationDataService } from 'src/app/core/data/feature-authorizatio
 import { NotifyInfoService } from 'src/app/core/coar-notify/notify-info/notify-info.service';
 import { APP_CONFIG, AppConfig } from 'src/config/app-config.interface';
 
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FeedbackFormComponent } from '../info/feedback/feedback-form/feedback-form.component';
+
 @Component({
   selector: 'ds-themed-footer',
   styleUrls: ['./footer.component.scss'],
@@ -38,12 +41,19 @@ export class FooterComponent extends BaseComponent {
     @Optional() public cookies: OrejimeService,
     protected authorizationService: AuthorizationDataService,
     protected notifyInfoService: NotifyInfoService,
-    @Inject(APP_CONFIG) protected appConfig: AppConfig
+    @Inject(APP_CONFIG) protected appConfig: AppConfig,
+    protected modalService: NgbModal,
   ) {
     super(cookies, authorizationService, notifyInfoService, appConfig);
   }
 
   ngOnInit(): void {
     this.isMobile$ = this.windowService.isUpTo(this.maxMobileWidth);
+  }
+
+  openModalFeedback() {
+    const modalRef = this.modalService.open(FeedbackFormComponent, {
+      centered: true, // Centra el modal
+    });
   }
 }
