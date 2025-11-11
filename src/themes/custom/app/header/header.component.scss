@@ -13,8 +13,19 @@
     }
 
     img#header-logo {
-      height: 100vh;
+      height: auto;
       max-height: var(--ds-header-logo-height);
+
+      @media (min-width: 768px) {
+        width: 25vw;
+        max-width: 300px;
+        min-width: 170px;
+      }
+
+      @media (max-width: 767px) {
+        height: 45px; 
+        width: auto;
+      }
     }
   }
 
@@ -80,7 +91,8 @@
   }
 
   .padding-logo {
-    padding: 1.5rem 0rem 1rem 3rem;
+    padding: 1.5rem 0rem 1rem 2.8vw;
+    margin-right: 10px;
   }
 
   #navbar-toggler {
@@ -130,6 +142,11 @@
 
     ds-search-navbar {
       width: 60%;
+
+      @media (max-width: 1300px) {
+        width: 45%;
+
+      }
     }
 
     @media print {
