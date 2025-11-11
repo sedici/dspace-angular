@@ -19,12 +19,12 @@
   #mobile-navbar-toggler {
     position: absolute;
     z-index: 100;
-    right: 0.5rem;
-    top: 1.5rem;
+    right: 1.5rem;
+    top: 2.5rem;
 
     #navbar-toggler {
       border: none;
-      color: var(--ds-header-icon-color);
+      box-shadow: none;
 
       .toggler-icon {
         width: 1.5em;
