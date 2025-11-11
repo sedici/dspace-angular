@@ -31,9 +31,6 @@
 .list-view {
   background: transparent;
   border: none;
-  
-
-
 
   &.access-status-open-access-listelement-badge,
   &.access-status-restricted-listelement-badge,
@@ -56,9 +53,7 @@
 }
 
 // Vista de item (background con color, texto blanco)
-.item-view {
-  padding: 0.3rem;
-  
+.item-view {  
   &.access-status-open-access-listelement-badge {
     border: 1px solid #248D28;
     color: #248D28;
@@ -84,7 +79,6 @@
   font-family: "Roboto";
   font-weight: var(--font-weight-regular);
 
-
   @media screen and (max-width: 768px) {
     font-size: small;
   }
@@ -94,7 +88,9 @@
   display: flex;
   align-items: center;
   gap: 0.35rem; 
-  margin: 0.5rem 0;
   font-family: "Roboto";
 }
 
+.list-view-container {
+  margin-top: 0.8rem;
+}

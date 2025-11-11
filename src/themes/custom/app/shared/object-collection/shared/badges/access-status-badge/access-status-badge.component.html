@@ -1,6 +1,6 @@
 @if (showAccessStatus) {
   @if (accessStatus$ | async; as accessStatus) {
-    <div class="access-status-container">
+    <div class="access-status-container" [class.list-view-container]="view === 'list'">
       @if (view !== 'item') {
         <i class="fa-solid fa-circle status-icon" [ngClass]="accessStatusClass"></i>
       }
