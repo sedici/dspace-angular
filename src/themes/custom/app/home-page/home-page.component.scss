@@ -126,11 +126,12 @@ div.row.container {
 }
 
 .projects-container {
+  margin: 1.5rem 0 1rem;
+
   .title-container {
     display: flex;
     justify-content: center;
     font-size: 2rem;
-    margin: 1.5rem 0 0;
 
     .explorar-text {
       color: #999;
@@ -144,6 +145,7 @@ div.row.container {
   }
 
   .projects-section {
+    display: flex;
     height: 175px;
     width: 100%;
     align-items: center;
