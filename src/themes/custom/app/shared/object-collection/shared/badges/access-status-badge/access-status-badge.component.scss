@@ -32,37 +32,47 @@
   background: transparent;
   border: none;
   
+
+
+
+  &.access-status-open-access-listelement-badge,
+  &.access-status-restricted-listelement-badge,
+  &.access-status-metadata-only-listelement-badge,
+  &.access-status-embargo-listelement-badge {
+  font-family: "Roboto", sans-serif;
+  font-size: medium;
+  font-weight: 300;
+  color: var(--bs-body-color);
+  }
+  
+  // &.access-status-restricted-listelement-badge {
+  //   color: #333333;
+  // }
+
+  // &.access-status-metadata-only-listelement-badge,
+  // &.access-status-embargo-listelement-badge {
+  //   color: #333333;
+  // }
+}
+
+// Vista de item (background con color, texto blanco)
+.item-view {
+  padding: 0.3rem;
+  
   &.access-status-open-access-listelement-badge {
+    border: 1px solid #248D28;
     color: #248D28;
   }
   
   &.access-status-restricted-listelement-badge {
+    border: 1px solid #dc3545;
     color: #dc3545;
   }
 
   &.access-status-metadata-only-listelement-badge,
   &.access-status-embargo-listelement-badge {
+    border: 1px solid #6c757d;
     color: #6c757d;
-  }
-}
-
-// Vista de item (background con color, texto blanco)
-.item-view {
-  color: white !important;
-  font-weight: 500;
-  padding: 0.3rem;
-  
-  &.access-status-open-access-listelement-badge {
-    background-color: #248D28;
-  }
-  
-  &.access-status-restricted-listelement-badge {
-    background-color: #dc3545;
-  }
-
-  &.access-status-metadata-only-listelement-badge,
-  &.access-status-embargo-listelement-badge {
-    background-color: #6c757d;
   }
 }
 
