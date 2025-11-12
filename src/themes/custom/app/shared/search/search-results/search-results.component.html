@@ -10,16 +10,18 @@
   </div>
 }
 
+<div class="row mb-3 mb-md-1">
+  <div class="labels col-12">
+    <ds-search-labels [inPlaceSearch]="inPlaceSearch">
+    </ds-search-labels>
+  </div>
+</div>
+
 <div class="search-results-header">
   <!-- @if (!disableHeader) {
     <h1>{{ (configuration ? configuration + '.search.results.head' : 'search.results.head') | translate }}</h1>
   } Comentado hasta ver si se va o no-->
-  <div class="row mb-3 mb-md-1">
-    <div class="labels col-12">
-      <ds-search-labels [inPlaceSearch]="inPlaceSearch">
-      </ds-search-labels>
-    </div>
-  </div>
+  <span class="show-results hidden-xs-down">{{ 'pagination.showing.label' | translate: { total: (showingDetails$ | async)?.total } }}</span> <!--SEDICI -->
   <div class="view-modes-and-sort">
     @if (showViewModes) {
       <ds-view-mode-switch class="d-none d-md-block"

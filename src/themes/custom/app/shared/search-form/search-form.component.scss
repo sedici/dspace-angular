@@ -17,6 +17,12 @@
     }
 }
 
+.search-form {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
 .input-group {
   border: 2px solid var(--sedici-color);
   border-radius: 25px;

@@ -31,6 +31,17 @@
   }
 }
 
+.show-results {
+  font-size: 1.05rem;
+  vertical-align: middle;
+  margin-left: 12px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 0.85rem;
+  }
+}
+
+
 .labels {
   align-content: center;
   margin-left: 12px;
