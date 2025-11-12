@@ -11,7 +11,7 @@ import {
   RouterOutlet,
 } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import {
   filter,
   map,
@@ -104,7 +104,7 @@ export class CommunityPageComponent extends BaseComponent {
     super(route, router, authService, authorizationDataService, dsoNameService);
   }
 
-  logo;
+  logo$: Observable<RemoteData<Bitstream>>;
   comlinksToFollow: FollowLinkConfig<Community>[] = [
     followLink('logo'),
     followLink('parentCommunity'),
@@ -121,58 +121,45 @@ export class CommunityPageComponent extends BaseComponent {
       map((community) => getCommunityPageRoute(community.id)),
     );
 
-    this.findLogoRecursively();
+    this.logo$ = this.communityRD$.pipe(
+      getFirstSucceededRemoteDataPayload(),
+      switchMap((community: Community) => this.getRecursiveLogo(community))
+    );
 
     this.isCommunityAdmin$ = this.authorizationDataService.isAuthorized(FeatureID.IsCommunityAdmin);
   }
 
-  private findLogoRecursively(): void {
-    this.communityRD$.pipe(
-      getFirstSucceededRemoteDataPayload(),
-      take(1)
-    ).subscribe((community: Community) => {
-      this.checkCommunityLogo(community);
-    });
-  }
-
-  private checkCommunityLogo(community: Community): void {
-    let fullCommunityRef: Community;
-
-    this.communityService.findById(
+  private getRecursiveLogo(community: Community): Observable<RemoteData<Bitstream>> {
+    return this.communityService.findById(
       community.id,
       true,
       false,
-      ...this.comlinksToFollow,
+      ...this.comlinksToFollow
     ).pipe(
       getFirstSucceededRemoteDataPayload(),
-      switchMap((fullCommunity: Community) => {
-        fullCommunityRef = fullCommunity;
-        return fullCommunity.logo;
-      }),
-      filter((logoRD: RemoteData<Bitstream>) => 
-        logoRD.state !== 'RequestPending' && logoRD.state !== 'ResponsePending'
-      ),
-      take(1)
-    ).subscribe((logoRD: RemoteData<Bitstream>) => {
-      if (logoRD.hasSucceeded && logoRD.payload) {
-        this.logo = logoRD;
-        this.changeDetectorRef.detectChanges();
-      } else {
-        fullCommunityRef.parentCommunity.pipe(
-          getFirstSucceededRemoteDataPayload(),
-          take(1)
-        ).subscribe((parentCommunity: Community) => {
-          if (parentCommunity) {
-            this.checkCommunityLogo(parentCommunity); // Recursión
+      switchMap((fullCommunity: Community) => fullCommunity.logo.pipe(
+        filter((logoRD: RemoteData<Bitstream>) => 
+          logoRD.state !== 'RequestPending' && logoRD.state !== 'ResponsePending'
+        ),
+        take(1),
+        switchMap((logoRD: RemoteData<Bitstream>) => {
+          if (logoRD.hasSucceeded && logoRD.payload) {
+            return of(logoRD);
           } else {
-            this.logo = null;
-            this.changeDetectorRef.detectChanges();
+            return fullCommunity.parentCommunity.pipe(
+              getFirstSucceededRemoteDataPayload(),
+              take(1),
+              switchMap((parentCommunity: Community) => {
+                if (parentCommunity) {
+                  return this.getRecursiveLogo(parentCommunity);
+                } else {
+                  return of(null);
+                }
+              })
+            );
           }
-        }, (error) => {
-          this.logo = null;
-          this.changeDetectorRef.detectChanges();
-        });
-      }
-    });
+        })
+      ))
+    );
   }
 }
