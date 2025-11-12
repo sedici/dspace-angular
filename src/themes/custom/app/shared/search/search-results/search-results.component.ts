@@ -1,8 +1,10 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, Input, Output, EventEmitter, Inject, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Inject, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { Observable, of } from 'rxjs';
+import { map, startWith, switchMap, tap } from 'rxjs/operators';
 
 import {
   fadeIn,
@@ -24,6 +26,14 @@ import { SearchDropdownComponent } from './search-dropdown/search-dropdown.compo
 import { SearchLabelsComponent } from '../../../../../../app/shared/search/search-labels/search-labels.component';
 import { ViewModeSwitchComponent } from 'src/app/shared/view-mode-switch/view-mode-switch.component';
 import { ViewMode } from 'src/app/core/shared/view-mode.model';
+import { hasValueOperator } from 'src/app/shared/empty.util';
+import { PaginatedList } from 'src/app/core/data/paginated-list.model';
+import { RemoteData } from 'src/app/core/data/remote-data';
+
+interface PaginationDetails {
+  range: string;
+  total: number;
+}
 
 @Component({
   selector: 'ds-themed-search-results',
@@ -49,13 +59,17 @@ import { ViewMode } from 'src/app/core/shared/view-mode.model';
     ViewModeSwitchComponent,
   ],
 })
-export class SearchResultsComponent extends BaseComponent {
+export class SearchResultsComponent extends BaseComponent implements OnChanges {
   @Input() inPlaceSearch: boolean;
   @Input() showViewModes = true;
   @Input() viewModeList: string[];
 
   @Output() changeViewMode = new EventEmitter<ViewMode>();
 
+  /**
+   * The total number of results
+   */
+  public showingDetails$: Observable<PaginationDetails> = of({ range: `${null} - ${null}`, total: null });
 
   constructor(
     @Inject(SEARCH_CONFIG_SERVICE) public searchConfigurationService: SearchConfigurationService,
@@ -64,6 +78,49 @@ export class SearchResultsComponent extends BaseComponent {
   ) {
     super(searchConfigurationService, searchService);
   }
+
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.searchResults && changes.searchResults.currentValue) {
+      const currentSearchResults: RemoteData<PaginatedList<any>> = changes.searchResults.currentValue;
+      if (currentSearchResults.hasSucceeded && currentSearchResults.payload) {
+        this.showingDetails$ = this.getShowingDetails(currentSearchResults.payload.totalElements);
+      } else {
+        // Initialize showingDetails$ to a default if searchResults are not yet available or failed
+        this.showingDetails$ = of({ range: `${null} - ${null}`, total: null });
+      }
+    }
+  }
+
+  /**
+   * Method to get pagination details of the current viewed page.
+   */
+  public getShowingDetails(collectionSize: number): Observable<PaginationDetails> {
+    return of(collectionSize).pipe(
+      hasValueOperator(),
+      switchMap(() => this.paginationService.getCurrentPagination(this.searchConfigurationService.paginationID, this.searchConfig.pagination)),
+      map((currentPaginationOptions) => {
+        let lastItem: number;
+        const pageMax = currentPaginationOptions.pageSize * currentPaginationOptions.currentPage;
+
+        const firstItem: number = currentPaginationOptions.pageSize * (currentPaginationOptions.currentPage - 1) + 1;
+        if (collectionSize > pageMax) {
+          lastItem = pageMax;
+        } else {
+          lastItem = collectionSize;
+        }
+        return {
+          range: `${firstItem} - ${lastItem}`,
+          total: collectionSize,
+        };
+      }),
+      startWith({
+        range: `${null} - ${null}`,
+        total: null,
+      }),
+    );
+  }
+
 
   /**
    * Method to change the current sort field and direction
