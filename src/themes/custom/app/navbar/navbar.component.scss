@@ -58,7 +58,7 @@
         color: var(--ds-navbar-link-color-hover);
       }
 
-      @media (max-width: 1300px) {
+      @media (max-width: 1300px) and (min-width: 768px) {
         padding: 0rem;
         /* Use clamp for fluid font size: min, preferred, max */
         font-size: clamp(0.6rem, 1.2vw, 1rem) !important;

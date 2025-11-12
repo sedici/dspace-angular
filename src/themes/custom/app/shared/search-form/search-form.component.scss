@@ -6,8 +6,8 @@
     transform: translateY(-50%);
     background-color: #4a90e2;
     border-radius: 50% !important;
-    width: clamp(2.5vh, 2.5vw, 4.5vh);
-    height: clamp(2.5vh, 2.5vw, 4.5vh);
+    width: clamp(1.8rem, 3.5vw, 2.3rem);
+    height: clamp(1.8rem, 3.5vw, 2.3rem);
     z-index: 10;
     border-color: transparent;
 
@@ -17,7 +17,7 @@
 
     i {
       color: #fff !important;
-      font-size: clamp(0.75rem, 1.3vw, 2.1vh);
+      font-size: clamp(0.75rem, 1.3vw, 1.2rem);
     }
 }
 
