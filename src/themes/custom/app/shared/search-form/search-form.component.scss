@@ -6,14 +6,18 @@
     transform: translateY(-50%);
     background-color: #4a90e2;
     border-radius: 50% !important;
-    width: 40px;
-    height: 40px;
+    width: clamp(2.5vh, 2.5vw, 4.5vh);
+    height: clamp(2.5vh, 2.5vw, 4.5vh);
     z-index: 10;
     border-color: transparent;
 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     i {
       color: #fff !important;
-      font-size: 1.2rem !important;
+      font-size: clamp(0.75rem, 1.3vw, 2.1vh);
     }
 }
 
@@ -28,6 +32,8 @@
   border-radius: 25px;
   background-color: white;
   opacity: 0.9;
+  height: clamp(30px, 4vw + 1vh, 45px); /* Responsive height with min/max */
+  align-content: center;
 }
 
 .form-control {
@@ -101,8 +107,8 @@
 .form-control--navbar,
 .form-control--home {
   background-color: transparent;
-  font-size: 1.2rem;
-  padding-left: 2rem;
+  font-size: 1.1rem;
+  padding-left: 1rem;
   
   &:-webkit-autofill{
     border-top-right-radius: 25px !important;
@@ -112,6 +118,10 @@
   &:focus {
     outline: none !important;
     box-shadow: none !important;
+  }
+
+  @media screen and (max-width: 1425px) {
+    font-size: clamp(0.6rem, 1vw, 1rem);
   }
 }
 
