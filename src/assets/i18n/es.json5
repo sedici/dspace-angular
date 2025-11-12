@@ -5213,13 +5213,13 @@
   "login.form.email": "Correo electrónico",
 
   // "login.form.forgot-password": "Have you forgotten your password?",
-  "login.form.forgot-password": "¿Has olvidado tu contraseña?",
+  "login.form.forgot-password": "¿Ha olvidado su contraseña?",
 
   // "login.form.header": "Please log in to DSpace",
   "login.form.header": "Inicie sesión en SEDICI",
 
   // "login.form.new-user": "New user? Click here to register.",
-  "login.form.new-user": "¿Nuevo Usuario? Pulse aquí para registrarse",
+  "login.form.new-user": "¿Nuevo usuario? Pulse aquí para registrarse",
 
   // "login.form.oidc": "Log in with OIDC",
   "login.form.oidc": "Iniciar sesión con OIDC",
