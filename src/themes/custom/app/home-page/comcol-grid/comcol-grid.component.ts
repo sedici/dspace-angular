@@ -24,6 +24,12 @@ export class ComcolGridComponent implements OnInit {
   apiBase = '/api';
   defaultColor = '#cccccc';
 
+  public isCarouselAtStart: boolean = true;
+  public isCarouselAtEnd: boolean = false;
+  public carouselPage: number = 0;
+  public totalCarouselPages: number = 1;
+  private itemsPerPage: number = 6;
+
   constructor(
     private communityDataService: CommunityDataService,
     private cdr: ChangeDetectorRef,
@@ -31,6 +37,12 @@ export class ComcolGridComponent implements OnInit {
 
   ngOnInit(): void {
     this.assignColorsFromCommunities();
+
+    const totalItems = this.coleccionesDestacadas.length;
+    this.totalCarouselPages = Math.ceil(totalItems / this.itemsPerPage);
+    this.carouselPage = 0;
+    this.isCarouselAtStart = true;
+    this.isCarouselAtEnd = this.totalCarouselPages <= 1;
   }
 
   private parseHandleFromHref(href: string): string | null {
@@ -83,6 +95,56 @@ export class ComcolGridComponent implements OnInit {
       console.error('Error recuperando communities hijas', err);
       [...this.facultades, ...this.pregrado].forEach(i => (i as any).color = this.defaultColor);
     });
+  }
+
+  public scrollGrid(container: HTMLElement, direction: 'left' | 'right'): void {
+    if (direction === 'right') {
+      if (this.carouselPage < (this.totalCarouselPages - 1)) {
+        this.carouselPage++;
+      }
+    } else {
+      if (this.carouselPage > 0) {
+        this.carouselPage--;
+      }
+    }
+
+    let targetScrollLeft = 0;
+
+    if (this.carouselPage === (this.totalCarouselPages - 1)) {
+      targetScrollLeft = container.scrollWidth - container.clientWidth;
+    } else {
+      const items = container.children;
+      
+      if (items.length > 0) {
+        const firstItem = items[0] as HTMLElement;
+        const secondItem = items[1] as HTMLElement;
+        const itemWidth = firstItem.offsetWidth;
+        const gap = secondItem ? secondItem.offsetLeft - (firstItem.offsetLeft + itemWidth) : 0;
+        const itemsToScroll = this.carouselPage * this.itemsPerPage;
+        targetScrollLeft = itemsToScroll * (itemWidth + gap);
+      }
+    }
+
+    container.scrollTo({ 
+      left: targetScrollLeft, 
+      behavior: 'smooth' 
+    });
+  }
+
+  public onCarouselScroll(container: HTMLElement): void {
+    const { scrollLeft, clientWidth, scrollWidth } = container;
+    const threshold = 10; 
+
+    this.isCarouselAtStart = scrollLeft < threshold;
+    this.isCarouselAtEnd = (scrollLeft + clientWidth) >= (scrollWidth - threshold);
+
+    if (this.isCarouselAtEnd) {
+      this.carouselPage = this.totalCarouselPages - 1;
+    } else {
+      this.carouselPage = Math.round(scrollLeft / clientWidth);
+    }
+    
+    this.cdr.detectChanges();
   }
 
   coleccionesDestacadas:Array<ExploracionDestacada> = [
