@@ -1686,7 +1686,7 @@
   "browse.startsWith.months.september": "septiembre",
 
   // "browse.startsWith.submit": "Browse",
-  "browse.startsWith.submit": "Examinar",
+  "browse.startsWith.submit": "Buscar",
 
   // "browse.startsWith.type_date": "Filter results by date",
   "browse.startsWith.type_date": "Resultados por fecha",
@@ -1695,7 +1695,7 @@
   "browse.startsWith.type_date.label": "O escriba una fecha (año-mes) y haga clic en el botón Examinar",
 
   // "browse.startsWith.type_text": "Filter results by typing the first few letters",
-  "browse.startsWith.type_text": "Seleccione resultados tecleando las primeras letras",
+  "browse.startsWith.type_text": "Busque resultados ingresando las primeras letras del apellido del autor/a",
 
   // "browse.startsWith.input": "Filter",
   "browse.startsWith.input": "Filtrar",
@@ -1704,10 +1704,10 @@
   "browse.taxonomy.button": "Examinar",
 
   // "browse.title": "Browsing by {{ field }}{{ startsWith }} {{ value }}",
-  "browse.title": "Examinando por {{ field }} {{ value }}",
+  "browse.title": "Buscar por {{ field }} {{ value }}",
 
   // "browse.title.page": "Browsing by {{ field }} {{ value }}",
-  "browse.title.page": "Examinando por {{ field }} {{ value }}",
+  "browse.title.page": "Buscar por {{ field }} {{ value }}",
 
   // "search.browse.item-back": "Back to Results",
   "search.browse.item-back": "Volver a los resultados",
@@ -7530,7 +7530,7 @@
   "search.results.no-results": "Su búsqueda no produjo resultados. ¿Tiene problemas para encontrar lo que busca? Intente poner",
 
   // "search.results.no-results-link": "quotes around it",
-  "search.results.no-results-link": "citas a su alrededor",
+  "search.results.no-results-link": "comillas a su alrededor",
 
   // "search.results.empty": "Your search returned no results.",
   "search.results.empty": "Su búsqueda no produjo resultados.",
