@@ -19,7 +19,7 @@
 
 // Badge del access status
 .access-status-badge {
-  font-size: medium;
+  font-size: 1rem;
   font-weight: 400;
 
   @media screen and (max-width: 768px) {
@@ -37,7 +37,7 @@
   &.access-status-metadata-only-listelement-badge,
   &.access-status-embargo-listelement-badge {
   font-family: "Roboto", sans-serif;
-  font-size: medium;
+  font-size: 1rem;
   font-weight: 300;
   color: var(--bs-body-color);
   }
@@ -72,7 +72,7 @@
 }
 
 .badge {
-  font-size: medium;
+  font-size: 1rem;
   font-weight: 400;
   border-radius: 2.5px;
   font-size: 0.9rem;
