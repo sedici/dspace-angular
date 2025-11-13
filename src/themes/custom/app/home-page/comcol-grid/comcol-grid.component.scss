@@ -228,7 +228,10 @@
     // Lógica para carrusel
     .carousel-wrapper.is-carousel {
       .carousel-arrow {
-        display: block;
+        display: flex;
+        align-content: center;
+        align-items: center;
+        justify-content: center;
       }
       
       .section-grid.single-row-scroll {
@@ -293,11 +296,11 @@
     }
 
     &.left {
-      left: 0;
+      left: -3rem;
     }
 
     &.right {
-      right: 0;
+      right: -3rem;
     }
   }
 }
