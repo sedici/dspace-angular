@@ -53,17 +53,24 @@
 
 .item-type-overlay {
   position: absolute;
-  top: 0.75rem;
-  left: 0.75rem;
+  left: 0rem;
+  top: -0.143rem;
   z-index: 2;
+}
+
+:host ::ng-deep .badge {
+  border-radius: 0px !important; // SEDICI TODO: "Sacar este estilo y ponerlo bien en el componente badge"
 }
 
 .item-year-overlay {
   position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
+  top: 0rem;
+  right: 0rem;
   z-index: 2;
-  color: #333;
+  color: white;
+  background-color: gray;
+  line-height: normal;
+  padding: 0.25rem; // SEDICI TODO: Ver por qué necestita este padding si el otro badge tiene 0.3
 }
 
 .author-icon, .building-icon {
