@@ -3,7 +3,7 @@ a {
 }
 
 .download-btn {
-  background-color: var(--sedici-color);
+  background-color: #535353;
   color: white;
   border: none;
   cursor: pointer;
@@ -16,7 +16,7 @@ a {
   width: -webkit-fill-available;
   
   &:hover {
-    background-color: #5c9acb;  // Azul un poco más oscuro al hover
+    background-color: #3e3e3e;  // Azul un poco más oscuro al hover
   }
 }
 
