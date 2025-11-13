@@ -18,10 +18,15 @@
 </div>
 
 <div class="search-results-header">
-  <!-- @if (!disableHeader) {
-    <h1>{{ (configuration ? configuration + '.search.results.head' : 'search.results.head') | translate }}</h1>
-  } Comentado hasta ver si se va o no-->
-  <span class="show-results hidden-xs-down">{{ 'pagination.showing.label' | translate: { total: (showingDetails$ | async)?.total } }}</span> <!--SEDICI -->
+  @if (showingDetails$ | async; as details) {
+    <span class="show-results hidden-xs-down">
+      @if (details.total > 0) {
+        {{ 'pagination.showing.label' | translate: { total: details.total } }}
+      } @else {
+        &nbsp;
+      }
+    </span> <!--SEDICI -->
+  }
   <div class="view-modes-and-sort">
     @if (showViewModes) {
       <ds-view-mode-switch class="d-none d-md-block"

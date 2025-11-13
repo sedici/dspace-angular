@@ -32,7 +32,7 @@
   border-radius: 25px;
   background-color: white;
   opacity: 0.9;
-  height: clamp(30px, 4vw + 1vh, 45px); /* Responsive height with min/max */
+  height: clamp(30px, 4vw + 1vh, 54px); /* Responsive height with min/max */
   align-content: center;
 }
 
@@ -120,8 +120,10 @@
     box-shadow: none !important;
   }
 
-  @media screen and (max-width: 1425px) {
-    font-size: clamp(0.6rem, 1vw, 1rem);
-  }
 }
 
+.form-control--navbar{
+  @media screen and (max-width: 1425px) {
+    font-size: clamp(0.8rem, 0.5929rem + 0.457vw, 1rem);
+  }
+}

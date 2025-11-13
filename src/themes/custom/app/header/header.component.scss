@@ -14,11 +14,11 @@
 
     img#header-logo {
       height: auto;
-      max-height: var(--ds-header-logo-height);
+      max-height: 60px;
 
       @media (min-width: 768px) {
         width: 25vw;
-        max-width: 300px;
+        max-width: 360px;
         min-width: 170px;
       }
 
@@ -48,6 +48,11 @@
       ::ng-deep ds-auth-nav-menu button, 
       ::ng-deep ds-lang-switch a {
         color: white;
+        font-size: 1rem;
+
+        @media screen and (min-width: 768px) and (max-width: 1300px) {
+          font-size: clamp(0.6rem, 1vw, 1rem);
+        }
 
         &:hover, &:focus {
           color: var(--sedici-color);
@@ -93,6 +98,10 @@
   .padding-logo {
     padding: 1.5rem 0rem 1rem 2.8vw;
     margin-right: 10px;
+
+    @media (min-width: 768px) and (max-width: 1400px) {
+      padding-left: clamp(10px, 1vw, 30px);
+    }
   }
 
   #navbar-toggler {

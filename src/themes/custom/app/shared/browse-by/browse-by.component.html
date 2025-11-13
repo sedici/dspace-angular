@@ -5,7 +5,7 @@
   <ds-starts-with-loader [paginationId]="paginationConfig?.id" [startsWithOptions]="startsWithOptions" [type]="type">
   </ds-starts-with-loader>
 
-  @if (hasSearched$ | async) {  <!-- ✅ Quitar las comillas -->
+  @if (hasSearched$ | async) {
     @if (objects?.hasSucceeded && !objects?.isLoading && objects?.payload?.page.length > 0) {
       <div @fadeIn>
         @if (shouldDisplayResetButton$ |async) {
