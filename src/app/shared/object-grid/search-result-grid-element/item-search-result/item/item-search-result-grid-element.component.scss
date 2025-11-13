@@ -59,7 +59,8 @@
 }
 
 :host ::ng-deep .badge {
-  border-radius: 0px !important; // SEDICI TODO: "Sacar este estilo y ponerlo bien en el componente badge"
+  border-radius: 0px !important; // SEDICI TODO: Sacar este estilo y ponerlo bien en el componente badge
+  padding: 0.4rem !important;
 }
 
 .item-year-overlay {
@@ -70,7 +71,7 @@
   color: white;
   background-color: gray;
   line-height: normal;
-  padding: 0.25rem; // SEDICI TODO: Ver por qué necestita este padding si el otro badge tiene 0.3
+  padding: 0.34rem; // SEDICI TODO: Ver por qué necestita este padding si el otro badge tiene 0.3
 }
 
 .author-icon, .building-icon {

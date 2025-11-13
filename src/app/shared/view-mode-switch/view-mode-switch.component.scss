@@ -10,21 +10,29 @@
   align-items: center;
   justify-content: center;
   border: none;
-  background-color: #e0e0e0;
+  background-color: transparent;
   transition: all 0.2s ease;
+  border-radius: 5px;
 }
 
 .view-toggle-button:hover {
-  background-color: #d0d0d0;
+  background-color: #e7e7e7;
+  i{
+    color: #c2c3c5;
+  }
 }
 
 .view-toggle-button.active {
   background-color: #c0c0c0;
+
+  i{
+    color: white;
+  }
 }
 
 .view-toggle-button i {
   font-size: 20px;
-  color: #ffffff;
+  color: #d0d0d0;
 }
 
 /* Versión con ícono más pequeño para el segundo botón */
