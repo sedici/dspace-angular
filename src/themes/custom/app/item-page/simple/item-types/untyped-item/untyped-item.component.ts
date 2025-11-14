@@ -104,7 +104,16 @@ export class UntypedItemComponent extends BaseComponent {
   get hasMetadata(): boolean {
     return this.hasField('sedici.description.note') ||
            this.hasField('dc.format') ||
-           this.hasField('dc.format.medium');
+           this.hasField('dc.format.medium') ||
+           this.hasField('sedici.contributor.director') ||
+           this.hasField('sedici.contributor.codirector') ||
+           this.hasField('thesis.degree.name') ||
+           this.hasField('thesis.degree.grantor') ||
+           this.hasField('sedici.institucionDesarrollo') ||
+           this.hasField('sedici.contributor.juror') ||
+           this.hasField('dc.audience') ||
+           this.hasField('dc.coverage.spatial') ||
+           this.hasField('dc.coverage.temporal');
   }
 
   // Comprueba si el campo existe y tiene contenido
