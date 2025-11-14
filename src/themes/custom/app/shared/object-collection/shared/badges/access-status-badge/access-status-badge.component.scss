@@ -38,22 +38,16 @@
   &.access-status-embargo-listelement-badge {
   font-family: "Roboto", sans-serif;
   font-size: 1rem;
-  font-weight: 300;
-  color: var(--bs-body-color);
+  font-weight: 400;
+  color: rgba(72, 72, 72, 1);
   }
-  
-  // &.access-status-restricted-listelement-badge {
-  //   color: #333333;
-  // }
 
-  // &.access-status-metadata-only-listelement-badge,
-  // &.access-status-embargo-listelement-badge {
-  //   color: #333333;
-  // }
 }
 
 // Vista de item (background con color, texto blanco)
 .item-view {  
+  padding: 0.4rem;
+
   &.access-status-open-access-listelement-badge {
     border: 1px solid #248D28;
     color: #248D28;
@@ -78,11 +72,9 @@
   font-size: 0.9rem;
   font-family: "Roboto";
   font-weight: var(--font-weight-regular);
-  padding: 3.9px;
 
   @media screen and (max-width: 768px) {
     font-size: small;
-    padding: 4.5px;
   }
 }
 

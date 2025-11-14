@@ -10036,7 +10036,7 @@
   "sedici.license.restriction.description": "No puede aplicar términos legales ni medidas tecnológicas que restrinjan legalmente a otras a hacer cualquier uso permitido por la licencia.",
 
   // Home
-  "home.page.search.placeholder": "Busque entre los {{ totalItems }} recursos disponibles en el repositorio",
+  "home.page.search.placeholder": "Buscar entre los {{ totalItems }} recursos disponibles...",
   "home.page.author": "Autores",
   "home.page.publication": "Publicaciones",
   "home.page.academicUnit": "Unidades Académicas",
