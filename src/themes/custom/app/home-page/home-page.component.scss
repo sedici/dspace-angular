@@ -155,4 +155,25 @@ div.row.container {
       max-width: 250px;
     }
   }
+
+  @media screen and (max-width: 1300px) {
+    .title-container {
+      font-size: 1.5rem;
+      justify-content: start;
+      padding-left: 5%;
+    }
+
+    .projects-section {
+      justify-content: flex-start;
+      overflow-x: auto;
+      flex-wrap: nowrap;
+      gap: 3rem;
+      padding: 0 1rem;
+
+      a img {
+        max-width: 200px;
+        max-height: 100px;
+      }
+    }
+  }
 }
