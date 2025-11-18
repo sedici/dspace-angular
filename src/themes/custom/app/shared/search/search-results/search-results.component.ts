@@ -79,6 +79,17 @@ export class SearchResultsComponent extends BaseComponent implements OnChanges {
     super(searchConfigurationService, searchService);
   }
 
+  ngOnInit(): void {
+    this.paginationService.updateRoute(
+      this.searchConfigurationService.paginationID,
+      {
+        pageSize: 20,
+        page: 1,
+      },
+      {},
+      true
+    );
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.searchResults && changes.searchResults.currentValue) {
