@@ -70,10 +70,10 @@ export class BrowseByComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     super.ngOnInit();
-    this._routeService.getQueryParameterValue('bbm.page').pipe(
-      map(value => hasValue(value)),
-    ).subscribe((isBbmPageOne: boolean) => {
-      this.hasSearched$.next(isBbmPageOne);
+    this._routeService.getQueryParamMap().pipe(
+      map(params => params.keys.length > 0),
+    ).subscribe((hasAnyQueryParam: boolean) => {
+      this.hasSearched$.next(hasAnyQueryParam);
     });
   }
 }

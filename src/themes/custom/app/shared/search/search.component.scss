@@ -18,11 +18,17 @@
 .config-view-container {
   display: flex;
   gap: 0.5rem;
+  justify-content: space-between;
+
+
 
   .config-right {
     display: flex;
     gap: 0.5rem;
-    margin-left: auto;
+
+    .filters-container {
+      display: flex;
+    }
   }
 
   @media screen and (max-width: 768px) {

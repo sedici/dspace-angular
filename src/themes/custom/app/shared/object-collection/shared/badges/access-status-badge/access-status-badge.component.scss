@@ -15,6 +15,10 @@
   &.access-status-embargo-listelement-badge {
     color: #6c757d;
   }
+
+  @media screen and (max-width: 768px) {
+    font-size: 0.6em;
+  }
 }
 
 // Badge del access status
@@ -40,9 +44,16 @@
   font-size: 1rem;
   font-weight: 400;
   color: rgba(72, 72, 72, 1);
+
+  @media screen and (max-width: 768px) {
+    font-size: 0.9rem;
+    padding-left: 0px;
+  }
   }
 
 }
+
+
 
 // Vista de item (background con color, texto blanco)
 .item-view {  
