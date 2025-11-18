@@ -13,7 +13,7 @@ a {
   transition: background-color 0.2s ease;
   padding-top: 3px;
   padding-bottom: 3px;
-  width: -webkit-fill-available;
+  width: 100%;
   
   &:hover {
     background-color: #3e3e3e;  // Azul un poco más oscuro al hover
@@ -40,5 +40,29 @@ a {
     .fas {
       font-size: 1em;
     }
+
+    @media screen and (max-width: 768px) {
+      flex: 1;
+      padding: 0px;
+      margin: 0px;
+      font-size: 0.875rem;
+      width: 100%;
+    }
+  }
+}
+
+.btn{
+  @media screen and (max-width: 768px) {
+    padding:0px;
+    
+  }
+}
+
+.download-text {
+  @media screen and (max-width: 768px) {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.75rem;
   }
 }

@@ -22,8 +22,10 @@
             <span role="img" [attr.aria-label]="'file-download-link.download' | translate">
               <i class="fas fa-download"></i>
             </span>
-            <span>Descargar ({{ adaptFileSize((bitstream?.sizeBytes) | dsFileSize:0) }})</span>
-          </div>
+            <span class="download-text">
+              Descargar ({{ adaptFileSize((bitstream?.sizeBytes) | dsFileSize:0) }})
+            </span>
+          </div>        
         }
         @if (!isMobile) {
           <div class="svg-container">
