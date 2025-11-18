@@ -1,10 +1,11 @@
 
 import { Component, OnInit, ViewChild, Input, ElementRef } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { plugins, Cite } from '@citation-js/core';
+import { Cite } from '@citation-js/core';
 import '@citation-js/plugin-csl';
 import '@citation-js/plugin-bibtex';
 import { MetadatumViewModel } from 'src/app/core/shared/metadata.models';
+import * as CSL from 'citeproc';
 
 @Component({
   selector: 'sedici-citation',
@@ -33,22 +34,12 @@ export class SediciCitationComponent implements OnInit {
   constructor(public activeModal: NgbActiveModal) {}
 
   async ngOnInit() {
-    const resMla = await fetch(
-      'https://raw.githubusercontent.com/citation-style-language/styles/master/modern-language-association.csl'
-    );
-    const resChi = await fetch(
-      'https://raw.githubusercontent.com/citation-style-language/styles/master/chicago-author-date.csl'
-    );
-    const mlaStyle = await resMla.text()
-    const chicagoStyle = await resChi.text();
     this.jsonData = this.metadataToJSON(this.metadata);
     this.generateCitation(this.citationType);
-    plugins.config.get('@csl').templates.add('mla', mlaStyle);
-    plugins.config.get('@csl').templates.add('chicago-author-date', chicagoStyle);
   }
 
   private metadataToJSON(metadata: MetadatumViewModel[]) {
-    var data = {};
+    var data = { id: '1' };
     var autores = []
     for (let i = 0; i < metadata.length; i++) {
       switch (metadata[i].key){
@@ -142,28 +133,45 @@ export class SediciCitationComponent implements OnInit {
     }
   }
 
-  generateCitation(type: string): void {
-    const cite = new Cite(this.jsonData);
-    if (type === 'apa') {
-      this.citation = cite.format('bibliography', {
-        format: 'text',
-        template: 'apa'
-      });
-    } else if (type === 'bibtex') {
-       this.citation = cite.format('bibtex', {
+  async generateCitation(type: string) {
+    if (type === 'bibtex') {
+      const cite = new Cite(this.jsonData);
+      this.citation = cite.format('bibtex', {
         format: 'text',
       });
-    } else if (type === 'mla'){
-      this.citation = cite.format('bibliography', {
-        format: 'text',
-        template: 'mla'
-      });
-    } else if (type === 'chicago'){
-      this.citation = cite.format('bibliography', {
-        format: 'text',
-        template: 'chicago-author-date'
-      });
+      return;
     }
+
+    const styles = {
+      apa: 'https://raw.githubusercontent.com/citation-style-language/styles/master/apa-no-ampersand.csl',
+      chicago: 'https://raw.githubusercontent.com/citation-style-language/styles/master/chicago-author-date.csl',
+      mla: 'https://raw.githubusercontent.com/citation-style-language/styles/master/modern-language-association.csl',
+    };
+
+    const styleURL = styles[type];
+    const localeURL = 'https://raw.githubusercontent.com/citation-style-language/locales/master/locales-es-ES.xml';
+
+    const [styleResponse, localeResponse] = await Promise.all([
+      fetch(styleURL),
+      fetch(localeURL),
+    ]);
+
+    const style = await styleResponse.text();
+    const locale = await localeResponse.text();
+
+    const sys = {
+      retrieveLocale: () => locale,
+      retrieveItem: () => this.jsonData,
+    };
+
+    const engine = new CSL.Engine(sys, style);
+    engine.updateItems([this.jsonData.id]);
+
+    const result = engine.makeBibliography();
+    const citationHTML = result[1][0];
+    const parser = new DOMParser();
+    const decodedString = parser.parseFromString(citationHTML, "text/html").documentElement.textContent;
+    this.citation = decodedString;
   }
 
   onCitationTypeChange(event: Event): void {
