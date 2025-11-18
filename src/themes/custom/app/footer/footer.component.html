@@ -32,7 +32,7 @@
     <div class="bottom-left">
       <!-- <span><b>PREBI - SEDICI UNLP © 2003</b> - Universidad Nacional de La Plata</span> -->
       <div class="bottom-footer-text-container">
-        <div class="bottom-footer-text"><b>PREBI - SEDICI UNLP © 2003</b></div>
+        <div class="bottom-footer-text"><b>PREBI - SEDICI UNLP © 2003-{{ dateObj | date:'y' }}</b></div>
         @if ((isMobile$ | async) !== true) { &nbsp;-&nbsp; }
         <div class="bottom-footer-text">Universidad Nacional de La Plata</div>
       </div>
