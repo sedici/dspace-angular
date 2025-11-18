@@ -71,9 +71,9 @@ export class ItemSearchResultListElementComponent extends BaseComponent {
 
 
   getFirstAvailableAuthors(): void {
-    const creators = this.dso.allMetadata(['sedici.creator.person']);
+    const creators = this.dso.allMetadata(['sedici.creator.person', 'sedici.creator.interprete']);
     if (creators.length > 0) {
-      this.authors = this.allMetadataValues(['sedici.creator.person']);
+      this.authors = this.allMetadataValues(['sedici.creator.person', 'sedici.creator.interprete']);
     } else {
       const compilers = this.dso.allMetadata(['sedici.contributor.compiler']);
       if (compilers.length > 0) {
