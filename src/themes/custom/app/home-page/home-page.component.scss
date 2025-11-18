@@ -104,15 +104,22 @@ div.row.container {
   text-align: center;
 
   @media screen and (max-width: map-get($grid-breakpoints, md)) {
+    flex-direction: row;
     padding: 1rem;
-    gap: 3rem;
+    gap: clamp(1rem, 2vw, 3rem);
     box-shadow: 0 -5px rgba(0,0,0,0.1);
   }
 
   img {
     margin-bottom: 1rem;
     width: 100%;
-    max-width: 60px;
+    max-width: 3.8rem;
+    height: 3.8rem;
+
+    @media screen and (max-width: map-get($grid-breakpoints, md)) {
+      margin-bottom: 0;
+      max-width: 2.5rem;
+    }
   }
 
   .help-text {
@@ -120,7 +127,7 @@ div.row.container {
     color: white;
 
     @media screen and (max-width: map-get($grid-breakpoints, md)) {
-      font-size: 1rem;
+      font-size: clamp(0.9rem, 2.5vw, 1.2rem);
     }
   }
 }
@@ -152,7 +159,30 @@ div.row.container {
     justify-content: space-evenly;
 
     a img {
+      min-width: 150px;
+      width: 100%;
       max-width: 250px;
+    }
+  }
+
+  @media screen and (max-width: 1300px) {
+    .title-container {
+      font-size: 1.5rem;
+      justify-content: start;
+      padding-left: 5%;
+    }
+
+    .projects-section {
+      justify-content: flex-start;
+      overflow-x: auto;
+      flex-wrap: nowrap;
+      gap: 3rem;
+      padding: 0 1rem;
+
+      a img {
+        max-width: 150px;
+        max-height: 75px;
+      }
     }
   }
 }
