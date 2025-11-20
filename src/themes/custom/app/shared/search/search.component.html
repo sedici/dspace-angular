@@ -90,6 +90,7 @@
           [sortOptionsList]="(sortOptionsList$ | async)"
           [currentSortOption]="(currentSortOptions$ | async)"
           [showThumbnails]="showThumbnails"
+          [inPlaceSearch]="inPlaceSearch"
           (contentChange)="onContentChange($event)"
           (deselectObject)="deselectObject.emit($event)"
         (selectObject)="selectObject.emit($event)"></ds-search-results>

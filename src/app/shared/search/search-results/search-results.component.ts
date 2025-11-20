@@ -144,6 +144,8 @@ export class SearchResultsComponent {
 
   @Input() context: Context;
 
+  @Input() inPlaceSearch: boolean;
+
   /**
    * Option for hiding the pagination detail
    */
