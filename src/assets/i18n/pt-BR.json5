@@ -5443,6 +5443,9 @@
   // "menu.section.new_item": "Item",
   "menu.section.new_item": "Item",
 
+  // "menu.section.new_item_sedici": "New Item",
+  "menu.section.new_item_sedici": "Novo Item",
+
   // "menu.section.new_item_version": "Item Version",
   "menu.section.new_item_version": "Versão do Item",
 
@@ -7064,6 +7067,9 @@
   // "search.filters.applied.f.itemtype": "Type",
   "search.filters.applied.f.itemtype": "Tipo",
 
+  // "search.filters.applied.f.itemsubtype": "Subtype",
+  "search.filters.applied.f.itemsubtype": "Subtipo",
+
   // "search.filters.applied.f.namedresourcetype": "Status",
   "search.filters.applied.f.namedresourcetype": "Estado",
 
@@ -7262,6 +7268,16 @@
 
   // "search.filters.filter.itemtype.label": "Search type",
   "search.filters.filter.itemtype.label": "Procurar tipo",
+
+  // "search.filters.filter.itemsubtype.head": "Subtype",
+  // "search.filters.filter.itemsubtype.head": "Subtipo",
+
+  // "search.filters.filter.itemsubtype.placeholder": "Subtype",
+  // "search.filters.filter.itemsubtype.placeholder": "Subtipo",
+
+  // "search.filters.filter.itemsubtype.label": "Search Subtype",
+  // "search.filters.filter.itemsubtype.label": "Procurar Subtipo",
+
 
   // "search.filters.filter.jobTitle.head": "Job Title",
   "search.filters.filter.jobTitle.head": "Cargo",
@@ -10952,6 +10968,8 @@
 
   "sedici.item.page.sedici.share": "Compartilhar",
 
+  "sedici.item.page.sedici.copy": "Copiar",
+
   // "sedici.item.page.sedici.creator.corporate": "Autor institucional",
   "sedici.item.page.sedici.creator.corporate": "Autor Institucional",
   
@@ -11127,6 +11145,10 @@
   
   "sedici.license.restriction.description": "Você não pode aplicar termos jurídicos ou medidas de caráter tecnológico que restrinjam legalmente outros de fazerem algo que a licença permita.",
 
+  "home.page.welcome.title": "Explora toda a produção da Universidade Nacional de La Plata",
+  
+  "home.page.welcome.text": "<b>O Serviço de Difusão da Criação Intelectual</b>, repositório institucional central da <b>UNLP</b>, abriga, preserva, difunde e dá visibilidade a nível mundial a toda a produção científica e intelectual da universidade.", 
+
   "home.page.search.placeholder": "Busque entre os {{ totalItems }} recursos disponíveis no repositório",
 
   "home.page.author": "Autores",
@@ -11160,6 +11182,8 @@
   "home.page.growthStatistics": "Estatísticas de Crescimento",
 
   "home.page.allies": "Aliados",
+
+  "home.page.projects": "Projetos",
 
   // "file-download-link.download": "Download ",
   "file-download-link.download": "Baixar ",

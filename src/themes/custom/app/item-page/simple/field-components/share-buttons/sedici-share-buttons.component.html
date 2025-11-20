@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h4 class="modal-title">Compartir</h4>
+  <h4 class="modal-title">{{'sedici.item.page.sedici.share' | translate}}</h4>
   <button type="button" class="btn-close" aria-label="Close" (click)="close()">
   </button>
 </div>
@@ -8,7 +8,7 @@
     <!-- Barra de enlace para copiar -->
     <div class="link-bar">
       <input type="text" class="share-link" [value]="link" readonly #elementContentToCopy>
-      <button id="copyButton" (click)="copyToClipboard(elementContentToCopy)">Copiar</button>
+      <button id="copyButton" (click)="copyToClipboard(elementContentToCopy)">{{'sedici.item.page.sedici.copy' | translate}}</button>
       @if (copySuccess) {
         <span id="copySuccessMessage" class="copy-success-message">✓</span>
       }

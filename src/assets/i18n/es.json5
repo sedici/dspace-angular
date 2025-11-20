@@ -5433,6 +5433,7 @@
   // "menu.section.new_item": "Item",
   "menu.section.new_item": "Ítem",
 
+  // "menu.section.new_item_sedici": "New Item",
   "menu.section.new_item_sedici": "Subir material",
 
   // "menu.section.new_item_version": "Item Version",
@@ -9966,6 +9967,7 @@
   "sedici.item.page.unknown.author": "Autor desconocido",
   "sedici.item.page.sedici.citation": "Citar",
   "sedici.item.page.sedici.share": "Compartir",
+  "sedici.item.page.sedici.copy": "Copiar",
   "sedici.item.page.sedici.creator.corporate": "Autor institucional",
   "sedici.item.page.sedici.creator.interprete": "Intérprete",
   "sedici.item.page.sedici.contributor.compiler": "Compilador",
@@ -10038,6 +10040,8 @@
   "sedici.license.restriction.description": "No puede aplicar términos legales ni medidas tecnológicas que restrinjan legalmente a otras a hacer cualquier uso permitido por la licencia.",
 
   // Home
+  "home.page.welcome.title": "Explorá toda la producción de la Universidad Nacional de La Plata",
+  "home.page.welcome.text": "<b>El Servicio de Difusión de la Creación Intelectual</b>, repositorio institucional central de la <b>UNLP</b>, alberga, preserva, difunde y da visibilidad a nivel mundial a toda la producción científica e intelectual de la universidad.",
   "home.page.search.placeholder": "Buscar entre los {{ totalItems }} recursos disponibles...",
   "home.page.author": "Autores",
   "home.page.publication": "Publicaciones",
@@ -10055,6 +10059,11 @@
   "home.page.depositionObligation": "Obligación de depósito en el repositorio",
   "home.page.growthStatistics": "Estadísticas de crecimiento",
   "home.page.allies": "Aliados",
+  "home.page.projects": "Proyectos",
+  "home.page.projects.name": "PREBI-SEDICI",
+
+  // Header
+  "header.new.item": "Subir material",
 
   // "vocabulary-treeview.search.form.add": "Add",
   "vocabulary-treeview.search.form.add": "Añadir",
