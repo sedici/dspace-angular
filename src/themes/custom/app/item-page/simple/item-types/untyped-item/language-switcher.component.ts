@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TruncatableComponent } from 'src/app/shared/truncatable/truncatable.component';
 import { TruncatablePartComponent } from 'src/app/shared/truncatable/truncatable-part/truncatable-part.component';
 
@@ -13,21 +13,37 @@ import { TruncatablePartComponent } from 'src/app/shared/truncatable/truncatable
     TranslateModule,
     TruncatableComponent,
     TruncatablePartComponent
-],
+  ],
 })
-export class LanguageSwitcherComponent {
+export class LanguageSwitcherComponent implements OnInit {
   @Input() item: any;
   selectedLanguage: string;
   availableLanguages: any[];
   abstracts: any[];
 
-  constructor(private sanitizer: DomSanitizer) {}
+  constructor(
+    private sanitizer: DomSanitizer,
+    private translate: TranslateService
+  ) {}
 
   ngOnInit() {
-    const langValue = this.item.metadata['dc.language']?.[0]?.value;
-    this.selectedLanguage = !langValue || langValue === 'other' ? '??' : langValue;
-    this.abstracts = this.item.metadata['dc.description.abstract'];
+    this.abstracts = this.item.metadata['dc.description.abstract'] || [];
     this.availableLanguages = this.getAvailableLanguages();
+
+    this.initializeLanguage();
+  }
+
+  initializeLanguage() {
+    if (!this.hasAbstract()) return;
+
+    const globalLang = this.translate.currentLang.split('-')[0];
+    const matchGlobal = this.abstracts.find((a: any) => (a.language || '??') === globalLang);
+
+    if (matchGlobal) {
+      this.selectedLanguage = globalLang;
+    } else {
+      this.selectedLanguage = this.abstracts[0].language || '??';
+    }
   }
 
   hasAbstract(): boolean {
@@ -35,13 +51,12 @@ export class LanguageSwitcherComponent {
   }
 
   getAbstract(): SafeHtml {
-    if (this.abstracts) {
-      let abstract = this.abstracts.find((abstract: any) => (abstract.language || '??') === this.selectedLanguage)?.value || '';
-      if (!abstract) {
-        abstract = this.abstracts[0].value;
-        this.selectedLanguage = this.abstracts[0].language;
+    if (this.abstracts && this.selectedLanguage) {
+      const abstract = this.abstracts.find((a: any) => (a.language || '??') === this.selectedLanguage);
+      
+      if (abstract) {
+        return this.sanitizer.bypassSecurityTrustHtml(abstract.value);
       }
-      return this.sanitizer.bypassSecurityTrustHtml(abstract);
     }
     return this.sanitizer.bypassSecurityTrustHtml('');
   }
