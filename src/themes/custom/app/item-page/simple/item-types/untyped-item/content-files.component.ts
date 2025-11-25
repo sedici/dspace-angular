@@ -15,7 +15,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SediciViewerComponent } from '../../field-components/viewer/sedici-viewer.component';
 
 import { ChangeDetectorRef } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpBackend } from '@angular/common/http';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import * as JSZip from 'jszip';
 
 import { HostWindowService, WidthCategory } from 'src/app/shared/host-window.service';
@@ -52,6 +53,10 @@ export class ContentFilesComponent {
 
   isLoading = true;
 
+  currentYoutubeUrl: SafeResourceUrl | null = null;
+
+  private externalHttp: HttpClient;
+
   onDocLoaded() {
     this.isLoading = false;
   }
@@ -85,13 +90,16 @@ export class ContentFilesComponent {
     @Inject(APP_CONFIG) protected appConfig: AppConfig,
     private modalService: NgbModal,
     private http: HttpClient,
+    private handler: HttpBackend,
     private cdr: ChangeDetectorRef,
     private windowService: HostWindowService,
     private notificationsService: NotificationsService,
     private authService: AuthService,
     private authorizationService: AuthorizationDataService,
+    private sanitizer: DomSanitizer,
   ) {
     this.isMobile$ = this.windowService.isUpTo(WidthCategory.MD);
+    this.externalHttp = new HttpClient(handler);
   }
 
   selectedFile: Bitstream | null = null;
@@ -99,12 +107,23 @@ export class ContentFilesComponent {
   isAssetAvailable: boolean = true;
 
   selectFile(file: Bitstream) {
+    const fileAny = file as any;
     this.selectedFile = file;
-    const extension = this.getFileExtension(file.name);
     this.isLoading = true;
     this.embargoedFile = false;
     this.isAssetAvailable = true;
     const authToken = this.authService.getToken();
+    
+    if (fileAny.isYoutube) {
+      this.currentYoutubeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(fileAny.embedUrl);
+      this.previewUrl = null; 
+      this.isLoading = false;
+      this.cdr.detectChanges();
+      return; 
+    }
+
+    const extension = this.getFileExtension(file.name);
+    this.currentYoutubeUrl = null;
     this.cdr.detectChanges();
   
     switch (extension) {
@@ -174,14 +193,17 @@ export class ContentFilesComponent {
         waitForDownloadable(this.selectedFile);
         break;
       default:
-        this.previewUrl = file._links.content.href;
+        if(file._links && file._links.content) {
+          this.previewUrl = file._links.content.href;
+        }
+        this.isLoading = false;
         break;
     }
   }
 
   isPreviewAvailable(fileName: string): boolean {
     const extension = this.getFileExtension(fileName);
-    return ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'zip', 'pdf'].includes(extension);
+    return ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'zip', 'pdf', 'youtube'].includes(extension);
   }
 
   getFileExtension(fileName: string): string {
@@ -202,8 +224,8 @@ export class ContentFilesComponent {
     return `assets/custom/images/icon_${extension}.png`;
   }
 
-  getFileDescription(file: Bitstream): string {
-    return file.metadata['dc.description']?.[0]?.value || this.dsoNameService.getName(file) ;
+  getFileDescription(file: any): string {
+    return file.metadata['dc.description']?.[0]?.value || this.dsoNameService.getName(file);
   }
 
   ngOnInit(): void {
@@ -292,11 +314,16 @@ export class ContentFilesComponent {
     this.isLoadingFiles = true;
     this.bitstreamDataService.findAllByItemAndBundleName(this.object, 'ORIGINAL', { currentPage: 0, elementsPerPage: 1000 }).subscribe((response: any) => {
       if (response && response.hasSucceeded) {
+        let bitstreams = [];
         if (response.payload && response.payload.page.length > 0) {
-          this.files = response.payload.page;
+          bitstreams = response.payload.page;
         }
+        this.files = bitstreams;
+
+        this.addYoutubeVideosToFiles();
         this.cdr.detectChanges();
         this.checkAndSaveDownloadStatus();
+        
         if (!this.isMobile && this.files.length >= 1) {
           // Seleccionar el primary bitstream si está disponible y tiene un preview
           const primaryBitstream = this.files.find(file => file.id === this.primaryBitsreamId && this.isPreviewAvailable(file.name));
@@ -315,9 +342,60 @@ export class ContentFilesComponent {
       }
     },
     (err) => {
-      console.error('Error en la solicitud:', err);
-      this.notificationsService.error('Error', 'Ocurrió un error al intentar cargar los archivos.');
+      // Manejo de error, pero aun así intentamos cargar videos si fallan los archivos
+      this.files = []; 
+      this.addYoutubeVideosToFiles();
       this.isLoadingFiles = false;
+      this.notificationsService.error('Error', 'Error al cargar archivos.');
+    });
+  }
+
+  addYoutubeVideosToFiles() {
+    const uriMetadata = this.object.allMetadata('sedici.identifier.uri');
+    
+    uriMetadata.forEach((mdValue, index) => {
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+      const match = mdValue.value.match(regExp);
+
+      if (match && match[2].length === 11) {
+        const videoId = match[2];
+        const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+        const fullYoutubeUrl = mdValue.value;
+        
+        const mockVideoBitstream: any = {
+          id: `youtube-${videoId}-${index}`,
+          name: `youtube_video_${videoId}.youtube`,
+          type: 'bitstream',
+          metadata: {
+            'dc.description': [{ value: 'Cargando título del video...' }] // Título temporal mientras carga
+          },
+          _links: {
+            content: { href: embedUrl }
+          },
+          isYoutube: true,
+          embedUrl: embedUrl,
+          canDownload: false
+        };
+
+        this.files.push(mockVideoBitstream);
+
+        // Usamos noembed.com para evitar problemas de CORS y no necesitar API Key
+        const oEmbedUrl = `https://noembed.com/embed?url=${encodeURIComponent(fullYoutubeUrl)}`;
+
+        this.externalHttp.get(oEmbedUrl).subscribe({
+          next: (data: any) => {
+            if (data && data.title) {
+              mockVideoBitstream.metadata['dc.description'][0].value = data.title;
+              this.cdr.detectChanges();
+            }
+          },
+          error: (err) => {
+            console.warn('No se pudo obtener el título de YouTube, usando fallback', err);
+            mockVideoBitstream.metadata['dc.description'][0].value = `Video Youtube (${videoId})`;
+            this.cdr.detectChanges();
+          }
+        });
+      }
     });
   }
 
@@ -334,7 +412,7 @@ export class ContentFilesComponent {
     });
   }
 
-  isDownloadable(file: Bitstream): boolean {
+  isDownloadable(file: any): boolean {
     return (file as any).canDownload;
   }
 

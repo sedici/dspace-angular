@@ -5,41 +5,51 @@
         <div class="row">
           <div class="file-list col-lg-3 col-12">
             @for (file of files; track file) {
-              <div (click)="isPreviewAvailable(file.name) && isDownloadable(file) && handleClick(file, contentTemplate, headerTemplate)" [ngClass]="{'selected-file': file === selectedFile}">
-                @if (isPreviewAvailable(file.name) && isDownloadable(file)) {
+              <div (click)="isPreviewAvailable(file.name) && handleClick(file, contentTemplate, headerTemplate)" 
+                   [ngClass]="{'selected-file': file === selectedFile}"
+                   style="cursor: pointer;">
+                   
                   <div class="file-item row">
                     <div class="file-icon col-1">
-                      <img [src]="getIconPath(file.name)" alt="File icon"/>
+                      @if (getFileExtension(file.name) === 'youtube') {
+                        <i class="fa-brands fa-youtube" style="color: red; font-size: 1.5rem;"></i>
+                      } @else {
+                        <img [src]="getIconPath(file.name)" alt="File icon"/>
+                      }
                     </div>
-                    <div class="col-7">
+                    <div [class.col-11]="getFileExtension(file.name) === 'youtube'" 
+                         [class.col-7]="getFileExtension(file.name) !== 'youtube'">
                       <span class="file-name">{{ getFileDescription(file) }}</span>
                     </div>
-                    <div class="col-4 download-button">
-                      <ds-sedici-file-download-link [bitstream]="file" [item]="object"></ds-sedici-file-download-link>
-                    </div>
+                    @if (getFileExtension(file.name) !== 'youtube') {
+                      <div class="col-4 download-button">
+                          <ds-sedici-file-download-link [bitstream]="file" [item]="object"></ds-sedici-file-download-link>
+                      </div>
+                    }
                   </div>
-                } @else {
-                  <ng-container *ngTemplateOutlet="noPreviewAvailable; context: { file: file }"></ng-container>
-                }
-                <ng-template #headerTemplate>
-                  <div class="header-template">
-                    <div class="file-name-container">
-                      <span class="file-name">{{ getFileDescription(file) }}</span>
+                  
+                  <ng-template #headerTemplate>
+                    <div class="header-template">
+                      <div class="file-name-container">
+                        <span class="file-name">{{ getFileDescription(file) }}</span>
+                      </div>
+                      <div class="button-container">
+                        @if (getFileExtension(file.name) !== 'youtube') {
+                           <ds-sedici-file-download-link [bitstream]="file" [item]="object" [isSticky]="true" [isMobile]="true"></ds-sedici-file-download-link>
+                        }
+                        <button class="btn share-button" (click)="openModalShareButtons()">
+                          <i class="fa-solid fa-share"></i>
+                          <span> {{'sedici.item.page.sedici.share' | translate}}</span>
+                        </button>
+                      </div>
                     </div>
-                    <div class="button-container">
-                      <ds-sedici-file-download-link [bitstream]="file" [item]="object" [isSticky]="true" [isMobile]="true"></ds-sedici-file-download-link>
-                      <button class="btn share-button" (click)="openModalShareButtons()">
-                        <i class="fa-solid fa-share"></i>
-                        <span> {{'sedici.item.page.sedici.share' | translate}}</span>
-                      </button>
-                    </div>
-                  </div>
-                </ng-template>
+                  </ng-template>
               </div>
             }
           </div>
+
           <div class="file-preview d-none d-lg-block col-lg-9">
-            @if (selectedFile && isAssetAvailable && !embargoedFile) {
+             @if (selectedFile && (isAssetAvailable || (selectedFile && selectedFile['isYoutube'])) && !embargoedFile) {
               <div>
                 <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
               </div>
@@ -60,28 +70,22 @@
             }
           </div>
         </div>
-        <ng-template #noPreviewAvailable let-file="file">
-          <div class="file-no-preview-available">
-            <div class="file-item row">
-              <div class="file-icon col-1">
-                <img [src]="getIconPath(file.name)" alt="File icon"/>
-              </div>
-              <div class="col-8">
-                <span class="file-name">{{ getFileDescription(file) }}</span>
-                <span class="text-no-preview-available">
-                  <i class="fa-solid fa-eye-slash"></i>
-                  Preview no disponible
-                </span>
-              </div>
-              <div class="col-3 download-button">
-                <ds-sedici-file-download-link [bitstream]="file" [item]="object"></ds-sedici-file-download-link>
-              </div>
-            </div>
-          </div>
-        </ng-template>
+
         <ng-template #contentTemplate>
           <div class="content-preview-wrapper">
             @switch (true) {
+              @case (selectedFile && getFileExtension(selectedFile.name) === 'youtube') {
+                 <div class="youtube-wrapper">
+                    <iframe 
+                      [src]="currentYoutubeUrl" 
+                      width="100%" 
+                      height="100%" 
+                      frameborder="0" 
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                      allowfullscreen>
+                    </iframe>
+                 </div>
+              }
               @case (getFileExtension(selectedFile.name) === 'pdf') {
                 <ng-container *ngTemplateOutlet="pdfTemplate"></ng-container>
               }
@@ -99,9 +103,12 @@
                 </div>
               }
             }
-            <div class="sticky-download">
-              <ds-sedici-file-download-link [bitstream]="selectedFile" [item]="object" [isSticky]="true"></ds-sedici-file-download-link>
-            </div>
+            
+            @if (selectedFile && getFileExtension(selectedFile.name) !== 'youtube') {
+              <div class="sticky-download">
+                <ds-sedici-file-download-link [bitstream]="selectedFile" [item]="object" [isSticky]="true"></ds-sedici-file-download-link>
+              </div>
+            }
           </div>
         </ng-template>
         <ng-template #pdfTemplate>

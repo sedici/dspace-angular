@@ -257,3 +257,12 @@ ul {
     background-color: #666;
   }
 }
+
+.youtube-wrapper {
+  width: 100%;
+  height: 85vh;
+
+  @media screen and (max-width: map-get($grid-breakpoints, md)) {
+    height: 40vh;
+  }
+}
