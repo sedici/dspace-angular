@@ -75,7 +75,7 @@
           <div class="content-preview-wrapper">
             @switch (true) {
               @case (selectedFile && getFileExtension(selectedFile.name) === 'youtube') {
-                 <div class="youtube-wrapper">
+                 <div class="video-wrapper">
                     <iframe 
                       [src]="currentYoutubeUrl" 
                       width="100%" 
@@ -88,6 +88,17 @@
               }
               @case (getFileExtension(selectedFile.name) === 'pdf') {
                 <ng-container *ngTemplateOutlet="pdfTemplate"></ng-container>
+              }
+              @case (isVideoFile(getFileExtension(selectedFile.name))) {
+                <div class="video-wrapper">
+                  <video 
+                    [src]="previewUrl"
+                    controls
+                    width="100%" 
+                    height="100%">
+                    Tu navegador no soporta la etiqueta de video.
+                  </video>
+                </div>
               }
               @case (isImageFile(getFileExtension(selectedFile.name))) {
                 <ng-container *ngTemplateOutlet="imageTemplate"></ng-container>

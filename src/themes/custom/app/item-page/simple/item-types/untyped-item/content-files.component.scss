@@ -258,9 +258,10 @@ ul {
   }
 }
 
-.youtube-wrapper {
+.video-wrapper {
   width: 100%;
   height: 85vh;
+  background-color: black;
 
   @media screen and (max-width: map-get($grid-breakpoints, md)) {
     height: 40vh;

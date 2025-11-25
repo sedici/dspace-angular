@@ -135,6 +135,14 @@ export class ContentFilesComponent {
         this.previewUrl = file._links.content.href;
         this.isLoading = false;
         break;
+      case 'mp4':
+      case 'mpeg':
+      case 'mov':
+      case 'webm':
+      case 'ogg':
+        this.previewUrl = file._links.content.href;
+        this.isLoading = false;
+        break;
       case 'zip':
         this.previewUrl = file._links.content.href;
         this.loadZipFromUrl(this.previewUrl);
@@ -203,7 +211,7 @@ export class ContentFilesComponent {
 
   isPreviewAvailable(fileName: string): boolean {
     const extension = this.getFileExtension(fileName);
-    return ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'zip', 'pdf', 'youtube'].includes(extension);
+    return ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'zip', 'pdf', 'youtube', 'mp4', 'mpeg', 'mov', 'webm', 'ogg'].includes(extension);
   }
 
   getFileExtension(fileName: string): string {
@@ -216,10 +224,18 @@ export class ContentFilesComponent {
     return imageExtensions.includes(extension);
   }
 
+  isVideoFile(extension: string): boolean {
+    const videoExtensions = ['mp4', 'mpeg', 'mov', 'webm', 'ogg'];
+    return videoExtensions.includes(extension);
+  }
+
   getIconPath(fileName: string): string {
     const extension = this.getFileExtension(fileName);
     if (this.isImageFile(extension)) {
       return `assets/custom/images/icon_imagen.png`;
+    }
+    if (this.isVideoFile(extension)) {
+      return `assets/custom/images/icon_video.png`;
     }
     return `assets/custom/images/icon_${extension}.png`;
   }
