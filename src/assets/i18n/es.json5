@@ -1686,7 +1686,7 @@
   "browse.startsWith.months.september": "septiembre",
 
   // "browse.startsWith.submit": "Browse",
-  "browse.startsWith.submit": "Examinar",
+  "browse.startsWith.submit": "Buscar",
 
   // "browse.startsWith.type_date": "Filter results by date",
   "browse.startsWith.type_date": "Resultados por fecha",
@@ -1695,7 +1695,7 @@
   "browse.startsWith.type_date.label": "O escriba una fecha (año-mes) y haga clic en el botón Examinar",
 
   // "browse.startsWith.type_text": "Filter results by typing the first few letters",
-  "browse.startsWith.type_text": "Seleccione resultados tecleando las primeras letras",
+  "browse.startsWith.type_text": "Busque resultados ingresando las primeras letras del apellido del autor/a",
 
   // "browse.startsWith.input": "Filter",
   "browse.startsWith.input": "Filtrar",
@@ -1704,10 +1704,10 @@
   "browse.taxonomy.button": "Examinar",
 
   // "browse.title": "Browsing by {{ field }}{{ startsWith }} {{ value }}",
-  "browse.title": "Examinando por {{ field }} {{ value }}",
+  "browse.title": "Buscar por {{ field }} {{ value }}",
 
   // "browse.title.page": "Browsing by {{ field }} {{ value }}",
-  "browse.title.page": "Examinando por {{ field }} {{ value }}",
+  "browse.title.page": "Buscar por {{ field }} {{ value }}",
 
   // "search.browse.item-back": "Back to Results",
   "search.browse.item-back": "Volver a los resultados",
@@ -3509,10 +3509,12 @@
   "info.feedback.head": "Sugerencias",
 
   // "info.feedback.title": "Feedback",
-  "info.feedback.title": "Sugerencias",
+  "info.feedback.title": "Sugerencias y contacto",
 
   // "info.feedback.info": "Thanks for sharing your feedback about the DSpace system. Your comments are appreciated!",
   "info.feedback.info": "Gracias por compartir sus sugerencias sobre el repositorio. ¡Tendremos en cuenta sus comentarios!",
+
+  "info.feedback.email-placeholder": "yo@correo.org.ar",
 
   // "info.feedback.email_help": "This address will be used to follow up on your feedback.",
   "info.feedback.email_help": "Esta dirección se usará para el seguimiento de su sugerencia.",
@@ -3530,7 +3532,7 @@
   "info.feedback.create.success": "Envío exitoso de sugerencia",
 
   // "info.feedback.error.email.required": "A valid email address is required",
-  "info.feedback.error.email.required": "se requiere una dirección válida de correo electrónico",
+  "info.feedback.error.email.required": "Se requiere una dirección válida de correo electrónico",
 
   // "info.feedback.error.message.required": "A comment is required",
   "info.feedback.error.message.required": "Se requiere un comentario",
@@ -5211,13 +5213,13 @@
   "login.form.email": "Correo electrónico",
 
   // "login.form.forgot-password": "Have you forgotten your password?",
-  "login.form.forgot-password": "¿Has olvidado tu contraseña?",
+  "login.form.forgot-password": "¿Ha olvidado su contraseña?",
 
   // "login.form.header": "Please log in to DSpace",
-  "login.form.header": "Inicie sesión en DSpace",
+  "login.form.header": "Inicie sesión en SEDICI",
 
   // "login.form.new-user": "New user? Click here to register.",
-  "login.form.new-user": "¿Nuevo Usuario? Pulse aquí para registrarse",
+  "login.form.new-user": "¿Nuevo usuario? Pulse aquí para registrarse",
 
   // "login.form.oidc": "Log in with OIDC",
   "login.form.oidc": "Iniciar sesión con OIDC",
@@ -5245,7 +5247,7 @@
   "login.breadcrumbs": "Acceso",
 
   // "logout.form.header": "Log out from DSpace",
-  "logout.form.header": "Cerrar sesión en DSpace",
+  "logout.form.header": "Cerrar sesión en SEDICI",
 
   // "logout.form.submit": "Log out",
   "logout.form.submit": "Cerrar sesión",
@@ -5430,6 +5432,9 @@
 
   // "menu.section.new_item": "Item",
   "menu.section.new_item": "Ítem",
+
+  // "menu.section.new_item_sedici": "New Item",
+  "menu.section.new_item_sedici": "Subir material",
 
   // "menu.section.new_item_version": "Item Version",
   "menu.section.new_item_version": "Versión del ítem",
@@ -5997,8 +6002,8 @@
   // "pagination.showing.detail": "{{ range }} of {{ total }}",
   "pagination.showing.detail": "{{ range }} de {{ total }}",
 
-  // "pagination.showing.label": "Now showing ",
-  "pagination.showing.label": "Mostrando ",
+  // "pagination.showing.label": "Found {{ total }} results",
+  "pagination.showing.label": "Se encontraron {{ total }} resultados",
 
   // "pagination.sort-direction": "Sort Options",
   "pagination.sort-direction": "Opciones de ordenación",
@@ -7486,7 +7491,7 @@
   "search.filters.head": "Filtros",
 
   // "search.filters.reset": "Reset filters",
-  "search.filters.reset": "Restablecer filtros",
+  "search.filters.reset": "Descartar filtros",
 
   // "search.filters.search.submit": "Submit",
   "search.filters.search.submit": "Enviar",
@@ -7528,7 +7533,7 @@
   "search.results.no-results": "Su búsqueda no produjo resultados. ¿Tiene problemas para encontrar lo que busca? Intente poner",
 
   // "search.results.no-results-link": "quotes around it",
-  "search.results.no-results-link": "citas a su alrededor",
+  "search.results.no-results-link": "comillas a su alrededor",
 
   // "search.results.empty": "Your search returned no results.",
   "search.results.empty": "Su búsqueda no produjo resultados.",
@@ -9962,6 +9967,7 @@
   "sedici.item.page.unknown.author": "Autor desconocido",
   "sedici.item.page.sedici.citation": "Citar",
   "sedici.item.page.sedici.share": "Compartir",
+  "sedici.item.page.sedici.copy": "Copiar",
   "sedici.item.page.sedici.creator.corporate": "Autor institucional",
   "sedici.item.page.sedici.creator.interprete": "Intérprete",
   "sedici.item.page.sedici.contributor.compiler": "Compilador",
@@ -10034,7 +10040,9 @@
   "sedici.license.restriction.description": "No puede aplicar términos legales ni medidas tecnológicas que restrinjan legalmente a otras a hacer cualquier uso permitido por la licencia.",
 
   // Home
-  "home.page.search.placeholder": "Busque entre los {{ totalItems }} recursos disponibles en el repositorio",
+  "home.page.welcome.title": "Explorá toda la producción de la Universidad Nacional de La Plata",
+  "home.page.welcome.text": "<b>El Servicio de Difusión de la Creación Intelectual</b>, repositorio institucional central de la <b>UNLP</b>, alberga, preserva, difunde y da visibilidad a nivel mundial a toda la producción científica e intelectual de la universidad.",
+  "home.page.search.placeholder": "Buscar entre los {{ totalItems }} recursos disponibles...",
   "home.page.author": "Autores",
   "home.page.publication": "Publicaciones",
   "home.page.academicUnit": "Unidades Académicas",
@@ -10051,6 +10059,11 @@
   "home.page.depositionObligation": "Obligación de depósito en el repositorio",
   "home.page.growthStatistics": "Estadísticas de crecimiento",
   "home.page.allies": "Aliados",
+  "home.page.projects": "Proyectos",
+  "home.page.projects.name": "PREBI-SEDICI",
+
+  // Header
+  "header.new.item": "Subir material",
 
   // "vocabulary-treeview.search.form.add": "Add",
   "vocabulary-treeview.search.form.add": "Añadir",

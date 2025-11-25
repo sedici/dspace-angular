@@ -1,35 +1,18 @@
 <footer>
-  <div class="bottom-footer">
-    <div class="footer-left">
-      <p class="footer-title">PREBI - SEDICI © 2003-{{ dateObj | date:'y' }}</p>
-      <p class="footer-text">Universidad Nacional de La Plata</p>
-      <p class="footer-text">Soportado por Dspace</p>
-      <div class="footer-icons mt-5">
-        <a href="https://creativecommons.org/" target="_blank">
-          <img src="assets/custom/images/footer/final_creative_negro.svg" width="75" height="75" [attr.alt]="'Creative Commons'"/>
-        </a>
-        <a href="https://www.openaccess.nl/en" target="_blank">
-          <img src="assets/custom/images/footer/final_OAcolor_.png" [attr.alt]="'Open Access'"/>
-        </a>
-        <a href="https://dspace.org/" target="_blank">
-          <img src="assets/custom/images/footer/final_Dspacecolor.png" [attr.alt]="'Dspace'"/>
-        </a>
-      </div>
+  <div class="top-footer">
+    <div class="footer-media-icons">
+      <a href="https://www.instagram.com/sedici_unlp/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://x.com/sedici_unlp" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+      <a href="https://www.youtube.com/@sediciUNLP" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+      <a href="https://www.facebook.com/sedici.unlp" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
     </div>
-
-    <div class="footer-right">
-      <div class="footer-media-icons">
-        <a href="https://www.facebook.com/sedici.unlp" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
-        <a href="https://www.instagram.com/sedici_unlp/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-        <a href="https://x.com/sedici_unlp" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
-        <a href="https://www.youtube.com/@sediciUNLP" target="_blank"><i class="fa-brands fa-youtube"></i></a>
-      </div>
-      @if ((isMobile$ | async) !== true) {
+    @if ((isMobile$ | async) !== true) {
+      <div class="footer-links">
         <div class="footer-section">
-          <h5 class="footer-subtitle">Busqueda de material</h5>
-          <a href="#">Ayuda</a>
-          <a href="#">Obligacion de deposito</a>
-          <a href="#">Estadisticas</a>
+          <h5 class="footer-subtitle">Preguntas frecuentes</h5>
+          <a href="#">Como agregar trabajos</a>
+          <a href="#">Que hacemos en SEDICI</a>
+          <a href="#">Acerca de</a>
         </div>
         <div class="footer-section">
           <h5 class="footer-subtitle">Institucional</h5>
@@ -37,12 +20,38 @@
           <a href="#">Blog</a>
         </div>
         <div class="footer-section">
-          <h5 class="footer-subtitle">Preguntas frecuentes</h5>
-          <a href="#">Como agregar trabajos</a>
-          <a href="#">Que hacemos en SEDICI</a>
-          <a href="#">Acerca de</a>
+          <h5 class="footer-subtitle">Aliados</h5>
+          <a href="https://repositoriosdigitales.mincyt.gob.ar/vufind/" target="_blank">SNRD</a>
+          <a href="https://www.lareferencia.info/es/" target="_blank">La Referencia</a>
+          <a href="https://coar-repositories.org/" target="_blank">COAR</a>
         </div>
-      }
+      </div>
+    }
+  </div>
+  <div class="bottom-footer">
+    <div class="bottom-left">
+      <!-- <span><b>PREBI - SEDICI UNLP © 2003</b> - Universidad Nacional de La Plata</span> -->
+      <div class="bottom-footer-text-container">
+        <div class="bottom-footer-text"><b>PREBI - SEDICI UNLP © 2003-{{ dateObj | date:'y' }}</b></div>
+        @if ((isMobile$ | async) !== true) { &nbsp;-&nbsp; }
+        <div class="bottom-footer-text">Universidad Nacional de La Plata</div>
+      </div>
+      <div class="bottom-footer-icons">
+        <a href="https://creativecommons.org/" target="_blank">
+          <img src="assets/custom/images/footer/CC.svg" [attr.alt]="'Creative Commons'"/>
+        </a>
+        <a href="https://www.openaccess.nl/en" target="_blank">
+          <img src="assets/custom/images/footer/openaccess.svg" [attr.alt]="'Open Access'"/>
+        </a>
+        <a href="https://dspace.org/" target="_blank">
+          <img src="assets/custom/images/footer/DSpace.svg" [attr.alt]="'Dspace'"/>
+        </a>
+      </div>
+    </div>
+    <div class="bottom-right">
+      <a href="/info/feedback">
+        <i class="fa-regular fa-comment-dots"></i> {{ 'footer.link.feedback' | translate }}
+      </a>
     </div>
   </div>
 </footer>

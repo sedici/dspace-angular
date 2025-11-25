@@ -1,0 +1,37 @@
+.custom-row{
+  margin-left: 12px;
+  padding: 1.4rem;
+  margin-right: 12px;
+  background-color: white;  
+  box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.1);
+}
+
+.item-list-title{
+  font-family:serif;
+  font-size: 1.65rem;
+  color: black;
+  line-height: 38px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 1.25rem;
+    line-height: 0%;
+  }
+}
+
+.collection-list-description{
+  // font-family: sans-serif;
+  font-family: 'Roboto', sans-serif  ;
+  font-size: 1rem;
+  font-weight: 300;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  text-align: justify;
+
+
+  @media screen and (max-width: 768px) {
+    font-size: small;
+  }
+}

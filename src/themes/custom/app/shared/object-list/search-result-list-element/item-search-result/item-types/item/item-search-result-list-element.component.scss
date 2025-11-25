@@ -1,5 +1,17 @@
 // @import '../../../../../../../styles/variables';
 
+.row{
+  margin-left: 12px;
+  padding: 1.4rem;
+  margin-right: 0px;
+  background-color: white;  
+  box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.1);
+}
+
+.without-thumbnails {
+  padding-left: 0 !important;
+}
+
 .item-list-supervision {
   a {
    cursor: pointer;
@@ -8,7 +20,7 @@
 
 .badges-context-container {
   display: flex;
-  gap: 0.25em;
+  gap: 0.25rem;
 }
 
 sedici-context {
@@ -16,19 +28,95 @@ sedici-context {
   min-width: 0;
 }
 
+.authors-container {
+  white-space: nowrap; /* Para que el texto no se divida en varias lineas */
+  overflow: hidden;         
+  text-overflow: ellipsis;
+
+  @media screen and (max-width: 768px) {
+    display: flex;
+    align-items: baseline;
+  }
+}
+
+
+.authors-mobile {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .authors-desktop {
+    display: none;
+  }
+  
+  .authors-mobile {
+    display: block;
+  }
+}
+
+.item-list-title{
+  font-family:serif;
+  font-size: 1.65rem;
+  color: black;
+  line-height: 38px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 1.25rem;
+    line-height: 0%;
+  }
+}
+
+.item-list-abstract{
+  // font-family: sans-serif;
+  font-family: 'Roboto', sans-serif  ;
+  font-size: 0.9rem;
+  font-weight: 300;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  text-align: justify;
+
+
+  @media screen and (max-width: 768px) {
+    font-size: small;
+  }
+}
+
+.item-list-publisher {
+  margin-right: 6px;
+}
+
+.item-year {
+  color: rgba(72, 72, 72, 0.9098039216);
+  font-size: 1rem; 
+  margin-left: 8px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 0.8rem;
+  }
+}
+
+.author-icon, .building-icon {
+  margin-right: 6px;
+  color: #ADADAD;
+}
+
+.text-muted-custom {
+  color: #131313;
+  font-size: 1rem;
+
+  @media screen and (max-width: 768px) {
+    font-size: 0.9rem;
+  }
+}
+
 ::ng-deep sedici-context div {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-}
-
-::ng-deep ds-badges .badge {
-  padding: 0.5em;
-  font-size: 0.88em;
-  vertical-align: text-bottom; // Para que el badge quede alineado con el sedici-context
-
-  // font-weight: var(--font-weight-regular);
 }
 
 .subtitle {

@@ -1,9 +1,8 @@
+@import url("../search-label/search-label.component.scss");
+
 :host {
   display: flex;
   flex-wrap: wrap;
   gap: calc(var(--bs-spacer) / 4);
 }
 
-.badge {
-  white-space: inherit;
-}

@@ -1,4 +1,4 @@
-<div class="btn-group" data-bs-toggle="buttons">
+<div class="view-toggle-container" data-bs-toggle="buttons">
   @if (isToShow(viewModeEnum.ListElement)) {
     <button
       [attr.aria-current]="currentMode === viewModeEnum.ListElement"
@@ -9,7 +9,7 @@
       queryParamsHandling="merge"
       (click)="switchViewTo(viewModeEnum.ListElement)"
       [class.active]="currentMode === viewModeEnum.ListElement"
-      class="btn btn-secondary"
+      class="view-toggle-button list-view active"
       [attr.data-test]="'list-view' | dsBrowserOnly">
       <i class="fas fa-list"></i>
     </button>
@@ -24,7 +24,7 @@
       queryParamsHandling="merge"
       (click)="switchViewTo(viewModeEnum.GridElement)"
       [class.active]="currentMode === viewModeEnum.GridElement"
-      class="btn btn-secondary"
+      class="view-toggle-button grid-view"
       [attr.data-test]="'grid-view' | dsBrowserOnly">
       <i class="fas fa-th-large"></i>
     </button>

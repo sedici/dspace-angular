@@ -35,9 +35,13 @@ import {
 })
 export class ThemedSearchResultsComponent extends ThemedComponent<SearchResultsComponent> {
 
-  protected inAndOutputNames: (keyof SearchResultsComponent & keyof this)[] = ['linkType', 'searchResults', 'searchConfig', 'showCsvExport', 'showThumbnails', 'sortConfig', 'viewMode', 'configuration', 'disableHeader', 'selectable', 'context', 'hidePaginationDetail', 'selectionConfig', 'contentChange', 'deselectObject', 'selectObject'];
+  protected inAndOutputNames: (keyof SearchResultsComponent & keyof this)[] = ['linkType', 'searchResults', 'searchConfig', 'showCsvExport', 'showThumbnails', 'sortConfig', 'viewMode', 'configuration', 'disableHeader', 'selectable', 'context', 'inPlaceSearch', 'hidePaginationDetail', 'selectionConfig', 'contentChange', 'deselectObject', 'selectObject', 'sortOptionsList', 'currentSortOption'];
 
   @Input() linkType: CollectionElementLinkType;
+
+  @Input() showViewModes: boolean;
+
+  @Input() viewModeList: string[];
 
   @Input() searchResults: RemoteData<PaginatedList<SearchResult<DSpaceObject>>>;
 
@@ -49,6 +53,10 @@ export class ThemedSearchResultsComponent extends ThemedComponent<SearchResultsC
 
   @Input() sortConfig: SortOptions;
 
+  @Input() currentSortOption: SortOptions;
+
+  @Input() sortOptionsList: SortOptions[];
+
   @Input() viewMode: ViewMode;
 
   @Input() configuration: string;
@@ -58,6 +66,8 @@ export class ThemedSearchResultsComponent extends ThemedComponent<SearchResultsC
   @Input() selectable: boolean;
 
   @Input() context: Context;
+
+  @Input() inPlaceSearch: boolean;
 
   @Input() hidePaginationDetail: boolean;
 

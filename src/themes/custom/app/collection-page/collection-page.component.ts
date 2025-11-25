@@ -11,7 +11,7 @@ import {
   RouterOutlet,
 } from '@angular/router'
 import { TranslateModule } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import {
   filter,
   map,
@@ -110,7 +110,6 @@ export class CollectionPageComponent extends BaseComponent implements OnInit {
     super(route, router, authService, authorizationDataService, dsoNameService);
   }
 
-  logo;
   collinksToFollow: FollowLinkConfig<Collection>[] = [
     followLink('logo'),
     followLink('parentCommunity'),
@@ -124,7 +123,6 @@ export class CollectionPageComponent extends BaseComponent implements OnInit {
     this.collectionRD$ = this.route.data.pipe(
       map((data) => data.dso as RemoteData<Collection>),
       redirectOn4xx(this.router, this.authService),
-      take(1),
     );
 
     this.collectionPageRoute$ = this.collectionRD$.pipe(
@@ -132,99 +130,79 @@ export class CollectionPageComponent extends BaseComponent implements OnInit {
       map((collection) => getCollectionPageRoute(collection.id)),
     );
 
-    this.findLogoRecursively();
+    this.logoRD$ = this.collectionRD$.pipe(
+      getFirstSucceededRemoteDataPayload(),
+      switchMap((collection: Collection) => this.getRecursiveLogoFromCollection(collection))
+    );
 
     this.isCollectionAdmin$ = this.authorizationDataService.isAuthorized(FeatureID.IsCollectionAdmin);
   }
 
-  private findLogoRecursively(): void {
-      this.collectionRD$.pipe(
-        getFirstSucceededRemoteDataPayload(),
-        take(1)
-      ).subscribe((collection: Collection) => {
-        this.checkCollectionLogo(collection);
-      });
-    }
-
-    private checkCollectionLogo(collection: Collection): void {
-      let fullCollectionRef: Collection;
-
-      this.collectionService.findById(
-        collection.id,
-        true,
-        false,
-        ...this.collinksToFollow,
-      ).pipe(
-        getFirstSucceededRemoteDataPayload(),
-        switchMap((fullCollection: Collection) => {
-          fullCollectionRef = fullCollection;
-          return fullCollection.logo;
-        }),
+  private getRecursiveLogoFromCollection(collection: Collection): Observable<RemoteData<Bitstream>> {
+    return this.collectionService.findById(
+      collection.id,
+      true,
+      false,
+      ...this.collinksToFollow
+    ).pipe(
+      getFirstSucceededRemoteDataPayload(),
+      switchMap((fullCollection: Collection) => fullCollection.logo.pipe(
         filter((logoRD: RemoteData<Bitstream>) => 
           logoRD.state !== 'RequestPending' && logoRD.state !== 'ResponsePending'
         ),
-        take(1)
-      ).subscribe((logoRD: RemoteData<Bitstream>) => {
-        if (logoRD.hasSucceeded && logoRD.payload) {
-          this.logo = logoRD;
-          this.changeDetectorRef.detectChanges();
-        } else {
-          fullCollectionRef.parentCommunity.pipe(
-            getFirstSucceededRemoteDataPayload(),
-            take(1)
-          ).subscribe((parentCommunity: Community) => {
-            if (parentCommunity) {
-              this.checkCommunityLogo(parentCommunity); // Recursión
-            } else {
-              this.logo = null;
-              this.changeDetectorRef.detectChanges();
-            }
-          }, (error) => {
-            this.logo = null;
-            this.changeDetectorRef.detectChanges();
-          });
-        }
-      });
-    }
-  
-    private checkCommunityLogo(community: Community ): void {
-      let fullCommunityRef: Community;
+        take(1),
+        switchMap((logoRD: RemoteData<Bitstream>) => {
+          if (logoRD.hasSucceeded && logoRD.payload) {
+            return of(logoRD);
+          } else {
+            return fullCollection.parentCommunity.pipe(
+              getFirstSucceededRemoteDataPayload(),
+              take(1),
+              switchMap((parentCommunity: Community) => {
+                if (parentCommunity) {
+                  return this.getRecursiveLogoFromCommunity(parentCommunity);
+                } else {
+                  return of(null);
+                }
+              })
+            );
+          }
+        })
+      ))
+    );
+  }
 
-      this.communityService.findById(
-        community.id,
-        true,
-        false,
-        ...this.comlinksToFollow,
-      ).pipe(
-        getFirstSucceededRemoteDataPayload(),
-        switchMap((fullCommunity: Community) => {
-          fullCommunityRef = fullCommunity;
-          return fullCommunity.logo;
-        }),
+  private getRecursiveLogoFromCommunity(community: Community): Observable<RemoteData<Bitstream>> {
+    return this.communityService.findById(
+      community.id,
+      true,
+      false,
+      ...this.comlinksToFollow
+    ).pipe(
+      getFirstSucceededRemoteDataPayload(),
+      switchMap((fullCommunity: Community) => fullCommunity.logo.pipe(
         filter((logoRD: RemoteData<Bitstream>) => 
           logoRD.state !== 'RequestPending' && logoRD.state !== 'ResponsePending'
         ),
-        take(1)
-      ).subscribe((logoRD: RemoteData<Bitstream>) => {
-        if (logoRD.hasSucceeded && logoRD.payload) {
-          this.logo = logoRD;
-          this.changeDetectorRef.detectChanges();
-        } else {
-          fullCommunityRef.parentCommunity.pipe(
-            getFirstSucceededRemoteDataPayload(),
-            take(1)
-          ).subscribe((parentCommunity: Community) => {
-            if (parentCommunity) {
-              this.checkCommunityLogo(parentCommunity); // Recursión
-            } else {
-              this.logo = null;
-              this.changeDetectorRef.detectChanges();
-            }
-          }, (error) => {
-            this.logo = null;
-            this.changeDetectorRef.detectChanges();
-          });
-        }
-      });
-    }
+        take(1),
+        switchMap((logoRD: RemoteData<Bitstream>) => {
+          if (logoRD.hasSucceeded && logoRD.payload) {
+            return of(logoRD);
+          } else {
+            return fullCommunity.parentCommunity.pipe(
+              getFirstSucceededRemoteDataPayload(),
+              take(1),
+              switchMap((parentCommunity: Community) => {
+                if (parentCommunity) {
+                  return this.getRecursiveLogoFromCommunity(parentCommunity);
+                } else {
+                  return of(null);
+                }
+              })
+            );
+          }
+        })
+      ))
+    );
+  }
 }

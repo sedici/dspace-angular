@@ -95,6 +95,11 @@ export class SearchFormComponent implements OnChanges {
   @Input() showScopeSelector = false;
 
   /**
+   * The variant of the search form
+   */
+  @Input() variant: 'home' | 'community' | 'navbar' = 'home';
+
+  /**
    * Output the search data on submit
    */
   @Output() submitSearch = new EventEmitter<any>();

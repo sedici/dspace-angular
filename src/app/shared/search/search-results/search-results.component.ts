@@ -112,6 +112,16 @@ export class SearchResultsComponent {
   @Input() sortConfig: SortOptions;
 
   /**
+   * The current sorting configuration of the search
+   */
+  @Input() sortOptionsList: SortOptions[];
+
+  /**
+   * The current sorting option of the search
+   */
+  @Input() currentSortOption: SortOptions;
+
+  /**
    * The current view-mode of the list
    */
   @Input() viewMode: ViewMode;
@@ -133,6 +143,8 @@ export class SearchResultsComponent {
   @Input() selectable = false;
 
   @Input() context: Context;
+
+  @Input() inPlaceSearch: boolean;
 
   /**
    * Option for hiding the pagination detail

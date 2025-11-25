@@ -5,8 +5,9 @@
         <div class="row">
           @if (!hidePaginationDetail && collectionSize > 0) {
             <div class="col-auto pagination-info">
-              <span class="align-middle hidden-xs-down">{{ 'pagination.showing.label' | translate }}</span>
+              <!-- <span class="align-middle hidden-xs-down">{{ 'pagination.showing.label' | translate }}</span>
               <span class="align-middle">{{ 'pagination.showing.detail' | translate:(showingDetails$ | async)}}</span>
+              <span class="align-middle hidden-xs-down">{{ 'pagination.showing.label' | translate: { total: (showingDetails$ | async)?.total } }}</span> COMENTADO POR SEDICI -->
             </div>
           }
           <div class="col">
@@ -53,24 +54,62 @@
           </div>
         </div>
       </div>
-    }
+    } 
     <ng-content></ng-content>
     @if (showBottomPager$ | async) {
       <div>
         @if (showPaginator) {
           <div class="pagination justify-content-center clearfix bottom">
-            <ngb-pagination [attr.aria-label]="('pagination-control.page-number-bar' | translate) + paginationOptions.id"
-              [boundaryLinks]="paginationOptions.boundaryLinks"
-              [collectionSize]="collectionSize"
-              [disabled]="paginationOptions.disabled"
-              [ellipses]="paginationOptions.ellipses"
-              [maxSize]="(isXs)?5:paginationOptions.maxSize"
-              [page]="(currentPage$|async)"
-              (pageChange)="doPageChange($event)"
-              [pageSize]="(pageSize$ |async)"
-              [rotate]="paginationOptions.rotate"
-              [size]="(isXs)?'sm':paginationOptions.size">
-            </ngb-pagination>
+            @if (isXs) {
+              <!-- Mobile simplified pagination -->
+              <ul class="pagination">
+                <!-- First Page -->
+                @if ((currentPage$ | async) > 2) {
+                  <li class="page-item">
+                    <a class="page-link" (click)="doPageChange(1)" [attr.aria-label]="'pagination.first.button' | translate">
+                      <i class="fa-solid fa-angles-left" aria-hidden="true"></i>
+                    </a>
+                  </li>
+                }
+
+                <!-- Previous Page -->
+                <li class="page-item" [class.disabled]="(currentPage$ | async) === 1">
+                  <a class="page-link" (click)="goPrev()" [attr.aria-label]="'pagination.previous.button' | translate">
+                    <i class="fa-solid fa-angle-left" aria-hidden="true"></i>
+                  </a>
+                </li>
+
+                <!-- Next Page -->
+                <li class="page-item" [class.disabled]="(currentPage$ | async) === objects?.payload?.totalPages">
+                  <a class="page-link" (click)="goNext()" [attr.aria-label]="'pagination.next.button' | translate">
+                    <i class="fa-solid fa-angle-right" aria-hidden="true"></i>
+                  </a>
+                </li>
+              </ul>
+            } @else {
+              <!-- Desktop full pagination -->
+              <ngb-pagination [attr.aria-label]="('pagination-control.page-number-bar' | translate) + paginationOptions.id"
+                [boundaryLinks]="paginationOptions.boundaryLinks"
+                [collectionSize]="collectionSize"
+                [disabled]="paginationOptions.disabled"
+                [ellipses]="paginationOptions.ellipses"
+                [maxSize]="(isXs)?5:(paginationOptions.maxSize + 1)"
+                [page]="(currentPage$|async)"
+                (pageChange)="doPageChange($event)"
+                [pageSize]="(pageSize$ |async)"
+                [rotate]="true"
+                [size]="(isXs)?'sm':paginationOptions.size">
+
+                <ng-template ngbPaginationPrevious>
+                  <i class="fa-solid fa-angles-left" aria-hidden="true"></i>
+                </ng-template>
+
+                <ng-template ngbPaginationNext>
+                  <i class="fa-solid fa-angles-right" aria-hidden="true"></i>
+                </ng-template>
+                
+              </ngb-pagination>
+            }
           </div>
         }
         @if (!showPaginator) {

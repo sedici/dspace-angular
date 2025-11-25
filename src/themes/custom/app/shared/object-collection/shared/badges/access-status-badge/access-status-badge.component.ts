@@ -1,5 +1,5 @@
-import { AsyncPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { AsyncPipe, NgClass } from '@angular/common';
+import { Component, Input } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   of as observableOf,
@@ -25,9 +25,13 @@ import { RemoteData } from 'src/app/core/data/remote-data';
   imports: [
     AsyncPipe,
     TranslateModule,
+    NgClass,
   ],
 })
 export class AccessStatusBadgeComponent extends BaseComponent {
+
+  @Input()
+  view: 'item' | 'list' = 'list';
   
   // ngOnInit(): void {
   //   this.showAccessStatus = environment.item.showAccessStatuses;

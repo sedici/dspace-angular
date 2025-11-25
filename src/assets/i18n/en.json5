@@ -3395,7 +3395,7 @@
 
   "login.form.forgot-password": "Have you forgotten your password?",
 
-  "login.form.header": "Please log in to DSpace",
+  "login.form.header": "Please log in to SEDICI",
 
   "login.form.new-user": "New user? Click here to register.",
 
@@ -3415,7 +3415,7 @@
 
   "login.breadcrumbs": "Login",
 
-  "logout.form.header": "Log out from DSpace",
+  "logout.form.header": "Log out from SEDICI",
 
   "logout.form.submit": "Log out",
 
@@ -3538,6 +3538,8 @@
   "menu.section.new_community": "Community",
 
   "menu.section.new_item": "Item",
+
+  "menu.section.new_item_sedici": "New Item",
 
   "menu.section.new_item_version": "Item Version",
 
@@ -3903,7 +3905,7 @@
 
   "pagination.showing.detail": "{{ range }} of {{ total }}",
 
-  "pagination.showing.label": "Now showing ",
+  "pagination.showing.label": "Found {{ total }} results",
 
   "pagination.sort-direction": "Sort Options",
 
@@ -4604,6 +4606,8 @@
 
   "search.filters.applied.f.itemtype": "Type",
 
+  "search.filters.applied.f.itemsubtype": "Subtype",
+
   "search.filters.applied.f.namedresourcetype": "Status",
 
   "search.filters.applied.f.subject": "Subject",
@@ -4733,6 +4737,12 @@
   "search.filters.filter.itemtype.placeholder": "Type",
 
   "search.filters.filter.itemtype.label": "Search type",
+
+  "search.filters.filter.itemsubtype.head": "Subtype",
+
+  "search.filters.filter.itemsubtype.placeholder": "Subtype",
+
+  "search.filters.filter.itemsubtype.label": "Search Subtype",
 
   "search.filters.filter.jobTitle.head": "Job Title",
 
@@ -7126,6 +7136,9 @@
 
   "sedici.item.page.sedici.share": "Share",
 
+  // "sedici.item.page.sedici.copy": "Copiar",
+  "sedici.item.page.sedici.copy": "Copy",
+
   // "sedici.item.page.sedici.creator.corporate": "Autor institucional",
   "sedici.item.page.sedici.creator.corporate": "Institutional Author",
 
@@ -7301,6 +7314,10 @@
   
   "sedici.license.restriction.description": "You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.",
   
+  "home.page.welcome.title": "Explore the entire production of the National University of La Plata",
+
+  "home.page.welcome.text": "<b>The Intellectual Creation Dissemination Service</b>, the central institutional repository of the <b>UNLP</b>, hosts, preserves, disseminates, and gives worldwide visibility to all scientific and intellectual production of the university.",
+
   "home.page.search.placeholder": "Search among the {{ totalItems }} resources available in the repository",
   
   "home.page.author": "Authors",
@@ -7334,6 +7351,8 @@
   "home.page.growthStatistics": "Growth Statistics",
 
   "home.page.allies": "Allies",
+
+  "home.page.projects": "Projects",
   
   "file-download-link.download": "Download ",
 

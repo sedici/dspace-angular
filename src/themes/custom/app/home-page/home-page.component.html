@@ -18,10 +18,6 @@
 
 <ng-template #homeContent>
   <div class="destacado">
-    <!-- <div class="title-container">
-      <span class="explorar-text">{{'home.page.explore' | translate}}</span>
-      <h2 class="section-title">{{'home.page.production' | translate}}</h2>
-    </div> -->
     <div class="row container">
       @for (item of exploraciones; track item) {
         <div class="col-6 col-md-3 mb-4">
@@ -33,7 +29,7 @@
                   <img class="hover-image" [src]="getHoverImageSrc(item.img)" alt="{{'home.page.' + item.title | translate}}">
                 </div>
                 <div class="text-container">
-                  <h2>{{'home.page.' + item.title | translate}}</h2>
+                  <span>{{'home.page.' + item.title | translate}}</span>
                 </div>
               </div>
             </a>
@@ -45,7 +41,7 @@
                   <img class="hover-image" [src]="getHoverImageSrc(item.img)" alt="{{'home.page.' + item.title | translate}}">
                 </div>
                 <div class="text-container">
-                  <h2>{{'home.page.' + item.title | translate}}</h2>
+                  <span>{{'home.page.' + item.title | translate}}</span>
                 </div>
               </div>
             </a>
@@ -58,32 +54,41 @@
 
 <comcol-grid></comcol-grid>
 
-<div class="help text-center d-flex flex-column flex-md-row justify-content-around align-items-center">
+<div class="help flex-md-row">
   <div class="p-2">
     <img src="assets/custom/images/ayuda.svg" alt="{{'home.page.researcherHelp' | translate}}">
-    <h5>{{'home.page.researcherHelp' | translate}}</h5>
+    <div class="help-text">{{'home.page.researcherHelp' | translate}}</div>
   </div>
   <div class="p-2">
     <img src="assets/custom/images/obligacion.svg" alt="{{'home.page.depositionObligation' | translate}}">
-    <h5>{{'home.page.depositionObligation' | translate}}</h5>
+    <div class="help-text">{{'home.page.depositionObligation' | translate}}</div>
   </div>
   <div class="p-2">
     <img src="assets/custom/images/stats.svg" alt="{{'home.page.growthStatistics' | translate}}">
-    <h5>{{'home.page.growthStatistics' | translate}}</h5>
+    <div class="help-text">{{'home.page.growthStatistics' | translate}}</div>
   </div>
 </div>
 
-<div class="aliados-section d-none d-md-flex">
-    <a href="https://repositoriosdigitales.mincyt.gob.ar/vufind/" target="_blank">
-      <img src="assets/custom/images/SNRD.png" alt="SNRD Logo">
+<div class="projects-container d-md-block">
+  <div class="title-container">
+    <span class="explorar-text">{{'home.page.projects' | translate}}</span>
+    <span class="section-title">{{'home.page.projects.name' | translate}}</span>
+  </div>
+  <div class="projects-section">
+    <a href="https://sitios.sedici.unlp.edu.ar/" target="_blank">
+      <img src="assets/custom/images/logoSITIOS_positivo.svg" alt="Sitios UNLP Logo">
     </a>
-    <a href="https://www.lareferencia.info/es/" target="_blank">
-      <img src="assets/custom/images/La referencia.png" alt="La Referencia Logo">
+    <a href="https://libros.unlp.edu.ar/index.php/unlp" target="_blank">
+      <img src="assets/custom/images/logoLIBROS.png" alt="Portal de libros UNLP Logo">
     </a>
-    <a href="https://coar-repositories.org/" target="_blank">
-      <img src="assets/custom/images/COAR.png" alt="COAR Logo">
+    <a href="https://congresos.unlp.edu.ar/" target="_blank">
+      <img src="assets/custom/images/logoCONGRESOS_positivo.svg" alt="Portal de congresos UNLP Logo">
+    </a>
+    <a href="https://portalderevistas.unlp.edu.ar/" target="_blank">
+      <img src="assets/custom/images/logoREVISTAS.png" alt="Portal de revistas UNLP Logo">
     </a>
     <a href="https://hera.sedici.unlp.edu.ar/" target="_blank">
-      <img src="assets/custom/images/HERA.png" alt="HERA Logo" style="width: 325px;">
+      <img src="assets/custom/images/logoHERA.svg" alt="HERA Logo" >
     </a>
+  </div>
 </div>

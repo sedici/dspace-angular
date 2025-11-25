@@ -18,6 +18,12 @@ import { TypeBadgeComponent as BaseComponent } from 'src/app/shared/object-colle
 })
 export class TypeBadgeComponent extends BaseComponent {
 
+  /**
+   * The view of the badge
+   * @default 'list'
+   */
+  @Input() view: 'item-page' | 'list' = 'list';
+
   private _typeBadgeObject: DSpaceObject;
   private _typeBadgeMessage: string;
 

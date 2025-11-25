@@ -14,9 +14,11 @@
 
                 <div class="collection-logo-content-container">
                   <!-- Collection logo -->
-                  @if (logo) {
-                    <ds-comcol-page-logo [logo]="logo.payload" [alternateText]="'collection.logo' | translate">
-                    </ds-comcol-page-logo>
+                  @if (logoRD$ | async; as logoRD) {
+                    @if (logoRD?.payload) {
+                      <ds-comcol-page-logo [logo]="logoRD.payload" [alternateText]="'collection.logo' | translate">
+                      </ds-comcol-page-logo>
+                    }
                   }
                   
                   <div class="collection-text">

@@ -8,9 +8,12 @@ import { TranslateModule } from '@ngx-translate/core';
 import { HomeNewsComponent as BaseComponent } from '../../../../../app/home-page/home-news/home-news.component';
 import { SearchFormComponent } from '../../shared/search-form/search-form.component';
 import { ThemedSearchNavbarComponent } from 'src/app/search-navbar/themed-search-navbar.component';
+import { ThemedNavbarComponent } from 'src/app/navbar/themed-navbar.component';
 
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { MenuService } from 'src/app/shared/menu/menu.service';
+import { MenuID } from 'src/app/shared/menu/menu-id.model';
 
 export interface CardItem {
   title: string;
@@ -30,6 +33,7 @@ export interface CardItem {
     ThemedSearchNavbarComponent,
     RouterLink,
     TranslateModule,
+    ThemedNavbarComponent,
 ],
   standalone: true,
 })
@@ -39,6 +43,9 @@ export interface CardItem {
  */
 export class HomeNewsComponent extends BaseComponent {
   public isMobile$: Observable<boolean>;
+  public isNavBarCollapsed$: Observable<boolean>;
+
+  menuID = MenuID.PUBLIC;
 
   maxMobileWidth = WidthCategory.SM;
 
@@ -46,13 +53,19 @@ export class HomeNewsComponent extends BaseComponent {
     protected windowService: HostWindowService,
     private http: HttpClient,
     private cdr: ChangeDetectorRef,
+    private menuService: MenuService,
   ) {
     super()
   }
 
   ngOnInit(): void {
     this.isMobile$ = this.windowService.isUpTo(this.maxMobileWidth);
+    this.isNavBarCollapsed$ = this.menuService.isMenuCollapsed(this.menuID);
     this.loadItemCount();
+  }
+
+  public toggleNavbar(): void {
+    this.menuService.toggleMenu(this.menuID);
   }
 
   totalItems = '';

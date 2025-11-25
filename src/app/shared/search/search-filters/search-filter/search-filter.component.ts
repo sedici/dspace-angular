@@ -149,15 +149,15 @@ export class SearchFilterComponent implements OnInit, OnChanges, OnDestroy {
       this.appliedFilters$.subscribe((selectedValues: AppliedFilter[]) => {
         if (isNotEmpty(selectedValues)) {
           this.filterService.expand(this.filter.name);
+          if (this.filter.name === 'itemtype') {
+            this.filterService.expand('itemsubtype');
+          }
         }
       }),
       this.getIsActive().subscribe(() => {
         this.isVisibilityComputed.emit(true);
       }),
     );
-    if((this.filter.name === 'itemtype') || (this.filter.name === 'location.coll')) {
-      this.filterService.expand(this.filter.name);
-    }
   }
 
   ngOnChanges(): void {

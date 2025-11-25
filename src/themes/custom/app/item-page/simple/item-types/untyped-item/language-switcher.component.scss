@@ -59,10 +59,15 @@
   width: 100%;
 }
 
+:host ::ng-deep .content {
+  text-align: justify;
+}
+
+
 .abstract-text {
   font-weight: var(--font-weight-regular);
   white-space: pre-wrap;
-  text-align: justify;
+  font-size: 0.97rem;
 }
 
 .no-abstract {

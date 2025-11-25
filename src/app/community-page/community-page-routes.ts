@@ -17,6 +17,7 @@ import {
 } from './community-page-routing-paths';
 import { CreateCommunityPageComponent } from './create-community-page/create-community-page.component';
 import { createCommunityPageGuard } from './create-community-page/create-community-page.guard';
+import { defaultBrowseTabGuard } from './create-community-page/create-community-page-rendering-guard';
 import { DeleteCommunityPageComponent } from './delete-community-page/delete-community-page.component';
 import { SubComColSectionComponent } from './sections/sub-com-col-section/sub-com-col-section.component';
 import { ThemedCommunityPageComponent } from './themed-community-page.component';
@@ -68,6 +69,7 @@ export const ROUTES: Route[] = [
       {
         path: '',
         component: ThemedCommunityPageComponent,
+        canActivate: [defaultBrowseTabGuard],
         data: {
           menuRoute: MenuRoute.COMMUNITY_PAGE,
         },

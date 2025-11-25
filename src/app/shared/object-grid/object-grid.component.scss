@@ -10,7 +10,7 @@
     margin-bottom: var(--ds-wrapper-grid-spacing);
 
     div.thumbnail > .thumbnail-content {
-      height: var(--ds-card-thumbnail-height);
+      height: 405px;
       width: 100%;
       display: block;
       min-width: 100%;
@@ -25,7 +25,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
-  margin-bottom: 20px;
+  margin: 0px 10px 20px 10px;
 
   .card-element {
     border: 1px solid #ddd;
@@ -33,15 +33,15 @@
     overflow: hidden;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s;
+    background-color: white;
 
     &:hover {
       transform: translateY(-4px);
     }
 
-    .card custom-card-style{
-    padding: var(--ds-wrapper-grid-spacing);
-    border: none !important;
-    box-shadow: none !important;
+    .card.custom-card-style {
+      display: block;
+      height: 100%;
     }
   }
 

@@ -1,4 +1,16 @@
 <div class="background-image-container mt-ncs">
+  @if ((isMobile$ | async)) {
+    <div id="mobile-navbar-toggler" class="d-block d-lg-none">
+      <button id="navbar-toggler" class="btn p-0" type="button" (click)="toggleNavbar()"
+        [attr.aria-label]="'nav.toggle' | translate" aria-controls="collapsible-mobile-navbar"
+        [attr.aria-expanded]="(isNavBarCollapsed$ | async) !== true">
+        <span class="fas fa-bars fa-fw fa-xl toggler-icon" 
+              [style.color]="(isNavBarCollapsed$ | async) ? '#ffffff' : '#000000'"
+              aria-hidden="true"></span>
+      </button>
+    </div>
+    <ds-navbar></ds-navbar>
+  }
   <div class="container">
     <div class="jumbotron">
       <div class="sedici-logo-container d-md-none">
@@ -9,14 +21,14 @@
       </div>
       @if ((isMobile$ | async)) {
         <div class="sedici-description-mobile">
-          <p class="text"><b>El Servicio de Difusión de la Creación Intelectual</b>, repositorio institucional central de la <b>UNLP</b>, alberga, preserva, difunde y da visibilidad a nivel mundial a toda la producción científica e intelectual de la universidad.</p>
+          <p class="text" [innerHTML]="'home.page.welcome.text' | translate"></p>
         </div>
         <ds-search-navbar></ds-search-navbar>
       } @else {     
         <div class="sedici-description">
           <div class="content-left">
-            <p class="title">Explorá toda la producción de la Universidad Nacional de La Plata</p>
-            <p class="text"><b>El Servicio de Difusión de la Creación Intelectual</b>, repositorio institucional central de la <b>UNLP</b>, alberga, preserva, difunde y da visibilidad a nivel mundial a toda la producción científica e intelectual de la universidad.</p>
+            <p class="title">{{'home.page.welcome.title' | translate}}</p>
+            <p class="text" [innerHTML]="'home.page.welcome.text' | translate"></p>
             <ds-themed-search-form [searchPlaceholder]="'home.page.search.placeholder' | translate:{totalItems: totalItems}"></ds-themed-search-form>
           </div>
           <div class="escudo-container">
@@ -37,7 +49,7 @@
             <img [src]="item.img" alt="{{'home.page.' + item.title | translate}}">
           </div>
           <div class="text-container">
-            <h4>{{'home.page.' + item.title | translate}}</h4>
+            <span>{{'home.page.' + item.title | translate}}</span>
           </div>
         </a>
       } @else {
@@ -46,7 +58,7 @@
             <img [src]="item.img" alt="{{'home.page.' + item.title | translate}}">
           </div>
           <div class="text-container">
-            <h4>{{'home.page.' + item.title | translate}}</h4>
+            <span>{{'home.page.' + item.title | translate}}</span>
           </div>
         </a>
       }

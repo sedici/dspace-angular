@@ -13,8 +13,8 @@ import { SearchFiltersComponent as BaseComponent } from '../../../../../../app/s
   selector: 'ds-themed-search-filters',
   // styleUrls: ['./search-filters.component.scss'],
   styleUrls: ['../../../../../../app/shared/search/search-filters/search-filters.component.scss'],
-  // templateUrl: './search-filters.component.html',
-  templateUrl: '../../../../../../app/shared/search/search-filters/search-filters.component.html',
+  templateUrl: './search-filters.component.html',
+  // templateUrl: '../../../../../../app/shared/search/search-filters/search-filters.component.html',
   providers: [
     {
       provide: SEARCH_CONFIG_SERVICE,

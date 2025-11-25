@@ -25,7 +25,10 @@ export class ThemedBadgesComponent extends ThemedComponent<BadgesComponent> {
   @Input() context: Context;
   @Input() showAccessStatus: boolean;
 
-  protected inAndOutputNames: (keyof BadgesComponent & keyof this)[] = ['object', 'context', 'showAccessStatus'];
+  @Input() view: string;
+
+  // The 'view' property is a custom addition and is not part of the base BadgesComponent.
+  protected inAndOutputNames: (keyof BadgesComponent & keyof this)[] = ['object', 'context', 'showAccessStatus', 'view' as any];
 
   protected getComponentName(): string {
     return 'BadgesComponent';

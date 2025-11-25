@@ -17,9 +17,9 @@
   flex-direction: column;
 
   .title-content {
-    font-size: 1.75em;
-    font-weight: bold;
-    margin-bottom: 0;
+    font-family: serif;
+    font-size: 1.65rem;
+    color: black;
 
     ::ng-deep .simple-view-element {
       margin-bottom: 0px;
@@ -32,7 +32,7 @@
 }
 
 .title-alternative-content {
-  font-size: 1.33333em;
+  font-size: 1.1rem;
   font-weight: var(--font-weight-regular);
   font-style: italic;
   color: #555;
@@ -58,6 +58,23 @@
 
 sedici-context,
 .author-container {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+
+  .author-with-icon {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35rem;
+  }
+  
+  .author-icon {
+    margin-top: 0.35rem;
+    color: #ADADAD;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
   ::ng-deep span, ::ng-deep a {
     font-size: 1.33333em;
     font-weight: var(--font-weight-regular);
@@ -67,9 +84,7 @@ sedici-context,
     font-size: 1.33333em;
     font-weight: var(--font-weight-bold);
   }
-}
 
-.author-container {
   ::ng-deep .simple-view-element {
     line-height: 1.5;
   }
@@ -123,7 +138,7 @@ sedici-context,
 
   ::ng-deep .btn {
     font-size: 1.33333em;
-    font-weight: var(--font-weight-light);
+    // font-weight: var(--font-weight-light);
   }
 }
 
@@ -140,13 +155,12 @@ app-expandable-metadata {
 }
 
 .metadata-column {
-  padding: 0 .5rem ;
 
   ::ng-deep ds-generic-item-page-field,
   ::ng-deep sedici-truncatable-generic-item-page-field,
   ::ng-deep ds-item-page-uri-field {
     h6 {
-      font-size: 1.25em;
+      font-size: 1rem;
       font-weight: var(--font-weight-bold);
     }
   

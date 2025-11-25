@@ -1,25 +1,71 @@
-<ng-container *ngTemplateOutlet="itemsGrid; context: { title: 'featuredCollections', items: coleccionesDestacadas, column: false, isSingleRow: true }"></ng-container>
+<ng-container *ngTemplateOutlet="itemsGrid; context: { title: 'featuredCollections', items: coleccionesDestacadas }"></ng-container>
 <div id="faculties-section">
-  <ng-container *ngTemplateOutlet="itemsGrid; context: { title: 'faculties', items: facultades, column: true, isSingleRow: false }"></ng-container>
+  <ng-container *ngTemplateOutlet="itemsGridCards; context: { title: 'faculties', items: facultades }"></ng-container>
 </div>
-<ng-container *ngTemplateOutlet="itemsGrid; context: { title: 'undergraduate', items: pregrado, column: true, isSingleRow: false }"></ng-container>
+<ng-container *ngTemplateOutlet="itemsGridCards; context: { title: 'undergraduate', items: pregrado }"></ng-container>
 
-<ng-template #itemsGrid let-title="title" let-items="items" let-column="column" let-isSingleRow="isSingleRow">
-  <div class="section-destacados">
+<ng-template #itemsGrid let-title="title" let-items="items">
+  <div class="section-destacados simple-grid">
     <div class="title-container">
       <span class="explorar-text">{{'home.page.explore' | translate}}</span>
-      <h2 class="section-title">{{'home.page.' + title | translate}}</h2>
+      <span class="section-title">{{'home.page.' + title | translate}}</span>
     </div>
     @if (items) {
-      <div class="section-grid container" [ngClass]="{'d-sm-flex': column, 'single-row-scroll': isSingleRow}">
+      <div class="carousel-wrapper container" [class.is-carousel]="items.length > 6">
+        
+        @if (items.length > 6 && !isCarouselAtStart) {
+          <button class="carousel-arrow left" (click)="scrollGrid(scrollContainer, 'left')"
+                  aria-label="Anterior">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+        }
+
+        <div class="section-grid single-row-scroll" #scrollContainer
+             (scroll)="onCarouselScroll(scrollContainer)">
+          
+          @for (item of items; track item) {
+            <div class="section-item single-row">
+              <a [href]="item.href">
+                <div class="img-container">
+                  <img [src]="item.img" [alt]="item.title">
+                </div>
+              </a>
+            </div>
+          }
+        </div>
+
+        @if (items.length > 6 && !isCarouselAtEnd) {
+          <button class="carousel-arrow right" (click)="scrollGrid(scrollContainer, 'right')"
+                  aria-label="Siguiente">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        }
+      </div>
+    }
+  </div>
+</ng-template>
+
+<ng-template #itemsGridCards let-title="title" let-items="items">
+  <div class="section-destacados card-grid">
+    <div class="title-container">
+      <span class="explorar-text">{{'home.page.explore' | translate}}</span>
+      <span class="section-title">{{'home.page.' + title | translate}}</span>
+    </div>
+    @if (items) {
+      <div class="section-grid container d-sm-flex">
         @for (item of items; track item) {
-          <div class="section-item" [ngClass]="isSingleRow ? 'single-row' : 'multi-row'">
+          <div class="card-item multi-row">
             <a [href]="item.href">
-              <div class="img-container">
-                <img [src]="item.img" [alt]="item.title">
+              <div class="card-header" [style.background-color]="item.color || defaultColor">
+                <!-- Barra de color superior -->
               </div>
-              <div class="section-texto">
-                <p>{{item.description}}</p>
+              <div class="card-body">
+                <div class="img-container">
+                  <img [src]="item.img" [alt]="item.title">
+                </div>
+                <div class="card-text">
+                  <p>{{item.description}}</p>
+                </div>
               </div>
             </a>
           </div>

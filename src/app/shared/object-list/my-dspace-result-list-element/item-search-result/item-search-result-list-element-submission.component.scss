@@ -1,1 +1,16 @@
 @import '../../../../../styles/variables';
+
+.row-2{
+    margin-left: 12px;
+    padding: 1.4rem;
+    margin-right: 0px;
+    background-color: white;
+    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.1);
+}
+
+:host ::ng-deep h2 {
+    font-family: serif;
+    font-size: 1.65rem;
+    color: black;
+    line-height: 38px;
+}

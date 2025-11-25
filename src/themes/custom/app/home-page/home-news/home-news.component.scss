@@ -16,6 +16,28 @@
     background-repeat: no-repeat;
   }
 
+  #mobile-navbar-toggler {
+    position: absolute;
+    z-index: 100;
+    right: 1.5rem;
+    top: 2.5rem;
+
+    #navbar-toggler {
+      border: none;
+      box-shadow: none;
+
+      .toggler-icon {
+        width: 1.5em;
+        height: 1.5em;
+        line-height: 1.5;
+      }
+    }
+  }
+
+  ds-navbar ::ng-deep #main-navbar {
+    padding-top: 1rem;
+  }
+
   .sedici-description-mobile {
     display: flex;
     padding-bottom: 1rem;
@@ -52,6 +74,7 @@
 
     .escudo-container {
       position: absolute;
+      opacity: 0.8;
       right: 0;
     }
   }
@@ -97,6 +120,7 @@
   .destacado {
     display: flex;
     justify-content: space-evenly;
+    margin-bottom: 1.5rem;
 
     .collection-card {
       padding: 1rem;
@@ -117,8 +141,8 @@
         z-index: 20;
         
         img {
-          width: 60px;
-          height: 60px;
+          width: 68px;
+          height: 68px;
           object-fit: contain;
         }
       }
@@ -132,8 +156,8 @@
         z-index: 15;
         position: relative;
         
-        h4 {
-          font-size: 1.2rem;
+        span {
+          font-size: 1.3125rem;
           margin-bottom: 0.5rem;
           color: #333;
         }
@@ -160,19 +184,23 @@
     
     @media (max-width: 767px) {      
       .collection-card {
+        flex: 1;
+        padding: 0;
+
         .icon-container {
-          width: 100px;
-          height: 100px;
+          width: 80px;
+          height: 80px;
           
           img {
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
           }
         }
         
         .text-container {
-          h4 {
-            font-size: 1rem;
+          span {
+            font-size: 1.05rem;
+            line-height: normal;
           }
         }
       }
@@ -181,45 +209,5 @@
 
   .destacado + * {
     padding-top: 2rem;
-  }
-
-  ::ng-deep ds-themed-search-form {
-    .input-group {
-      border: 2px solid var(--sedici-color);
-      border-radius: 25px;
-      background-color: white;
-    }
-
-    .form-control {
-      background-color: transparent;
-      font-size: 1.2rem;
-      padding-left: 2rem;
-      
-      &:focus {
-        outline: none !important;
-        box-shadow: none !important;
-      }
-    }
-
-    .search-button {
-      position: absolute;
-      right: 5px;
-      top: 50%;
-      transform: translateY(-50%);
-      background-color: #4A90E2;
-      border-radius: 50% !important;
-      width: 40px;
-      height: 40px;
-      z-index: 10;
-
-      i {
-        color: white !important;
-        font-size: 1.2rem !important;
-      }
-
-      &:hover {
-        background-color: #357ABD !important;
-      }
-    }
   }
 }

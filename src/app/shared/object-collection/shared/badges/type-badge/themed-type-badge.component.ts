@@ -21,8 +21,9 @@ import { TypeBadgeComponent } from './type-badge.component';
 })
 export class ThemedTypeBadgeComponent extends ThemedComponent<TypeBadgeComponent> {
   @Input() object: DSpaceObject;
+  @Input() view: 'item-page' | 'list';
 
-  protected inAndOutputNames: (keyof TypeBadgeComponent & keyof this)[] = ['object'];
+  protected inAndOutputNames: (keyof TypeBadgeComponent & keyof this)[] = ['object', 'view' as any];
 
   protected getComponentName(): string {
     return 'TypeBadgeComponent';

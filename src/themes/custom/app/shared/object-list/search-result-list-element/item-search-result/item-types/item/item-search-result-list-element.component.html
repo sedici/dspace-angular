@@ -1,6 +1,6 @@
 <div class="row">
   @if (showThumbnails) {
-    <div class="col-3 col-md-2">
+      <div class="col-3 col-md-2">
       @if (linkType !== linkTypes.None) {
         <a [target]="(linkType === linkTypes.ExternalLink) ? '_blank' : '_self'" [attr.rel]="(linkType === linkTypes.ExternalLink) ? 'noopener noreferrer' : null"
           [routerLink]="[itemPageRoute]" class="dont-break-out">
@@ -16,14 +16,14 @@
       }
     </div>
   }
-  <div [ngClass]="showThumbnails ? 'col-9' : 'col-md-12'">
+  <div [ngClass]="showThumbnails ? 'col-9' : 'without-thumbnails'">
     <div class="badges-context-container">
       @if (showLabel) {
-        <ds-badges [object]="dso" [context]="context" [showAccessStatus]="true"></ds-badges>
+        <ds-badges [object]="dso" [context]="context" [showAccessStatus]="true" [view]="'list'"></ds-badges>
         <sedici-context [object]="dso"></sedici-context>
+        <span class="item-year">{{ getYear() }}</span>
       }
     </div>
-
     @if (object !== undefined && object !== null) {
       <ds-truncatable [id]="dso.id">
         @if (linkType !== linkTypes.None) {
@@ -41,42 +41,47 @@
           <span class="lead item-list-title dont-break-out"
           [innerHTML]="dsoTitle"></span>
         }
-        <span class="text-muted">
-          <ds-truncatable-part [id]="dso.id" [minLines]="1">
-            @if (dso.firstMetadataValue('dc.publisher') || dso.firstMetadataValue('dc.date.issued')) {
-              (@if (dso.firstMetadataValue('dc.publisher')) {
-              <span class="item-list-publisher" [innerHTML]="firstMetadataValue('dc.publisher')"></span>
-            }
-            @if (dso.firstMetadataValue('dc.publisher') && dso.firstMetadataValue('dc.date.issued')) {
-              <span>, </span>
-            }
-            @if (dso.firstMetadataValue('dc.date.issued')) {
-              <span class="item-list-date" [innerHTML]="firstMetadataValue('dc.date.issued').slice(0,4)"></span>
-              })
+        <span class="text-muted-custom">
+          <div class="authors-container">
+            @if (dso.firstMetadataValue('sedici.creator.corporate') || dso.firstMetadataValue('dc.publisher')) {
+              <i class="building-icon fa-solid fa-building-columns"></i>
+              <span class="item-list-publisher" [innerHTML]="firstMetadataValue('sedici.creator.corporate') || firstMetadataValue('dc.publisher')"></span>
             }
             @if (authors.length > 0) {
-              <span class="item-list-authors">
-                @for (author of authors; track author; let last = $last) {
+              <i [class]="authors.length === 1 ? 'fa-solid fa-user' : 'fa-solid fa-users'" class="author-icon"></i>
+              <!-- Versión desktop: hasta 4 autores -->
+              <span class="item-list-authors authors-desktop">
+                @for (author of authors.slice(0, 4); track author; let last = $last) {
                   <span>
-                    <span [innerHTML]="author"><span [innerHTML]="author"></span></span>
+                    <span [innerHTML]="author"></span>
                     @if (!last) {
-                      <span>; </span>
+                        <span style="font-weight: bold;"> • </span>
                     }
                   </span>
                 }
+                @if (authors.length > 4) {
+                  <span style="font-style: italic;"> et al.</span>
+                }
               </span>
-            } @else {
+              <!-- Versión mobile: solo 1 autor -->
+              <span class="item-list-authors authors-mobile">
+                <span [innerHTML]="authors[0]"></span>
+                @if (authors.length > 1) {
+                  <span style="font-style: italic;"> et al.</span>
+                }
+              </span>
+            } @else if (!dso.firstMetadataValue('sedici.creator.corporate') && !dso.firstMetadataValue('dc.publisher')) {
+              <i class="fa-solid fa-user author-icon me-1"></i>
               <span>{{ 'sedici.item.page.unknown.author' | translate }}</span>
             }
-          </ds-truncatable-part>
+          </div>
         </span>
         @if (dso.firstMetadataValue('dc.description.abstract')) {
           <div class="item-list-abstract">
-            <ds-truncatable-part [id]="dso.id" [minLines]="3"><span
-            [innerHTML]="firstMetadataValue('dc.description.abstract')"></span>
-          </ds-truncatable-part>
-        </div>
+            <span [innerHTML]="firstMetadataValue('dc.description.abstract')"></span>
+          </div>
         }
+        <ds-access-status-badge [object]="dso"></ds-access-status-badge>
       </ds-truncatable>
     }
   </div>

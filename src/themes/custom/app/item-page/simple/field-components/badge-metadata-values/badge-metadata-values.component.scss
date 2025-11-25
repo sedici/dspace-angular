@@ -1,31 +1,44 @@
 .badge-group {
   display: inline-flex;
   margin-right: 0.5rem;
-  
+
   .badge {
-    font-size: 1.1667em;
+    font-size: 0.9rem;
     font-weight: var(--font-weight-regular);
     border-radius: 0px;
     padding: 0;
+
+    @media print {
+      font-size: 0.7rem;
+    }
   }
-  
+
   .badge-label {
+    border-top-left-radius: 2.5px;
+    border-bottom-left-radius: 2.5px;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     color: white;
-    background-color: #706f6f;
-    border: 1px solid #706f6f;
+    background-color: #19487B;
+    border: 1px solid #19487B;
     padding: 0.35em 0.5em;
+
+    @media print {
+      background-color: #19487B !important;
+      color: white !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
   }
-  
+
   .badge-content {
     display: flex;
     align-items: center;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     background-color: white;
-    color: #706f6f;
-    
+    color: #726e6e;
+
     a.no-format {
       border: 1px solid #dee2e6;
       padding: 0.35em;
@@ -37,6 +50,10 @@
       border: 1px solid #dee2e6;
       padding: 0.35em;
     }
+  }
+
+  @media print {
+    font-size: 0.8rem;
   }
 }
 

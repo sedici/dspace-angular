@@ -11,10 +11,10 @@
                     <div class="file-icon col-1">
                       <img [src]="getIconPath(file.name)" alt="File icon"/>
                     </div>
-                    <div class="col-8">
+                    <div class="col-7">
                       <span class="file-name">{{ getFileDescription(file) }}</span>
                     </div>
-                    <div class="col-3 download-button">
+                    <div class="col-4 download-button">
                       <ds-sedici-file-download-link [bitstream]="file" [item]="object"></ds-sedici-file-download-link>
                     </div>
                   </div>
@@ -28,7 +28,7 @@
                     </div>
                     <div class="button-container">
                       <ds-sedici-file-download-link [bitstream]="file" [item]="object" [isSticky]="true" [isMobile]="true"></ds-sedici-file-download-link>
-                      <button class="btn" (click)="openModalShareButtons()">
+                      <button class="btn share-button" (click)="openModalShareButtons()">
                         <i class="fa-solid fa-share"></i>
                         <span> {{'sedici.item.page.sedici.share' | translate}}</span>
                       </button>

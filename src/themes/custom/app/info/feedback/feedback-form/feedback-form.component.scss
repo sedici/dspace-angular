@@ -1,0 +1,120 @@
+.feedback-modal-container {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.feedback-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+
+  .feedback-icon {
+    font-size: 2rem;
+    color: var(--sedici-color);
+  }
+
+  .feedback-title {
+    font-weight: 700;
+    color: var(--sedici-color);
+    margin: 0;
+  }
+}
+
+.feedback-form {
+  .form-group {
+    margin-bottom: 1.5rem;
+
+    .form-label {
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 0.5rem;
+      display: block;
+      font-size: 0.9rem;
+    }
+
+    .input-wrapper {
+      position: relative;
+
+      .input-icon {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #666;
+        font-size: 1rem;
+      }
+
+      .form-control {
+        padding-left: 3rem;
+      }
+    }
+
+    .form-control {
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 0.75rem 1rem;
+      font-size: 0.95rem;
+      transition: border-color 0.2s;
+
+      &:focus {
+        border-color: var(--sedici-color);
+        box-shadow: 0 0 0 0.2rem rgba(0, 188, 212, 0.25);
+        outline: none;
+      }
+
+      &.is-invalid {
+        border-color: #dc3545;
+      }
+
+      &.form-control-readonly {
+        background-color: #f5f5f5;
+        color: #666;
+        cursor: not-allowed;
+      }
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-text {
+      font-size: 0.85rem;
+      display: block;
+    }
+
+    .invalid-feedback {
+      font-size: 0.85rem;
+      color: #dc3545;
+    }
+  }
+
+  .form-actions {
+    margin-top: 2rem;
+    text-align: right;
+
+    .btn-submit {
+      background-color: var(--sedici-color);
+      border: none;
+      padding: 0.75rem 2rem;
+      font-size: 1rem;
+      font-weight: 500;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+
+      &:hover:not(:disabled) {
+        background-color: #357abd;
+      }
+
+      &:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+    }
+  }
+}

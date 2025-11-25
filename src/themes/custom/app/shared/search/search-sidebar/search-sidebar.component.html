@@ -8,12 +8,7 @@
     class="fas fa-arrow-right"></i> {{'search.sidebar.close' | translate}}
   </button>
 </div>
-<div id="search-sidebar-content">
-  @if (showViewModes) {
-    <ds-view-mode-switch class="d-none d-md-block"
-      [viewModeList]="viewModeList"
-    (changeViewMode)="changeViewMode.emit($event)"></ds-view-mode-switch>
-  }
+<div id="search-sidebar-content" class="sidebar-container">
   <div class="sidebar-content">
     @if (configurationList && (sidebarMode$ | async) !== 'sort') {
       <ds-search-switch-configuration
@@ -30,19 +25,6 @@
         [refreshFilters]="refreshFilters"
         [inPlaceSearch]="inPlaceSearch">
       </ds-search-filters>
-    }
-    @if (inPlaceSearch && (this.showAdvancedSearch$ | async) === true && (sidebarMode$ | async) !== 'sort') {
-      <ds-advanced-search
-        [configuration]="configuration"
-        [filtersConfig]="(filters | async)?.payload"
-        [scope]="currentScope">
-      </ds-advanced-search>
-    }
-    @if (inPlaceSearch && (sidebarMode$ | async) !== 'filters') {
-      <ds-search-settings
-        [currentSortOption]="currentSortOption"
-        [sortOptionsList]="sortOptionsList">
-      </ds-search-settings>
     }
   </div>
 </div>

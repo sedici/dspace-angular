@@ -42,43 +42,50 @@
   </div>
   <hr class="divider divider-top">
   <div class="author-container">
-    @if (object.allMetadata(['sedici.creator.*', 'sedici.contributor.compiler', 'sedici.contributor.editor']).length === 0) {
-      <span>{{ 'sedici.item.page.unknown.author' | translate }}</span>
-    }
-    <ds-generic-item-page-field [item]="object"
-      [fields]="['sedici.creator.person']"
-      [separator]="' | '">
-    </ds-generic-item-page-field>
-    <ds-generic-item-page-field [item]="object"
-      [fields]="['sedici.creator.corporate']"
-      [separator]="' | '"
-      [label]="'sedici.item.page.sedici.creator.corporate'">
-    </ds-generic-item-page-field>
-    <ds-generic-item-page-field [item]="object"
-      [fields]="['sedici.creator.interprete']"
-      [separator]="' | '"
-      [label]="'sedici.item.page.sedici.creator.interprete'">
-    </ds-generic-item-page-field>
-    <ds-generic-item-page-field [item]="object"
-      [fields]="['sedici.contributor.compiler']"
-      [separator]="' | '"
-      [label]="'sedici.item.page.sedici.contributor.compiler'">
-    </ds-generic-item-page-field>
-    <ds-generic-item-page-field [item]="object"
-      [fields]="['sedici.contributor.translator']"
-      [separator]="' | '"
-      [label]="'sedici.item.page.sedici.contributor.translator'">
-    </ds-generic-item-page-field>
-    <ds-generic-item-page-field [item]="object"
-      [fields]="['sedici.contributor.editor']"
-      [separator]="' | '"
-      [label]="'sedici.item.page.sedici.contributor.editor'">
-    </ds-generic-item-page-field>
-    <ds-generic-item-page-field [item]="object"
-      [fields]="['sedici.contributor.inscriber']"
-      [separator]="' | '"
-      [label]="'sedici.item.page.sedici.contributor.inscriber'">
-    </ds-generic-item-page-field>
+    <div class="author-list">
+      @if (object.allMetadata(['sedici.creator.*', 'sedici.contributor.compiler', 'sedici.contributor.editor']).length === 0) {
+        <span>{{ 'sedici.item.page.unknown.author' | translate }}</span>
+      }
+      <div class="author-with-icon">
+        @if (totalAuthors > 0) {
+          <i [class]="totalAuthors === 1 ? 'fa-solid fa-user author-icon' : 'fa-solid fa-users author-icon'"></i>
+        }
+        <ds-generic-item-page-field [item]="object"
+        [fields]="['sedici.creator.person']"
+        [separator]="' | '">
+        </ds-generic-item-page-field>
+      </div>
+      <ds-generic-item-page-field [item]="object"
+        [fields]="['sedici.creator.corporate']"
+        [separator]="' | '"
+        [label]="'sedici.item.page.sedici.creator.corporate'">
+      </ds-generic-item-page-field>
+      <ds-generic-item-page-field [item]="object"
+        [fields]="['sedici.creator.interprete']"
+        [separator]="' | '"
+        [label]="'sedici.item.page.sedici.creator.interprete'">
+      </ds-generic-item-page-field>
+      <ds-generic-item-page-field [item]="object"
+        [fields]="['sedici.contributor.compiler']"
+        [separator]="' | '"
+        [label]="'sedici.item.page.sedici.contributor.compiler'">
+      </ds-generic-item-page-field>
+      <ds-generic-item-page-field [item]="object"
+        [fields]="['sedici.contributor.translator']"
+        [separator]="' | '"
+        [label]="'sedici.item.page.sedici.contributor.translator'">
+      </ds-generic-item-page-field>
+      <ds-generic-item-page-field [item]="object"
+        [fields]="['sedici.contributor.editor']"
+        [separator]="' | '"
+        [label]="'sedici.item.page.sedici.contributor.editor'">
+      </ds-generic-item-page-field>
+      <ds-generic-item-page-field [item]="object"
+        [fields]="['sedici.contributor.inscriber']"
+        [separator]="' | '"
+        [label]="'sedici.item.page.sedici.contributor.inscriber'">
+      </ds-generic-item-page-field>
+    </div>
   </div>
   <sedici-context [object]="object"></sedici-context>
   <div class="flex-container">
@@ -129,55 +136,11 @@
         <language-switcher [item]="object"></language-switcher>
         <app-expandable-metadata>
           <div class="d-flex flex-wrap responsive-columns">
-            <div class="metadata-column col-lg-4 col-md-12" [ngClass]="{'col-lg-12': !hasMetadata}">
+            <div class="metadata-column col-lg-5 col-md-12" [ngClass]="{'col-lg-12': !hasMetadata}">
               <ds-generic-item-page-field [item]="object"
-                [fields]="['sedici.contributor.director']"
-                [separator]="' | '"
-                [label]="'sedici.item.page.sedici.contributor.director'">
-              </ds-generic-item-page-field>
-              <ds-generic-item-page-field [item]="object"
-                [fields]="['sedici.contributor.codirector']"
-                [separator]="' | '"
-                [label]="'sedici.item.page.sedici.contributor.codirector'">
-              </ds-generic-item-page-field>
-              <ds-generic-item-page-field [item]="object"
-                [fields]="['sedici.institucionDesarrollo']"
-                [label]="'sedici.item.page.sedici.institucionDesarrollo'">
-              </ds-generic-item-page-field>
-              <ds-generic-item-page-field [item]="object"
-                [fields]="['thesis.degree.name']"
-                [label]="'sedici.item.page.thesis.degree.name'">
-              </ds-generic-item-page-field>
-              <ds-generic-item-page-field [item]="object"
-                [fields]="['thesis.degree.grantor']"
-                [label]="'sedici.item.page.thesis.degree.grantor'">
-              </ds-generic-item-page-field>
-              <ds-generic-item-page-field [item]="object"
-                [fields]="['sedici.contributor.juror']"
-                [separator]="' | '"
-                [label]="'sedici.item.page.sedici.contributor.juror'">
-              </ds-generic-item-page-field>
-              <ds-generic-item-page-field [item]="object"
-                [fields]="['sedici.contributor.colaborator']"
-                [separator]="' | '"
-                [label]="'sedici.item.page.sedici.contributor.colaborator'">
-              </ds-generic-item-page-field>
-              <ds-generic-item-page-field [item]="object"
-                [fields]="['mods.originInfo.place']"
+                [fields]="['sedici.subject.materias']"
                 [separator]="'; '"
-                [label]="'sedici.item.page.mods.originInfo.place'">
-              </ds-generic-item-page-field>
-              <ds-generic-item-page-field [item]="object"
-                [fields]="['dc.audience']"
-                [label]="'sedici.item.page.dc.audience'">
-              </ds-generic-item-page-field>
-              <ds-generic-item-page-field [item]="object"
-                [fields]="['dc.coverage.spatial']"
-                [label]="'sedici.item.page.dc.coverage.spatial'">
-              </ds-generic-item-page-field>
-              <ds-generic-item-page-field [item]="object"
-                [fields]="['dc.coverage.temporal']"
-                [label]="'sedici.item.page.dc.coverage.temporal'">
+                [label]="'sedici.item.page.sedici.subject.materias'">
               </ds-generic-item-page-field>
               <sedici-truncatable-generic-item-page-field [item]="object"
                 [fields]="['dc.subject']"
@@ -185,9 +148,14 @@
                 [minLines]="3">
               </sedici-truncatable-generic-item-page-field>
               <ds-generic-item-page-field [item]="object"
-                [fields]="['sedici.subject.materias']"
+                [fields]="['mods.originInfo.place']"
                 [separator]="'; '"
-                [label]="'sedici.item.page.sedici.subject.materias'">
+                [label]="'sedici.item.page.mods.originInfo.place'">
+              </ds-generic-item-page-field>
+              <ds-generic-item-page-field [item]="object"
+                [fields]="['sedici.contributor.colaborator']"
+                [separator]="' | '"
+                [label]="'sedici.item.page.sedici.contributor.colaborator'">
               </ds-generic-item-page-field>
               <ds-generic-item-page-field [item]="object"
                 [fields]="['dc.publisher']"
@@ -207,7 +175,50 @@
               </ds-item-page-uri-field>
             </div>
             @if (hasMetadata) {
-              <div class="metadata-column col-lg-8 col-md-12">
+              <div class="metadata-column col-lg-7 col-md-12">
+                <!-- Bloque tesis -->
+                <ds-generic-item-page-field [item]="object"
+                  [fields]="['sedici.contributor.director']"
+                  [separator]="' | '"
+                  [label]="'sedici.item.page.sedici.contributor.director'">
+                </ds-generic-item-page-field>
+                <ds-generic-item-page-field [item]="object"
+                  [fields]="['sedici.contributor.codirector']"
+                  [separator]="' | '"
+                  [label]="'sedici.item.page.sedici.contributor.codirector'">
+                </ds-generic-item-page-field>
+                <ds-generic-item-page-field [item]="object"
+                  [fields]="['thesis.degree.name']"
+                  [label]="'sedici.item.page.thesis.degree.name'">
+                </ds-generic-item-page-field>
+                <ds-generic-item-page-field [item]="object"
+                  [fields]="['thesis.degree.grantor']"
+                  [label]="'sedici.item.page.thesis.degree.grantor'">
+                </ds-generic-item-page-field>
+                <ds-generic-item-page-field [item]="object"
+                  [fields]="['sedici.institucionDesarrollo']"
+                  [label]="'sedici.item.page.sedici.institucionDesarrollo'">
+                </ds-generic-item-page-field>
+                <ds-generic-item-page-field [item]="object"
+                  [fields]="['sedici.contributor.juror']"
+                  [separator]="' | '"
+                  [label]="'sedici.item.page.sedici.contributor.juror'">
+                </ds-generic-item-page-field>
+                <!-- Bloque objeto de aprendizaje -->
+                <ds-generic-item-page-field [item]="object"
+                  [fields]="['dc.audience']"
+                  [label]="'sedici.item.page.dc.audience'">
+                </ds-generic-item-page-field>
+                <!-- Bloque conjuntos de datos -->
+                <ds-generic-item-page-field [item]="object"
+                  [fields]="['dc.coverage.spatial']"
+                  [label]="'sedici.item.page.dc.coverage.spatial'">
+                </ds-generic-item-page-field>
+                <ds-generic-item-page-field [item]="object"
+                  [fields]="['dc.coverage.temporal']"
+                  [label]="'sedici.item.page.dc.coverage.temporal'">
+                </ds-generic-item-page-field>
+                <!-- Bloque general -->
                 <ds-generic-item-page-field [item]="object"
                   [fields]="['sedici.description.note']"
                   [separator]="'<br/>'"

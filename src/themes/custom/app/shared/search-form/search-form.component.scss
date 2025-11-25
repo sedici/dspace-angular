@@ -1,26 +1,134 @@
-.search-button {
-  background-color: transparent; // Fondo transparente
-  border: none; // Sin borde
-  padding: 0; // Sin padding
-  margin-left: 10px !important; // Ajuste para que la lupa esté más cerca del borde del input
+.search-button--navbar,
+.search-button--home {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #4a90e2;
+    border-radius: 50% !important;
+    width: clamp(1.8rem, 3.5vw, 2.3rem);
+    height: clamp(1.8rem, 3.5vw, 2.3rem);
+    z-index: 10;
+    border-color: transparent;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i {
+      color: #fff !important;
+      font-size: clamp(0.75rem, 1.3vw, 1.2rem);
+    }
+}
+
+.search-form {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: baseline;
+  gap: 5px;
+}
 
-  i {
-    color: black; // Color blanco para la lupa
-    font-size: 2.7rem; // Tamaño de la lupa, ajusta según necesites
-  }
-
-  &:hover {
-      cursor: pointer; // Cambia el cursor al pasar sobre la lupa
-  }
+.input-group {
+  border: 2px solid var(--sedici-color);
+  border-radius: 25px;
+  background-color: white;
+  opacity: 0.9;
+  height: clamp(30px, 4vw + 1vh, 54px); /* Responsive height with min/max */
+  align-content: center;
 }
 
 .form-control {
   background-color: rgba(0, 0, 0, 0.2); // Fondo negro con transparencia
-  border: none; // Sin borde
-  border-radius: 0; // Sin bordes redondeados en el input
-  box-shadow: none; // Sin sombra en el input
+  border: none;
+  box-shadow: none; 
+  font-size: 1.7rem;
   font-style: italic;
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    box-shadow: 0 0 0 30px white inset !important;
+    border: 1px solid #e0e0e0 !important;
+    -webkit-text-fill-color: inherit !important;
+    caret-color: inherit !important;
+    border-radius: inherit;
+    outline: none !important;
+  }
+
+}
+
+.search-bar-container {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: row-reverse;
+  margin-top: 12px;
+
+  @media screen and (max-width: 768px) {
+    margin-bottom: 1.2rem;
+  }
+}
+.search-button--community {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  z-index: 2;
+  background-color: transparent;
+  border: none;
+  margin-right: 10px;
+}
+
+.form-control--community, .form-control--community:focus {
+  border-radius: 10px;
+  padding: 10px 0px 10px 20px;
+  font-size: 14px;
+  height: auto;
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  width: 99%;
+  outline: none;
+  margin-bottom: 0.7rem;
+
+  &:-webkit-autofill{
+    border-radius: 10px;
+    padding: 10px 0px 10px 20px;
+    font-size: 14px;
+    height: auto;
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    outline: none;
+  }
+}
+
+.form-control--navbar,
+.form-control--home {
+  background-color: transparent;
+  font-size: 1.1rem;
+  padding-left: 1rem;
+  
+  &:-webkit-autofill{
+    border-top-right-radius: 25px !important;
+    border-bottom-right-radius: 25px !important;
+  }
+  
+  &:focus {
+    background-color: transparent;
+    font-size: 1.1rem;
+    padding-left: 1rem;
+    outline: none !important;
+    box-shadow: none !important;
+    border-radius: 25px !important;
+  }
+
+}
+
+.form-control--navbar{
+  @media screen and (max-width: 1425px) {
+    font-size: clamp(0.8rem, 0.5929rem + 0.457vw, 1rem);
+  }
 }
