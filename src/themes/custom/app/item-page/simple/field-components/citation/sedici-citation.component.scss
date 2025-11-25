@@ -12,12 +12,13 @@
 .copy-button-container {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   padding-top: .25rem;
   gap: .25rem;
 }
 
 .copy-text {
-  font-size: .75rem;
+  font-size: 0.9rem;
   color: #666666;
 }
 

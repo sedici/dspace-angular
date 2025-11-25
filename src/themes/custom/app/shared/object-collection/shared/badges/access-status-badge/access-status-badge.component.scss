@@ -1,7 +1,7 @@
 
 // Ícono de estado (solo para vista de lista)
 .status-icon {
-  font-size: 0.8em;
+  font-size: 0.7rem;
   
   &.access-status-open-access-listelement-badge {
     color: #248D28;
@@ -17,7 +17,7 @@
   }
 
   @media screen and (max-width: 768px) {
-    font-size: 0.6em;
+    font-size: 0.5rem;
   }
 }
 

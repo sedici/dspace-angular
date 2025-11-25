@@ -76,12 +76,12 @@ sedici-context,
   }
 
   ::ng-deep span, ::ng-deep a {
-    font-size: 1.33333em;
+    font-size: 1rem;
     font-weight: var(--font-weight-regular);
   }
 
   ::ng-deep h6 {
-    font-size: 1.33333em;
+    font-size: 1rem;
     font-weight: var(--font-weight-bold);
   }
 
@@ -137,8 +137,7 @@ sedici-context,
   }
 
   ::ng-deep .btn {
-    font-size: 1.33333em;
-    // font-weight: var(--font-weight-light);
+    font-size: 1rem;
   }
 }
 
@@ -165,7 +164,7 @@ app-expandable-metadata {
     }
   
     span, a {
-      font-size: 1.25em;
+      font-size: 0.9rem;
       font-weight: var(--font-weight-regular);
     }
   }
