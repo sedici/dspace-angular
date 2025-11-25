@@ -1,391 +1,170 @@
+.item-identifiers {
+  display: flex;
+
+  @media print {}
+}
+
+.certificate-title {
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.row {
+  margin-left: 0;
+}
+
 @media print {
-  .no-print, .no-print * {
+
+  .no-print,
+  .no-print * {
     display: none !important;
   }
-  
+
   // Ajustes específicos para impresión
-  body, html {
+  body,
+  html {
     font-family: Verdana, Geneva, Tahoma, sans-serif !important;
-    // font-size: 12px !important;
+    font-size: 12px !important;
     line-height: 1.4 !important;
   }
-  
+
+  .content {
+    margin-right: 4.2rem;
+  }
+
   .container {
-    font-size: 0.75em !important; // Más pequeño que .75rem
-    margin: 0 !important;
+    font-size: 1rem !important;
     max-width: 100% !important;
-    
-    .texto-imprimir{
-      margin-top: 0em !important;
-      margin-bottom: 0.4em;
-      font-size: 1.1em;
+    width: 100% !important;
+    padding: 0 1.5rem !important;
+
+    .texto-imprimir {
+      margin-top: 0.5rem !important;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
     }
   }
-  
+
+  .badge-container {
+    align-items: stretch !important;
+  }
+
+  .badge-title-container {
+    margin-bottom: 1rem !important;
+  }
+
+  .certificate-title {
+    font-size: 1.8rem !important; // Largest
+    font-weight: bold !important;
+    display: block !important;
+  }
+
+  .item-title {
+    font-size: 1.4rem !important; // Large
+    font-weight: bolder !important;
+    line-height: 1.2 !important;
+  }
+
+  .title-alternative-content {
+    font-size: 1.1rem !important; // Medium-Large
+    margin: 0.25rem 0 !important;
+    line-height: 1.2 !important;
+    font-style: italic !important;
+  }
+
+  .author-container {
+    font-size: 0.9rem !important; // Medium
+    margin-bottom: 0.5rem !important;
+    line-height: 1.3 !important;
+
+    :host ::ng-deep a {
+      font-size: 0.9rem !important;
+    }
+  }
+
+  .metadata-column {
+
+    ::ng-deep ds-generic-item-page-field,
+    ::ng-deep sedici-truncatable-generic-item-page-field,
+    ::ng-deep ds-item-page-uri-field {
+
+      .simple-view-element {
+        margin-bottom: 0rem !important;
+        margin-top: 0rem !important;
+        padding: 0rem !important;
+      }
+
+      h6 {
+        font-size: 0.9rem !important;
+        font-weight: bold !important;
+        margin-bottom: 0 !important;
+      }
+
+      span,
+      a {
+        font-size: 0.9rem !important; // Base size
+        line-height: 1.3 !important;
+        font-weight: normal !important;
+      }
+    }
+  }
+
+  .sedici-context {
+    display: none !important;
+  }
+
   .jumbotron {
     padding: 0 !important;
     margin: 0 !important;
-    background-color: #f6f6f6 !important;
-    font-size: 1rem !important; // Reducir tamaño base
+    background-color: transparent !important;
 
     .container {
       .texto-handler {
-        padding-top: 1.2rem !important;
-        font-size: 0.85rem !important;
+        padding-top: 1rem !important;
+        font-size: 0.8rem !important; // Small
+        text-align: center !important;
 
         a {
-          display: inline !important;
-          visibility: visible !important;
-          color: #0066cc !important;
           text-decoration: underline !important;
+          color: #0230af !important;
         }
       }
     }
   }
 
-  .jumbotron.container {
-    padding: 0 !important;
-    font-size: 1rem !important; // Reducir tamaño base
-  }
-
-
-  
-  .title-content {
-    font-size: 1.2em !important; // Reducido de 1.75em
-    line-height: 1.2 !important;
-    //margin-bottom: 0.5rem !important;
-    font-weight: bold !important;
-  }
-  
-  .title-alternative-content {
-    font-size: 1.1em !important; // Reducido de 1.33333em
-    margin: 0.25rem 0 !important;
-    line-height: 1.2 !important;
-  }
-
-
-  .author-container {
-    font-size: 1.25em !important; // Reducido de 1.2em
-
-    ::ng-deep span, ::ng-deep a {
-      font-size: 0.9em !important; // Reducido de 1.33333em
-      line-height: 1.3 !important;
-      margin-top: 0em !important;
-      margin-bottom: 0em !important;
-      padding: 0em !important;
-    }
-
-    ::ng-deep .simple-view-element{
-      margin-bottom: 0rem !important; // Espacio entre campos
-      margin-top: 0rem !important;
-      padding: 0rem !important;
-      font-size: 0.8em !important; // Esto afecta a los autores
-    }
-    
-    ::ng-deep h6 {
-      margin-top: 0em !important;
-      margin-bottom: 0em !important;      
-      padding-top: 0em !important;
-      padding-bottom: 0em !important;
-      font-size: 0.9em !important;
-      font-weight: normal !important; // Labels no en negrita
-    }
-  }
-
-  .metadata-column{
-    padding-left: 0 !important;
-    font-size: 0.9em !important; // Reducido de 1.25em
-  }
-
-  // Esto afecta a los campos del item abajo del handle
-  .metadata-column {    
-    ::ng-deep ds-generic-item-page-field,
-    ::ng-deep sedici-truncatable-generic-item-page-field,
-    ::ng-deep ds-item-page-uri-field {
-      
-      h6 {
-        font-size: 0.7rem !important; 
-        font-weight: bold !important;
-      }
-      
-      span, a {
-        font-size: 0.7rem !important; // Contenido de metadatos más pequeño
-        line-height: 1.3 !important;
-        font-weight: normal !important;
-      }
-
-      .no-print, .no-print * {
-        display: none !important; 
-      }
-    }
-
-  }
-  
-  .sedici-context{
-    display: none !important;
-  }
-
-  .item-identifiers {
-    margin: 0.25rem 0 !important;
-    font-size: 0.4rem !important; // Reducido de 1em
-
-    ::ng-deep .badge {
-      // font-size: 0.85em !important; // Badges más pequeños
-      font-weight: normal !important;
-    }
-  }
-
-  .contenedor-qr{
+  .contenedor-qr {
     text-align: center !important;
-
+    margin-top: 1rem !important;
+    margin-bottom: 0.5rem !important;
 
     qrcode {
-        width: 75% !important; // Reduce QR size to 75% of original
-        height: auto !important;
-        transform: scale(0.8); // Alternative scaling approach
+      img {
+        width: 130px !important;
+        height: 130px !important;
       }
+    }
   }
 
-  .texto-qr{
-    font-size: 0.85rem !important; // Reducido de 1em
+  .texto-qr {
+    font-size: 0.7rem !important; // Smallest
+    text-align: center !important;
+    color: #555 !important;
   }
-  
+
   .divider-top {
+    border-top: 1px solid #000 !important;
     margin-top: 0.5rem !important;
-    margin-bottom: 0.25rem !important;
+    margin-bottom: 0.5rem !important;
   }
-  
-  .item-identifiers {
-    margin: 0.25rem 0 !important;
-  }
-  
-  // Reducir espaciado general
+
   .row {
     margin: 0 !important;
-    font-size: 1.1em;
-  }
-  
-  // Asegurar que el contenido entre en una página
-  .badge-title-content,
-  .metadata-column,
-  app-expandable-metadata {
-    ::ng-deep .simple-view-element {
-      margin-bottom: 0.2rem !important;
-      line-height: 1.3 !important;
-      font-size: 1.2em !important;
-    }
-  }
-
-}
-
-// ===== ESTILOS ORDENADOS SEGÚN HTML =====
-
-.container {
-  font-size: 1em;
-
-  .texto-imprimir{
-    margin-top: 10px;
-  }
-
-  .texto-imprimir.p{
-    text-align: center;
-    font-size: 1em;
-  }
-
-}
-
-.badge-title-container {
-  display: flex;
-}
-
-.badge-title-content {
-  display: flex;
-  flex-direction: column;
-
-  .title-content {
-    font-size: 1.75em;
-    font-weight: bold;
-    margin-bottom: 0;
-
-    ::ng-deep .simple-view-element {
-      margin-bottom: 0px;
-    }
-  }
-
-}
-
-.certificate-title {
-  font-size: 2em;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-  text-align: center;
-}
-
-.edit-menu {
-  margin-left: auto;
-}
-
-.item-title {
-  font-size: 1.9em;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
-
-.title-alternative-content {
-  font-size: 1.33333em;
-  font-weight: var(--font-weight-regular);
-  font-style: italic;
-  color: #555;
-  margin: 0.5rem 0;
-
-  ::ng-deep .simple-view-element {
-    margin-top: 0.5rem;
   }
 }
 
-.divider {
-  border-top: 1px solid #ccc;
-}
-
-.divider-top {
-  margin-top: 1rem;
-  margin-bottom: .5rem;
-}
-
-.section-divider {
-  border-bottom: 1px solid #D8E8Eb;
-}
-
-.author-container {
-  ::ng-deep .simple-view-element {
-    line-height: 1.5;
-  }
-}
-
-.author-container {
-  ::ng-deep span, ::ng-deep a {
-    font-size: 1.2em;
-    font-weight: var(--font-weight-regular);
-  }
-
-  ::ng-deep h6 {
-    font-size: 1.2em;
-    font-weight: var(--font-weight-bold);
-  }
-}
-
-.flex-container {
-  @media screen and (min-width: 769px) {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-}
-
-.item-identifiers {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.2rem;
-  margin: 0.5rem 0;
-
-  @media screen and (min-width: 769px) {
-    ::ng-deep .simple-view-element {
-      margin-bottom: 0px;
-    }
-  }
-
-}
-
-.jumbotron {
-  padding: 1rem 0 0;
-  margin-bottom: 0;
-}
-
-.metadata-column {
-  padding: 0 .5rem ;
-
-  // Esto afecta a los campos del item abajo del handle
-  ::ng-deep ds-generic-item-page-field,
-  ::ng-deep sedici-truncatable-generic-item-page-field,
-  ::ng-deep ds-item-page-uri-field {
-
-    h6 {
-      font-size: 1.2em;
-      font-weight: var(--font-weight-bold);
-    }
-
-    span, a {
-      font-size: 1.2em;
-      font-weight: var(--font-weight-regular);
-    }
-  }
-}
-
-app-expandable-metadata {
-  ::ng-deep .simple-view-element {
-    line-height: 1.5;
-  }
-
-  sedici-truncatable-generic-item-page-field {
-    ::ng-deep .content {
-      line-height: 1.5;
-    }
-  }
-}
-
-.contenedor-qr {
-  //border: 3px solid black;
-  margin-bottom: 2%;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.container.tex
-
-.contenedor-qr qrcode{
-  border: 3px solid black;
-}
-
-.texto-qr{
-  text-align: center;
-  font-size: 1em;
-}
-
-// ===== ESTILOS ADICIONALES =====
-
-.botones-context {
-  display: flex;
-  gap: 0.2rem;
-  flex-shrink: 0;
-
-  @media screen and (max-width: 768px) {
-    gap: 0;
-
-    button {
-      flex: 1 100%;
-      border-radius: 0;
-      border-top: 1px solid #ccc;
-    }
-
-    button + button {
-      border-left: 1px solid #ccc; /* Línea divisoria */
-      padding-left: 0.5rem; /* Espacio después de la línea */
-    }
-  }
-
-  ::ng-deep .btn {
-    font-size: 1.33333em;
-    font-weight: var(--font-weight-light);
-  }
-}
-
-// .col-12, .col-lg-4, .col-lg-8, .col-md-12 {
-//     padding-left: 0.5rem !important;
-// }
-
-.col-12{
+.col-12 {
   padding: 0 !important;
 }
 

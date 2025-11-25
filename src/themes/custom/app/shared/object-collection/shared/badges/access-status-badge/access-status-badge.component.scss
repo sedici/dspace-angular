@@ -1,12 +1,11 @@
-
 // Ícono de estado (solo para vista de lista)
 .status-icon {
   font-size: 0.8em;
-  
+
   &.access-status-open-access-listelement-badge {
     color: #248D28;
   }
-  
+
   &.access-status-restricted-listelement-badge {
     color: #dc3545;
   }
@@ -40,15 +39,15 @@
   &.access-status-restricted-listelement-badge,
   &.access-status-metadata-only-listelement-badge,
   &.access-status-embargo-listelement-badge {
-  font-family: "Roboto", sans-serif;
-  font-size: 1rem;
-  font-weight: 400;
-  color: rgba(72, 72, 72, 1);
+    font-family: "Roboto", sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: rgba(72, 72, 72, 1);
 
-  @media screen and (max-width: 768px) {
-    font-size: 0.9rem;
-    padding-left: 0px;
-  }
+    @media screen and (max-width: 768px) {
+      font-size: 0.9rem;
+      padding-left: 0px;
+    }
   }
 
 }
@@ -56,14 +55,14 @@
 
 
 // Vista de item (background con color, texto blanco)
-.item-view {  
+.item-view {
   padding: 0.4rem;
 
   &.access-status-open-access-listelement-badge {
     border: 1px solid #248D28;
     color: #248D28;
   }
-  
+
   &.access-status-restricted-listelement-badge {
     border: 1px solid #dc3545;
     color: #dc3545;
@@ -74,6 +73,13 @@
     border: 1px solid #6c757d;
     color: #6c757d;
   }
+
+  @media print {
+    border: none !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
 }
 
 .badge {
@@ -92,7 +98,7 @@
 .access-status-container {
   display: flex;
   align-items: center;
-  gap: 0.35rem; 
+  gap: 0.35rem;
   font-family: "Roboto";
 }
 
