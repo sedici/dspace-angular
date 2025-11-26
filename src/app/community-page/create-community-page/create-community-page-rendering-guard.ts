@@ -41,13 +41,13 @@ export const defaultBrowseTabGuard: CanActivateFn = (
   const comColType: string = route.data['menuRoute']?.toString().toLowerCase().includes('community') ? 'community' : 'collection';
 
   // Obtener la ruta base según el tipo de contenido
-  const comColRoute: string = comColType === 'collection' 
+  const comColRoute: string = comColType === 'collection'
     ? getCollectionPageRoute(routeId)
     : getCommunityPageRoute(routeId);
 
   // Verificar si ya estamos en una sub-ruta (browse, search, subcoms-cols, etc.)
   const isInSubRoute = state.url.split('?')[0] !== comColRoute;
-  
+
   // Si ya estamos en una sub-ruta, permitir el acceso
   if (isInSubRoute) {
     return of(true);
@@ -60,9 +60,14 @@ export const defaultBrowseTabGuard: CanActivateFn = (
   if (defaultTab === 'search') {
     return of(router.createUrlTree([`${comColRoute}/search`]));
   }
-  
+
   if (defaultTab === 'comcols' && comColType === 'community') {
     return of(router.createUrlTree([`${comColRoute}/subcoms-cols`]));
+  }
+
+  // Si no hay configuración explícita, por defecto ir a search para evitar esperas asíncronas
+  if (!defaultTab) {
+    return of(router.createUrlTree([`${comColRoute}/search`]));
   }
 
   // Si el tab por defecto es un browse-by, verificar que exista
@@ -72,7 +77,7 @@ export const defaultBrowseTabGuard: CanActivateFn = (
       if (browseDefsRD.hasSucceeded && browseDefsRD.payload?.page?.length > 0) {
         // Buscar la definición que coincida con el defaultTab
         const defaultBrowseDef = browseDefsRD.payload.page.find(def => def.id === defaultTab);
-        
+
         if (defaultBrowseDef) {
           // Redirigir al browse tab por defecto
           return router.createUrlTree([`${comColRoute}/browse/${defaultTab}`]);

@@ -39,7 +39,7 @@ interface PaginationDetails {
   selector: 'ds-themed-search-results',
   templateUrl: './search-results.component.html',
   // styleUrls: ['../../../../../../app/shared/search/search-results/search-results.component.scss'],
-  styleUrls: [ './search-results.component.scss' ],
+  styleUrls: ['./search-results.component.scss'],
   animations: [
     fadeIn,
     fadeInOut,
@@ -79,17 +79,7 @@ export class SearchResultsComponent extends BaseComponent implements OnChanges {
     super(searchConfigurationService, searchService);
   }
 
-  ngOnInit(): void {
-    this.paginationService.updateRoute(
-      this.searchConfigurationService.paginationID,
-      {
-        pageSize: 20,
-        page: 1,
-      },
-      {},
-      true
-    );
-  }
+
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.searchResults && changes.searchResults.currentValue) {
@@ -139,7 +129,7 @@ export class SearchResultsComponent extends BaseComponent implements OnChanges {
    */
   reloadOrder(event: Event) {
     const values = (event.target as HTMLInputElement).value.split(',');
-    
+
     this.paginationService.updateRoute(this.searchConfigurationService.paginationID, {
       sortField: values[0],
       sortDirection: values[1] as SortDirection,

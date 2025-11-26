@@ -52,7 +52,7 @@ export class PaginationService {
   private clearParams = {};
 
   constructor(protected routeService: RouteService,
-              protected router: Router,
+    protected router: Router,
   ) {
   }
 
@@ -169,7 +169,9 @@ export class PaginationService {
     this.getCurrentRouting(paginationId).subscribe((currentFindListOptions) => {
       const currentParametersWithIdName = this.getParametersWithIdName(paginationId, currentFindListOptions);
       const parametersWithIdName = this.getParametersWithIdName(paginationId, params);
+
       if (isNotEmpty(difference(parametersWithIdName, currentParametersWithIdName)) || isNotEmpty(extraParams) || isNotEmpty(this.clearParams)) {
+        console.log('DEBUG: Updating route...');
         const queryParams = Object.assign({}, this.clearParams, currentParametersWithIdName,
           parametersWithIdName, extraParams);
         if (retainScrollPosition) {

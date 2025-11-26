@@ -104,7 +104,7 @@ export class SearchConfigurationService implements OnDestroy {
    */
   protected defaultPagination = Object.assign(new PaginationComponentOptions(), {
     id: this.paginationID,
-    pageSize: 10,
+    pageSize: 20, // SEDICI default pagination
     currentPage: 1,
   });
 
@@ -129,13 +129,13 @@ export class SearchConfigurationService implements OnDestroy {
   protected subs: Map<string, Subscription[]> = new Map<string, Subscription[]>(null);
 
   constructor(protected routeService: RouteService,
-              protected paginationService: PaginationService,
-              protected route: ActivatedRoute,
-              protected linkService: LinkService,
-              protected halService: HALEndpointService,
-              protected requestService: RequestService,
-              protected rdb: RemoteDataBuildService,
-              @Inject(APP_CONFIG) protected appConfig: AppConfig,
+    protected paginationService: PaginationService,
+    protected route: ActivatedRoute,
+    protected linkService: LinkService,
+    protected halService: HALEndpointService,
+    protected requestService: RequestService,
+    protected rdb: RemoteDataBuildService,
+    @Inject(APP_CONFIG) protected appConfig: AppConfig,
   ) {
     this.initDefaults();
   }
