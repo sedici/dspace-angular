@@ -143,6 +143,11 @@ export class ContentFilesComponent {
         this.previewUrl = file._links.content.href;
         this.isLoading = false;
         break;
+      case 'mp3':
+      case 'wav':
+        this.previewUrl = file._links.content.href;
+        this.isLoading = false;
+        break;
       case 'zip':
         this.previewUrl = file._links.content.href;
         this.loadZipFromUrl(this.previewUrl);
@@ -211,7 +216,7 @@ export class ContentFilesComponent {
 
   isPreviewAvailable(fileName: string): boolean {
     const extension = this.getFileExtension(fileName);
-    return ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'zip', 'pdf', 'youtube', 'mp4', 'mpeg', 'mov', 'webm', 'ogg'].includes(extension);
+    return ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'zip', 'pdf', 'youtube', 'mp4', 'mpeg', 'mov', 'webm', 'ogg', 'mp3', 'wav'].includes(extension);
   }
 
   getFileExtension(fileName: string): string {
@@ -229,13 +234,19 @@ export class ContentFilesComponent {
     return videoExtensions.includes(extension);
   }
 
+  isAudioFile(extension: string): boolean {
+    const audioExtensions = ['mp3', 'wav'];
+    return audioExtensions.includes(extension);
+  }
+
   getIconPath(fileName: string): string {
     const extension = this.getFileExtension(fileName);
     if (this.isImageFile(extension)) {
       return `assets/custom/images/icon_imagen.png`;
-    }
-    if (this.isVideoFile(extension)) {
+    } else if (this.isVideoFile(extension)) {
       return `assets/custom/images/icon_video.png`;
+    } else if (this.isAudioFile(extension)) {
+      return `assets/custom/images/icon_audio.png`;
     }
     return `assets/custom/images/icon_${extension}.png`;
   }
@@ -375,7 +386,7 @@ export class ContentFilesComponent {
 
       if (match && match[2].length === 11) {
         const videoId = match[2];
-        const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+        const embedUrl = `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&iv_load_policy=3`;
         const fullYoutubeUrl = mdValue.value;
         
         const mockVideoBitstream: any = {
