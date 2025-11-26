@@ -11,17 +11,16 @@
                    
                   <div class="file-item row">
                     <div class="file-icon col-1">
-                      @if (getFileExtension(file.name) === 'youtube') {
+                      @if (file['externalService'] === 'youtube') {
                         <i class="fa-brands fa-youtube" style="color: red; font-size: 1.5rem;"></i>
                       } @else {
                         <img [src]="getIconPath(file.name)" alt="File icon"/>
                       }
                     </div>
-                    <div [class.col-11]="getFileExtension(file.name) === 'youtube'" 
-                         [class.col-7]="getFileExtension(file.name) !== 'youtube'">
+                    <div [class.col-11]="file['isExternal']" [class.col-7]="!file['isExternal']">
                       <span class="file-name">{{ getFileDescription(file) }}</span>
                     </div>
-                    @if (getFileExtension(file.name) !== 'youtube') {
+                    @if (!file['isExternal']) {
                       <div class="col-4 download-button">
                           <ds-sedici-file-download-link [bitstream]="file" [item]="object"></ds-sedici-file-download-link>
                       </div>
@@ -34,7 +33,7 @@
                         <span class="file-name">{{ getFileDescription(file) }}</span>
                       </div>
                       <div class="button-container">
-                        @if (getFileExtension(file.name) !== 'youtube') {
+                        @if (!file['isExternal']) {
                            <ds-sedici-file-download-link [bitstream]="file" [item]="object" [isSticky]="true" [isMobile]="true"></ds-sedici-file-download-link>
                         }
                         <button class="btn share-button" (click)="openModalShareButtons()">
@@ -49,7 +48,7 @@
           </div>
 
           <div class="file-preview d-none d-lg-block col-lg-9">
-             @if (selectedFile && (isAssetAvailable || (selectedFile && selectedFile['isYoutube'])) && !embargoedFile) {
+            @if (selectedFile && (isAssetAvailable || (selectedFile && selectedFile['isExternal'])) && !embargoedFile) {
               <div>
                 <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
               </div>
@@ -74,10 +73,10 @@
         <ng-template #contentTemplate>
           <div class="content-preview-wrapper">
             @switch (true) {
-              @case (selectedFile && getFileExtension(selectedFile.name) === 'youtube') {
+              @case (selectedFile && selectedFile['isExternal']) {
                  <div class="video-wrapper">
                     <iframe 
-                      [src]="currentYoutubeUrl" 
+                      [src]="currentExternalUrl" 
                       width="100%" 
                       height="100%" 
                       frameborder="0" 
@@ -120,12 +119,12 @@
               }
               @default {
                 <div class="fa fa-file">
-                  {{ dsoNameService.getName(selectedFile) }}
+                  {{ getFileDescription(selectedFile) }}
                 </div>
               }
             }
             
-            @if (selectedFile && getFileExtension(selectedFile.name) !== 'youtube') {
+            @if (selectedFile && !selectedFile['isExternal']) {
               <div class="sticky-download">
                 <ds-sedici-file-download-link [bitstream]="selectedFile" [item]="object" [isSticky]="true"></ds-sedici-file-download-link>
               </div>
@@ -152,7 +151,7 @@
         </ng-template>
         <ng-template #imageTemplate>
           <div style="display: flex; justify-content: center;">
-            <img class="preview-image" [src]="previewUrl" alt="{{ dsoNameService.getName(selectedFile) }}">
+            <img class="preview-image" [src]="previewUrl" alt="{{ getFileDescription(selectedFile) }}">
           </div>
         </ng-template>
         <ng-template #zipTemplate>
