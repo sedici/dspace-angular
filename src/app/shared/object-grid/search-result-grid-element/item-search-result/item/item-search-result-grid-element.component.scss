@@ -2,48 +2,48 @@
   height: 100%;
 }
 
-.card-body{
-    display: flex;
-    flex-direction: column;
+.card-body {
+  display: flex;
+  flex-direction: column;
 
-    ds-badges {
-      margin-bottom: 0.6rem;
-      font-size: 1.5em;
-    }
+  ds-badges {
+    margin-bottom: 0.6rem;
+    font-size: 1.5em;
+  }
 
-    ::ng-deep .badge {
-      font-size: 1rem;
-    }
-
-    ds-access-status-badge {
-      margin-top: auto;
-    }
-}
-
-.card-title{
-    font-family: serif;
-    font-size: 1.25rem;
-    color: black;
-    line-height: 1.3;
-    margin-bottom: 0;
-
-    @media screen and (max-width: 768px) {
-      font-size: 1.25rem;
-    }
-}
-
-.item-abstract{
+  ::ng-deep .badge {
     font-size: 1rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    text-align: center;
+  }
 
-    @media screen and (max-width: 768px) {
-      font-size: small;
-    }
+  ds-access-status-badge {
+    margin-top: auto;
+  }
+}
+
+.card-title {
+  font-family: serif;
+  font-size: 1.25rem;
+  color: black;
+  line-height: 1.3;
+  margin-bottom: 0;
+
+  @media screen and (max-width: 768px) {
+    font-size: 1.25rem;
+  }
+}
+
+.item-abstract {
+  font-size: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  text-align: center;
+
+  @media screen and (max-width: 768px) {
+    font-size: small;
+  }
 }
 
 .thumbnail-container {
@@ -54,27 +54,27 @@
 .item-type-overlay {
   position: absolute;
   left: 0rem;
-  top: -0.143rem;
+  top: -0rem;
   z-index: 2;
 }
 
-:host ::ng-deep .badge {
-  border-radius: 0px !important; // SEDICI TODO: Sacar este estilo y ponerlo bien en el componente badge
-  padding: 0.4rem !important;
-}
-
 .item-year-overlay {
+  font-size: 0.9rem;
+  font-family: 'Roboto';
+  font-weight: var(--font-weight-regular);
   position: absolute;
   top: 0rem;
   right: 0rem;
   z-index: 2;
   color: white;
   background-color: gray;
-  line-height: normal;
-  padding: 0.34rem; // SEDICI TODO: Ver por qué necestita este padding si el otro badge tiene 0.3
+  line-height: 1;
+  border: 1px solid transparent;
+  padding: 0.4rem;
 }
 
-.author-icon, .building-icon {
+.author-icon,
+.building-icon {
   margin-right: 6px;
   color: #ADADAD;
 }
@@ -86,7 +86,7 @@
 
   .info-row {
     display: flex;
-    align-items: baseline; 
+    align-items: baseline;
   }
 
   .author-icon,

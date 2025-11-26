@@ -3,41 +3,42 @@
     <ng-content></ng-content>
   </div>
   @if (linkType !== linkTypes.None) {
-    <a [target]="(linkType === linkTypes.ExternalLink) ? '_blank' : '_self'" [attr.rel]="(linkType === linkTypes.ExternalLink) ? 'noopener noreferrer' : null" [routerLink]="[itemPageRoute]"
-      class="card-img-top full-width" tabindex="-1" [attr.title]="'search.results.view-result' | translate">
-      <div class="thumbnail-container">
-        <ds-thumbnail [thumbnail]="dso?.thumbnail | async" [limitWidth]="false">
-        </ds-thumbnail>
+  <a [target]="(linkType === linkTypes.ExternalLink) ? '_blank' : '_self'"
+    [attr.rel]="(linkType === linkTypes.ExternalLink) ? 'noopener noreferrer' : null" [routerLink]="[itemPageRoute]"
+    class="card-img-top full-width" tabindex="-1" [attr.title]="'search.results.view-result' | translate">
+    <div class="thumbnail-container">
+      <ds-thumbnail [thumbnail]="dso?.thumbnail | async" [limitWidth]="false">
+      </ds-thumbnail>
 
-        @if (showLabel) {
-          <div class="item-type-overlay">
-             <ds-badges [object]="dso" [context]="context" [showAccessStatus]="true"></ds-badges>
-          </div>
-        }
-        
-        <span class="item-year-overlay">
-          {{ getYear() }}
-        </span>
+      @if (showLabel) {
+      <div class="item-type-overlay">
+        <ds-badges [object]="dso" [context]="context" [showAccessStatus]="true" [view]="'card'"></ds-badges>
       </div>
-    </a>
+      }
+
+      <span class="item-year-overlay">
+        {{ getYear() }}
+      </span>
+    </div>
+  </a>
   }
   @if (linkType === linkTypes.None) {
-    <span class="card-img-top full-width">
-      <div class="thumbnail-container">
-        <ds-thumbnail [thumbnail]="dso?.thumbnail | async" [limitWidth]="false">
-        </ds-thumbnail>
+  <span class="card-img-top full-width">
+    <div class="thumbnail-container">
+      <ds-thumbnail [thumbnail]="dso?.thumbnail | async" [limitWidth]="false">
+      </ds-thumbnail>
 
-        @if (showLabel) {
-          <div class="item-type-overlay">
-             <ds-badges [object]="dso" [context]="context" [showAccessStatus]="true"></ds-badges>
-          </div>
-        }
-        
-        <span class="item-year-overlay">
-          {{ getYear() }}
-        </span>
+      @if (showLabel) {
+      <div class="item-type-overlay">
+        <ds-badges [object]="dso" [context]="context" [showAccessStatus]="true" [view]="'card'"></ds-badges>
       </div>
-    </span>
+      }
+
+      <span class="item-year-overlay">
+        {{ getYear() }}
+      </span>
+    </div>
+  </span>
   }
   <div class="card-body">
     <ds-truncatable [id]="dso.id">
@@ -46,32 +47,34 @@
       </ds-truncatable-part>
       <div class="authors-container">
         @if (dso.firstMetadataValue('sedici.creator.corporate') || dso.firstMetadataValue('dc.publisher')) {
-          <div class="info-row">
-            <i class="building-icon fa-solid fa-building-columns"></i>
-            <span class="item-list-publisher" [innerHTML]="firstMetadataValue('sedici.creator.corporate') || firstMetadataValue('dc.publisher')"></span>
-          </div>
+        <div class="info-row">
+          <i class="building-icon fa-solid fa-building-columns"></i>
+          <span class="item-list-publisher"
+            [innerHTML]="firstMetadataValue('sedici.creator.corporate') || firstMetadataValue('dc.publisher')"></span>
+        </div>
         }
         @if (authors.length > 0) {
-          <ds-truncatable-part [id]="dso.id" [minLines]="3">
-            <p class="item-authors card-text info-row">
-              <i [class]="authors.length === 1 ? 'fa-solid fa-user' : 'fa-solid fa-users'" class="author-icon"></i>
-              <span class="text-wrapper">
-                @for (author of authors.slice(0, 3); track author; let last = $last) {
-                  <span>
-                    <span [innerHTML]="author"></span>
-                    @if (!last) {
-                      <span>; </span>
-                    }
-                  </span>
+        <ds-truncatable-part [id]="dso.id" [minLines]="3">
+          <p class="item-authors card-text info-row">
+            <i [class]="authors.length === 1 ? 'fa-solid fa-user' : 'fa-solid fa-users'" class="author-icon"></i>
+            <span class="text-wrapper">
+              @for (author of authors.slice(0, 3); track author; let last = $last) {
+              <span>
+                <span [innerHTML]="author"></span>
+                @if (!last) {
+                <span>; </span>
                 }
-                @if (authors.length > 3) {
-                  <span>, et al.</span>
-                }
-              </span> </p>
-          </ds-truncatable-part>
+              </span>
+              }
+              @if (authors.length > 3) {
+              <span>, et al.</span>
+              }
+            </span>
+          </p>
+        </ds-truncatable-part>
         } @else if (!dso.firstMetadataValue('sedici.creator.corporate') && !dso.firstMetadataValue('dc.publisher')) {
-          <i class="fa-solid fa-user author-icon me-1"></i>
-          <span>{{ 'sedici.item.page.unknown.author' | translate }}</span>
+        <i class="fa-solid fa-user author-icon me-1"></i>
+        <span>{{ 'sedici.item.page.unknown.author' | translate }}</span>
         }
       </div>
     </ds-truncatable>

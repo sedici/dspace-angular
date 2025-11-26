@@ -1,16 +1,22 @@
 .badge {
   color: #26667D;
   background-color: #D8EEF6;
-  border-radius: 2.5px;
   font-size: 0.9rem;
   font-family: 'Roboto';
   font-weight: var(--font-weight-regular);
   padding: 0.4rem;
   border: 1px solid transparent;
 
-  
+
   @media screen and (max-width: 768px) {
     font-size: 0.8rem;
   }
 }
 
+.list-view {
+  border-radius: 2.5px;
+}
+
+.card-view {
+  border-radius: 0px;
+}

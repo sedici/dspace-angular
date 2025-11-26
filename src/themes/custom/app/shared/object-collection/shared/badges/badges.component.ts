@@ -30,5 +30,5 @@ export class BadgesComponent extends BaseComponent {
    * @default 'list'
    * The 'view' property is a custom addition and is not part of the base BadgesComponent.
    */
-  @Input() view: 'item-page' | 'list' = 'list';
+  @Input() view: 'item-page' | 'list' | 'card' = 'list';
 }
