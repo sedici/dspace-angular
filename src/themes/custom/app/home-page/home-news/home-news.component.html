@@ -1,67 +1,73 @@
 <div class="background-image-container mt-ncs">
-  @if ((isMobile$ | async)) {
+  <!-- Mobile Navbar -->
+  <div class="d-md-none">
     <div id="mobile-navbar-toggler" class="d-block d-lg-none">
       <button id="navbar-toggler" class="btn p-0" type="button" (click)="toggleNavbar()"
         [attr.aria-label]="'nav.toggle' | translate" aria-controls="collapsible-mobile-navbar"
         [attr.aria-expanded]="(isNavBarCollapsed$ | async) !== true">
-        <span class="fas fa-bars fa-fw fa-xl toggler-icon" 
-              [style.color]="(isNavBarCollapsed$ | async) ? '#ffffff' : '#000000'"
-              aria-hidden="true"></span>
+        <span class="fas fa-bars fa-fw fa-xl toggler-icon"
+          [style.color]="(isNavBarCollapsed$ | async) ? '#ffffff' : '#000000'" aria-hidden="true"></span>
       </button>
     </div>
     <ds-navbar></ds-navbar>
-  }
+  </div>
+
   <div class="container">
     <div class="jumbotron">
+      <!-- Mobile Logos -->
       <div class="sedici-logo-container d-md-none">
         <img [src]="'assets/custom/images/escudoUNLP.svg'" alt="Escudo UNLP">
       </div>
       <div class="sedici-logo-container d-md-none">
         <img [src]="'assets/custom/images/SEDICIUNLP.svg'" alt="Logo UNLP">
       </div>
-      @if ((isMobile$ | async)) {
+
+      <!-- Mobile Content -->
+      <div class="d-md-none">
         <div class="sedici-description-mobile">
           <p class="text" [innerHTML]="'home.page.welcome.text' | translate"></p>
         </div>
         <ds-search-navbar></ds-search-navbar>
-      } @else {     
-        <div class="sedici-description">
-          <div class="content-left">
-            <p class="title">{{'home.page.welcome.title' | translate}}</p>
-            <p class="text" [innerHTML]="'home.page.welcome.text' | translate"></p>
-            <ds-themed-search-form [searchPlaceholder]="'home.page.search.placeholder' | translate:{totalItems: totalItems}"></ds-themed-search-form>
-          </div>
-          <div class="escudo-container">
-            <img [src]="'assets/custom/images/EscudoUNLPDer.svg'" alt="Escudo UNLP">
-          </div>
+      </div>
+
+      <!-- Desktop View -->
+      <div class="sedici-description d-none d-md-flex">
+        <div class="content-left">
+          <p class="title">{{'home.page.welcome.title' | translate}}</p>
+          <p class="text" [innerHTML]="'home.page.welcome.text' | translate"></p>
+          <ds-themed-search-form
+            [searchPlaceholder]="'home.page.search.placeholder' | translate:{totalItems: totalItems}"></ds-themed-search-form>
         </div>
-      }
+        <div class="escudo-container">
+          <img [src]="'assets/custom/images/EscudoUNLPDer.svg'" alt="Escudo UNLP">
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <div class="destacado">
   @for (item of cardItems; track item) {
-    <div class="collection-card">
-      @if (item.href.startsWith('#')) {
-        <a (click)="scrollToSection(item.href.substring(1))" style="cursor: pointer;">
-          <div class="icon-container">
-            <img [src]="item.img" alt="{{'home.page.' + item.title | translate}}">
-          </div>
-          <div class="text-container">
-            <span>{{'home.page.' + item.title | translate}}</span>
-          </div>
-        </a>
-      } @else {
-        <a [href]="item.href">
-          <div class="icon-container">
-            <img [src]="item.img" alt="{{'home.page.' + item.title | translate}}">
-          </div>
-          <div class="text-container">
-            <span>{{'home.page.' + item.title | translate}}</span>
-          </div>
-        </a>
-      }
-    </div>
+  <div class="collection-card">
+    @if (item.href.startsWith('#')) {
+    <a (click)="scrollToSection(item.href.substring(1))" style="cursor: pointer;">
+      <div class="icon-container">
+        <img [src]="item.img" alt="{{'home.page.' + item.title | translate}}">
+      </div>
+      <div class="text-container">
+        <span>{{'home.page.' + item.title | translate}}</span>
+      </div>
+    </a>
+    } @else {
+    <a [href]="item.href">
+      <div class="icon-container">
+        <img [src]="item.img" alt="{{'home.page.' + item.title | translate}}">
+      </div>
+      <div class="text-container">
+        <span>{{'home.page.' + item.title | translate}}</span>
+      </div>
+    </a>
+    }
+  </div>
   }
 </div>
