@@ -198,11 +198,12 @@ export class ContentFilesComponent {
         const waitForDownloadable = (file: Bitstream) => {
           if (this.isDownloadable(file) !== undefined) {
             if(this.isDownloadable(this.selectedFile)) {
-              // Usar HttpClient para obtener el archivo con autenticación
+              let headers = new HttpHeaders();
+              if (authToken) {
+                headers = headers.set('Authorization', `Bearer ${authToken}`);
+              }
               this.http.get(this.previewUrl, {
-                headers: new HttpHeaders({
-                  'Authorization': `Bearer ${authToken}`
-                }),
+                headers: headers,
                 responseType: 'blob'
               }).subscribe((data: Blob) => {
                 // Crear una URL para el blob
