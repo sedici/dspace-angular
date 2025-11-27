@@ -35,6 +35,10 @@ body {
 #main-content {
     flex: 1 1 100%;
     min-height: 100vh;
+
+    @media print {
+        min-height: 0% !important;
+    }
 }
 
 .alert.hide {
