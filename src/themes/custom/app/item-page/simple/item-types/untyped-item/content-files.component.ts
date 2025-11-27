@@ -159,6 +159,7 @@ export class ContentFilesComponent {
     const extension = this.getFileExtension(file.name);
   
     switch (extension) {
+      // IMAGENES
       case 'jpg':
       case 'jpeg':
       case 'png':
@@ -167,24 +168,30 @@ export class ContentFilesComponent {
         this.previewUrl = file._links.content.href;
         this.isLoading = false;
         break;
+      // VIDEOS
       case 'mp4':
-      case 'mpeg':
       case 'mov':
       case 'webm':
       case 'ogg':
         this.previewUrl = file._links.content.href;
         this.isLoading = false;
         break;
+      // AUDIOS
       case 'mp3':
       case 'wav':
+      case 'ogg':
+      case 'flac':
+      case 'ogx':
         this.previewUrl = file._links.content.href;
         this.isLoading = false;
         break;
+      // ZIP
       case 'zip':
         this.previewUrl = file._links.content.href;
         this.loadZipFromUrl(this.previewUrl);
         this.isLoading = false;
         break;
+      // PDF
       case 'pdf':
         this.previewUrl = file._links.content.href;
 
@@ -267,12 +274,12 @@ export class ContentFilesComponent {
   }
 
   isVideoFile(extension: string): boolean {
-    const videoExtensions = ['mp4', 'mpeg', 'mov', 'webm', 'ogg'];
+    const videoExtensions = ['mp4', 'mov', 'webm', 'ogg'];
     return videoExtensions.includes(extension);
   }
 
   isAudioFile(extension: string): boolean {
-    const audioExtensions = ['mp3', 'wav'];
+    const audioExtensions = ['mp3', 'wav', 'ogg', 'flac', 'ogx'];
     return audioExtensions.includes(extension);
   }
 
