@@ -54,7 +54,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
     const currentUrl = this.router.url;
     this.isHomePage$.next(this.isHomeUrl(currentUrl));
-    
+
     // Detecta cambios en la URL mientras navegas
     this.routerSubscription = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
@@ -67,7 +67,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
     });
 
     this.route.queryParams.subscribe(params => {
-      if (params.query) {
+      if (params.query && this.currentUrl.includes('/search')) {
         this.query = params.query; // Asigna el valor de la URL a la variable que usa el [(ngModel)]
       } else {
         this.query = '';
@@ -76,8 +76,37 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   }
 
   private isHomeUrl(url: string): boolean {
-    return url === '/' || 
-           url === '/home' || 
-           url.startsWith('/home?');
+    return url === '/' ||
+      url === '/home' ||
+      url.startsWith('/home?');
+  }
+
+  /**
+   * Sobrescribe el método updateSearch para excluir el parámetro 'configuration'
+   * @param data Updated parameters
+   */
+  override updateSearch(data: any) {
+    const goToFirstPage = { 'spc.page': 1 };
+
+    // Obtener los query params actuales y excluir 'configuration'
+    const currentParams = { ...this.route.snapshot.queryParams };
+    const { configuration, ...paramsWithoutConfig } = currentParams;
+
+    const queryParams = Object.assign(
+      {},
+      paramsWithoutConfig, // Usar los params sin 'configuration'
+      goToFirstPage,
+      data,
+    );
+
+    // Si hay scope y debe ocultarse en la URL, eliminarlo
+    if (data?.scope && this.hideScopeInUrl) {
+      delete queryParams.scope;
+    }
+
+    void this.router.navigate(this.getSearchLinkParts(), {
+      queryParams: queryParams,
+      queryParamsHandling: '', // No hacer merge para evitar mantener 'configuration'
+    });
   }
 }
