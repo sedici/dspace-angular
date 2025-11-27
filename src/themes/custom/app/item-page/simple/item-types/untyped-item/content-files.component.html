@@ -5,18 +5,26 @@
         <div class="row">
           <div class="file-list col-lg-3 col-12">
             @for (file of files; track file) {
-              <div (click)="isPreviewAvailable(file.name) && isDownloadable(file) && handleClick(file, contentTemplate, headerTemplate)" [ngClass]="{'selected-file': file === selectedFile}">
-                @if (isPreviewAvailable(file.name) && isDownloadable(file)) {
+              <div (click)="isPreviewAvailable(file.name) && handleClick(file, contentTemplate, headerTemplate)" 
+                   [ngClass]="{'selected-file': file === selectedFile}"
+                   style="cursor: pointer;">
+                @if (isPreviewAvailable(file.name) && (isDownloadable(file) || file['isExternal'])) {
                   <div class="file-item row">
                     <div class="file-icon col-1">
-                      <img [src]="getIconPath(file.name)" alt="File icon"/>
+                      @if (file['externalService'] === 'youtube') {
+                        <i class="fa-brands fa-youtube" style="color: red; font-size: 1.5rem;"></i>
+                      } @else {
+                        <img [src]="getIconPath(file.name)" alt="File icon"/>
+                      }
                     </div>
-                    <div class="col-7">
+                    <div [class.col-11]="file['isExternal']" [class.col-7]="!file['isExternal']">
                       <span class="file-name">{{ getFileDescription(file) }}</span>
                     </div>
-                    <div class="col-4 download-button">
-                      <ds-sedici-file-download-link [bitstream]="file" [item]="object"></ds-sedici-file-download-link>
-                    </div>
+                    @if (!file['isExternal']) {
+                      <div class="col-4 download-button">
+                        <ds-sedici-file-download-link [bitstream]="file" [item]="object"></ds-sedici-file-download-link>
+                      </div>
+                    }
                   </div>
                 } @else {
                   <ng-container *ngTemplateOutlet="noPreviewAvailable; context: { file: file }"></ng-container>
@@ -27,7 +35,9 @@
                       <span class="file-name">{{ getFileDescription(file) }}</span>
                     </div>
                     <div class="button-container">
-                      <ds-sedici-file-download-link [bitstream]="file" [item]="object" [isSticky]="true" [isMobile]="true"></ds-sedici-file-download-link>
+                      @if (!file['isExternal']) {
+                        <ds-sedici-file-download-link [bitstream]="file" [item]="object" [isSticky]="true" [isMobile]="true"></ds-sedici-file-download-link>
+                      }
                       <button class="btn share-button" (click)="openModalShareButtons()">
                         <i class="fa-solid fa-share"></i>
                         <span> {{'sedici.item.page.sedici.share' | translate}}</span>
@@ -38,8 +48,9 @@
               </div>
             }
           </div>
+
           <div class="file-preview d-none d-lg-block col-lg-9">
-            @if (selectedFile && isAssetAvailable && !embargoedFile) {
+            @if (selectedFile && (isAssetAvailable || (selectedFile && selectedFile['isExternal'])) && !embargoedFile) {
               <div>
                 <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
               </div>
@@ -60,30 +71,65 @@
             }
           </div>
         </div>
+
         <ng-template #noPreviewAvailable let-file="file">
           <div class="file-no-preview-available">
             <div class="file-item row">
               <div class="file-icon col-1">
                 <img [src]="getIconPath(file.name)" alt="File icon"/>
               </div>
-              <div class="col-8">
+              <div class="col-7">
                 <span class="file-name">{{ getFileDescription(file) }}</span>
                 <span class="text-no-preview-available">
                   <i class="fa-solid fa-eye-slash"></i>
                   Preview no disponible
                 </span>
               </div>
-              <div class="col-3 download-button">
+              <div class="col-4 download-button">
                 <ds-sedici-file-download-link [bitstream]="file" [item]="object"></ds-sedici-file-download-link>
               </div>
             </div>
           </div>
         </ng-template>
+
         <ng-template #contentTemplate>
           <div class="content-preview-wrapper">
             @switch (true) {
+              @case (selectedFile && selectedFile['isExternal']) {
+                <div class="video-wrapper">
+                  <iframe 
+                    [src]="currentExternalUrl" 
+                    width="100%" 
+                    height="100%" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                  </iframe>
+                </div>
+              }
               @case (getFileExtension(selectedFile.name) === 'pdf') {
                 <ng-container *ngTemplateOutlet="pdfTemplate"></ng-container>
+              }
+              @case (isVideoFile(getFileExtension(selectedFile.name))) {
+                <div class="video-wrapper">
+                  <video 
+                    [src]="previewUrl"
+                    controls
+                    width="100%" 
+                    height="100%">
+                    Tu navegador no soporta la etiqueta de video.
+                  </video>
+                </div>
+              }
+              @case (isAudioFile(getFileExtension(selectedFile.name))) {
+                <div class="video-wrapper">
+                  <audio
+                    [src]="previewUrl"
+                    controls
+                    style="width: 100%;">
+                    Tu navegador no soporta el elemento de audio.
+                  </audio>
+                </div>
               }
               @case (isImageFile(getFileExtension(selectedFile.name))) {
                 <ng-container *ngTemplateOutlet="imageTemplate"></ng-container>
@@ -95,13 +141,16 @@
               }
               @default {
                 <div class="fa fa-file">
-                  {{ dsoNameService.getName(selectedFile) }}
+                  {{ getFileDescription(selectedFile) }}
                 </div>
               }
             }
-            <div class="sticky-download">
-              <ds-sedici-file-download-link [bitstream]="selectedFile" [item]="object" [isSticky]="true"></ds-sedici-file-download-link>
-            </div>
+            
+            @if (selectedFile && !selectedFile['isExternal']) {
+              <div class="sticky-download">
+                <ds-sedici-file-download-link [bitstream]="selectedFile" [item]="object" [isSticky]="true"></ds-sedici-file-download-link>
+              </div>
+            }
           </div>
         </ng-template>
         <ng-template #pdfTemplate>
@@ -124,7 +173,7 @@
         </ng-template>
         <ng-template #imageTemplate>
           <div style="display: flex; justify-content: center;">
-            <img class="preview-image" [src]="previewUrl" alt="{{ dsoNameService.getName(selectedFile) }}">
+            <img class="preview-image" [src]="previewUrl" alt="{{ getFileDescription(selectedFile) }}">
           </div>
         </ng-template>
         <ng-template #zipTemplate>

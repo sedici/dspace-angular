@@ -15,7 +15,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SediciViewerComponent } from '../../field-components/viewer/sedici-viewer.component';
 
 import { ChangeDetectorRef } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpBackend } from '@angular/common/http';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import * as JSZip from 'jszip';
 
 import { HostWindowService, WidthCategory } from 'src/app/shared/host-window.service';
@@ -26,6 +27,35 @@ import { PdfJsViewerModule } from "ng2-pdfjs-viewer";
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { AuthorizationDataService } from 'src/app/core/data/feature-authorization/authorization-data.service';
 import { SediciShareButtonsComponent } from '../../field-components/share-buttons/sedici-share-buttons.component';
+
+type ExternalServiceType = 'youtube' | 'sketchfab';
+
+interface ExternalBitstreamMock {
+  id: string;
+  name: string;
+  type: 'bitstream';
+  metadata: any;
+  _links: any;
+  // Propiedades exclusivas de recursos externos
+  isExternal: boolean;
+  externalService: ExternalServiceType;
+  embedUrl: string; // URL cruda sin sanitizar
+  canDownload: boolean; // Siempre false
+}
+
+const EXTERNAL_CONFIG = {
+  youtube: {
+    regex: /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/,
+    embedBase: (id: string) => `https://www.youtube.com/embed/${id}?rel=0&modestbranding=1&iv_load_policy=3`,
+    oEmbed: (url: string) => `https://noembed.com/embed?url=${encodeURIComponent(url)}`
+  },
+  sketchfab: {
+    regex: /sketchfab\.com\/(?:models|3d-models)\/(?:[a-zA-Z0-9-]+\-)?([a-f0-9]{32})/,
+    embedBase: (id: string) => `https://sketchfab.com/models/${id}/embed`,
+    oEmbed: null // Sketchfab suele requerir API real, usamos fallback manual si es null
+  }
+};
+
 @Component({
   selector: 'content-files',
   styleUrls: ['./content-files.component.scss'],
@@ -41,7 +71,7 @@ import { SediciShareButtonsComponent } from '../../field-components/share-button
     SediciFileDownloadLinkComponent,
     SediciViewerComponent,
     PdfJsViewerModule
-],
+  ],
 })
 export class ContentFilesComponent {
   @Input() object: Item;
@@ -51,6 +81,11 @@ export class ContentFilesComponent {
   previewUrl: string;
 
   isLoading = true;
+
+  currentExternalUrl: SafeResourceUrl | null = null;
+  currentExternalService: ExternalServiceType | null = null;
+
+  private externalHttp: HttpClient;
 
   onDocLoaded() {
     this.isLoading = false;
@@ -74,7 +109,7 @@ export class ContentFilesComponent {
   }
 
   isLoadingFiles: boolean = true;
-  files: Bitstream[] = [];
+  files: (Bitstream | ExternalBitstreamMock)[] = [];
 
   isMobile$: Observable<boolean>;
   isMobile = false;
@@ -85,29 +120,46 @@ export class ContentFilesComponent {
     @Inject(APP_CONFIG) protected appConfig: AppConfig,
     private modalService: NgbModal,
     private http: HttpClient,
+    private handler: HttpBackend,
     private cdr: ChangeDetectorRef,
     private windowService: HostWindowService,
     private notificationsService: NotificationsService,
     private authService: AuthService,
     private authorizationService: AuthorizationDataService,
+    private sanitizer: DomSanitizer,
   ) {
     this.isMobile$ = this.windowService.isUpTo(WidthCategory.MD);
+    this.externalHttp = new HttpClient(handler);
   }
 
-  selectedFile: Bitstream | null = null;
+  selectedFile: Bitstream | ExternalBitstreamMock | null = null;
   embargoedFile: boolean = false;
   isAssetAvailable: boolean = true;
 
-  selectFile(file: Bitstream) {
+  selectFile(file: Bitstream | ExternalBitstreamMock) {
     this.selectedFile = file;
-    const extension = this.getFileExtension(file.name);
     this.isLoading = true;
     this.embargoedFile = false;
     this.isAssetAvailable = true;
     const authToken = this.authService.getToken();
-    this.cdr.detectChanges();
+    this.currentExternalUrl = null;
+    this.currentExternalService = null;
+    this.previewUrl = null;
+    
+    if ('isExternal' in file && file.isExternal) {
+      const extFile = file as ExternalBitstreamMock;
+      this.currentExternalUrl = this.sanitizer.bypassSecurityTrustResourceUrl(extFile.embedUrl);
+      this.currentExternalService = extFile.externalService;
+      this.isLoading = false;
+      this.cdr.detectChanges();
+      return; 
+    }
+
+    const bitstream = file as Bitstream;
+    const extension = this.getFileExtension(file.name);
   
     switch (extension) {
+      // IMAGENES
       case 'jpg':
       case 'jpeg':
       case 'png':
@@ -116,11 +168,30 @@ export class ContentFilesComponent {
         this.previewUrl = file._links.content.href;
         this.isLoading = false;
         break;
+      // VIDEOS
+      case 'mp4':
+      case 'mov':
+      case 'webm':
+      case 'ogg':
+        this.previewUrl = file._links.content.href;
+        this.isLoading = false;
+        break;
+      // AUDIOS
+      case 'mp3':
+      case 'wav':
+      case 'ogg':
+      case 'flac':
+      case 'ogx':
+        this.previewUrl = file._links.content.href;
+        this.isLoading = false;
+        break;
+      // ZIP
       case 'zip':
         this.previewUrl = file._links.content.href;
         this.loadZipFromUrl(this.previewUrl);
         this.isLoading = false;
         break;
+      // PDF
       case 'pdf':
         this.previewUrl = file._links.content.href;
 
@@ -171,17 +242,25 @@ export class ContentFilesComponent {
             setTimeout(() => waitForDownloadable(file), 100);
           }
         }
-        waitForDownloadable(this.selectedFile);
+        waitForDownloadable(bitstream);
         break;
       default:
-        this.previewUrl = file._links.content.href;
+        if(file._links && file._links.content) {
+          this.previewUrl = file._links.content.href;
+        }
+        this.isLoading = false;
         break;
     }
+    this.cdr.detectChanges();
   }
 
   isPreviewAvailable(fileName: string): boolean {
     const extension = this.getFileExtension(fileName);
-    return ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'zip', 'pdf'].includes(extension);
+    return ['zip', 'pdf', 'youtube', 'sketchfab'].includes(extension) 
+      || this.isImageFile(extension)
+      || this.isVideoFile(extension) 
+      || this.isAudioFile(extension)
+      || this.is3DModel(extension);
   }
 
   getFileExtension(fileName: string): string {
@@ -194,16 +273,37 @@ export class ContentFilesComponent {
     return imageExtensions.includes(extension);
   }
 
+  isVideoFile(extension: string): boolean {
+    const videoExtensions = ['mp4', 'mov', 'webm', 'ogg'];
+    return videoExtensions.includes(extension);
+  }
+
+  isAudioFile(extension: string): boolean {
+    const audioExtensions = ['mp3', 'wav', 'ogg', 'flac', 'ogx'];
+    return audioExtensions.includes(extension);
+  }
+
+  is3DModel(extension: string): boolean {
+    const modelExtensions = ['obj', 'glb'];
+    return modelExtensions.includes(extension);
+  }
+
   getIconPath(fileName: string): string {
     const extension = this.getFileExtension(fileName);
     if (this.isImageFile(extension)) {
       return `assets/custom/images/icon_imagen.png`;
+    } else if (this.isVideoFile(extension)) {
+      return `assets/custom/images/icon_video.png`;
+    } else if (this.isAudioFile(extension)) {
+      return `assets/custom/images/icon_audio.png`;
+    } else if (this.is3DModel(extension)) {
+      return `assets/custom/images/icon_3dmodel.png`;
     }
     return `assets/custom/images/icon_${extension}.png`;
   }
 
-  getFileDescription(file: Bitstream): string {
-    return file.metadata['dc.description']?.[0]?.value || this.dsoNameService.getName(file) ;
+  getFileDescription(file: any): string {
+    return file.metadata['dc.description']?.[0]?.value || this.dsoNameService.getName(file);
   }
 
   ngOnInit(): void {
@@ -292,11 +392,16 @@ export class ContentFilesComponent {
     this.isLoadingFiles = true;
     this.bitstreamDataService.findAllByItemAndBundleName(this.object, 'ORIGINAL', { currentPage: 0, elementsPerPage: 1000 }).subscribe((response: any) => {
       if (response && response.hasSucceeded) {
+        let bitstreams = [];
         if (response.payload && response.payload.page.length > 0) {
-          this.files = response.payload.page;
+          bitstreams = response.payload.page;
         }
+        this.files = bitstreams;
+
+        this.processExternalResources();
         this.cdr.detectChanges();
         this.checkAndSaveDownloadStatus();
+        
         if (!this.isMobile && this.files.length >= 1) {
           // Seleccionar el primary bitstream si está disponible y tiene un preview
           const primaryBitstream = this.files.find(file => file.id === this.primaryBitsreamId && this.isPreviewAvailable(file.name));
@@ -315,26 +420,84 @@ export class ContentFilesComponent {
       }
     },
     (err) => {
-      console.error('Error en la solicitud:', err);
-      this.notificationsService.error('Error', 'Ocurrió un error al intentar cargar los archivos.');
+      // Manejo de error, pero aun así intentamos cargar videos si fallan los archivos
+      this.files = []; 
+      this.processExternalResources();
       this.isLoadingFiles = false;
+      this.notificationsService.error('Error', 'Error al cargar archivos.');
     });
+  }
+
+  processExternalResources() {
+    const uriMetadata = this.object.allMetadata('sedici.identifier.uri');
+    
+    uriMetadata.forEach((mdValue, index) => {
+      const url = mdValue.value;
+      
+      const ytMatch = url.match(EXTERNAL_CONFIG.youtube.regex);
+      if (ytMatch && ytMatch[2].length === 11) {
+        this.addExternalFile('youtube', ytMatch[2], url, index);
+        return;
+      }
+
+      const skMatch = url.match(EXTERNAL_CONFIG.sketchfab.regex);
+      if (skMatch && skMatch[1]) {
+        this.addExternalFile('sketchfab', skMatch[1], url, index);
+        return;
+      }
+    });
+  }
+
+  addExternalFile(service: ExternalServiceType, id: string, originalUrl: string, index: number) {
+    const config = EXTERNAL_CONFIG[service];
+    const embedUrl = config.embedBase(id);
+
+    const mockFile: ExternalBitstreamMock = {
+      id: `${service}-${id}-${index}`,
+      name: `${service}_resource.${service}`,
+      type: 'bitstream',
+      metadata: { 'dc.description': [{ value: `Cargando título (${service})...` }] },
+      _links: { content: { href: embedUrl } },
+      isExternal: true,
+      externalService: service,
+      embedUrl: embedUrl,
+      canDownload: false
+    };
+
+    this.files.push(mockFile);
+
+    if (config.oEmbed) {
+      const oEmbedUrl = config.oEmbed(originalUrl);
+      this.externalHttp.get(oEmbedUrl).subscribe({
+        next: (data: any) => {
+          if (data && data.title) {
+            mockFile.metadata['dc.description'][0].value = data.title;
+            this.cdr.detectChanges();
+          }
+        },
+        error: () => {
+          mockFile.metadata['dc.description'][0].value = `${service.charAt(0).toUpperCase() + service.slice(1)} Video/Model`;
+          this.cdr.detectChanges();
+        }
+      });
+    } else {
+      mockFile.metadata['dc.description'][0].value = `${service.charAt(0).toUpperCase() + service.slice(1)} Resource`;
+    }
   }
 
   checkAndSaveDownloadStatus(): void {
     this.files.forEach(file => {
-      this.authorizationService.isAuthorized(
-        FeatureID.CanDownload,
-        isNotEmpty(file) ? file.self : undefined)
-        .subscribe(canDownload => {
-          // Extiende el objeto file con una nueva propiedad canDownload
-          (file as any).canDownload = canDownload;
-          this.cdr.detectChanges();
-        });
+      if ('isExternal' in file) {
+        (file as any).canDownload = false;
+      } else {
+        const bitstream = file as Bitstream;
+        this.authorizationService.isAuthorized(FeatureID.CanDownload, isNotEmpty(bitstream) ? bitstream.self : undefined)
+          .subscribe(canDownload => { (bitstream as any).canDownload = canDownload; this.cdr.detectChanges(); });
+      }
     });
   }
 
-  isDownloadable(file: Bitstream): boolean {
+  isDownloadable(file: Bitstream | ExternalBitstreamMock): boolean {
     return (file as any).canDownload;
   }
 
@@ -342,7 +505,7 @@ export class ContentFilesComponent {
     return this.files.some(file => this.isPreviewAvailable(file.name) && (file as any).canDownload);
   }
 
-  handleClick(file: Bitstream, contentTemplate: any, headerTemplate: any) {
+  handleClick(file: Bitstream | ExternalBitstreamMock, contentTemplate: any, headerTemplate: any) {
     this.selectFile(file);
     setTimeout(() => {
       if (this.isMobile) {
