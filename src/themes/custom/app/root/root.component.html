@@ -5,9 +5,9 @@
   <ds-admin-sidebar [expandedSidebarWidth$]="expandedSidebarWidth$" [collapsedSidebarWidth$]="collapsedSidebarWidth$"></ds-admin-sidebar>
   <div class="inner-wrapper" [ngClass]="{'margin-header': ((isHomePage$ | async) !== true)}">
     <ds-system-wide-alert-banner></ds-system-wide-alert-banner>
-    @if (((isMobile$ | async) !== true) || ((isMobile$ | async) && ((isHomePage$ | async) !== true))) {
+    <div [ngClass]="{'d-none d-md-block': (isHomePage$ | async)}">
       <ds-header-navbar-wrapper></ds-header-navbar-wrapper>
-    }
+    </div>
     <ds-breadcrumbs></ds-breadcrumbs>
     <main id="main-content">
 
