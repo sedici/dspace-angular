@@ -1,7 +1,6 @@
-<header id="main-site-header" class="background-image-header" [ngClass]="{'home-header': ((isMobile$ | async) !== true) && (isHomePage$ | async)}">
+<header id="main-site-header" class="background-image-header"  [ngClass]="{'home-header': (isHomePage$ | async)}">
   <!-- Vista Desktop -->
-  @if ((isMobile$ | async) !== true) {
-    <div class="d-flex align-items-center" id="main-site-header-container">
+    <div class="d-none d-md-flex align-items-center" id="main-site-header-container">
       <div class="left-container navbar-brand" [ngClass]="{ 'padding-logo': (isHomePage$ | async) !== true }">
         <a routerLink="/home">
           <img id="header-logo" [src]="'assets/custom/images/LogoSEDICI.svg'" [attr.alt]="'menu.header.image.logo' | translate"/>
@@ -14,11 +13,9 @@
         <ds-navbar></ds-navbar>
       </div>
     </div>
-  }
 
   <!-- Vista Mobile -->
-  @if ((isMobile$ | async)) {
-    <div class="d-flex align-items-center" id="main-site-header-container">
+    <div class="d-flex align-items-center d-md-none" id="main-site-header-container">
       <div class="left-container-mobile">
         <a routerLink="/home">
           <img id="header-logo" [src]="'assets/custom/images/SEDICI_2024_mobile.svg'" [attr.alt]="'menu.header.image.logo' | translate"/>
@@ -35,5 +32,4 @@
         </div>
       </div>
     </div>
-  }
 </header>
