@@ -1,11 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import {
-  Component,
-  Inject,
-  Input,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
   EventType,
@@ -15,12 +9,7 @@ import {
   Scroll,
 } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import {
-  BehaviorSubject,
-  combineLatest,
-  Observable,
-  Subscription,
-} from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
 import {
   distinctUntilChanged,
   filter,
@@ -29,10 +18,7 @@ import {
   take,
 } from 'rxjs/operators';
 
-import {
-  APP_CONFIG,
-  AppConfig,
-} from '../../../../config/app-config.interface';
+import { APP_CONFIG, AppConfig } from '../../../../config/app-config.interface';
 import { getCollectionPageRoute } from '../../../collection-page/collection-page-routing-paths';
 import { getCommunityPageRoute } from '../../../community-page/community-page-routing-paths';
 import { BrowseService } from '../../../core/browse/browse.service';
@@ -57,12 +43,7 @@ export interface ComColPageNavOption {
   selector: 'ds-base-comcol-page-browse-by',
   styleUrls: ['./comcol-page-browse-by.component.scss'],
   templateUrl: './comcol-page-browse-by.component.html',
-  imports: [
-    AsyncPipe,
-    FormsModule,
-    RouterLink,
-    TranslateModule,
-  ],
+  imports: [AsyncPipe, FormsModule, RouterLink, TranslateModule],
   standalone: true,
 })
 export class ComcolPageBrowseByComponent implements OnDestroy, OnInit {
@@ -74,16 +55,17 @@ export class ComcolPageBrowseByComponent implements OnDestroy, OnInit {
 
   allOptions$: Observable<ComColPageNavOption[]>;
 
-  currentOption$: BehaviorSubject<ComColPageNavOption> = new BehaviorSubject(undefined);
+  currentOption$: BehaviorSubject<ComColPageNavOption> = new BehaviorSubject(
+    undefined
+  );
 
   subs: Subscription[] = [];
 
   constructor(
     @Inject(APP_CONFIG) public appConfig: AppConfig,
     public router: Router,
-    private browseService: BrowseService,
-  ) {
-  }
+    private browseService: BrowseService
+  ) {}
 
   ngOnInit(): void {
     this.allOptions$ = this.browseService.getBrowseDefinitions().pipe(
@@ -118,11 +100,13 @@ export class ComcolPageBrowseByComponent implements OnDestroy, OnInit {
             allOptions.push(allOptions.shift());
           }
 
-          allOptions.push(...browseDefListRD.payload.page.map((config: BrowseDefinition) => ({
-            id: `browse_${config.id}`,
-            label: `browse.comcol.by.${config.id}`,
-            routerLink: `${comColRoute}/browse/${config.id}`,
-          })));
+          allOptions.push(
+            ...browseDefListRD.payload.page.map((config: BrowseDefinition) => ({
+              id: `browse_${config.id}`,
+              label: `browse.comcol.by.${config.id}`,
+              routerLink: `${comColRoute}/browse/${config.id}`,
+            }))
+          );
 
           // When the default tab is not the "search" tab, the "search" tab is moved
           // at the end of the tabs ribbon for aesthetics purposes.
@@ -131,7 +115,7 @@ export class ComcolPageBrowseByComponent implements OnDestroy, OnInit {
           // }
         }
         return allOptions;
-      }),
+      })
     );
 
     let comColRoute: string;
@@ -141,27 +125,32 @@ export class ComcolPageBrowseByComponent implements OnDestroy, OnInit {
       comColRoute = getCommunityPageRoute(this.id);
     }
 
-    this.subs.push(combineLatest([
-      this.allOptions$,
-      this.router.events.pipe(
-        startWith(this.router),
-        filter((next: Router | Scroll) => (isNotEmpty((next as Router)?.url) || (next as Scroll)?.type === EventType.Scroll)),
-        map((next: Router | Scroll) => (next as Router)?.url || ((next as Scroll).routerEvent as NavigationEnd).urlAfterRedirects),
-        distinctUntilChanged(),
-      ),
-    ]).subscribe(([navOptions, url]: [ComColPageNavOption[], string]) => {
-      for (const option of navOptions) {
-        if (option.routerLink === url?.split('?')[0]) {
-          this.currentOption$.next(option);
-          break;
+    this.subs.push(
+      combineLatest([
+        this.allOptions$,
+        this.router.events.pipe(
+          startWith(this.router),
+          filter(
+            (next: Router | Scroll) =>
+              isNotEmpty((next as Router)?.url) ||
+              (next as Scroll)?.type === EventType.Scroll
+          ),
+          map(
+            (next: Router | Scroll) =>
+              (next as Router)?.url ||
+              ((next as Scroll).routerEvent as NavigationEnd).urlAfterRedirects
+          ),
+          distinctUntilChanged()
+        ),
+      ]).subscribe(([navOptions, url]: [ComColPageNavOption[], string]) => {
+        for (const option of navOptions) {
+          if (option.routerLink === url?.split('?')[0]) {
+            this.currentOption$.next(option);
+            break;
+          }
         }
-        // if (url?.split('?')[0] === comColRoute && option.id === this.appConfig[this.contentType].defaultBrowseTab) {
-        //   void this.router.navigate([option.routerLink], { queryParams: option.params, replaceUrl: true  });
-        //   break;
-        // } else if (option.routerLink === url?.split('?')[0]) {
-      }
-    }));
-
+      })
+    );
   }
 
   ngOnDestroy(): void {
@@ -169,16 +158,18 @@ export class ComcolPageBrowseByComponent implements OnDestroy, OnInit {
   }
 
   onSelectChange(event: any): void {
-    this.allOptions$.pipe(
-      take(1),
-    ).subscribe((allOptions: ComColPageNavOption[]) => {
-      for (const option of allOptions) {
-        if (option.id === event.target.value) {
-          this.currentOption$.next(option[0]);
-          void this.router.navigate([option.routerLink], { queryParams: option.params });
-          break;
+    this.allOptions$
+      .pipe(take(1))
+      .subscribe((allOptions: ComColPageNavOption[]) => {
+        for (const option of allOptions) {
+          if (option.id === event.target.value) {
+            this.currentOption$.next(option);
+            void this.router.navigate([option.routerLink], {
+              queryParams: option.params,
+            });
+            break;
+          }
         }
-      }
-    });
+      });
   }
 }

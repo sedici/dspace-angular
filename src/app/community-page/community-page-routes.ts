@@ -22,6 +22,9 @@ import { DeleteCommunityPageComponent } from './delete-community-page/delete-com
 import { SubComColSectionComponent } from './sections/sub-com-col-section/sub-com-col-section.component';
 import { ThemedCommunityPageComponent } from './themed-community-page.component';
 
+import { browseDefinitionsResolver } from '../core/browse/browse-definitions.resolver';
+import { subCommunitiesResolver } from './sub-communities.resolver';
+
 export const ROUTES: Route[] = [
   {
     path: COMMUNITY_CREATE_PATH,
@@ -51,13 +54,16 @@ export const ROUTES: Route[] = [
     resolve: {
       dso: communityPageResolver,
       breadcrumb: communityBreadcrumbResolver,
+      browseDefinitions: browseDefinitionsResolver,
     },
     runGuardsAndResolvers: 'always',
     children: [
       {
         path: COMMUNITY_EDIT_PATH,
-        loadChildren: () => import('./edit-community-page/edit-community-page-routes')
-          .then((m) => m.ROUTES),
+        loadChildren: () =>
+          import('./edit-community-page/edit-community-page-routes').then(
+            (m) => m.ROUTES
+          ),
         canActivate: [communityPageAdministratorGuard],
       },
       {
@@ -101,6 +107,7 @@ export const ROUTES: Route[] = [
             component: SubComColSectionComponent,
             resolve: {
               breadcrumb: i18nBreadcrumbResolver,
+              subCommunities: subCommunitiesResolver,
             },
             data: {
               breadcrumbKey: 'community.subcoms-cols',
