@@ -10064,6 +10064,10 @@
 
   // Header
   "header.new.item": "Subir material",
+  "confirmation-modal.new-item.header": "Aviso importante",
+  "confirmation-modal.new-item.info": "Está a punto de crear un nuevo ítem. Por favor, asegúrese de que el trabajo no esté ya disponible en el repositorio. Para ello, realice una búsqueda por título o por autor, para evitar duplicados.",
+  "confirmation-modal.new-item.cancel": "Cancelar",
+  "confirmation-modal.new-item.confirm": "Aceptar",
 
   // "vocabulary-treeview.search.form.add": "Add",
   "vocabulary-treeview.search.form.add": "Añadir",

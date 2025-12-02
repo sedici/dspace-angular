@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   map,
@@ -16,6 +17,7 @@ import {
   PartialMenuSection,
 } from '../menu-provider.model';
 import { CommunityDataService } from '../../../core/data/community-data.service';
+import { ConfirmationModalComponent } from '../../confirmation-modal/confirmation-modal.component';
 
 @Injectable()
 export class NewItemMenuProvider extends AbstractMenuProvider {
@@ -23,8 +25,27 @@ export class NewItemMenuProvider extends AbstractMenuProvider {
     protected authorizationService: AuthorizationDataService,
     protected modalService: NgbModal,
     protected communityDataService: CommunityDataService,
+    protected router: Router,
   ) {
     super();
+  }
+
+  private showConfirmationAndNavigate(collectionUuid: string): void {
+    const modalRef = this.modalService.open(ConfirmationModalComponent);
+    
+    modalRef.componentInstance.headerLabel = 'confirmation-modal.new-item.header';
+    modalRef.componentInstance.infoLabel = 'confirmation-modal.new-item.info';
+    modalRef.componentInstance.cancelLabel = 'confirmation-modal.new-item.cancel';
+    modalRef.componentInstance.confirmLabel = 'confirmation-modal.new-item.confirm';
+    modalRef.componentInstance.brandColor = 'primary';
+    
+    modalRef.componentInstance.response.pipe(take(1)).subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.router.navigate(['/submit'], {
+          queryParams: { collection: collectionUuid }
+        });
+      }
+    });
   }
 
   // TODO: buscar una alternativa menos problemática para dado un handle obtener su uuid
@@ -86,11 +107,10 @@ export class NewItemMenuProvider extends AbstractMenuProvider {
           {
             visible: !!collectionUuid,
             model: {
-              type: MenuItemType.LINK,
+              type: MenuItemType.ONCLICK,
               text: 'menu.section.new_item_sedici',
-              link: '/submit',
-              queryParams: {
-                collection: collectionUuid
+              function: () => {
+                this.showConfirmationAndNavigate(collectionUuid);
               },
             },
           },
