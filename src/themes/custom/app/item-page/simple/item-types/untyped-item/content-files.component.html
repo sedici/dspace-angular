@@ -22,7 +22,7 @@
                     </div>
                     @if (!file['isExternal']) {
                       <div class="col-4 download-button">
-                        <ds-sedici-file-download-link [bitstream]="file" [item]="object" [canDownload]="isPreviewAvailable(file.name)"></ds-sedici-file-download-link>
+                        <ds-sedici-file-download-link [bitstream]="file" [item]="object" [canDownload]="isPreviewAvailable(file.name) && (isDownloadable(file) || file['isExternal'])"></ds-sedici-file-download-link>
                       </div>
                     }
                   </div>
@@ -36,7 +36,7 @@
                     </div>
                     <div class="button-container">
                       @if (!file['isExternal']) {
-                        <ds-sedici-file-download-link [bitstream]="file" [item]="object" [isSticky]="true" [isMobile]="true"></ds-sedici-file-download-link>
+                        <ds-sedici-file-download-link [bitstream]="file" [item]="object" [isSticky]="true" [isMobile]="true" [canDownload]="isPreviewAvailable(file.name) && (isDownloadable(file) || file['isExternal'])"></ds-sedici-file-download-link>
                       }
                       <button class="btn share-button" (click)="openModalShareButtons()">
                         <i class="fa-solid fa-share"></i>
@@ -86,7 +86,7 @@
                 </span>
               </div>
               <div class="col-4 download-button">
-                <ds-sedici-file-download-link [bitstream]="file" [item]="object"></ds-sedici-file-download-link>
+                <ds-sedici-file-download-link [bitstream]="file" [item]="object" [canDownload]="isPreviewAvailable(file.name) && (isDownloadable(file) || file['isExternal'])"></ds-sedici-file-download-link>
               </div>
             </div>
           </div>
@@ -148,7 +148,7 @@
             
             @if (selectedFile && !selectedFile['isExternal']) {
               <div class="sticky-download">
-                <ds-sedici-file-download-link [bitstream]="selectedFile" [item]="object" [isSticky]="true"></ds-sedici-file-download-link>
+                <ds-sedici-file-download-link [bitstream]="selectedFile" [item]="object" [isSticky]="true" [canDownload]="isPreviewAvailable(selectedFile.name)"></ds-sedici-file-download-link>
               </div>
             }
           </div>

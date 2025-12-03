@@ -52,7 +52,7 @@
       <span class="section-title">{{'home.page.' + title | translate}}</span>
     </div>
     @if (items) {
-      <div class="section-grid container d-sm-flex">
+      <div class="section-grid container">
         @for (item of items; track item) {
           <div class="card-item multi-row">
             <a [href]="item.href">
