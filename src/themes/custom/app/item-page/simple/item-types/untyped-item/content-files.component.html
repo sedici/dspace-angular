@@ -22,7 +22,7 @@
                     </div>
                     @if (!file['isExternal']) {
                       <div class="col-4 download-button">
-                        <ds-sedici-file-download-link [bitstream]="file" [item]="object"></ds-sedici-file-download-link>
+                        <ds-sedici-file-download-link [bitstream]="file" [item]="object" [canDownload]="isPreviewAvailable(file.name)"></ds-sedici-file-download-link>
                       </div>
                     }
                   </div>
