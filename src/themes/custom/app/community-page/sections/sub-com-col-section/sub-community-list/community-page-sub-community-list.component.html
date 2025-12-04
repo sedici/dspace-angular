@@ -60,20 +60,7 @@
         </span>
       </div>
     </div>
-    <ds-truncatable [id]="node.id">
-      <div class="text-muted" cdkTreeNodePadding>
-        @if (node.payload.shortDescription) {
-          <div class="d-flex">
-            <span aria-hidden="true" class="btn btn-default invisible">
-              <span class="fa fa-chevron-right"></span>
-            </span>
-            <ds-truncatable-part [id]="node.id" [minLines]="3">
-              <span>{{node.payload.shortDescription}}</span>
-            </ds-truncatable-part>
-          </div>
-        }
-      </div>
-    </ds-truncatable>
+    <div class="text-muted" cdkTreeNodePadding></div>
     @if (node===loadingNode && dataSource.loading$ | async) {
       <div class="d-flex"
         cdkTreeNodePadding>
@@ -95,19 +82,6 @@
         <a [routerLink]="node.route" class="lead" role="link" tabindex="0">{{ dsoNameService.getName(node.payload) }}</a>
       </h6>
     </div>
-    <ds-truncatable [id]="node.id">
-      <div class="text-muted" cdkTreeNodePadding>
-        @if (node.payload.shortDescription) {
-          <div class="d-flex">
-            <span aria-hidden="true" class="btn btn-default invisible">
-              <span class="fa fa-chevron-right"></span>
-            </span>
-            <ds-truncatable-part [id]="node.id" [minLines]="3">
-              <span>{{node.payload.shortDescription}}</span>
-            </ds-truncatable-part>
-          </div>
-        }
-      </div>
-    </ds-truncatable>
+    <div class="text-muted" cdkTreeNodePadding></div>
   </cdk-tree-node>
 </cdk-tree>
