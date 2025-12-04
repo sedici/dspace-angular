@@ -32,10 +32,7 @@ export class SediciFileDownloadLinkComponent
 {
   @Input() isSticky: boolean = false;
   @Input() isMobile: boolean = false;
-  // SEDICI:  Este input es para controlar si el archivo es descargable o no
-  // Se agregó para inhabilitar el módulo de request a copy
-  // En caso de querer habilitarlo se debe eliminar
-  @Input() canDownload: boolean = false;
+  @Input() embargoedFile: boolean = false;
 
   constructor(
     protected authorizationService: AuthorizationDataService,
@@ -45,11 +42,6 @@ export class SediciFileDownloadLinkComponent
     private cdr: ChangeDetectorRef
   ) {
     super(authorizationService, dsoNameService, route, translateService);
-  }
-
-  ngOnInit(): void {
-    this.enableRequestACopy = false;
-    super.ngOnInit();
   }
 
   ngOnChanges() {
@@ -91,7 +83,7 @@ export class SediciFileDownloadLinkComponent
       );
     } else {
       this.bitstreamPath$ = of(this.getBitstreamDownloadPath());
-      this.canDownload$ = of(false);
+      this.canDownload$ = of(true);
     }
   }
 

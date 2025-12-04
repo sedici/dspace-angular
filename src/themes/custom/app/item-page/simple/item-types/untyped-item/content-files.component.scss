@@ -107,7 +107,6 @@
 .file-item {
   align-items: center;
   padding: .5rem;
-  cursor: pointer;
 
   &:hover {
     background-color: #cccccc96;
@@ -176,10 +175,7 @@
   }
 }
 
-// En caso de no tener preview, le saco el hover y la manito al pasar el mouse
-.file-no-preview-available .file-item {
-  cursor: not-allowed;
-}
+
 
 .preview-image {
   max-width: 85vh;

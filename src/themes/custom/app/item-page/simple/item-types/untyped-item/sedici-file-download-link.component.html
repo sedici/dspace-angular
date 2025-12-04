@@ -1,78 +1,51 @@
-@if (canDownload === true) {
-  <a [routerLink]="(bitstreamPath$ | async)?.routerLink" [queryParams]="(bitstreamPath$ | async)?.queryParams" [target]="isBlank ? '_blank' : '_self'" [ngClass]="cssClasses">
-    @if (isSticky !== true) {
-      <div>
-        <button class="download-btn" placement="left" [ngbTooltip]="'item.page.filesection.download' | translate">
-          <span role="img" [attr.aria-label]="'file-download-link.download' | translate" class="pe-1">
-            <i class="fas fa-download"></i>
-          </span>
-          {{ adaptFileSize((bitstream?.sizeBytes) | dsFileSize:0) }}
-        </button>
-      </div>
-    } @else {
-      <div class="sticky-button">
-        <button class="download-btn">
-          @if (isMobile) {
-            <div class="download-content">
-              <span role="img" [attr.aria-label]="'file-download-link.download' | translate">
-                <i class="fas fa-download"></i>
-              </span>
-              <span class="download-text">
-                Descargar ({{ adaptFileSize((bitstream?.sizeBytes) | dsFileSize:0) }})
-              </span>
-            </div>        
-          }
-          @if (!isMobile) {
-            <div class="svg-container">
-              <!-- SVG circular (estado inicial) -->
-              <div class="svg-circle">
-                <img [src]="'assets/custom/images/DescargarOff.svg'"/>
-              </div>
-              <!-- SVG expandido (estado hover) -->
-              <div class="svg-expanded">
-                <img [src]="'assets/custom/images/DescargarHover.svg'"/>
-              </div>
-            </div>
-          }
-        </button>
-      </div>
-    }
-  </a>
-} @else {
-  <div [ngClass]="cssClasses + ' disabled'">
-    @if (isSticky !== true) {
-      <div>
-        <button class="download-btn disabled" placement="left" [ngbTooltip]="'file-download-link.restricted' | translate" disabled>
+<a [routerLink]="embargoedFile ? null : (bitstreamPath$ | async)?.routerLink" [queryParams]="(bitstreamPath$ | async)?.queryParams" [target]="isBlank ? '_blank' : '_self'" [ngClass]="cssClasses" [style.cursor]="embargoedFile ? 'not-allowed' : 'pointer'" (click)="embargoedFile ? $event.preventDefault() : null">
+  @if (isSticky !== true) {
+    <div>
+      <button class="download-btn" placement="left" [ngbTooltip]="'item.page.filesection.download' | translate" [style.cursor]="embargoedFile ? 'not-allowed' : 'pointer'">
+        @if ((canDownload$ | async) !== true || embargoedFile) {
           <span role="img" [attr.aria-label]="'file-download-link.restricted' | translate" class="pe-1">
             <i class="fas fa-lock"></i>
           </span>
-          {{ adaptFileSize((bitstream?.sizeBytes) | dsFileSize:0) }}
-        </button>
-      </div>
-    } @else {
-      <div class="sticky-button">
-        <button class="download-btn disabled" disabled>
-          @if (isMobile) {
-            <div class="download-content">
+        } @else {
+          <span role="img" [attr.aria-label]="'file-download-link.download' | translate" class="pe-1">
+            <i class="fas fa-download"></i>
+          </span>
+        }
+        {{ adaptFileSize((bitstream?.sizeBytes) | dsFileSize:0) }}
+      </button>
+    </div>
+  } @else {
+    <div class="sticky-button">
+      <button class="download-btn" [style.cursor]="embargoedFile ? 'not-allowed' : 'pointer'">
+        @if (isMobile) {
+          <div class="download-content">
+            @if ((canDownload$ | async) !== true || embargoedFile) {
               <span role="img" [attr.aria-label]="'file-download-link.restricted' | translate">
                 <i class="fas fa-lock"></i>
               </span>
-              <span class="download-text">
-                Restringido ({{ adaptFileSize((bitstream?.sizeBytes) | dsFileSize:0) }})
+            } @else {
+              <span role="img" [attr.aria-label]="'file-download-link.download' | translate">
+                <i class="fas fa-download"></i>
               </span>
-            </div>        
-          }
-          @if (!isMobile) {
-            <div class="svg-container">
-              <!-- SVG circular (estado inicial) con candado -->
-              <div class="svg-circle">
-                <i class="fas fa-lock"></i>
-              </div>
+            }
+            <span class="download-text">
+              Descargar ({{ adaptFileSize((bitstream?.sizeBytes) | dsFileSize:0) }})
+            </span>
+          </div>        
+        }
+        @if (!isMobile) {
+          <div class="svg-container">
+            <!-- SVG circular (estado inicial) -->
+            <div class="svg-circle">
+              <img [src]="'assets/custom/images/DescargarOff.svg'"/>
             </div>
-          }
-        </button>
-      </div>
-    }
-  </div>
-}
-
+            <!-- SVG expandido (estado hover) -->
+            <div class="svg-expanded">
+              <img [src]="'assets/custom/images/DescargarHover.svg'"/>
+            </div>
+          </div>
+        }
+      </button>
+    </div>
+  }
+</a>
