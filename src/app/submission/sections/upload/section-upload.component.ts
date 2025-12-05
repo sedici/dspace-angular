@@ -28,6 +28,8 @@ import { SubmissionFormsModel } from '../../../core/config/models/config-submiss
 import { SubmissionUploadsModel } from '../../../core/config/models/config-submission-uploads.model';
 import { SubmissionUploadsConfigDataService } from '../../../core/config/submission-uploads-config-data.service';
 import { CollectionDataService } from '../../../core/data/collection-data.service';
+import { AuthorizationDataService } from '../../../core/data/feature-authorization/authorization-data.service';
+import { FeatureID } from '../../../core/data/feature-authorization/feature-id';
 import { RemoteData } from '../../../core/data/remote-data';
 import { GroupDataService } from '../../../core/eperson/group-data.service';
 import { Group } from '../../../core/eperson/models/group.model';
@@ -139,6 +141,11 @@ export class SubmissionSectionUploadComponent extends SectionModelComponent {
   public required$ = new BehaviorSubject<boolean>(true);
 
   /**
+   * Observable to check if the current user is an administrator
+   */
+  public isAdmin$: Observable<boolean>;
+
+  /**
    * Array to track all subscriptions and unsubscribe them onDestroy
    * @type {Array}
    */
@@ -155,6 +162,7 @@ export class SubmissionSectionUploadComponent extends SectionModelComponent {
    * @param {SectionsService} sectionService
    * @param {SubmissionService} submissionService
    * @param {SubmissionUploadsConfigDataService} uploadsConfigService
+   * @param {AuthorizationDataService} authorizationService
    * @param {SectionDataObject} injectedSectionData
    * @param {string} injectedSubmissionId
    */
@@ -166,6 +174,7 @@ export class SubmissionSectionUploadComponent extends SectionModelComponent {
               protected sectionService: SectionsService,
               private submissionService: SubmissionService,
               private uploadsConfigService: SubmissionUploadsConfigDataService,
+              private authorizationService: AuthorizationDataService,
               public dsoNameService: DSONameService,
               @Inject('sectionDataProvider') public injectedSectionData: SectionDataObject,
               @Inject('submissionIdProvider') public injectedSubmissionId: string) {
@@ -176,6 +185,9 @@ export class SubmissionSectionUploadComponent extends SectionModelComponent {
    * Initialize all instance variables and retrieve collection default access conditions
    */
   onSectionInit() {
+    // Check if the current user is an administrator
+    this.isAdmin$ = this.authorizationService.isAuthorized(FeatureID.AdministratorOf);
+
     const config$ = this.uploadsConfigService.findByHref(this.sectionData.config, true, false, followLink('metadata')).pipe(
       getFirstSucceededRemoteData(),
       map((config) => config.payload));

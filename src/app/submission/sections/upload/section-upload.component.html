@@ -1,6 +1,12 @@
-<ds-alert [content]="'submission.sections.upload.info'"
-  [dismissible]="true"
-[type]="AlertTypeEnum.Info"></ds-alert>
+@if (isAdmin$ | async) {
+  <ds-alert [content]="'submission.sections.upload.info'"
+    [dismissible]="true"
+    [type]="AlertTypeEnum.Info"></ds-alert>
+} @else {
+  <ds-alert [content]="'submission.sections.upload.info.user'"
+    [dismissible]="true"
+    [type]="AlertTypeEnum.Info"></ds-alert>
+}
 
 @if (fileList.length > 0) {
   @if (collectionDefaultAccessConditions.length > 0) {
