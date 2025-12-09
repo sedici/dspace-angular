@@ -21,4 +21,13 @@ import { ComcolPageBrowseByComponent as BaseComponent } from '../../../../../../
   ],
 })
 export class ComcolPageBrowseByComponent extends BaseComponent {
+  isDropdownOpen = false;
+
+  toggleDropdown(): void {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  selectOption(): void {
+    this.isDropdownOpen = false;
+  }
 }
