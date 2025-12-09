@@ -1,7 +1,4 @@
-import {
-  AsyncPipe,
-  NgComponentOutlet,
-} from '@angular/common';
+import { AsyncPipe, NgComponentOutlet } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLinkActive } from '@angular/router';
 
@@ -11,10 +8,12 @@ import { HoverOutsideDirective } from '../../../../../app/shared/utils/hover-out
 
 @Component({
   selector: 'ds-themed-expandable-navbar-section',
-  // templateUrl: './expandable-navbar-section.component.html',
-  templateUrl: '../../../../../app/navbar/expandable-navbar-section/expandable-navbar-section.component.html',
+  templateUrl: './expandable-navbar-section.component.html',
+  // templateUrl: '../../../../../app/navbar/expandable-navbar-section/expandable-navbar-section.component.html',
   // styleUrls: ['./expandable-navbar-section.component.scss'],
-  styleUrls: ['../../../../../app/navbar/expandable-navbar-section/expandable-navbar-section.component.scss'],
+  styleUrls: [
+    '../../../../../app/navbar/expandable-navbar-section/expandable-navbar-section.component.scss',
+  ],
   animations: [slide],
   standalone: true,
   imports: [
@@ -24,5 +23,4 @@ import { HoverOutsideDirective } from '../../../../../app/shared/utils/hover-out
     RouterLinkActive,
   ],
 })
-export class ExpandableNavbarSectionComponent extends BaseComponent {
-}
+export class ExpandableNavbarSectionComponent extends BaseComponent {}

@@ -22,7 +22,7 @@
 }
 
 :host {
-  .navbar-nav {
+  .nav-item {
     @media screen and (max-width: map-get($grid-breakpoints, md)-0.02) {      
       .dropdown-menu {
         position: static !important;

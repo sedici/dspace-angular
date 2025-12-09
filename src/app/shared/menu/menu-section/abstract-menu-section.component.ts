@@ -1,24 +1,9 @@
-import {
-  Component,
-  Injector,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
-import {
-  BehaviorSubject,
-  Observable,
-  Subscription,
-} from 'rxjs';
-import {
-  distinctUntilChanged,
-  switchMap,
-} from 'rxjs/operators';
+import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 import { GenericConstructor } from '../../../core/shared/generic-constructor';
-import {
-  hasNoValue,
-  hasValue,
-} from '../../empty.util';
+import { hasNoValue, hasValue } from '../../empty.util';
 import { MenuService } from '../menu.service';
 import { MenuID } from '../menu-id.model';
 import { getComponentForMenuItemType } from '../menu-item.decorator';
@@ -34,7 +19,9 @@ import { MenuSection } from '../menu-section.model';
   template: '',
   standalone: true,
 })
-export abstract class AbstractMenuSectionComponent implements OnInit, OnDestroy {
+export abstract class AbstractMenuSectionComponent
+  implements OnInit, OnDestroy
+{
   protected abstract section: MenuSection;
 
   /**
@@ -55,10 +42,15 @@ export abstract class AbstractMenuSectionComponent implements OnInit, OnDestroy 
   /**
    * Map of components and injectors for each dynamically rendered menu section
    */
-  sectionMap$: BehaviorSubject<Map<string, {
-    injector: Injector,
-    component: GenericConstructor<AbstractMenuSectionComponent>
-  }>> = new BehaviorSubject(new Map());
+  sectionMap$: BehaviorSubject<
+    Map<
+      string,
+      {
+        injector: Injector;
+        component: GenericConstructor<AbstractMenuSectionComponent>;
+      }
+    >
+  > = new BehaviorSubject(new Map());
 
   /**
    * Array to track all subscriptions and unsubscribe them onDestroy
@@ -68,19 +60,23 @@ export abstract class AbstractMenuSectionComponent implements OnInit, OnDestroy 
 
   protected constructor(
     protected menuService: MenuService,
-    protected injector: Injector,
-  ) {
-  }
+    protected injector: Injector
+  ) {}
 
   /**
    * Set initial values for instance variables
    */
   ngOnInit(): void {
-    this.subs.push(this.menuService.isSectionActive(this.menuID, this.section.id).pipe(distinctUntilChanged()).subscribe((isActive: boolean) => {
-      if (this.active$.value !== isActive) {
-        this.active$.next(isActive);
-      }
-    }));
+    this.subs.push(
+      this.menuService
+        .isSectionActive(this.menuID, this.section.id)
+        .pipe(distinctUntilChanged())
+        .subscribe((isActive: boolean) => {
+          if (this.active$.value !== isActive) {
+            this.active$.next(isActive);
+          }
+        })
+    );
     this.initializeInjectorData();
   }
 
@@ -116,10 +112,12 @@ export abstract class AbstractMenuSectionComponent implements OnInit, OnDestroy 
    * @param skipEvent Weather the event should still be triggered after deactivating the section or not
    */
   deactivateSection(event: Event, skipEvent = true): void {
-    if (skipEvent) {
+    if (skipEvent && event) {
       event.preventDefault();
     }
-    this.menuService.deactivateSection(this.menuID, this.section.id);
+    setTimeout(() => {
+      this.menuService.deactivateSection(this.menuID, this.section.id);
+    }, 0);
   }
 
   /**
@@ -129,21 +127,26 @@ export abstract class AbstractMenuSectionComponent implements OnInit, OnDestroy 
     this.updateSectionMap(
       this.section.id,
       this.getItemModelInjector(this.section.model),
-      this.getMenuItemComponent(this.section.model),
+      this.getMenuItemComponent(this.section.model)
     );
-    this.subSections$ = this.menuService.getSubSectionsByParentID(this.menuID, this.section.id);
+    this.subSections$ = this.menuService.getSubSectionsByParentID(
+      this.menuID,
+      this.section.id
+    );
     this.subs.push(
-      this.subSections$.pipe(
-        // if you return an array from a switchMap it will emit each element as a separate event.
-        // So this switchMap is equivalent to a subscribe with a forEach inside
-        switchMap((sections: MenuSection[]) => sections),
-      ).subscribe((section: MenuSection) => {
-        this.updateSectionMap(
-          section.id,
-          this.getItemModelInjector(section.model),
-          this.getMenuItemComponent(section.model),
-        );
-      }),
+      this.subSections$
+        .pipe(
+          // if you return an array from a switchMap it will emit each element as a separate event.
+          // So this switchMap is equivalent to a subscribe with a forEach inside
+          switchMap((sections: MenuSection[]) => sections)
+        )
+        .subscribe((section: MenuSection) => {
+          this.updateSectionMap(
+            section.id,
+            this.getItemModelInjector(section.model),
+            this.getMenuItemComponent(section.model)
+          );
+        })
     );
   }
 
@@ -179,7 +182,9 @@ export abstract class AbstractMenuSectionComponent implements OnInit, OnDestroy 
       itemModel = this.section.model;
     }
     return Injector.create({
-      providers: [{ provide: 'itemModelProvider', useFactory: () => (itemModel), deps: [] }],
+      providers: [
+        { provide: 'itemModelProvider', useFactory: () => itemModel, deps: [] },
+      ],
       parent: this.injector,
     });
   }
