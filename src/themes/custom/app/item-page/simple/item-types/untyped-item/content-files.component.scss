@@ -175,7 +175,10 @@
   }
 }
 
-
+// En caso de no tener preview, le cambio la manito al pasar el mouse
+.file-no-preview-available .file-item {
+  cursor: not-allowed;
+}
 
 .preview-image {
   max-width: 85vh;
