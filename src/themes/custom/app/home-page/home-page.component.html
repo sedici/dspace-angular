@@ -1,18 +1,14 @@
 <ds-home-news></ds-home-news>
 @if (showDiscoverFilters) {
-  <ds-configuration-search-page
-    [sideBarWidth]="3"
-    [showViewModes]="false"
-    [searchEnabled]="false"
-    [inPlaceSearch]="false"
-    [showScopeSelector]="false">
-    <ng-container searchContentTop *ngTemplateOutlet="homeContent"></ng-container>
-  </ds-configuration-search-page>
+<ds-configuration-search-page [sideBarWidth]="3" [showViewModes]="false" [searchEnabled]="false" [inPlaceSearch]="false"
+  [showScopeSelector]="false">
+  <ng-container searchContentTop *ngTemplateOutlet="homeContent"></ng-container>
+</ds-configuration-search-page>
 }
 @if (!showDiscoverFilters) {
-  <div>
-    <ng-container *ngTemplateOutlet="homeContent"></ng-container>
-  </div>
+<div>
+  <ng-container *ngTemplateOutlet="homeContent"></ng-container>
+</div>
 }
 <ds-suggestions-popup></ds-suggestions-popup>
 
@@ -20,33 +16,39 @@
   <div class="destacado">
     <div class="row container">
       @for (item of exploraciones; track item) {
-        <div class="col-6 col-md-3 mb-4">
-          @if (item.href.startsWith('/handle')) {
-            <a [href]="item.href">
-              <div class="collection-card">
-                <div class="icon-container">
-                  <img class="default-image" [src]="item.img" alt="{{'home.page.' + item.title | translate}}">
-                  <img class="hover-image" [src]="getHoverImageSrc(item.img)" alt="{{'home.page.' + item.title | translate}}">
-                </div>
-                <div class="text-container">
-                  <span>{{'home.page.' + item.title | translate}}</span>
-                </div>
-              </div>
-            </a>
-          } @else {
-            <a [routerLink]="item.href" [queryParams]="item.queryParams || {}">
-              <div class="collection-card">
-                <div class="icon-container">
-                  <img class="default-image" [src]="item.img" alt="{{'home.page.' + item.title | translate}}">
-                  <img class="hover-image" [src]="getHoverImageSrc(item.img)" alt="{{'home.page.' + item.title | translate}}">
-                </div>
-                <div class="text-container">
-                  <span>{{'home.page.' + item.title | translate}}</span>
-                </div>
-              </div>
-            </a>
-          }
-        </div>
+      <div class="col-6 col-md-3 mb-4">
+        @if (item.href.startsWith('/handle')) {
+        <a [href]="item.href">
+          <div class="collection-card">
+            <div class="icon-container">
+              <img class="default-image" [src]="item.img" alt="{{'home.page.' + item.title | translate}}">
+              <img class="hover-image" [src]="getHoverImageSrc(item.img)"
+                alt="{{'home.page.' + item.title | translate}}">
+            </div>
+            <div class="linea-vertical"></div>
+            <div class="text-container">
+              <span>{{'home.page.' + item.title | translate}}</span>
+              <p class="subtitle">{{'home.page.' + item.title + '.description' | translate}}</p>
+            </div>
+          </div>
+        </a>
+        } @else {
+        <a [routerLink]="item.href" [queryParams]="item.queryParams || {}">
+          <div class="collection-card">
+            <div class="icon-container">
+              <img class="default-image" [src]="item.img" alt="{{'home.page.' + item.title | translate}}">
+              <img class="hover-image" [src]="getHoverImageSrc(item.img)"
+                alt="{{'home.page.' + item.title | translate}}">
+            </div>
+            <div class="linea-vertical"></div>
+            <div class="text-container">
+              <span>{{'home.page.' + item.title | translate}}</span>
+              <p class="subtitle">{{'home.page.' + item.title + '.description' | translate}}</p>
+            </div>
+          </div>
+        </a>
+        }
+      </div>
       }
     </div>
   </div>
@@ -88,7 +90,7 @@
       <img src="assets/custom/images/logoREVISTAS.png" alt="Portal de revistas UNLP Logo">
     </a>
     <a href="https://hera.sedici.unlp.edu.ar/" target="_blank">
-      <img src="assets/custom/images/logoHERA.svg" alt="HERA Logo" >
+      <img src="assets/custom/images/logoHERA.svg" alt="HERA Logo">
     </a>
   </div>
 </div>
