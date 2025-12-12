@@ -7332,7 +7332,13 @@
 
   "home.page.books": "Books",
 
-  "home.page.data": "Data",
+  "home.page.journals.description": "Academic publications of the UNLP",
+
+  "home.page.events.description": "Academic events",
+
+  "home.page.books.description": "Complete works of the university",
+
+  "home.page.data.description": "Conjuntos de datos de investigación",
 
   "home.page.explore": "Explore",
 

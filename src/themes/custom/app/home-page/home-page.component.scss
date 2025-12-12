@@ -4,20 +4,30 @@ div.row.container {
 }
 
 .destacado {
+
+  .col-6,
+  .col-md-3 {
+    display: flex;
+  }
+
   .collection-card {
     display: flex;
-    padding: 1.3rem 0rem 1.3rem 0rem;
-    border: 1px solid var(--sedici-color);
+    padding: 1.2rem 0.7rem 1.2rem 0.7rem;
     transition: background-color 0.3s ease, color 0.3s ease;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    border-radius: 5px;
+    box-shadow: 3px 4px 12px 3px rgba(131, 127, 127, 0.46);
+    height: 100%;
     
     &:hover {
       background-color: var(--sedici-color);
       color: white;
       
-      .text-container span {
-        color: white;
+      .text-container {
+        span, .subtitle {
+          color: white;
+        }
       }
       
       .icon-container .hover-image {
@@ -36,10 +46,28 @@ div.row.container {
         width: 40px;
         height: 40px;
         object-fit: contain;
+
+        @media (max-width: 991px) {
+          width: 30px;
+          height: 30px;
+        }
       }
 
       .hover-image {
         display: none;
+      }
+    }
+
+    .linea-vertical {
+      width: 1px;
+      min-width: 1px;
+      flex-shrink: 0;
+      height: 3.5rem;
+      background-color: #a1a5a8;
+      margin: 0 15px;
+
+      @media (max-width: 991px) {
+        margin: 10px;
       }
     }
     
@@ -47,12 +75,31 @@ div.row.container {
       span {
         font-size: 1.3125rem;
         margin-bottom: 0;
+
+        @media (max-width: 991px) {
+          font-size: clamp(1rem, 2.5vw, 1.1rem);
+        }
+      }
+
+      .subtitle {
+        font-size: 0.9rem;
+        color: #929292;
+        margin: 0;
+        line-height: 1;
+
+        @media (max-width: 991px) {
+          font-size: clamp(0.7rem, 2.5vw, 0.8rem);
+        }
+        
       }
     }
   }
 
   a {
     color: inherit;
+    display: flex; 
+    height: 100%; 
+    width: 100%; 
 
     &:hover {
       text-decoration: none;
@@ -63,31 +110,42 @@ div.row.container {
   @media (min-width: 768px) {
     .collection-card {     
       .icon-container {
-        margin-right: 15px;
         margin-bottom: 0;
       }
     }
   }
 
+  @media (max-width: 991px) {
+    .collection-card {     
+      padding: 0.4rem 0.8rem;
+    }
+  }
+    
+
   // Estilo para dispositivos móviles (grid 2x2) con ícono a la derecha
   @media (max-width: 767px) {
     .collection-card {     
-      padding: 15px;
       height: 100%;
       align-items: center;
+      width: 100%;
       
       .icon-container {
         margin-bottom: 0;
-        margin-right: 10px;
         
         img {
-          width: 30px;
-          height: 30px;
+          width: 25px;
+          height: 25px;
         }
       }
       
-      .text-container span {
-       font-size: 1.1rem;
+      .text-container {
+        span {
+          font-size: 1rem;
+        }
+
+        .subtitle {
+          font-size: 0.7rem;
+        }
       }
     }
   }
@@ -167,7 +225,6 @@ div.row.container {
   @media screen and (max-width: 1300px) {
     .title-container {
       font-size: 1.5rem;
-      justify-content: start;
       padding-left: 5%;
     }
 
