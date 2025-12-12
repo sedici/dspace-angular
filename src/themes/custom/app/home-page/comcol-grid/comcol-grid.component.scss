@@ -16,13 +16,13 @@
     align-items: center;
     
     .explorar-text {
-      font-size: 2rem;
+      font-size: clamp(1.6rem, 2.8vw, 2rem);
       color: #999;
       margin-right: 0.5rem;
     }
     
     .section-title {
-      font-size: 2rem;
+      font-size: clamp(1.6rem, 2.8vw, 2rem);
       font-weight: var(--font-weight-bold);
       margin: 0;
     }
@@ -135,13 +135,14 @@
     .title-container {
       margin-bottom: 1rem;
       padding-left: 5%;
+      justify-content: center;
 
       .explorar-text {
-        font-size: 1.5rem;
+        font-size: clamp(1rem, 3.5vw, 1.6rem);
       }
 
       .section-title {
-        font-size: 1.5rem;
+        font-size: clamp(1.1rem, 3.5vw, 1.6rem);
       }
 
       &::before,

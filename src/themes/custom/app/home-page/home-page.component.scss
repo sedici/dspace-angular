@@ -24,8 +24,10 @@ div.row.container {
       background-color: var(--sedici-color);
       color: white;
       
-      .text-container span {
-        color: white;
+      .text-container {
+        span, .subtitle {
+          color: white;
+        }
       }
       
       .icon-container .hover-image {
@@ -44,6 +46,11 @@ div.row.container {
         width: 40px;
         height: 40px;
         object-fit: contain;
+
+        @media (max-width: 991px) {
+          width: 30px;
+          height: 30px;
+        }
       }
 
       .hover-image {
@@ -53,15 +60,25 @@ div.row.container {
 
     .linea-vertical {
       width: 1px;
-      height: 3.5rem; /* Altura fija controlada por vos */
+      min-width: 1px;
+      flex-shrink: 0;
+      height: 3.5rem;
       background-color: #a1a5a8;
-      margin: 0 15px; /* Separación a los costados */
+      margin: 0 15px;
+
+      @media (max-width: 991px) {
+        margin: 10px;
+      }
     }
     
     .text-container {
       span {
         font-size: 1.3125rem;
         margin-bottom: 0;
+
+        @media (max-width: 991px) {
+          font-size: clamp(1rem, 2.5vw, 1.1rem);
+        }
       }
 
       .subtitle {
@@ -69,15 +86,20 @@ div.row.container {
         color: #929292;
         margin: 0;
         line-height: 1;
+
+        @media (max-width: 991px) {
+          font-size: clamp(0.7rem, 2.5vw, 0.8rem);
+        }
+        
       }
     }
   }
 
   a {
     color: inherit;
-    display: flex; // Hacer que el enlace use flexbox
-    height: 100%; // Ocupar toda la altura de la columna
-    width: 100%; // Ocupar todo el ancho de la columna
+    display: flex; 
+    height: 100%; 
+    width: 100%; 
 
     &:hover {
       text-decoration: none;
@@ -93,21 +115,26 @@ div.row.container {
     }
   }
 
+  @media (max-width: 991px) {
+    .collection-card {     
+      padding: 0.4rem 0.8rem;
+    }
+  }
+    
+
   // Estilo para dispositivos móviles (grid 2x2) con ícono a la derecha
   @media (max-width: 767px) {
     .collection-card {     
-      padding: 15px;
       height: 100%;
       align-items: center;
       width: 100%;
       
       .icon-container {
         margin-bottom: 0;
-        // margin-right: 0px;
         
         img {
-          width: 30px;
-          height: 30px;
+          width: 25px;
+          height: 25px;
         }
       }
       
@@ -198,7 +225,6 @@ div.row.container {
   @media screen and (max-width: 1300px) {
     .title-container {
       font-size: 1.5rem;
-      justify-content: start;
       padding-left: 5%;
     }
 
