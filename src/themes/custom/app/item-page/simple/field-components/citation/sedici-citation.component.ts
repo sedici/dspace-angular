@@ -31,6 +31,8 @@ export class SediciCitationComponent implements OnInit {
     { value: 'bibtex', label: 'BibTex' },
   ];
 
+  copySuccess: boolean = false;
+
   constructor(public activeModal: NgbActiveModal) {}
 
   async ngOnInit() {
@@ -179,22 +181,14 @@ export class SediciCitationComponent implements OnInit {
     this.citationType = selectElement.value;
     this.generateCitation(this.citationType);
   }
-
-  copyToClipboard(el: HTMLDivElement, id: string) {
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(el.innerText).then(() => {
-        document.getElementById(id).classList.remove('fa-copy');
-        document.getElementById(id).classList.add('fa-check');
-        setTimeout(() => {
-          document.getElementById(id).classList.remove('fa-check');
-          document.getElementById(id).classList.add('fa-copy');
-        }, 1000);
-      }, (error) => {
-        console.log(error);
-      });
-    } else {
-      console.log('Browser do not support Clipboard API');
-    }
+  
+  copyToClipboard(element: HTMLDivElement) {
+    navigator.clipboard.writeText(element.innerText).then(() => {
+      this.copySuccess = true;
+      setTimeout(() => this.copySuccess = false, 2000); // Ocultar el mensaje después de 2 segundos
+    }).catch(err => {
+      console.error('Error al copiar el texto: ', err);
+    });
   }
 
   close() {
