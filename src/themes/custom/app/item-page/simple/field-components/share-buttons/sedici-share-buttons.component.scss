@@ -1,3 +1,13 @@
+.modal-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  .modal-title {
+    font-size: 1rem;
+  }
+}
+
 .share-modal-content {
   padding: 20px;
 }
@@ -11,8 +21,9 @@
 .share-link {
   flex: 1;
   padding: .25rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  background-color: #e9f5ff;
+  border: 1px solid #d0e3f0;
+  border-radius: 8px;
   outline: none;
 }
 

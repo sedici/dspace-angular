@@ -6,13 +6,14 @@ import '@citation-js/plugin-csl';
 import '@citation-js/plugin-bibtex';
 import { MetadatumViewModel } from 'src/app/core/shared/metadata.models';
 import * as CSL from 'citeproc';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'sedici-citation',
   templateUrl: './sedici-citation.component.html',
   styleUrls: ['./sedici-citation.component.scss'],
   standalone: true,
-  imports: [],
+  imports: [TranslateModule],
 })
 export class SediciCitationComponent implements OnInit {
 

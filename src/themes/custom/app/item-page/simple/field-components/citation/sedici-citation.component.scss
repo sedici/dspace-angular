@@ -1,3 +1,13 @@
+.modal-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  .modal-title {
+    font-size: 1rem;
+  }
+}
+
 .citation-type-selector {
   margin-bottom: 1rem;
   
