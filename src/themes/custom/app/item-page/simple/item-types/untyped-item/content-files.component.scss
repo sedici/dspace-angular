@@ -271,3 +271,100 @@ ul {
     height: 40vh;
   }
 }
+
+// Estilos para el visor de imágenes incrustado
+.single-image-viewer-container {
+  display: flex;
+  flex-direction: column;
+  // height: 100%;
+  // min-height: 400px; // Altura mínima para el área de previsualización
+  // border: 1px solid #e0e0e0; // Opcional: borde para delimitar el área
+  // background-color: #fdfdfd;
+  height: 85vh; 
+  width: 100%;
+  border: 1px solid #e0e0e0;
+  background-color: #fdfdfd;
+
+  .image-toolbar {
+    flex: 0 0 auto;
+    padding: 0.5rem;
+    background-color: #f0f2f5;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .zoom-percentage {
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    
+    // Ajustes para botones de Bootstrap en la toolbar
+    .btn-secondary {
+      background-color: #e2e6ea;
+      border-color: #dae0e5;
+      color: #333;
+      &:hover:not([disabled]) {
+          background-color: #d3d9df;
+      }
+      &[disabled] {
+          opacity: 0.5;
+      }
+    }
+  }
+
+  .image-scroll-container {
+    flex: 1 1 auto;
+    overflow: auto; // CRUCIAL: Permite scroll cuando la imagen está con zoom
+    min-height: 0;
+    display: flex;
+    // justify-content: center;
+    // align-items: center;
+    padding: 1rem;
+    position: relative;
+    background-color: #3333331a;
+
+    .preview-image-zoomed {
+      // TRUCO DE ORO: margin: auto centra el elemento si sobra espacio, 
+      // pero permite scroll hacia todos lados si falta espacio.
+      margin: auto; 
+      
+      // Importante para que el flex container no aplaste la imagen
+      flex-shrink: 0; 
+      
+      // Eliminamos max-width/height fijos que tenías antes para permitir el zoom
+      max-width: none; 
+      max-height: none; 
+      
+      object-fit: contain;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      
+      // Esto asegura que al nivel 1 de zoom, la imagen no rompa la pantalla si es gigante,
+      // pero respete el width.% dinámico que le pasamos por HTML
+      display: block; 
+      transition: width 0.2s ease-out;
+    }
+  }
+}
+
+// Estilos para el modal de pantalla completa
+::ng-deep .image-fullscreen-modal {
+  .modal-content {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+  }
+  .modal-header {
+    background-color: white;
+    border-top-left-radius: 0.3rem;
+    border-top-right-radius: 0.3rem;
+  }
+  .modal-body {
+    background-color: rgba(0, 0, 0, 0.8) !important; // Fondo oscuro para resaltar la imagen
+  }
+  .modal-footer {
+    background-color: white;
+    border-bottom-left-radius: 0.3rem;
+    border-bottom-right-radius: 0.3rem;
+  }
+}

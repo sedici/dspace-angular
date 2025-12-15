@@ -1,5 +1,5 @@
 import { Component, Input, Inject, ViewChild, ElementRef } from '@angular/core';
-import { NgStyle, NgClass, NgTemplateOutlet, AsyncPipe } from '@angular/common';
+import { NgStyle, NgClass, NgTemplateOutlet, AsyncPipe, DecimalPipe } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { Item } from 'src/app/core/shared/item.model';
 import { BitstreamDataService } from 'src/app/core/data/bitstream-data.service';
@@ -66,6 +66,7 @@ const EXTERNAL_CONFIG = {
     NgClass,
     NgTemplateOutlet,
     AsyncPipe,
+    DecimalPipe,
     TranslateModule,
     FileSizePipe,
     SediciFileDownloadLinkComponent,
@@ -114,6 +115,11 @@ export class ContentFilesComponent {
   isMobile$: Observable<boolean>;
   isMobile = false;
 
+  currentZoomLevel: number = 1;
+  readonly ZOOM_STEP: number = 0.2;
+  readonly MAX_ZOOM: number = 3;
+  readonly MIN_ZOOM: number = 0.5;
+
   constructor(
     protected bitstreamDataService: BitstreamDataService,
     public dsoNameService: DSONameService,
@@ -145,6 +151,8 @@ export class ContentFilesComponent {
     this.currentExternalUrl = null;
     this.currentExternalService = null;
     this.previewUrl = null;
+
+    this.currentZoomLevel = 1;
     
     if ('isExternal' in file && file.isExternal) {
       const extFile = file as ExternalBitstreamMock;
@@ -253,6 +261,32 @@ export class ContentFilesComponent {
         break;
     }
     this.cdr.detectChanges();
+  }
+
+  zoomIn(): void {
+    if (this.currentZoomLevel < this.MAX_ZOOM) {
+      this.currentZoomLevel = parseFloat((this.currentZoomLevel + this.ZOOM_STEP).toFixed(1));
+    }
+  }
+
+  zoomOut(): void {
+    if (this.currentZoomLevel > this.MIN_ZOOM) {
+      this.currentZoomLevel = parseFloat((this.currentZoomLevel - this.ZOOM_STEP).toFixed(1));
+    }
+  }
+
+  resetZoom(): void {
+    this.currentZoomLevel = 1;
+  }
+
+  // Función para abrir el modal de pantalla completa específico para imágenes
+  openImageFullscreen(content: any) {
+    this.modalService.open(content, { 
+      size: 'xl', // Extra grande
+      windowClass: 'image-fullscreen-modal', // Clase CSS personalizada (ver SCSS)
+      centered: true,
+      scrollable: true // Permitir scroll si la imagen es muy alta
+    });
   }
 
   isPreviewAvailable(fileName: string): boolean {

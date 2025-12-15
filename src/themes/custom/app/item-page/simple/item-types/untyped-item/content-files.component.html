@@ -172,8 +172,51 @@
           </div>
         </ng-template>
         <ng-template #imageTemplate>
-          <div style="display: flex; justify-content: center;">
-            <img class="preview-image" [src]="previewUrl" alt="{{ getFileDescription(selectedFile) }}">
+          <div class="single-image-viewer-container">
+            <div class="image-toolbar">
+              <div class="btn-group" role="group" aria-label="Image controls">
+                  <button type="button" class="btn btn-secondary" (click)="zoomOut()" [disabled]="currentZoomLevel <= MIN_ZOOM" title="Zoom Out">
+                    <i class="fa-solid fa-magnifying-glass-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-secondary" (click)="resetZoom()" [disabled]="currentZoomLevel === 1" title="Reset Zoom">
+                    <i class="fa-solid fa-rotate-left"></i>
+                    <span class="zoom-percentage ms-1">{{ currentZoomLevel * 100 | number:'1.0-0' }}%</span>
+                  </button>
+                  <button type="button" class="btn btn-secondary" (click)="zoomIn()" [disabled]="currentZoomLevel >= MAX_ZOOM" title="Zoom In">
+                    <i class="fa-solid fa-magnifying-glass-plus"></i>
+                  </button>
+                </div>
+                
+                <button type="button" class="btn btn-secondary ms-2" (click)="openImageFullscreen(fullscreenImageModal)" title="Pantalla completa">
+                  <i class="fa-solid fa-expand"></i>
+                </button>
+            </div>
+
+            <div class="image-scroll-container">
+              <img class="preview-image-zoomed" 
+                  [src]="previewUrl" 
+                  alt="{{ getFileDescription(selectedFile) }}"
+                  [style.width.%]="currentZoomLevel * 100" 
+                  [style.height]="'auto'">
+            </div>
+          </div>
+        </ng-template>
+        <ng-template #fullscreenImageModal let-modal>
+          <div class="modal-header border-0 pb-0">
+            <h5 class="modal-title text-truncate" title="{{ getFileDescription(selectedFile) }}">
+              {{ getFileDescription(selectedFile) }}
+            </h5>
+            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+          </div>
+          <div class="modal-body p-0" style="display: flex; justify-content: center; align-items: center; background-color: #f8f9fa; min-height: 80vh;">
+            <img [src]="previewUrl" style="max-width: 100%; max-height: 90vh; object-fit: contain;" alt="Fullscreen preview">
+          </div>
+          <div class="modal-footer border-0 pt-0 justify-content-center">
+              <ds-sedici-file-download-link *ngIf="!selectedFile['isExternal']"
+                [bitstream]="selectedFile" 
+                [item]="object" 
+                [embargoedFile]="!isDownloadable(selectedFile)">
+              </ds-sedici-file-download-link>
           </div>
         </ng-template>
         <ng-template #zipTemplate>
