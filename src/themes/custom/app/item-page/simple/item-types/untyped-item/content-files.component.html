@@ -17,7 +17,7 @@
                         <img [src]="getIconPath(file.name)" alt="File icon"/>
                       }
                     </div>
-                    <div [class.col-11]="file['isExternal']" [class.col-7]="!file['isExternal']">
+                    <div [class]="file['isExternal'] ? 'col-11 col-md-10 col-xl-11' : 'col-7 col-md-6 col-xl-7'">
                       <span class="file-name">{{ getFileDescription(file) }}</span>
                     </div>
                     @if (!file['isExternal']) {
@@ -78,7 +78,7 @@
               <div class="file-icon col-1">
                 <img [src]="getIconPath(file.name)" alt="File icon"/>
               </div>
-              <div class="col-7">
+              <div class="col-7 col-md-6 col-xl-7">
                 <span class="file-name">{{ getFileDescription(file) }}</span>
                 <span class="text-no-preview-available">
                   <i class="fa-solid fa-eye-slash"></i>

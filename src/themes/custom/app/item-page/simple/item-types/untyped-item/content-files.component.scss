@@ -6,6 +6,15 @@
     flex: 1;
     display: flex;
     flex-direction: column;
+
+    .file-item.row {
+      ::ng-deep .download-btn {
+        @media screen and (min-width: map-get($grid-breakpoints, xl)) {
+          font-size: 0.875rem;
+          width: 90%;
+        }
+      }
+    }
   }
 
   .file-preview {
