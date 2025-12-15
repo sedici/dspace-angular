@@ -7699,9 +7699,9 @@
   // "statistics.table.no-name": "(object name could not be loaded)",
   "statistics.table.no-name": "(el nombre del objeto no pudo ser cargado)",
 
-  "submission.privacy.warning.title": "Aviso sobre Información Personal",
+  "submission.privacy.warning.title": "Antes de subir sus archivos",
   
-  "submission.privacy.warning.message": "Por favor, revise que los documentos no contengan información personal innecesaria (números de documento, número de teléfono de línea y/o celular, direcciones privadas, datos bancarios, etc.).",
+  "submission.privacy.warning.message": "Por favor, evite subir datos personales innecesarios y verifique que el ítem no se encuentre subido en el repositorio. Si tiene alguna duda escriba a info@sedici.unlp.edu.ar",
 
   // "submission.edit.breadcrumbs": "Edit Submission",
   "submission.edit.breadcrumbs": "Editar envío",
@@ -10070,10 +10070,6 @@
 
   // Header
   "header.new.item": "Subir material",
-  "confirmation-modal.new-item.header": "Aviso importante",
-  "confirmation-modal.new-item.info": "Está a punto de crear un nuevo ítem. Por favor, asegúrese de que el trabajo no esté ya disponible en el repositorio. Para ello, realice una búsqueda por título o por autor, para evitar duplicados.",
-  "confirmation-modal.new-item.cancel": "Cancelar",
-  "confirmation-modal.new-item.confirm": "Aceptar",
 
   // "vocabulary-treeview.search.form.add": "Add",
   "vocabulary-treeview.search.form.add": "Añadir",
