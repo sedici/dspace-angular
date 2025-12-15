@@ -12,8 +12,8 @@ import { BrowserOnlyPipe } from '../../../../../app/shared/utils/browser-only.pi
 
 @Component({
   selector: 'ds-themed-admin-sidebar',
-  // templateUrl: './admin-sidebar.component.html',
-  templateUrl: '../../../../../app/admin/admin-sidebar/admin-sidebar.component.html',
+  templateUrl: './admin-sidebar.component.html',
+  // templateUrl: '../../../../../app/admin/admin-sidebar/admin-sidebar.component.html',
   // styleUrls: ['./admin-sidebar.component.scss']
   styleUrls: ['../../../../../app/admin/admin-sidebar/admin-sidebar.component.scss'],
   standalone: true,
