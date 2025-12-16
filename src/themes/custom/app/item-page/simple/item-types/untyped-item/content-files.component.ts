@@ -27,6 +27,7 @@ import { PdfJsViewerModule } from "ng2-pdfjs-viewer";
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { AuthorizationDataService } from 'src/app/core/data/feature-authorization/authorization-data.service';
 import { SediciShareButtonsComponent } from '../../field-components/share-buttons/sedici-share-buttons.component';
+import OpenSeadragon from 'openseadragon';
 
 type ExternalServiceType = 'youtube' | 'sketchfab';
 
@@ -76,6 +77,7 @@ const EXTERNAL_CONFIG = {
 export class ContentFilesComponent {
   @Input() object: Item;
   @ViewChild('pdfViewerOnDemand') pdfViewerOnDemand;
+  osdViewer: any;
 
   primaryBitsreamId: string;
   previewUrl: string;
@@ -97,6 +99,13 @@ export class ContentFilesComponent {
     modalRef.componentInstance.headerTemplate = headerTemplate;
     modalRef.componentInstance.embargoedFile = this.embargoedFile;
     modalRef.componentInstance.isAssetAvailable = this.isAssetAvailable;
+    
+    // Esperar a que el modal se muestre completamente
+    modalRef.shown.subscribe(() => {
+      if (this.selectedFile && this.isImageFile(this.getFileExtension(this.selectedFile.name))) {
+        this.initOpenSeadragon();
+      }
+    });
   }
 
   openModalShareButtons() {
@@ -137,6 +146,11 @@ export class ContentFilesComponent {
   isAssetAvailable: boolean = true;
 
   selectFile(file: Bitstream | ExternalBitstreamMock) {
+    if (this.osdViewer) {
+      this.osdViewer.destroy();
+      this.osdViewer = null;
+    }
+
     this.selectedFile = file;
     this.isLoading = true;
     this.embargoedFile = false;
@@ -167,6 +181,11 @@ export class ContentFilesComponent {
       case 'bmp':
         this.previewUrl = file._links.content.href;
         this.isLoading = false;
+        if (!this.isMobile) {
+          setTimeout(() => {
+            this.initOpenSeadragon();
+          }, 100);
+        }
         break;
       // VIDEOS
       case 'mp4':
@@ -253,6 +272,43 @@ export class ContentFilesComponent {
         break;
     }
     this.cdr.detectChanges();
+  }
+
+  initOpenSeadragon() {
+    if (this.osdViewer) {
+      this.osdViewer.destroy();
+      this.osdViewer = null;
+    }
+
+    if (typeof window !== 'undefined' && document.getElementById('osd-viewer')) {
+      
+      this.osdViewer = OpenSeadragon({
+        id: 'osd-viewer',
+        prefixUrl: 'https://openseadragon.github.io/openseadragon/images/',
+        
+        tileSources: {
+          type: 'image',
+          url: this.previewUrl,
+          buildPyramid: false
+        } as any,
+        
+        showNavigationControl: true, // Esto muestra los botones
+        // showNavigator: true,      // Esto muestra el mapa de la imagen (opcional)
+        
+        defaultZoomLevel: 0,
+        minZoomLevel: 0.5,
+        maxZoomLevel: 10,
+        visibilityRatio: 1.0,
+        constrainDuringPan: true,
+        gestureSettingsMouse: {
+          clickToZoom: false
+        }
+      });
+
+      this.osdViewer.addHandler('open-failed', () => {
+        this.notificationsService.error('Error', 'No se pudo cargar la imagen.');
+      });
+    }
   }
 
   isPreviewAvailable(fileName: string): boolean {

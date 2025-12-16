@@ -49,27 +49,29 @@
             }
           </div>
 
-          <div class="file-preview d-none d-lg-block col-lg-9">
-            @if (selectedFile && (isAssetAvailable || (selectedFile && selectedFile['isExternal'])) && !embargoedFile) {
-              <div>
-                <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
-              </div>
-            } @else {
-              @if (!isAssetAvailable) {
-                <div class="no-preview">
-                  <span>OCURRIÓ UN ERROR INESPERADO: PREVISUALIZACIÓN NO DISPONIBLE</span>
-                </div>
-              } @else if (embargoedFile) {
-                <div class="no-preview">
-                  <span>ARCHIVO EMBARGADO</span>
+          @if (!isMobile) {
+            <div class="file-preview d-none d-lg-block col-lg-9">
+              @if (selectedFile && (isAssetAvailable || (selectedFile && selectedFile['isExternal'])) && !embargoedFile) {
+                <div>
+                  <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
                 </div>
               } @else {
-                <div class="no-preview">
-                  <span>NO HAY ARCHIVO/S CON PREVISUALIZACIÓN DISPONIBLE</span>
-                </div>
+                @if (!isAssetAvailable) {
+                  <div class="no-preview">
+                    <span>OCURRIÓ UN ERROR INESPERADO: PREVISUALIZACIÓN NO DISPONIBLE</span>
+                  </div>
+                } @else if (embargoedFile) {
+                  <div class="no-preview">
+                    <span>ARCHIVO EMBARGADO</span>
+                  </div>
+                } @else {
+                  <div class="no-preview">
+                    <span>NO HAY ARCHIVO/S CON PREVISUALIZACIÓN DISPONIBLE</span>
+                  </div>
+                }
               }
-            }
-          </div>
+            </div>
+          }
         </div>
 
         <ng-template #noPreviewAvailable let-file="file">
@@ -172,8 +174,8 @@
           </div>
         </ng-template>
         <ng-template #imageTemplate>
-          <div style="display: flex; justify-content: center;">
-            <img class="preview-image" [src]="previewUrl" alt="{{ getFileDescription(selectedFile) }}">
+          <div class="single-image-viewer-container">
+            <div id="osd-viewer" class="osd-container"></div>
           </div>
         </ng-template>
         <ng-template #zipTemplate>
