@@ -27,7 +27,6 @@ import { PdfJsViewerModule } from "ng2-pdfjs-viewer";
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { AuthorizationDataService } from 'src/app/core/data/feature-authorization/authorization-data.service';
 import { SediciShareButtonsComponent } from '../../field-components/share-buttons/sedici-share-buttons.component';
-import OpenSeadragon from 'openseadragon';
 
 type ExternalServiceType = 'youtube' | 'sketchfab';
 
@@ -282,31 +281,38 @@ export class ContentFilesComponent {
 
     if (typeof window !== 'undefined' && document.getElementById('osd-viewer')) {
       
-      this.osdViewer = OpenSeadragon({
-        id: 'osd-viewer',
-        prefixUrl: 'https://openseadragon.github.io/openseadragon/images/',
-        
-        tileSources: {
-          type: 'image',
-          url: this.previewUrl,
-          buildPyramid: false
-        } as any,
-        
-        showNavigationControl: true, // Esto muestra los botones
-        // showNavigator: true,      // Esto muestra el mapa de la imagen (opcional)
-        
-        defaultZoomLevel: 0,
-        minZoomLevel: 0.5,
-        maxZoomLevel: 10,
-        visibilityRatio: 1.0,
-        constrainDuringPan: true,
-        gestureSettingsMouse: {
-          clickToZoom: false
-        }
-      });
+      import('openseadragon').then(osdModule => {
+        const OpenSeadragon = osdModule.default;
 
-      this.osdViewer.addHandler('open-failed', () => {
-        this.notificationsService.error('Error', 'No se pudo cargar la imagen.');
+        this.osdViewer = OpenSeadragon({
+          id: 'osd-viewer',
+          prefixUrl: 'https://openseadragon.github.io/openseadragon/images/',
+
+          tileSources: {
+            type: 'image',
+            url: this.previewUrl,
+            buildPyramid: false
+          } as any,
+
+          showNavigationControl: true, // Esto muestra los botones
+          // showNavigator: true,      // Esto muestra el mapa de la imagen (opcional)
+
+          defaultZoomLevel: 0,
+          minZoomLevel: 0.5,
+          maxZoomLevel: 10,
+          visibilityRatio: 1.0,
+          constrainDuringPan: true,
+          gestureSettingsMouse: {
+            clickToZoom: false
+          }
+        });
+
+        this.osdViewer.addHandler('open-failed', () => {
+          this.notificationsService.error('Error', 'No se pudo cargar la imagen.');
+        });
+
+      }).catch(error => {
+        console.error('Error cargando OpenSeadragon:', error);
       });
     }
   }
