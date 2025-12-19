@@ -319,7 +319,7 @@ export class ContentFilesComponent {
 
   isPreviewAvailable(fileName: string): boolean {
     const extension = this.getFileExtension(fileName);
-    return ['zip', 'pdf', 'youtube', 'sketchfab'].includes(extension) 
+    return ['zip', 'pdf'].includes(extension) 
       || this.isImageFile(extension)
       || this.isVideoFile(extension) 
       || this.isAudioFile(extension)
@@ -337,7 +337,7 @@ export class ContentFilesComponent {
   }
 
   isVideoFile(extension: string): boolean {
-    const videoExtensions = ['mp4', 'mov', 'webm', 'ogg'];
+    const videoExtensions = ['youtube', 'mp4', 'mov', 'webm', 'ogg'];
     return videoExtensions.includes(extension);
   }
 
@@ -347,7 +347,7 @@ export class ContentFilesComponent {
   }
 
   is3DModel(extension: string): boolean {
-    const modelExtensions = ['obj', 'glb'];
+    const modelExtensions = ['sketchfab', 'obj', 'glb'];
     return modelExtensions.includes(extension);
   }
 
@@ -356,13 +356,17 @@ export class ContentFilesComponent {
     if (this.isImageFile(extension)) {
       return `assets/custom/images/icon_imagen.png`;
     } else if (this.isVideoFile(extension)) {
-      return `assets/custom/images/icon_video.png`;
+      return `assets/custom/images/icon_video.svg`;
     } else if (this.isAudioFile(extension)) {
       return `assets/custom/images/icon_audio.png`;
     } else if (this.is3DModel(extension)) {
-      return `assets/custom/images/icon_3dmodel.png`;
+      return `assets/custom/images/icon_3dmodel.svg`;
+    } else if (extension === 'pdf') {
+      return `assets/custom/images/icon_pdf.png`;
+    } else if (extension === 'zip') {
+      return `assets/custom/images/icon_zip.png`;
     }
-    return `assets/custom/images/icon_${extension}.png`;
+    return `assets/custom/images/icon_default.svg`;
   }
 
   getFileDescription(file: any): string {

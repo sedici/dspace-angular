@@ -8,11 +8,32 @@
     flex-direction: column;
 
     .file-item.row {
+      .col-4 {
+        width: 30%;
+      }
+
       ::ng-deep .download-btn {
         @media screen and (min-width: map-get($grid-breakpoints, xl)) {
           font-size: 0.875rem;
-          width: 90%;
         }
+      }
+    }
+
+    .icon-wrapper {
+      position: relative;
+
+      .base-icon &.faded-bottom {
+        -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+        mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+      }
+
+      .overlay-icon {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        z-index: 2;
       }
     }
   }
@@ -276,10 +297,6 @@ ul {
   display: block;
   height: 85vh;
   width: 100%;
-
-  @media screen and (max-width: map-get($grid-breakpoints, md)) {
-    height: 40vh;
-  }
 
   .osd-container {
     width: 100%;

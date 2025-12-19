@@ -11,11 +11,18 @@
                 @if (isPreviewAvailable(file.name) && (isDownloadable(file) || file['isExternal'])) {
                   <div class="file-item row">
                     <div class="file-icon col-1">
-                      @if (file['externalService'] === 'youtube') {
-                        <i class="fa-brands fa-youtube" style="color: red; font-size: 1.5rem;"></i>
-                      } @else {
-                        <img [src]="getIconPath(file.name)" alt="File icon"/>
-                      }
+                      <div class="icon-wrapper">
+                        <img [src]="getIconPath(file.name)" 
+                            class="base-icon" 
+                            [class.faded-bottom]="file['isExternal']"
+                            alt="File icon"/>
+
+                        @if (file['isExternal']) {
+                          <img src="assets/custom/images/external-badge.svg"
+                              class="overlay-icon" 
+                              alt="External source"/>
+                        }
+                      </div>
                     </div>
                     <div [class]="file['isExternal'] ? 'col-11 col-md-10 col-xl-11' : 'col-7 col-md-6 col-xl-7'">
                       <span class="file-name">{{ getFileDescription(file) }}</span>
