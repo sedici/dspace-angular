@@ -24,14 +24,22 @@
                         }
                       </div>
                     </div>
-                    <div [class]="file['isExternal'] ? 'col-11 col-md-10 col-xl-11' : 'col-7 col-md-6 col-xl-7'">
+                    <div class="col-7 col-md-6 col-xl-7">
                       <span class="file-name">{{ getFileDescription(file) }}</span>
                     </div>
-                    @if (!file['isExternal']) {
-                      <div class="col-4 download-button">
+                    <div class="col-4 download-button">
+                      @if (file['isExternal']) {
+                        <a [href]="file.metadata['sedici.identifier.uri']?.[0]?.value || file['embedUrl']" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          class="btn btn-primary external-link-btn">
+                          <i class="fa-solid fa-external-link-alt pe-1"></i>
+                          <span>Acceder</span>
+                        </a>
+                      } @else {
                         <ds-sedici-file-download-link [bitstream]="file" [item]="object" [embargoedFile]="!isDownloadable(file) && !file['isExternal']"></ds-sedici-file-download-link>
-                      </div>
-                    }
+                      }
+                    </div>
                   </div>
                 } @else {
                   <ng-container *ngTemplateOutlet="noPreviewAvailable; context: { file: file }"></ng-container>
@@ -42,7 +50,15 @@
                       <span class="file-name">{{ getFileDescription(file) }}</span>
                     </div>
                     <div class="button-container">
-                      @if (!file['isExternal']) {
+                      @if (file['isExternal']) {
+                        <a [href]="file.metadata['sedici.identifier.uri']?.[0]?.value || file['embedUrl']" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          class="btn btn-primary external-link-btn">
+                          <i class="fa-solid fa-external-link-alt pe-1"></i>
+                          <span>Acceder</span>
+                        </a>
+                      } @else {
                         <ds-sedici-file-download-link [bitstream]="file" [item]="object" [isSticky]="true" [isMobile]="true" [embargoedFile]="!isDownloadable(file) && !file['isExternal']"></ds-sedici-file-download-link>
                       }
                       <button class="btn share-button" (click)="openModalShareButtons()">
@@ -95,7 +111,18 @@
                 </span>
               </div>
               <div class="col-4 download-button">
-                <ds-sedici-file-download-link [bitstream]="file" [item]="object" [embargoedFile]="!isDownloadable(file) && !file['isExternal']"></ds-sedici-file-download-link>
+                @if (file['isExternal']) {
+                  <a [href]="file.metadata['sedici.identifier.uri']?.[0]?.value || file['embedUrl']"
+                    (click)="$event.stopPropagation()" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn btn-primary external-link-btn">
+                    <i class="fa-solid fa-external-link-alt pe-1"></i>
+                    <span>Acceder</span>
+                  </a>
+                } @else {
+                  <ds-sedici-file-download-link [bitstream]="file" [item]="object" [embargoedFile]="!isDownloadable(file) && !file['isExternal']"></ds-sedici-file-download-link>
+                }
               </div>
             </div>
           </div>

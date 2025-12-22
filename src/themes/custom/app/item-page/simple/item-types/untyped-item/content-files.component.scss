@@ -12,9 +12,9 @@
         width: 30%;
       }
 
-      ::ng-deep .download-btn {
+      ::ng-deep .download-btn, .external-link-btn {
         @media screen and (min-width: map-get($grid-breakpoints, xl)) {
-          font-size: 0.875rem;
+          font-size: 0.8125rem;
         }
       }
     }
@@ -137,6 +137,8 @@
 .file-item {
   align-items: center;
   padding: .5rem;
+  border-bottom: 1px solid #d4d4d4;
+  padding-bottom: .75rem;
 
   &:hover {
     background-color: #cccccc96;
@@ -145,10 +147,11 @@
   .file-icon {
     display: flex;
     justify-content: center;
+    align-self: baseline;
   }
 
   .file-name {
-    font-size: 0.86rem;
+    font-size: 0.8125rem;
     overflow: hidden; // Oculta el texto que se desborda
     text-overflow: ellipsis; // Agrega puntos suspensivos al texto que se desborda
     display: -webkit-box; // Necesario para line-clamp
@@ -303,4 +306,21 @@ ul {
     height: 100%;
     background-color: #000;
   }
+}
+
+::ng-deep .external-link-btn {
+  padding: 4px 3px;
+  background-color: var(--sedici-color);
+  border: none;
+  border-radius: 2.5px;
+  font-size: 0.625rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  width: 100%;
+}
+
+.button-container .external-link-btn {
+  flex: 1;
+  width: 80%;
+  padding: 0.75rem;
+  font-size: 0.875rem;
 }

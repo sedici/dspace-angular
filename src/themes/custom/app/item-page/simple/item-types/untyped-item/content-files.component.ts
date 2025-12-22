@@ -28,7 +28,7 @@ import { AuthService } from 'src/app/core/auth/auth.service';
 import { AuthorizationDataService } from 'src/app/core/data/feature-authorization/authorization-data.service';
 import { SediciShareButtonsComponent } from '../../field-components/share-buttons/sedici-share-buttons.component';
 
-type ExternalServiceType = 'youtube' | 'sketchfab';
+type ExternalServiceType = 'youtube' | 'sketchfab' | 'generic';
 
 interface ExternalBitstreamMock {
   id: string;
@@ -53,6 +53,11 @@ const EXTERNAL_CONFIG = {
     regex: /sketchfab\.com\/(?:models|3d-models)\/(?:[a-zA-Z0-9-]+\-)?([a-f0-9]{32})/,
     embedBase: (id: string) => `https://sketchfab.com/models/${id}/embed`,
     oEmbed: null // Sketchfab suele requerir API real, usamos fallback manual si es null
+  },
+  generic: {
+    regex: null, 
+    embedBase: (url: string) => url, 
+    oEmbed: null
   }
 };
 
@@ -365,6 +370,8 @@ export class ContentFilesComponent {
       return `assets/custom/images/icon_pdf.png`;
     } else if (extension === 'zip') {
       return `assets/custom/images/icon_zip.png`;
+    } else if (extension === 'generic') {
+      return `assets/custom/images/icon_link.svg`;
     }
     return `assets/custom/images/icon_default.svg`;
   }
@@ -512,18 +519,23 @@ export class ContentFilesComponent {
         this.addExternalFile('sketchfab', skMatch[1], url, index);
         return;
       }
+
+      this.addExternalFile('generic', null, url, index);
     });
   }
 
   addExternalFile(service: ExternalServiceType, id: string, originalUrl: string, index: number) {
     const config = EXTERNAL_CONFIG[service];
-    const embedUrl = config.embedBase(id);
+    const embedUrl = (service === 'generic') ? originalUrl : config.embedBase(id!);
 
     const mockFile: ExternalBitstreamMock = {
-      id: `${service}-${id}-${index}`,
+      id: `${service}-${index}`,
       name: `${service}_resource.${service}`,
       type: 'bitstream',
-      metadata: { 'dc.description': [{ value: `Cargando título (${service})...` }] },
+      metadata: { 
+        'dc.description': [{ value: `Recurso externo` }], // Valor por defecto
+        'sedici.identifier.uri': [{ value: originalUrl }] 
+      },
       _links: { content: { href: embedUrl } },
       isExternal: true,
       externalService: service,
@@ -533,7 +545,14 @@ export class ContentFilesComponent {
 
     this.files.push(mockFile);
 
-    if (config.oEmbed) {
+    if (service === 'generic') {
+      try {
+        const hostname = new URL(originalUrl).hostname.replace('www.', '');
+        mockFile.metadata['dc.description'][0].value = `Enlace externo a ${hostname}`;
+      } catch (e) {
+        mockFile.metadata['dc.description'][0].value = `Enlace externo`;
+      }
+    } else if (config.oEmbed) {
       const oEmbedUrl = config.oEmbed(originalUrl);
       this.externalHttp.get(oEmbedUrl).subscribe({
         next: (data: any) => {
