@@ -44,7 +44,6 @@ interface PaginationDetails {
     fadeIn,
     fadeInOut,
   ],
-  standalone: true,
   imports: [
     AsyncPipe,
     ErrorComponent,

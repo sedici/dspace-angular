@@ -26,6 +26,7 @@ import { COLLECTION_MODULE_PATH } from './collection-page/collection-page-routin
 import { COMMUNITY_MODULE_PATH } from './community-page/community-page-routing-paths';
 import { authBlockingGuard } from './core/auth/auth-blocking.guard';
 import { authenticatedGuard } from './core/auth/authenticated.guard';
+import { notAuthenticatedGuard } from './core/auth/not-authenticated.guard';
 import { groupAdministratorGuard } from './core/data/feature-authorization/feature-authorization-guard/group-administrator.guard';
 import { siteAdministratorGuard } from './core/data/feature-authorization/feature-authorization-guard/site-administrator.guard';
 import { siteRegisterGuard } from './core/data/feature-authorization/feature-authorization-guard/site-register.guard';
@@ -98,13 +99,13 @@ export const APP_ROUTES: Route[] = [
         path: REGISTER_PATH,
         loadChildren: () => import('./register-page/register-page-routes')
           .then((m) => m.ROUTES),
-        canActivate: [siteRegisterGuard],
+        canActivate: [notAuthenticatedGuard, siteRegisterGuard],
       },
       {
         path: FORGOT_PASSWORD_PATH,
         loadChildren: () => import('./forgot-password/forgot-password-routes')
           .then((m) => m.ROUTES),
-        canActivate: [endUserAgreementCurrentUserGuard, forgotPasswordCheckGuard],
+        canActivate: [notAuthenticatedGuard, endUserAgreementCurrentUserGuard, forgotPasswordCheckGuard],
       },
       {
         path: COMMUNITY_MODULE_PATH,
@@ -181,11 +182,13 @@ export const APP_ROUTES: Route[] = [
         path: 'login',
         loadChildren: () => import('./login-page/login-page-routes')
           .then((m) => m.ROUTES),
+        canActivate: [notAuthenticatedGuard],
       },
       {
         path: 'logout',
         loadChildren: () => import('./logout-page/logout-page-routes')
           .then((m) => m.ROUTES),
+        canActivate: [authenticatedGuard],
       },
       {
         path: 'submit',
@@ -278,6 +281,7 @@ export const APP_ROUTES: Route[] = [
       {
         path: 'external-login/:token',
         loadChildren: () => import('./external-login-page/external-login-routes').then((m) => m.ROUTES),
+        canActivate: [notAuthenticatedGuard],
       },
       {
         path: 'review-account/:token',
@@ -288,6 +292,7 @@ export const APP_ROUTES: Route[] = [
         path: 'email-confirmation',
         loadChildren: () => import('./external-login-email-confirmation-page/external-login-email-confirmation-page-routes')
           .then((m) => m.ROUTES),
+        canActivate: [notAuthenticatedGuard],
       },
       { path: '**', pathMatch: 'full', component: ThemedPageNotFoundComponent },
     ],

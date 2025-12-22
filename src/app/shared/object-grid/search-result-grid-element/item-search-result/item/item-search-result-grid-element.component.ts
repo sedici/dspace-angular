@@ -29,7 +29,6 @@ import { ThemedAccessStatusBadgeComponent } from 'src/app/shared/object-collecti
   styleUrls: ['./item-search-result-grid-element.component.scss'],
   templateUrl: './item-search-result-grid-element.component.html',
   animations: [focusShadow],
-  standalone: true,
   imports: [
     AsyncPipe,
     RouterLink,
@@ -92,5 +91,6 @@ export class ItemSearchResultGridElementComponent extends SearchResultGridElemen
         }
       }
     }  
+    this.dsoTitle = this.dsoNameService.getHitHighlights(this.object, this.dso, true);
   }
 }

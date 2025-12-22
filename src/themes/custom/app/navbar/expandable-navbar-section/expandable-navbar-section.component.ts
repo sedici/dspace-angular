@@ -15,7 +15,6 @@ import { HoverOutsideDirective } from '../../../../../app/shared/utils/hover-out
     '../../../../../app/navbar/expandable-navbar-section/expandable-navbar-section.component.scss',
   ],
   animations: [slide],
-  standalone: true,
   imports: [
     AsyncPipe,
     HoverOutsideDirective,

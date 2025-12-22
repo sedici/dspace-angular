@@ -41,7 +41,6 @@ import { StartsWithLoaderComponent } from '../../../../../app/shared/starts-with
     fadeIn,
     fadeInOut,
   ],
-  standalone: true,
   imports: [
     AsyncPipe,
     ErrorComponent,

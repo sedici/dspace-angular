@@ -44,7 +44,6 @@ import { SidebarService } from '../../sidebar/sidebar.service';
   selector: 'ds-base-search-sidebar',
   styleUrls: ['./search-sidebar.component.scss'],
   templateUrl: './search-sidebar.component.html',
-  standalone: true,
   imports: [
     AdvancedSearchComponent,
     AsyncPipe,

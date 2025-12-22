@@ -62,7 +62,6 @@ import { CollectionDataService } from 'src/app/core/data/collection-data.service
     fadeIn,
     fadeInOut,
   ],
-  standalone: true,
   imports: [
     AsyncPipe,
     ComcolPageHeaderComponent,

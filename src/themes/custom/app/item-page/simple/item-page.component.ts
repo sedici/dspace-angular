@@ -27,7 +27,6 @@ import { ViewTrackerResolverService } from '../../../../../app/statistics/angula
   // templateUrl: '../../../../../app/item-page/simple/item-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeInOut],
-  standalone: true,
   imports: [
     AccessByTokenNotificationComponent,
     AsyncPipe,

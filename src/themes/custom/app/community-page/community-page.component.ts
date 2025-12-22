@@ -54,7 +54,6 @@ import { CommunityDataService } from 'src/app/core/data/community-data.service';
   // styleUrls: ['../../../../app/community-page/community-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeInOut],
-  standalone: true,
   imports: [
     AsyncPipe,
     ComcolPageHeaderComponent,
