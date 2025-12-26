@@ -29,7 +29,8 @@ export class CommunityListMenuProvider extends AbstractMenuProvider {
         visible: true,
         model: {
           type: MenuItemType.LINK,
-          text: `menu.section.browse_global_communities_and_collections`,
+          // text: `menu.section.browse_global_communities_and_collections`,
+          text: `home.page.explore`,
           link: `/community-list`,
         },
         icon: 'diagram-project',

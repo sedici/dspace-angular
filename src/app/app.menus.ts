@@ -56,7 +56,7 @@ import { NewItemMenuProvider } from './shared/menu/providers/new-item.menu';
 export const MENUS = buildMenuStructure({
   [MenuID.PUBLIC]: [
     NewItemMenuProvider,
-    ExploreMenuProvider,
+    CommunityListMenuProvider,
     StatisticsMenuProvider,
   ],
   [MenuID.ADMIN]: [
