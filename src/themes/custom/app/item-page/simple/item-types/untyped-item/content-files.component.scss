@@ -330,3 +330,11 @@ ul {
   padding: 0.75rem;
   font-size: 0.875rem;
 }
+
+@media screen and (max-width: map-get($grid-breakpoints, md)) {
+  .external-link-btn {
+    background-color: white;
+    border: 1px solid var(--sedici-color);
+    color: var(--sedici-color);
+  }
+}
