@@ -1,7 +1,7 @@
 <a [routerLink]="embargoedFile ? null : (bitstreamPath$ | async)?.routerLink" [queryParams]="(bitstreamPath$ | async)?.queryParams" [target]="isBlank ? '_blank' : '_self'" [ngClass]="cssClasses" [style.cursor]="embargoedFile ? 'not-allowed' : 'pointer'" (click)="embargoedFile ? $event.preventDefault() : null">
   @if (isSticky !== true) {
     <div>
-      <button class="download-btn" placement="left" [ngbTooltip]="'item.page.filesection.download' | translate" [style.cursor]="embargoedFile ? 'not-allowed' : 'pointer'">
+      <button class="download-btn" placement="left" title="{{ 'item.page.filesection.download' | translate }}" [style.cursor]="embargoedFile ? 'not-allowed' : 'pointer'">
         @if ((canDownload$ | async) !== true || embargoedFile) {
           <span role="img" [attr.aria-label]="'file-download-link.restricted' | translate" class="pe-1">
             <i class="fas fa-lock"></i>

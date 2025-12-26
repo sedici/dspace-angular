@@ -37,7 +37,7 @@
                           <span>Acceder</span>
                         </a>
                       } @else {
-                        <ds-sedici-file-download-link [bitstream]="file" [item]="object" [embargoedFile]="!isDownloadable(file) && !file['isExternal']"></ds-sedici-file-download-link>
+                        <ds-sedici-file-download-link [bitstream]="file" [item]="object" [isBlank]="true" [embargoedFile]="!isDownloadable(file) && !file['isExternal']"></ds-sedici-file-download-link>
                       }
                     </div>
                   </div>
@@ -59,7 +59,7 @@
                           <span>Acceder</span>
                         </a>
                       } @else {
-                        <ds-sedici-file-download-link [bitstream]="file" [item]="object" [isSticky]="true" [isMobile]="true" [embargoedFile]="!isDownloadable(file) && !file['isExternal']"></ds-sedici-file-download-link>
+                        <ds-sedici-file-download-link [bitstream]="file" [item]="object" [isSticky]="true" [isMobile]="true" [isBlank]="true" [embargoedFile]="!isDownloadable(file) && !file['isExternal']"></ds-sedici-file-download-link>
                       }
                       <button class="btn share-button" (click)="openModalShareButtons()">
                         <i class="fa-solid fa-share"></i>
@@ -98,17 +98,13 @@
         </div>
 
         <ng-template #noPreviewAvailable let-file="file">
-          <div class="file-no-preview-available">
+          <div class="file-no-preview-available" title="Previsualización no disponible">
             <div class="file-item row">
               <div class="file-icon col-1">
                 <img [src]="getIconPath(file.name)" alt="File icon"/>
               </div>
               <div class="col-7 col-md-6 col-xl-7">
                 <span class="file-name">{{ getFileDescription(file) }}</span>
-                <span class="text-no-preview-available">
-                  <i class="fa-solid fa-eye-slash"></i>
-                  Preview no disponible
-                </span>
               </div>
               <div class="col-4 download-button">
                 @if (file['isExternal']) {
@@ -121,7 +117,7 @@
                     <span>Acceder</span>
                   </a>
                 } @else {
-                  <ds-sedici-file-download-link [bitstream]="file" [item]="object" [embargoedFile]="!isDownloadable(file) && !file['isExternal']"></ds-sedici-file-download-link>
+                  <ds-sedici-file-download-link [bitstream]="file" [item]="object" [isBlank]="true" [embargoedFile]="!isDownloadable(file) && !file['isExternal']"></ds-sedici-file-download-link>
                 }
               </div>
             </div>
@@ -184,7 +180,7 @@
             
             @if (selectedFile && getFileExtension(selectedFile.name) === 'pdf') {
               <div class="sticky-download">
-                <ds-sedici-file-download-link [bitstream]="selectedFile" [item]="object" [isSticky]="true" [embargoedFile]="!isDownloadable(selectedFile) && !selectedFile['isExternal']"></ds-sedici-file-download-link>
+                <ds-sedici-file-download-link [bitstream]="selectedFile" [item]="object" [isSticky]="true" [isBlank]="true" [embargoedFile]="!isDownloadable(selectedFile) && !selectedFile['isExternal']"></ds-sedici-file-download-link>
               </div>
             }
           </div>
@@ -266,4 +262,3 @@
 } @else {
   Cargando archivos...
 }
-

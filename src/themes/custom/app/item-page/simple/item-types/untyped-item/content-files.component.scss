@@ -17,6 +17,12 @@
           font-size: 0.8125rem;
         }
       }
+
+      ::ng-deep .external-link-btn {
+        background-color: white;
+        border: 1px solid var(--sedici-color);
+        color: var(--sedici-color);
+      }
     }
 
     .icon-wrapper {
