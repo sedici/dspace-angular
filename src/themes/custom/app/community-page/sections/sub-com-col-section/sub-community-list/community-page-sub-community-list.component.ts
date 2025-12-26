@@ -63,7 +63,17 @@ export class SubComColDatasource implements DataSource<FlatNode> {
     return this.communityList$.asObservable();
   }
 
+  /**
+   * Set data directly without making HTTP requests.
+   * Used for pre-loaded data from SSR to avoid hydration mismatch.
+   */
+  setData(data: FlatNode[]): void {
+    console.log('SubComColDatasource.setData called with', data?.length, 'nodes');
+    this.communityList$.next(data);
+  }
+
   loadCommunities(findOptions: FindListOptions, expandedNodes: FlatNode[]) {
+    console.log('SubComColDatasource.loadCommunities called');
     this.loading$.next(true);
     if (hasValue(this.subLoadCommunities)) {
       this.subLoadCommunities.unsubscribe();
@@ -103,6 +113,11 @@ export class CommunityPageSubCommunityListComponent
 {
   @Input() community: Community;
   @Input() pageSize: number = 5; // Default page size
+  /**
+   * Pre-loaded data from SSR to avoid hydration mismatch and flickering.
+   * If provided, the component will use this data instead of making HTTP requests.
+   */
+  @Input() preloadedData?: FlatNode[];
 
   expandedNodes: FlatNode[] = [];
   loadingNode: FlatNode;
@@ -135,7 +150,14 @@ export class CommunityPageSubCommunityListComponent
     this.dataSource = new SubComColDatasource(
       this.loadSubCommunitiesAndCollections.bind(this)
     );
-    this.dataSource.loadCommunities(this.paginationConfig, this.expandedNodes);
+    // If preloaded data exists (from SSR), use it directly to avoid flicker
+    if (this.preloadedData && this.preloadedData.length > 0) {
+      console.log('CommunityPageSubCommunityListComponent: using preloadedData');
+      this.dataSource.setData(this.preloadedData);
+    } else {
+      console.log('CommunityPageSubCommunityListComponent: no preloadedData, loading manually');
+      this.dataSource.loadCommunities(this.paginationConfig, this.expandedNodes);
+    }
   }
 
   ngOnDestroy(): void {
