@@ -23,7 +23,7 @@ import { HostWindowService, WidthCategory } from 'src/app/shared/host-window.ser
 import { Observable } from 'rxjs';
 import { NotificationsService } from 'src/app/shared/notifications/notifications.service';
 
-import { PdfJsViewerModule } from "ng2-pdfjs-viewer";
+import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { AuthorizationDataService } from 'src/app/core/data/feature-authorization/authorization-data.service';
 import { SediciShareButtonsComponent } from '../../field-components/share-buttons/sedici-share-buttons.component';
