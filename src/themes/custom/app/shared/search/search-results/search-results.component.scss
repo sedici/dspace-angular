@@ -48,8 +48,12 @@
   margin-left: 12px;
 }
 
-.search-sidebar-sort{
+.input-group {
   @media screen and (max-width: 767px) {
     display: none;
+  }
+
+  .input-group-text {
+    background-color: white;
   }
 }
