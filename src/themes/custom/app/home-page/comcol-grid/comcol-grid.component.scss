@@ -203,7 +203,7 @@
   @media (min-width: 768px) {
     .section-grid {
       flex-wrap: wrap;
-      justify-content: space-around;
+      justify-content: flex-start;
 
       &.single-row-scroll {
         overflow-x: auto;
