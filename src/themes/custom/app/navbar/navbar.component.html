@@ -15,8 +15,8 @@
             *ngComponentOutlet="(sectionMap$ | async).get(section.id)?.component; injector: (sectionMap$ | async).get(section.id)?.injector;"></ng-container>
           }
           <ds-impersonate-navbar></ds-impersonate-navbar>
-          <ds-auth-nav-menu class="ds-menu-item"></ds-auth-nav-menu>
-          <ds-lang-switch class="ds-menu-item"></ds-lang-switch>
+          <ds-auth-nav-menu class="ds-menu-item order-2 order-md-1"></ds-auth-nav-menu>
+          <ds-lang-switch class="ds-menu-item order-1 order-md-2"></ds-lang-switch>
         </div>
       </div>
     </div>

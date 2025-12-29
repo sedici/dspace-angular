@@ -20,7 +20,15 @@
         height: auto;
         border-bottom: 3px var(--sedici-color) solid; // open navbar covers header-navbar-wrapper border
       }
+
+      ds-auth-nav-menu {
+        border-top: 1px solid #dee2e6;
+      }
     }
+  }
+
+  ::ng-deep ds-auth-nav-menu .btn-link, ::ng-deep ds-lang-switch a {
+    text-decoration: none;
   }
 
   @media screen and (min-width: map-get($grid-breakpoints, md)) {

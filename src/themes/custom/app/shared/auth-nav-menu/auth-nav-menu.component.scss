@@ -34,3 +34,8 @@
     box-shadow: unset;
   }
 }
+
+::ng-deep .dropdownLogin.dropdown-toggle::after,
+::ng-deep .dropdownLogout.dropdown-toggle::after {
+  display: none !important;
+}

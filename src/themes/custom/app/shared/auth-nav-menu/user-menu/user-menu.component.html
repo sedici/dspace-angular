@@ -1,0 +1,40 @@
+@if ((loading$ | async)) {
+  <ds-loading></ds-loading>
+}
+@if ((loading$ | async) !== true) {
+  <ul class="user-menu" role="menu"
+      [ngClass]="{'mobile-menu': inExpandableNavbar}"
+      [attr.aria-label]="'nav.user-profile-menu-and-logout' | translate">
+    
+    <li class="user-header">
+      <div class="user-name">{{ dsoNameService.getName(user$ | async) }}</div>
+      <div class="user-email">{{ (user$ | async)?.email }}</div>
+    </li>
+
+    <li>
+      <a class="menu-item dropdown-item" [routerLink]="[profileRoute]" routerLinkActive="active" (click)="onMenuItemClick()">
+        {{ 'nav.profile' | translate }}
+      </a>
+    </li>
+    
+    <li>
+      <a class="menu-item dropdown-item" [routerLink]="[mydspaceRoute]" routerLinkActive="active" (click)="onMenuItemClick()">
+        {{ 'nav.mydspace' | translate }}
+      </a>
+    </li>
+    
+    <li>
+      <a class="menu-item dropdown-item" [routerLink]="[subscriptionsRoute]" routerLinkActive="active" (click)="onMenuItemClick()">
+        {{ 'nav.subscriptions' | translate }}
+      </a>
+    </li>
+
+    @if (!inExpandableNavbar) {
+      <li class="menu-divider"></li>
+
+      <li class="logout-wrapper">
+        <ds-log-out data-test="log-out-component"></ds-log-out>
+      </li>
+    }
+  </ul>
+}

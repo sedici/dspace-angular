@@ -1,0 +1,67 @@
+:host {
+  ul.user-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    min-width: 260px;
+    background-color: #fff;
+  }
+
+  .user-header {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+
+    .user-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #343a40;
+    }
+
+    .user-email {
+      font-size: 0.9rem;
+      color: #6c757d;
+      font-style: italic;
+    }
+  }
+
+  .menu-item {
+    display: block;
+    padding: 0.75rem 1.25rem;
+    color: #343a40;
+    text-decoration: none;
+    transition: background-color 0.2s;
+    font-size: 1rem;
+    cursor: pointer;
+
+    &:hover, &:focus {
+      background-color: #f8f9fa;
+      color: #000;
+    }
+
+    &.active, &:active {
+      background-color: #ccc;
+    }
+  }
+
+  .menu-divider {
+    height: 0;
+    margin: 0.5rem 0;
+    overflow: hidden;
+    border-top: 1px solid #dee2e6;
+  }
+
+  .mobile-menu {
+    border-bottom: 1px solid #dee2e6;
+    box-shadow: none;
+
+    .user-header {
+      padding: 1rem .5rem;
+    }
+    
+    .menu-item {
+      padding: 0.5rem;
+    }
+  }
+}

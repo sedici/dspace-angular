@@ -15,10 +15,10 @@ import { UserMenuComponent as BaseComponent } from '../../../../../../app/shared
 
 @Component({
   selector: 'ds-themed-user-menu',
-  // templateUrl: 'user-menu.component.html',
-  templateUrl: '../../../../../../app/shared/auth-nav-menu/user-menu/user-menu.component.html',
-  // styleUrls: ['user-menu.component.scss'],
-  styleUrls: ['../../../../../../app/shared/auth-nav-menu/user-menu/user-menu.component.scss'],
+  templateUrl: 'user-menu.component.html',
+  // templateUrl: '../../../../../../app/shared/auth-nav-menu/user-menu/user-menu.component.html',
+  styleUrls: ['user-menu.component.scss'],
+  // styleUrls: ['../../../../../../app/shared/auth-nav-menu/user-menu/user-menu.component.scss'],
   standalone: true,
   imports: [
     AsyncPipe,

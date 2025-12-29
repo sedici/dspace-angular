@@ -1,1 +1,25 @@
 @import '../log-in/methods/password/log-in-password.component';
+
+button {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  box-shadow: none;
+  color: #dc3545 !important; 
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 0.75rem 1.25rem;
+
+  &:hover {
+    color: darken(#dc3545, 10%) !important;
+    background-color: #f8f9fa;
+    text-decoration: none;
+  }
+
+  &:active {
+    background-color: #ccc !important;
+  }
+}
