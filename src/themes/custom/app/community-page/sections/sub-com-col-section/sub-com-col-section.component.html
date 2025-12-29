@@ -4,6 +4,7 @@
       [pageSize]="'100'"
       [preloadedData]="(subCommunities$ | async)?.payload?.page">
   </ds-community-page-sub-community-list>
+  Lo que viene {{(subCommunities$ | async)?.payload?.page}}
   <ds-community-page-sub-collection-list
       [community]="community"
       [pageSize]="'100'">

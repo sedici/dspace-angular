@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import {
   BehaviorSubject,
@@ -11,7 +11,7 @@ import { finalize, map, switchMap, take } from 'rxjs/operators';
 import { CdkTreeModule, FlatTreeControl } from '@angular/cdk/tree';
 import { TranslateModule } from '@ngx-translate/core';
 import { DataSource, CollectionViewer } from '@angular/cdk/collections';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, isPlatformServer } from '@angular/common';
 
 import { Community } from '../../../../../../../app/core/shared/community.model';
 import { Collection } from '../../../../../../../app/core/shared/collection.model';
@@ -138,7 +138,8 @@ export class CommunityPageSubCommunityListComponent
     private communityListService: CommunityListService,
     private communityDataService: CommunityDataService,
     private collectionDataService: CollectionDataService,
-    public dsoNameService: DSONameService
+    public dsoNameService: DSONameService,
+    @Inject(PLATFORM_ID) protected platformId: Object
   ) {
     this.paginationConfig = new FindListOptions();
     this.paginationConfig.currentPage = 1;
@@ -146,16 +147,17 @@ export class CommunityPageSubCommunityListComponent
   }
 
   ngOnInit(): void {
+    const isServer = isPlatformServer(this.platformId);
     this.paginationConfig.elementsPerPage = +this.pageSize;
     this.dataSource = new SubComColDatasource(
       this.loadSubCommunitiesAndCollections.bind(this)
     );
     // If preloaded data exists (from SSR), use it directly to avoid flicker
     if (this.preloadedData && this.preloadedData.length > 0) {
-      console.log('CommunityPageSubCommunityListComponent: using preloadedData');
+      console.log(`[${isServer ? 'SERVER' : 'CLIENT'}] CommunityPageSubCommunityListComponent: using preloadedData`);
       this.dataSource.setData(this.preloadedData);
     } else {
-      console.log('CommunityPageSubCommunityListComponent: no preloadedData, loading manually');
+      console.log(`[${isServer ? 'SERVER' : 'CLIENT'}] CommunityPageSubCommunityListComponent: no preloadedData, loading manually`);
       this.dataSource.loadCommunities(this.paginationConfig, this.expandedNodes);
     }
   }

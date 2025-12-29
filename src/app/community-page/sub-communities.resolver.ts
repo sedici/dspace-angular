@@ -1,10 +1,12 @@
-import { inject } from '@angular/core';
+import { inject, PLATFORM_ID } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   ResolveFn,
   RouterStateSnapshot,
 } from '@angular/router';
+import { isPlatformServer } from '@angular/common';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { CommunityDataService } from '../core/data/community-data.service';
 import { RemoteData } from '../core/data/remote-data';
 import { PaginatedList } from '../core/data/paginated-list.model';
@@ -19,9 +21,18 @@ export const subCommunitiesResolver: ResolveFn<RemoteData<PaginatedList<Communit
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot,
   communityService: CommunityDataService = inject(CommunityDataService),
+  platformId: Object = inject(PLATFORM_ID),
 ): Observable<RemoteData<PaginatedList<Community>>> => {
   const communityId = route.parent?.params.id;
-  return communityService.findByParent(communityId).pipe(
+  const isServer = isPlatformServer(platformId);
+
+  console.log(`[${isServer ? 'SERVER' : 'CLIENT'}] SubCommunitiesResolver: Resolving for ${communityId}`);
+
+  const data = communityService.findByParent(communityId).pipe(
     getFirstCompletedRemoteData(),
+    tap((rd) => {
+      console.log(`[${isServer ? 'SERVER' : 'CLIENT'}] SubCommunitiesResolver: Resolved ${rd?.payload?.page?.length || 0} communities. Success? ${rd.hasSucceeded}`);
+    })
   );
+  return data;
 };
