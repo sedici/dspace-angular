@@ -1,0 +1,11 @@
+@if ((community$ | async); as community) {
+  <ds-community-page-sub-community-list
+      [community]="community"
+      [pageSize]="'100'"
+      [preloadedData]="(subCommunities$ | async)?.payload?.page">
+  </ds-community-page-sub-community-list>
+  <ds-community-page-sub-collection-list
+      [community]="community"
+      [pageSize]="'100'">
+  </ds-community-page-sub-collection-list>
+}
