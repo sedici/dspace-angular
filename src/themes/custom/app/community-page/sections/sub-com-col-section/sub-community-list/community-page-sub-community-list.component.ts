@@ -139,7 +139,8 @@ export class CommunityPageSubCommunityListComponent
     private communityDataService: CommunityDataService,
     private collectionDataService: CollectionDataService,
     public dsoNameService: DSONameService,
-    @Inject(PLATFORM_ID) protected platformId: Object
+    @Inject(PLATFORM_ID) protected platformId: Object,
+    private route: ActivatedRoute
   ) {
     this.paginationConfig = new FindListOptions();
     this.paginationConfig.currentPage = 1;
@@ -152,14 +153,26 @@ export class CommunityPageSubCommunityListComponent
     this.dataSource = new SubComColDatasource(
       this.loadSubCommunitiesAndCollections.bind(this)
     );
-    // If preloaded data exists (from SSR), use it directly to avoid flicker
+
+    // Strategy 1: Input preloadedData (Original plan, kept for backward compat)
     if (this.preloadedData && this.preloadedData.length > 0) {
-      console.log(`[${isServer ? 'SERVER' : 'CLIENT'}] CommunityPageSubCommunityListComponent: using preloadedData`);
+      console.log(`[${isServer ? 'SERVER' : 'CLIENT'}] CommunityPageSubCommunityListComponent: Strategy 1 - using INPUT preloadedData`);
       this.dataSource.setData(this.preloadedData);
-    } else {
-      console.log(`[${isServer ? 'SERVER' : 'CLIENT'}] CommunityPageSubCommunityListComponent: no preloadedData, loading manually`);
-      this.dataSource.loadCommunities(this.paginationConfig, this.expandedNodes);
+      return;
     }
+
+    // Strategy 2: Check Route Data directly (Backup plan for when Parent ignores us)
+    // The data key in community-page-routes.ts is 'subCommunities'
+    const routeData = this.route.snapshot.data['subCommunities'];
+    if (routeData && routeData.payload && routeData.payload.page && routeData.payload.page.length > 0) {
+        console.log(`[${isServer ? 'SERVER' : 'CLIENT'}] CommunityPageSubCommunityListComponent: Strategy 2 - using ROUTE data directly. Found ${routeData.payload.page.length} items.`);
+        this.dataSource.setData(routeData.payload.page as FlatNode[]);
+        return;
+    }
+
+    // Strategy 3: Fallback to manual load (The "Flicker" path)
+    console.log(`[${isServer ? 'SERVER' : 'CLIENT'}] CommunityPageSubCommunityListComponent: Fallback - no data found in Input or Route. Loading manually (Potential flicker).`);
+    this.dataSource.loadCommunities(this.paginationConfig, this.expandedNodes);
   }
 
   ngOnDestroy(): void {
