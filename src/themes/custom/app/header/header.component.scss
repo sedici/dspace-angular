@@ -167,6 +167,12 @@
     }
   }
 
+  .right-container-mobile {
+    @media print {
+      display: none !important;
+    }
+  }
+
   ::ng-deep ds-navbar .container{
     max-width: 100%;
   }

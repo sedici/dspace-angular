@@ -32,6 +32,10 @@
         line-height: 1.5;
       }
     }
+
+    @media print {
+      display: none;
+    }
   }
 
   ds-navbar ::ng-deep #main-navbar {

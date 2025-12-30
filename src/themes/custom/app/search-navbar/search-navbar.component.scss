@@ -1,5 +1,9 @@
 .navbar {
   padding: 0;
+
+  @media print {
+    display: none;
+  }
 }
 
 .navbar-brand {
@@ -41,6 +45,10 @@ form {
     outline: none;
     box-shadow: 0 1px 4px rgba(0,0,0,0.15);
     border-color: #d0d0d0;
+  }
+
+  @media print {
+    display: none;
   }
 }
 
