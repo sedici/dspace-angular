@@ -17,7 +17,6 @@ import { MenuSection } from '../menu-section.model';
 @Component({
   selector: 'ds-menu-section',
   template: '',
-  standalone: true,
 })
 export abstract class AbstractMenuSectionComponent
   implements OnInit, OnDestroy

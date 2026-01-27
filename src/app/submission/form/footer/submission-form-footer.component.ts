@@ -51,8 +51,12 @@ import { URLCombiner } from 'src/app/core/url-combiner/url-combiner';
   selector: 'ds-base-submission-form-footer',
   styleUrls: ['./submission-form-footer.component.scss'],
   templateUrl: './submission-form-footer.component.html',
-  standalone: true,
-  imports: [CommonModule, BrowserOnlyPipe, TranslatePipe, NgbTooltipModule, BtnDisabledDirective],
+  imports: [
+    AsyncPipe,
+    BrowserOnlyPipe,
+    BtnDisabledDirective,
+    TranslatePipe,
+  ],
 })
 export class SubmissionFormFooterComponent implements OnChanges {
 

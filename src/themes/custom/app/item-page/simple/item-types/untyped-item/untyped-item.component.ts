@@ -47,7 +47,6 @@ import { ExpandableMetadataComponent } from './expandable-metadata';
   templateUrl: './untyped-item.component.html',
   // templateUrl: '../../../../../../../app/item-page/simple/item-types/untyped-item/untyped-item.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     NgStyle,
     NgClass,

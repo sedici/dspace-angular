@@ -64,7 +64,6 @@ import { EditItemMenuComponent } from '../../shared/edit-item-menu/edit-item-men
   selector: 'ds-base-dso-edit-metadata',
   styleUrls: ['./dso-edit-metadata.component.scss'],
   templateUrl: './dso-edit-metadata.component.html',
-  standalone: true,
   imports: [
     AlertComponent,
     AsyncPipe,

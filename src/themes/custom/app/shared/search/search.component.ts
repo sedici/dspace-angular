@@ -31,7 +31,6 @@ import { SearchExportCsvComponent } from 'src/app/shared/search/search-export-cs
   // templateUrl: '../../../../../app/shared/search/search.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [pushInOut],
-  standalone: true,
   imports: [
     AsyncPipe,
     NgTemplateOutlet,

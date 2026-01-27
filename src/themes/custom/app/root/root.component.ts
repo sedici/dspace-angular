@@ -25,7 +25,6 @@ import { BottomNavigationBarComponent } from '../bottom-navigation-bar/bottom-na
   templateUrl: './root.component.html',
   // templateUrl: '../../../../app/root/root.component.html',
   animations: [slideSidebarPadding],
-  standalone: true,
   imports: [
     AsyncPipe,
     LiveRegionComponent,

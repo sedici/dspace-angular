@@ -54,7 +54,6 @@ import { Community } from 'src/app/core/shared/community.model';
     RouterLink,
     TranslateModule,
   ],
-  standalone: true,
 })
 export class CollectionsComponent implements OnInit {
 

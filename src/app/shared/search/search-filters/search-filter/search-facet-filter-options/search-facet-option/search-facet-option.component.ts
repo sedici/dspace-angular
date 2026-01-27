@@ -37,7 +37,6 @@ import { RemoteData } from 'src/app/core/data/remote-data';
   selector: 'ds-search-facet-option',
   styleUrls: ['./search-facet-option.component.scss'],
   templateUrl: './search-facet-option.component.html',
-  standalone: true,
   imports: [
     AsyncPipe,
     RouterLink,
