@@ -1,5 +1,5 @@
 import { WorkflowItemDataService } from './../../../core/submission/workflowitem-data.service';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {
   Component,
   Input,
@@ -56,6 +56,7 @@ import { URLCombiner } from 'src/app/core/url-combiner/url-combiner';
     BrowserOnlyPipe,
     BtnDisabledDirective,
     TranslatePipe,
+    NgbTooltipModule,
   ],
 })
 export class SubmissionFormFooterComponent implements OnChanges {

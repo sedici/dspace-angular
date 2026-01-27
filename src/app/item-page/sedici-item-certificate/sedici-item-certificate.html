@@ -136,7 +136,7 @@
                 [separator]="'; '" [label]="'sedici.item.page.sedici.subject.materias'">
               </ds-generic-item-page-field>
               <ds-generic-item-page-field [item]="object" class="no-print" [fields]="['dc.publisher']"
-                [label]="subtype === ('Discurso' || 'Entrevista') ? ('sedici.item.page.dc.publisher.production') : ('sedici.item.page.dc.publisher.editorial')">
+                [label]="(subtype === 'Discurso' || subtype === 'Entrevista') ? ('sedici.item.page.dc.publisher.production') : ('sedici.item.page.dc.publisher.editorial')">
               </ds-generic-item-page-field>
               <ds-generic-item-page-field class="no-print" [item]="object" [fields]="['dc.relation.ispartof']"
                 [label]="'sedici.item.page.dc.relation.ispartof'">
