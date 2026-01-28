@@ -29,9 +29,10 @@
     }
   }
 
-  :host-context(:has(.sidebar-full-width-container)) #main-site-header {
-    left: var(--ds-admin-sidebar-fixed-element-width);
-  }
+  // Comento hasta saber si cambia el comportamento
+  // :host-context(:has(.sidebar-full-width-container)) #main-site-header {
+  //   left: var(--ds-admin-sidebar-fixed-element-width);
+  // }
 
   .background-image-header {
     background-image: url('/assets/custom/images/Fondo_home.png');
