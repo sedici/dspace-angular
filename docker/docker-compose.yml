@@ -23,9 +23,6 @@ services:
       DSPACE_REST_HOST: localhost
       DSPACE_REST_PORT: 8080
       DSPACE_REST_NAMESPACE: /server
-      CI: 'true'
-      WRAP_ANSI: 'false'
-      FORCE_COLOR: '1'
     image: "${DOCKER_REGISTRY:-docker.io}/${DOCKER_OWNER:-dspace}/dspace-angular:${DSPACE_VER:-dspace-9_x}"
     build:
       context: ..
