@@ -12,7 +12,21 @@
   background-color: transparent !important;
 }
 
-.loginLink, .dropdownLogin, .logoutLink, .dropdownLogout {
+.logoutLink{
+  color: #dc3545 !important; 
+
+  &:hover {
+    color: darken(#dc3545, 10%) !important;
+    background-color: #f8f9fa;
+    text-decoration: none;
+  }
+
+  &:active {
+    background-color: #ccc !important;
+  }
+}
+
+.loginLink, .dropdownLogin, .dropdownLogout {
   color: var(--ds-header-icon-color);
 
   &:hover, &:focus {

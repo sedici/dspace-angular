@@ -68,7 +68,17 @@
 
   @media (min-width: 768px) {
     .home-header {
-      display: none !important;
+      background: transparent !important;
+      padding: 1.5rem 3rem;
+      z-index: 1020 !important;
+      border-bottom: none !important;
+      left: 0 !important;
+      right: 0 !important;
+      top: 0;
+
+      img#header-logo {
+        height: auto;
+      }
     }
   }
 
