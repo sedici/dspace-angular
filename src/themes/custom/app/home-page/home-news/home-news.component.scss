@@ -1,19 +1,18 @@
 :host {
   display: block;
 
-  @media screen and (min-width: 1200px) and (max-width: 1499px) {
-    .background-image-container .container{
-      max-width: 1024px;
-    }
-  }
 
   div.background-image-container {
-    position: relative;
-    padding-bottom: 80px;
     background-image: url('/assets/custom/images/Fondo_home.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    padding: 8rem 0;
+
+    @media screen and (max-width: map-get($grid-breakpoints, md)) {
+      padding: 1rem 0rem 8rem 0rem;
+
+    }
   }
 
   #mobile-navbar-toggler {
@@ -38,9 +37,6 @@
     }
   }
 
-  ds-navbar ::ng-deep #main-navbar {
-    padding-top: 1rem;
-  }
 
   .sedici-description-mobile {
     display: flex;
@@ -52,35 +48,29 @@
   }
 
   .sedici-description {
-    display: flex;
-    padding-top: 10rem;
-    padding-bottom: 3rem;
-    margin-top: -110px; // PARA PISAR EL HEADER
+    padding-top: 3rem;
+    margin: auto;
+    max-width: 80%;
+    color: white;
+    flex-direction: column;
 
-    .content-left {
-      flex: 1;
-      max-width: 80%;
-      color: white;
+    .title {
       margin-bottom: 1rem;
-      
-      .title {
-        margin-bottom: 1rem;
-        font-size: 3.5rem;
-        line-height: 1.25;
-        font-weight: bold;
-      }
-      
-      .text {
-        margin-bottom: 2rem;
-        font-size: 1.25rem;
-      }
+      font-size: clamp(2.2rem, 3vw, 3.5rem);
+      line-height: 1.25;
+      font-weight: bold;
     }
+    
+    .text {
+      margin-bottom: 2rem;
+      font-size: 1.25rem;
+    }
+  }
 
-    .escudo-container {
-      position: absolute;
-      opacity: 0.8;
-      right: 0;
-    }
+  .escudo-container {
+    opacity: 0.8;
+    right: 0;
+    margin-top: auto;
   }
 
   @media screen and (max-width: map-get($grid-breakpoints, md)) {
@@ -88,7 +78,7 @@
     text-align: left;
     
     .escudo-container {
-      width: 50%;
+      display: none;
     }
     
     .text {

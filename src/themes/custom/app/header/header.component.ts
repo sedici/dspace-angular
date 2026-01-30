@@ -35,7 +35,7 @@ import { SearchFormComponent } from '../shared/search-form/search-form.component
 })
 export class HeaderComponent extends BaseComponent implements OnInit {
   public isNavBarCollapsed$: Observable<boolean>;
-  public isHomePage$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public isHomePage$: BehaviorSubject<boolean>;
   private routerSubscription: Subscription;
 
   constructor(protected menuService: MenuService,
@@ -44,6 +44,7 @@ export class HeaderComponent extends BaseComponent implements OnInit {
     private http: HttpClient,
     private cdr: ChangeDetectorRef) {
     super(menuService, windowService);
+    this.isHomePage$ = new BehaviorSubject<boolean>(this.isHomeUrl(this.router.url));
   }
 
   ngOnInit() {
