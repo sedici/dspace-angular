@@ -66,13 +66,4 @@ export class BrowseByComponent extends BaseComponent implements OnInit {
     super(injector, paginationService, translateService, routeService);
     this._routeService = routeService;
   }
-
-  ngOnInit(): void {
-    super.ngOnInit();
-    this._routeService.getQueryParamMap().pipe(
-      map(params => params.keys.length > 0),
-    ).subscribe((hasAnyQueryParam: boolean) => {
-      this.hasSearched$.next(hasAnyQueryParam);
-    });
-  }
 }
