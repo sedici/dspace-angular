@@ -37,7 +37,6 @@
     }
     @if (sortOptionsList && sortOptionsList?.length > 0) {
       <div class="input-group">
-        <img class="input-group-text" src="assets/custom/images/sort.svg">
         <ds-search-dropdown class="search-sidebar-sort"
           [id]="'search-sidebar-sort'"
           (changed)="reloadOrder($event)">
@@ -49,6 +48,7 @@
             </option>
           }
         </ds-search-dropdown>
+        <img class="input-group-text" src="assets/custom/images/sort.svg">
       </div>
     }
   </div>
