@@ -9,9 +9,13 @@
     background-repeat: no-repeat;
     padding: 8rem 0;
 
+    @media screen and (min-width: map-get($grid-breakpoints, md)) {
+      margin-top: -112px;
+    }
+
     @media screen and (max-width: map-get($grid-breakpoints, md)) {
       padding: 1rem 0rem 8rem 0rem;
-
+      margin-top: 0px;
     }
   }
 

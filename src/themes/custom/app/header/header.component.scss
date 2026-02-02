@@ -1,12 +1,6 @@
 :host {
 
   #main-site-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1021;
-
     @media (max-width: 767px) {
       border-bottom: 0px;
       padding: 10px;
