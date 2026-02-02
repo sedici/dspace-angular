@@ -7,7 +7,8 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    padding: 8rem 0;
+    padding-top: 8rem;
+    padding-bottom: 3rem;
 
     @media screen and (min-width: map-get($grid-breakpoints, md)) {
       margin-top: -112px;

@@ -1,0 +1,30 @@
+<div class="carousel-wrapper container" [class.is-carousel]="coleccionesDestacadas.length > 6">
+    
+    @if (coleccionesDestacadas.length > 6 && !isCarouselAtStart) {
+      <button class="carousel-arrow left" (click)="scrollGrid(scrollContainer, 'left')"
+              aria-label="Anterior">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+    }
+
+    <div class="section-grid single-row-scroll" #scrollContainer
+          (scroll)="onCarouselScroll(scrollContainer)">
+      
+      @for (item of coleccionesDestacadas; track item) {
+        <div class="section-item single-row">
+          <a [href]="item.href">
+            <div class="img-container">
+              <img [src]="item.img" [alt]="item.title">
+            </div>
+          </a>
+        </div>
+      }
+    </div>
+
+    @if (coleccionesDestacadas.length > 6 && !isCarouselAtEnd) {
+      <button class="carousel-arrow right" (click)="scrollGrid(scrollContainer, 'right')"
+              aria-label="Siguiente">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    }
+</div>

@@ -2,55 +2,12 @@
 @if (showDiscoverFilters) {
 <ds-configuration-search-page [sideBarWidth]="3" [showViewModes]="false" [searchEnabled]="false" [inPlaceSearch]="false"
   [showScopeSelector]="false">
-  <ng-container searchContentTop *ngTemplateOutlet="homeContent"></ng-container>
 </ds-configuration-search-page>
 }
-@if (!showDiscoverFilters) {
-<div>
-  <ng-container *ngTemplateOutlet="homeContent"></ng-container>
-</div>
-}
+
 <ds-suggestions-popup></ds-suggestions-popup>
 
-<ng-template #homeContent>
-  <div class="destacado">
-    <div class="row container">
-      @for (item of exploraciones; track item) {
-      <div class="col-12 col-md-3">
-        @if (item.href.startsWith('/handle')) {
-        <a [href]="item.href">
-          <div class="collection-card">
-            <div class="icon-container">
-              <img class="default-image" [src]="item.img" alt="{{'home.page.' + item.title | translate}}">
-              <img class="hover-image" [src]="getHoverImageSrc(item.img)"
-                alt="{{'home.page.' + item.title | translate}}">
-            </div>
-            <div class="text-container">
-              <span>{{'home.page.' + item.title | translate}}</span>
-              <p class="subtitle">{{'home.page.' + item.title + '.description' | translate}}</p>
-            </div>
-          </div>
-        </a>
-        } @else {
-        <a [routerLink]="item.href" [queryParams]="item.queryParams || {}">
-          <div class="collection-card">
-            <div class="icon-container">
-              <img class="default-image" [src]="item.img" alt="{{'home.page.' + item.title | translate}}">
-              <img class="hover-image" [src]="getHoverImageSrc(item.img)"
-                alt="{{'home.page.' + item.title | translate}}">
-            </div>
-            <div class="text-container">
-              <span>{{'home.page.' + item.title | translate}}</span>
-              <p class="subtitle">{{'home.page.' + item.title + '.description' | translate}}</p>
-            </div>
-          </div>
-        </a>
-        }
-      </div>
-      }
-    </div>
-  </div>
-</ng-template>
+
 
 <comcol-grid></comcol-grid>
 

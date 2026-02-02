@@ -5,6 +5,7 @@ import { filter, map, take, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { CommunityDataService } from 'src/app/core/data/community-data.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { SimpleCarouselComponent } from './simple-carousel/simple-carousel.component';
 
 interface ExploracionDestacada {
   title: string;
@@ -17,18 +18,12 @@ interface ExploracionDestacada {
   styleUrls: ['./comcol-grid.component.scss'],
   templateUrl: './comcol-grid.component.html',
   standalone: true,
-  imports: [NgTemplateOutlet, RouterLink, TranslateModule, NgClass],
+  imports: [NgTemplateOutlet, RouterLink, TranslateModule, NgClass, SimpleCarouselComponent],
 })
 export class ComcolGridComponent implements OnInit {
 
   apiBase = '/api';
   defaultColor = '#cccccc';
-
-  public isCarouselAtStart: boolean = true;
-  public isCarouselAtEnd: boolean = false;
-  public carouselPage: number = 0;
-  public totalCarouselPages: number = 1;
-  private itemsPerPage: number = 6;
 
   constructor(
     private communityDataService: CommunityDataService,
@@ -37,12 +32,6 @@ export class ComcolGridComponent implements OnInit {
 
   ngOnInit(): void {
     this.assignColorsFromCommunities();
-
-    const totalItems = this.coleccionesDestacadas.length;
-    this.totalCarouselPages = Math.ceil(totalItems / this.itemsPerPage);
-    this.carouselPage = 0;
-    this.isCarouselAtStart = true;
-    this.isCarouselAtEnd = this.totalCarouselPages <= 1;
   }
 
   private parseHandleFromHref(href: string): string | null {
@@ -96,67 +85,15 @@ export class ComcolGridComponent implements OnInit {
       [...this.facultades, ...this.pregrado].forEach(i => (i as any).color = this.defaultColor);
     });
   }
-
-  public scrollGrid(container: HTMLElement, direction: 'left' | 'right'): void {
-    if (direction === 'right') {
-      if (this.carouselPage < (this.totalCarouselPages - 1)) {
-        this.carouselPage++;
-      }
-    } else {
-      if (this.carouselPage > 0) {
-        this.carouselPage--;
-      }
-    }
-
-    let targetScrollLeft = 0;
-
-    if (this.carouselPage === (this.totalCarouselPages - 1)) {
-      targetScrollLeft = container.scrollWidth - container.clientWidth;
-    } else {
-      const items = container.children;
-      
-      if (items.length > 0) {
-        const firstItem = items[0] as HTMLElement;
-        const secondItem = items[1] as HTMLElement;
-        const itemWidth = firstItem.offsetWidth;
-        const gap = secondItem ? secondItem.offsetLeft - (firstItem.offsetLeft + itemWidth) : 0;
-        const itemsToScroll = this.carouselPage * this.itemsPerPage;
-        targetScrollLeft = itemsToScroll * (itemWidth + gap);
-      }
-    }
-
-    container.scrollTo({ 
-      left: targetScrollLeft, 
-      behavior: 'smooth' 
-    });
-  }
-
-  public onCarouselScroll(container: HTMLElement): void {
-    const { scrollLeft, clientWidth, scrollWidth } = container;
-    const threshold = 10; 
-
-    this.isCarouselAtStart = scrollLeft < threshold;
-    this.isCarouselAtEnd = (scrollLeft + clientWidth) >= (scrollWidth - threshold);
-
-    if (this.isCarouselAtEnd) {
-      this.carouselPage = this.totalCarouselPages - 1;
-    } else {
-      this.carouselPage = Math.round(scrollLeft / clientWidth);
-    }
+  
     
-    this.cdr.detectChanges();
-  }
 
-  coleccionesDestacadas:Array<ExploracionDestacada> = [
+
+  coleccionesDestacadasUnlp:Array<ExploracionDestacada> = [
     {
       title: "Red de Museos de la UNLP",
       img: "assets/custom/images/ComCol/redmuseos.svg",
       href: "handle/10915/27268",
-    } as ExploracionDestacada,
-    {
-      title: "Red de Universidades con Carreras en Informática (RedUNCI)",
-      img: "assets/custom/images/ComCol/redunci.png",
-      href: "handle/10915/18267",
     } as ExploracionDestacada,
     {
       title: "Radio Universidad Nacional de La Plata",
@@ -169,14 +106,22 @@ export class ComcolGridComponent implements OnInit {
       href: "handle/10915/21328",
     } as ExploracionDestacada,
     {
-      title: "Sociedad Argentina de Informática (SADIO)",
-      img: "assets/custom/images/ComCol/sadio.jpg",
-      href: "handle/10915/38367",
-    } as ExploracionDestacada,
-    {
       title: "Presidencia",
       img: "assets/custom/images/ComCol/UNLP_Logo.png",
       href: "handle/10915/47",
+    } as ExploracionDestacada,
+  ];
+
+  coleccionesDestacadasOtras:Array<ExploracionDestacada> = [
+    {
+      title: "Red de Universidades con Carreras en Informática (RedUNCI)",
+      img: "assets/custom/images/ComCol/redunci.png",
+      href: "handle/10915/18267",
+    } as ExploracionDestacada,
+    {
+      title: "Sociedad Argentina de Informática (SADIO)",
+      img: "assets/custom/images/ComCol/sadio.jpg",
+      href: "handle/10915/38367",
     } as ExploracionDestacada,
   ];
 

@@ -85,19 +85,24 @@ export class HomeNewsComponent extends BaseComponent {
 
   cardItems:Array<CardItem> = [
     {
-      title: "publication",
+      title: "journals",
       img: "assets/custom/images/Publicaciones.svg",
-      href: "/search",
+      href: "/handle/10915/51",
     } as CardItem,{
-      title: "academicUnit",
-      img: "assets/custom/images/UAs.svg",
-      href: "#faculties-section",
+      title: "events",
+      img: "assets/custom/images/Autores.svg",
+      href: "/handle/10915/1038",
     } as CardItem,
     {
-      title: "author",
+      title: "books",
+      img: "assets/custom/images/UAs.svg",
+      href: "/search?spc.page=1&f.itemtype=Libro,equals&spc.sf=dc.date.accessioned&spc.sd=DESC",
+    } as CardItem,
+    {
+      title: "data",
       img: "assets/custom/images/Autores.svg",
-      href: "/browse/author",
-    } as CardItem
+      href: "/search?spc.page=1&f.itemtype=Conjunto%20de%20datos,equals&spc.sf=dc.date.accessioned&spc.sd=DESC",
+    } as CardItem,
   ];
 
   scrollToSection(sectionId: string): void {
