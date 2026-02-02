@@ -5700,6 +5700,9 @@
   // "nav.main.description": "Main navigation bar",
   "nav.main.description": "Barra de navegação principal",
 
+  // "nav.account": "My Account",
+  "nav.account": "Minha Conta",
+
   // "nav.mydspace": "MyDSpace",
   "nav.mydspace": "MeuDSpace",
 
@@ -11192,6 +11195,8 @@
   "home.page.allies": "Aliados",
 
   "home.page.projects": "Projetos",
+
+  "home.page.projects.name": "PREBI-SEDICI",
 
   // "file-download-link.download": "Download ",
   "file-download-link.download": "Baixar ",

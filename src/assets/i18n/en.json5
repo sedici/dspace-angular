@@ -3709,6 +3709,8 @@
 
   "nav.main.description": "Main navigation bar",
 
+  "nav.account": "My Account",
+
   "nav.mydspace": "MyDSpace",
 
   "nav.profile": "Profile",
@@ -7362,6 +7364,8 @@
   "home.page.allies": "Allies",
 
   "home.page.projects": "Projects",
+
+  "home.page.projects.name": "PREBI-SEDICI",
   
   "file-download-link.download": "Download ",
 

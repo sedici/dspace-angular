@@ -5641,6 +5641,9 @@
   // "nav.main.description": "Main navigation bar",
   "nav.main.description": "Barra de navegación principal",
 
+  // "nav.account": "My Account",
+  "nav.account": "Mi cuenta",
+
   // "nav.mydspace": "MyDSpace",
   "nav.mydspace": "Mi DSpace",
 

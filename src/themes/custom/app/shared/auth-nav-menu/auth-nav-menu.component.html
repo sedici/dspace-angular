@@ -39,7 +39,7 @@
             class="dropdownLogout btn btn-link px-0"
             [attr.data-test]="'user-menu' | dsBrowserOnly"
             ngbDropdownToggle>
-            <i class="fa-regular fa-user"></i> Mi cuenta</button>
+            <i class="fa-regular fa-user"></i> {{ 'nav.account' | translate }}</button>
             <div id="logoutDropdownMenu" ngbDropdownMenu>
               <ds-user-menu [inExpandableNavbar]="false" (changedRoute)="loggedInDrop.close()"></ds-user-menu>
             </div>
