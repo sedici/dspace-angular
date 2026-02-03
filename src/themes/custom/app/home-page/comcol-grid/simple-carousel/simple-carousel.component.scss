@@ -38,3 +38,42 @@
     max-height: 120px;
   }
 }
+
+// Estilos flechas carrusel
+.carousel-wrapper {
+  position: relative;
+  
+  .carousel-arrow {
+    display: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    i {
+      font-size: 1rem;
+      color: #333;
+    }
+
+    &.left {
+      left: -3rem;
+    }
+
+    &.right {
+      right: -3rem;
+    }
+  }
+}
