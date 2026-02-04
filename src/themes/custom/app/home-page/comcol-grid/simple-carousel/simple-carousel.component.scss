@@ -8,6 +8,8 @@
   
   .section-grid.single-row-scroll {
     overflow-x: hidden;
+
+
   }
   
   .section-grid .section-item.single-row {
@@ -22,6 +24,13 @@
     justify-content: space-evenly;
     height: 150px;
     align-items: center;
+    
+    @media (max-width: 767px) {
+      height: 80%;
+      gap: 2.9rem;
+      margin: 0 1rem;
+    }
+
   }
 }
 
@@ -32,6 +41,10 @@
   &:hover {
     transform: scale(1.1);
   }
+
+  @media (max-width: 767px) {
+    flex: 0 0 calc((100% - (5 * 2rem)) / 4);
+  }
 }
 
 .img-container {
@@ -41,8 +54,12 @@
   height: 120px;
 
   img {
-    max-width: 100%;
-    max-height: 120px;
+    height: 120px;
+    object-fit: contain;
+
+    @media (max-width: 767px) {
+      height: 70px;
+    }
   }
 }
 

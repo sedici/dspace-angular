@@ -11,6 +11,14 @@
   }
 }
 
+#featured-collections-section {
+  .section-destacados {
+    @media (max-width: 767px) {
+      padding: 0 0 2rem;
+    }
+  }
+}
+
 .section-destacados {
   padding: 0 0 3.5rem;
 
@@ -164,6 +172,7 @@
           display: flex;
           overflow-x: auto;
           flex-wrap: nowrap;
+          height: 100%;
 
           .section-item {
             min-width: 33vw;
