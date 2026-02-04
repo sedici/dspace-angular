@@ -16,6 +16,21 @@
     @media (max-width: 767px) {
       padding: 0 0 2rem;
     }
+
+    // Para que colecciones destacadas UNLP/Externas no se vean en dos lineas
+    .title-container {
+      @media (max-width: 386px) {
+        justify-content: flex-start !important;
+
+        .explorar-text {
+          font-size: 1.1rem !important;
+        }
+
+        .section-title {
+          font-size: 1.1rem !important;
+        }
+      }
+    }
   }
 }
 
@@ -54,6 +69,8 @@
       background-color: #bbb;
       margin-left: 5rem;
     }
+
+
   }
 
   .section-grid {
