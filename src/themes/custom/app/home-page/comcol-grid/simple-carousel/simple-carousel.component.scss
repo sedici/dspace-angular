@@ -20,11 +20,18 @@
     overflow-x: auto;
     flex-wrap: nowrap;
     justify-content: space-evenly;
+    height: 150px;
+    align-items: center;
   }
 }
 
 .section-grid .section-item.single-row {
   flex: 0 0 calc((100% - (5 * 2rem)) / 6);
+  
+  transition: transform 0.3s ease;
+  &:hover {
+    transform: scale(1.1);
+  }
 }
 
 .img-container {
