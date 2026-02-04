@@ -47,6 +47,15 @@
         <span>{{ 'sedici.item.page.unknown.author' | translate }}</span>
       }
       <div class="author-with-icon">
+        @if (object.firstMetadataValue('sedici.creator.corporate')) {
+          <i class="building-icon fa-solid fa-building-columns author-icon"></i>
+          <ds-generic-item-page-field [item]="object"
+            [fields]="['sedici.creator.corporate']"
+            [separator]="' | '">
+          </ds-generic-item-page-field>
+        }
+      </div>
+      <div class="author-with-icon">
         @if (totalAuthors > 0) {
           <i [class]="totalAuthors === 1 ? 'fa-solid fa-user author-icon' : 'fa-solid fa-users author-icon'"></i>
         }
@@ -55,11 +64,6 @@
         [separator]="' | '">
         </ds-generic-item-page-field>
       </div>
-      <ds-generic-item-page-field [item]="object"
-        [fields]="['sedici.creator.corporate']"
-        [separator]="' | '"
-        [label]="'sedici.item.page.sedici.creator.corporate'">
-      </ds-generic-item-page-field>
       <ds-generic-item-page-field [item]="object"
         [fields]="['sedici.creator.interprete']"
         [separator]="' | '"
