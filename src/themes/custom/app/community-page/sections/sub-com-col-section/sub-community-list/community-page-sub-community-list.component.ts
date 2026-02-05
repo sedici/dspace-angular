@@ -37,8 +37,7 @@ import {
   combineAndFlatten,
 } from '../../../../../../../app/community-list-page/community-list-service';
 import { ThemedLoadingComponent } from '../../../../../../../app/shared/loading/themed-loading.component';
-import { TruncatableComponent } from '../../../../../../../app/shared/truncatable/truncatable.component';
-import { TruncatablePartComponent } from '../../../../../../../app/shared/truncatable/truncatable-part/truncatable-part.component';
+
 import {
   SortDirection,
   SortOptions,
@@ -93,8 +92,7 @@ export class SubComColDatasource implements DataSource<FlatNode> {
     RouterLink,
     ThemedLoadingComponent,
     TranslateModule,
-    TruncatableComponent,
-    TruncatablePartComponent,
+
     AsyncPipe,
   ],
 })

@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { RouterLink } from '@angular/router';
+
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HostWindowService, WidthCategory } from 'src/app/shared/host-window.service';
@@ -31,7 +31,7 @@ export interface CardItem {
     AsyncPipe,
     SearchFormComponent,
     ThemedSearchNavbarComponent,
-    RouterLink,
+
     TranslateModule,
     ThemedNavbarComponent,
 ],

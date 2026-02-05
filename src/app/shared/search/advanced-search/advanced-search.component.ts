@@ -32,7 +32,7 @@ import {
   hasValue,
   isNotEmpty,
 } from '../../empty.util';
-import { FilterInputSuggestionsComponent } from '../../input-suggestions/filter-suggestions/filter-input-suggestions.component';
+
 import { InputSuggestion } from '../../input-suggestions/input-suggestions.model';
 import { FilterType } from '../models/filter-type.model';
 import { SearchFilterConfig } from '../models/search-filter-config.model';
@@ -47,7 +47,7 @@ import { SearchFilterConfig } from '../models/search-filter-config.model';
   imports: [
     AsyncPipe,
     BtnDisabledDirective,
-    FilterInputSuggestionsComponent,
+
     FormsModule,
     TranslateModule,
   ],

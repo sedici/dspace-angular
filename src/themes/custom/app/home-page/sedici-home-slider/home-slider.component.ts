@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { ComcolPageLogoComponent } from 'src/app/shared/comcol/comcol-page-logo/comcol-page-logo.component';
-import { AsyncPipe, NgClass, NgTemplateOutlet } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import {
   Component,
   Input } from '@angular/core';
@@ -17,7 +17,7 @@ import {
   styleUrls: ['./home-slider.component.scss'],
   templateUrl: './home-slider.component.html',
   standalone: true,
-  imports: [NgTemplateOutlet, RouterModule, AsyncPipe, TranslateModule, NgClass, ComcolPageLogoComponent],
+  imports: [RouterModule, AsyncPipe, TranslateModule, NgClass, ComcolPageLogoComponent],
 })
 export class HomeSliderComponent {
 

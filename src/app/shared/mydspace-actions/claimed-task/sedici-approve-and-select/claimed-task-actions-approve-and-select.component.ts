@@ -5,8 +5,7 @@ import {
   Input,
 } from '@angular/core';
 import {
-  AsyncPipe,
-  NgIf,
+
 } from '@angular/common';
 import {
   TranslateModule,
@@ -38,7 +37,7 @@ import { Item } from 'src/app/core/shared/item.model';
   styleUrls: ['./claimed-task-actions-approve-and-select.component.scss'],
   templateUrl: './claimed-task-actions-approve-and-select.component.html',
   standalone: true,
-  imports: [NgbTooltipModule, NgIf, AsyncPipe, TranslateModule],
+  imports: [NgbTooltipModule, TranslateModule],
 })
 /**
  * Component for displaying and processing the approve action on a workflow task item

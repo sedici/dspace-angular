@@ -13,7 +13,7 @@ import { ItemSearchResult } from '../../../../../../../../../app/shared/object-c
 import { listableObjectComponent } from '../../../../../../../../../app/shared/object-collection/shared/listable-object/listable-object.decorator';
 import { ItemSearchResultListElementComponent as BaseComponent } from '../../../../../../../../../app/shared/object-list/search-result-list-element/item-search-result/item-types/item/item-search-result-list-element.component';
 import { TruncatableComponent } from '../../../../../../../../../app/shared/truncatable/truncatable.component';
-import { TruncatablePartComponent } from '../../../../../../../../../app/shared/truncatable/truncatable-part/truncatable-part.component';
+
 import { ThemedThumbnailComponent } from '../../../../../../../../../app/thumbnail/themed-thumbnail.component';
 import { SediciContextComponent } from 'src/themes/custom/app/item-page/simple/field-components/context/sedici-context.component';
 import { ThemedAccessStatusBadgeComponent } from 'src/app/shared/object-collection/shared/badges/access-status-badge/themed-access-status-badge.component';
@@ -35,7 +35,7 @@ import { ThemedAccessStatusBadgeComponent } from 'src/app/shared/object-collecti
     ThemedBadgesComponent,
     ThemedThumbnailComponent,
     TruncatableComponent,
-    TruncatablePartComponent,
+
     SediciContextComponent,
     ThemedAccessStatusBadgeComponent,
   ],

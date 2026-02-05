@@ -12,7 +12,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { pushInOut } from '../../../../../app/shared/animations/push';
 import { SearchComponent as BaseComponent } from '../../../../../app/shared/search/search.component';
-import { SearchLabelsComponent } from '../../../../../app/shared/search/search-labels/search-labels.component';
+
 import { ThemedSearchResultsComponent } from '../../../../../app/shared/search/search-results/themed-search-results.component';
 import { ThemedSearchSidebarComponent } from '../../../../../app/shared/search/search-sidebar/themed-search-sidebar.component';
 import { ThemedSearchFormComponent } from '../../../../../app/shared/search-form/themed-search-form.component';
@@ -35,7 +35,7 @@ import { SearchExportCsvComponent } from 'src/app/shared/search/search-export-cs
     AsyncPipe,
     NgTemplateOutlet,
     PageWithSidebarComponent,
-    SearchLabelsComponent,
+
     ThemedSearchFormComponent,
     ThemedSearchResultsComponent,
     ThemedSearchSidebarComponent,

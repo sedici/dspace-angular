@@ -1,19 +1,17 @@
-import { AsyncPipe, NgStyle, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
   ViewChild,
 } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { Context } from '../../../../../../../app/core/shared/context.model';
 import { Item } from '../../../../../../../app/core/shared/item.model';
 import { ViewMode } from '../../../../../../../app/core/shared/view-mode.model';
 import { GenericItemPageFieldComponent } from '../../../../../../../app/item-page/simple/field-components/specific-field/generic/generic-item-page-field.component';
-import { GeospatialItemPageFieldComponent } from '../../../../../../../app/item-page/simple/field-components/specific-field/geospatial/geospatial-item-page-field.component';
-import { ThemedItemPageTitleFieldComponent } from '../../../../../../../app/item-page/simple/field-components/specific-field/title/themed-item-page-field.component';
+
 import { ItemPageUriFieldComponent } from '../../../../../../../app/item-page/simple/field-components/specific-field/uri/item-page-uri-field.component';
 import { UntypedItemComponent as BaseComponent } from '../../../../../../../app/item-page/simple/item-types/untyped-item/untyped-item.component';
 import { DsoEditMenuComponent } from '../../../../../../../app/shared/dso-page/dso-edit-menu/dso-edit-menu.component';
@@ -29,11 +27,13 @@ import { SediciContextComponent } from '../../field-components/context/sedici-co
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SediciCitationComponent } from '../../field-components/citation/sedici-citation.component';
+
 import { RouteService } from 'src/app/core/services/route.service';
 import { Router } from '@angular/router';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SediciShareButtonsComponent } from '../../field-components/share-buttons/sedici-share-buttons.component';
+
 
 import { ExpandableMetadataComponent } from './expandable-metadata';
 /**
@@ -48,13 +48,10 @@ import { ExpandableMetadataComponent } from './expandable-metadata';
   // templateUrl: '../../../../../../../app/item-page/simple/item-types/untyped-item/untyped-item.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    NgStyle,
     NgClass,
     DsoEditMenuComponent,
     GenericItemPageFieldComponent,
     ItemPageUriFieldComponent,
-    RouterLink,
-    AsyncPipe,
     TranslateModule,
     LanguageSwitcherComponent,
     BadgeMetadataValuesComponent,
@@ -62,12 +59,10 @@ import { ExpandableMetadataComponent } from './expandable-metadata';
     SediciContextBadgeComponent,
     SediciTruncatableGenericItemPageFieldComponent,
     SediciContextComponent,
-    SediciCitationComponent,
+
     NgbModule,
-    SediciShareButtonsComponent,
+
     ExpandableMetadataComponent,
-    GeospatialItemPageFieldComponent,
-    ThemedItemPageTitleFieldComponent
 ],
 })
 export class UntypedItemComponent extends BaseComponent {

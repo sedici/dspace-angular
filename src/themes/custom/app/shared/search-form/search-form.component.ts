@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbTooltipModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
-import { Router, RouterLink, NavigationEnd, ActivatedRoute } from '@angular/router'; // Importar ActivatedRoute
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router'; // Importar ActivatedRoute
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { SearchFormComponent as BaseComponent } from '../../../../../app/shared/search-form/search-form.component';
@@ -27,7 +27,7 @@ import { DSONameService } from '../../../../../app/core/breadcrumbs/dso-name.ser
     NgbTooltipModule,
     TranslateModule,
     NgClass,
-    RouterLink,
+
   ],
 })
 export class SearchFormComponent extends BaseComponent implements OnInit {

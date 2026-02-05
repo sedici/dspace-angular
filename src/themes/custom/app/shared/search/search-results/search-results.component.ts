@@ -12,7 +12,7 @@ import {
 } from '../../../../../../app/shared/animations/fade';
 import { ErrorComponent } from '../../../../../../app/shared/error/error.component';
 import { ObjectCollectionComponent } from '../../../../../../app/shared/object-collection/object-collection.component';
-import { SearchExportCsvComponent } from '../../../../../../app/shared/search/search-export-csv/search-export-csv.component';
+
 import { SearchResultsComponent as BaseComponent } from '../../../../../../app/shared/search/search-results/search-results.component';
 import { SearchResultsSkeletonComponent } from '../../../../../../app/shared/search/search-results/search-results-skeleton/search-results-skeleton.component';
 import { SidebarDropdownComponent } from '../../../../../../app/shared/sidebar/sidebar-dropdown.component';
@@ -50,7 +50,7 @@ interface PaginationDetails {
     NgxSkeletonLoaderModule,
     ObjectCollectionComponent,
     RouterLink,
-    SearchExportCsvComponent,
+
     SearchResultsSkeletonComponent,
     TranslateModule,
     SearchDropdownComponent,

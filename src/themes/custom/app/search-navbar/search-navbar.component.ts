@@ -11,7 +11,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { SearchService } from 'src/app/core/shared/search/search.service';
 import { SearchNavbarComponent as BaseComponent } from '../../../../app/search-navbar/search-navbar.component';
-import { BrowserOnlyPipe } from '../../../../app/shared/utils/browser-only.pipe';
+
 import { ClickOutsideDirective } from '../../../../app/shared/utils/click-outside.directive';
 
 @Component({
@@ -22,7 +22,7 @@ import { ClickOutsideDirective } from '../../../../app/shared/utils/click-outsid
   // templateUrl: '../../../../app/search-navbar/search-navbar.component.html',
   standalone: true,
   imports: [
-    BrowserOnlyPipe,
+
     ClickOutsideDirective,
     FormsModule,
     ReactiveFormsModule,

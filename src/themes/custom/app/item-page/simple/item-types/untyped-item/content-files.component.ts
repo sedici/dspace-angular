@@ -1,11 +1,11 @@
 import { Component, Input, Inject, ViewChild, ElementRef } from '@angular/core';
-import { NgStyle, NgClass, NgTemplateOutlet, AsyncPipe } from '@angular/common';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { Item } from 'src/app/core/shared/item.model';
 import { BitstreamDataService } from 'src/app/core/data/bitstream-data.service';
 import { APP_CONFIG, AppConfig } from 'src/config/app-config.interface';
 import { Bitstream } from 'src/app/core/shared/bitstream.model';
-import { FileSizePipe } from 'src/app/shared/utils/file-size-pipe';
+
 import { DSONameService } from 'src/app/core/breadcrumbs/dso-name.service';
 import { SediciFileDownloadLinkComponent } from './sedici-file-download-link.component';
 import { isNotEmpty } from 'src/app/shared/empty.util';
@@ -13,6 +13,7 @@ import { FeatureID } from 'src/app/core/data/feature-authorization/feature-id';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SediciViewerComponent } from '../../field-components/viewer/sedici-viewer.component';
+
 
 import { ChangeDetectorRef } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpBackend } from '@angular/common/http';
@@ -67,14 +68,10 @@ const EXTERNAL_CONFIG = {
   templateUrl: './content-files.component.html',
   standalone: true,
   imports: [
-    NgStyle,
     NgClass,
     NgTemplateOutlet,
-    AsyncPipe,
     TranslateModule,
-    FileSizePipe,
     SediciFileDownloadLinkComponent,
-    SediciViewerComponent,
     PdfJsViewerModule
   ],
 })

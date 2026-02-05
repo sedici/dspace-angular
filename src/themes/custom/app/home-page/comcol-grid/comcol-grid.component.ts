@@ -1,5 +1,5 @@
-import { NgClass, NgTemplateOutlet } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { NgTemplateOutlet } from '@angular/common';
+
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { filter, map, take, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -18,7 +18,7 @@ interface ExploracionDestacada {
   styleUrls: ['./comcol-grid.component.scss'],
   templateUrl: './comcol-grid.component.html',
   standalone: true,
-  imports: [NgTemplateOutlet, RouterLink, TranslateModule, NgClass, SimpleCarouselComponent],
+  imports: [NgTemplateOutlet, TranslateModule, SimpleCarouselComponent],
 })
 export class ComcolGridComponent implements OnInit {
 
