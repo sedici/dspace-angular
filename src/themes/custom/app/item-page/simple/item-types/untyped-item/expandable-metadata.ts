@@ -1,5 +1,5 @@
 import { Component, Input, ElementRef, Renderer2, AfterViewInit, ViewChild } from '@angular/core';
-import { NgClass } from '@angular/common';
+
 
 @Component({
   selector: 'app-expandable-metadata',
@@ -51,9 +51,7 @@ import { NgClass } from '@angular/common';
       background-color: #ccc; /* Color gris más suave para la línea */
     }
   `],
-  imports: [
-    NgClass
-],
+  imports: [],
 })
 export class ExpandableMetadataComponent implements AfterViewInit {
   @ViewChild('containerRef', { static: false }) containerRef!: ElementRef;

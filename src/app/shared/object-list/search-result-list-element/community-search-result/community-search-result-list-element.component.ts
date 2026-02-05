@@ -1,4 +1,4 @@
-import { NgClass } from '@angular/common';
+
 import {
   Component,
   OnInit,
@@ -17,7 +17,7 @@ import { SearchResultListElementComponent } from '../search-result-list-element.
   styleUrls: ['../search-result-list-element.component.scss', 'community-search-result-list-element.component.scss'],
   templateUrl: 'community-search-result-list-element.component.html',
   imports: [
-    NgClass,
+
     RouterLink,
     ThemedBadgesComponent,
   ],

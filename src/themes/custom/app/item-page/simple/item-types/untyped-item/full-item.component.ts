@@ -5,10 +5,8 @@ import { RouterLink } from '@angular/router';
 import { getItemPageRoute } from 'src/app/item-page/item-page-routing-paths';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { GenericItemPageFieldComponent } from 'src/app/item-page/simple/field-components/specific-field/generic/generic-item-page-field.component';
-import { CollectionsComponent } from 'src/app/item-page/field-components/collections/collections.component';
-import { ItemPageIdentifierOtherFieldComponent } from '../../field-components/specific-field/identfier-other/item-page-identifier.other-field';
 
+import { CollectionsComponent } from 'src/app/item-page/field-components/collections/collections.component';
 interface MetadataMapping {
   fieldName: string;        // Nombre del campo de metadatos (dc.date.issued, etc.)
   labelKey: string;         // Clave para la traducción (sedici.item.page.dc.date.issued)
@@ -22,9 +20,8 @@ interface MetadataMapping {
   imports: [
     RouterLink,
     TranslateModule,
-    GenericItemPageFieldComponent,
     CollectionsComponent,
-    ItemPageIdentifierOtherFieldComponent
+
 ],
 })
 export class FullItemComponent {

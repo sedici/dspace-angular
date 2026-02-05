@@ -12,11 +12,11 @@ import { ThemedFooterComponent } from '../../../../app/footer/themed-footer.comp
 import { ThemedHeaderNavbarWrapperComponent } from '../../../../app/header-nav-wrapper/themed-header-navbar-wrapper.component';
 import { RootComponent as BaseComponent } from '../../../../app/root/root.component';
 import { slideSidebarPadding } from '../../../../app/shared/animations/slide';
-import { LiveRegionComponent } from '../../../../app/shared/live-region/live-region.component';
+
 import { ThemedLoadingComponent } from '../../../../app/shared/loading/themed-loading.component';
 import { NotificationsBoardComponent } from '../../../../app/shared/notifications/notifications-board/notifications-board.component';
 import { SystemWideAlertBannerComponent } from '../../../../app/system-wide-alert/alert-banner/system-wide-alert-banner.component';
-import { BottomNavigationBarComponent } from '../bottom-navigation-bar/bottom-navigation-bar';
+
 
 @Component({
   selector: 'ds-themed-root',
@@ -27,8 +27,7 @@ import { BottomNavigationBarComponent } from '../bottom-navigation-bar/bottom-na
   animations: [slideSidebarPadding],
   imports: [
     AsyncPipe,
-    LiveRegionComponent,
-    BottomNavigationBarComponent,
+
     NgClass,
     NotificationsBoardComponent,
     RouterOutlet,

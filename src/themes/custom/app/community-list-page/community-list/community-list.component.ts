@@ -6,8 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { CommunityListComponent as BaseComponent } from '../../../../../app/community-list-page/community-list/community-list.component';
 import { ThemedLoadingComponent } from '../../../../../app/shared/loading/themed-loading.component';
-import { TruncatableComponent } from '../../../../../app/shared/truncatable/truncatable.component';
-import { TruncatablePartComponent } from '../../../../../app/shared/truncatable/truncatable-part/truncatable-part.component';
+
 
 @Component({
   selector: 'ds-themed-community-list',
@@ -21,8 +20,7 @@ import { TruncatablePartComponent } from '../../../../../app/shared/truncatable/
     RouterLink,
     ThemedLoadingComponent,
     TranslateModule,
-    TruncatableComponent,
-    TruncatablePartComponent,
+
   ],
 })
 export class CommunityListComponent extends BaseComponent {

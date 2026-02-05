@@ -1,4 +1,4 @@
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+
 import { RouterLink } from '@angular/router';
 import { Component, OnInit, ChangeDetectorRef, Input } from '@angular/core';
 import { filter, map, take, switchMap } from 'rxjs/operators';
@@ -18,7 +18,7 @@ interface ExploracionDestacada {
   styleUrls: ['./simple-carousel.component.scss'],
   templateUrl: './simple-carousel.component.html',
   standalone: true,
-  imports: [NgTemplateOutlet, NgClass],
+  imports: [],
 })
 export class SimpleCarouselComponent implements OnInit {
   

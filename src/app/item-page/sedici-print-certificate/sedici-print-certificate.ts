@@ -2,7 +2,7 @@ import {
   AsyncPipe,
   isPlatformServer,
   NgIf,
-  NgClass,
+
 } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -47,23 +47,18 @@ import { fadeInOut } from '../../shared/animations/fade';
 import { isNotEmpty } from '../../shared/empty.util';
 import { ErrorComponent } from '../../shared/error/error.component';
 import { ThemedLoadingComponent } from '../../shared/loading/themed-loading.component';
-import { ListableObjectComponentLoaderComponent } from '../../shared/object-collection/shared/listable-object/listable-object-component-loader.component';
+
 import { VarDirective } from '../../shared/utils/var.directive';
 import { ViewTrackerResolverService } from 'src/app/statistics/angulartics/dspace/view-tracker-resolver.service';
-import { ThemedItemAlertsComponent } from '../alerts/themed-item-alerts.component';
+
 import { getItemPageRoute } from '../item-page-routing-paths';
 import { ItemVersionsComponent } from '../versions/item-versions.component';
-import { ItemVersionsNoticeComponent } from '../versions/notice/item-versions-notice.component';
-import { NotifyRequestsStatusComponent } from '../simple/notify-requests-status/notify-requests-status-component/notify-requests-status.component';
-import { QaEventNotificationComponent } from '../simple/qa-event-notification/qa-event-notification.component';
-import { SediciContextBadgeComponent } from 'src/themes/custom/app/shared/object-collection/shared/badges/sedici-context-badge/sedici-context-badge.component';
-import { GenericItemPageFieldComponent } from '../simple/field-components/specific-field/generic/generic-item-page-field.component';
-import { SediciContextComponent } from 'src/themes/custom/app/item-page/simple/field-components/context/sedici-context.component';
+
+
+
 import { MetadataValue } from 'src/app/core/shared/metadata.models';
 import { setPersistentIdentifiers } from 'src/app/shared/utils/persistent.identifier';
-import { BadgeMetadataValuesComponent } from 'src/themes/custom/app/item-page/simple/field-components/badge-metadata-values/badge-metadata-values.component';
-import { LanguageSwitcherComponent } from 'src/themes/custom/app/item-page/simple/item-types/untyped-item/language-switcher.component';
-import { ExpandableMetadataComponent } from 'src/themes/custom/app/item-page/simple/item-types/untyped-item/expandable-metadata';
+
 import { SediciCertificate } from '../sedici-item-certificate/sedici-item-certificate';
 
 /**
@@ -80,24 +75,16 @@ import { SediciCertificate } from '../sedici-item-certificate/sedici-item-certif
   standalone: true,
   imports: [
     VarDirective,
-    ThemedItemAlertsComponent,
-    ItemVersionsNoticeComponent,
-    ListableObjectComponentLoaderComponent,
+
+
     ItemVersionsComponent,
     ErrorComponent,
     ThemedLoadingComponent,
     TranslateModule,
     AsyncPipe,
     NgIf,
-    NgClass,
-    NotifyRequestsStatusComponent,
-    QaEventNotificationComponent,
-    SediciContextBadgeComponent,
-    GenericItemPageFieldComponent,
-    SediciContextComponent,
-    BadgeMetadataValuesComponent,
-    LanguageSwitcherComponent,
-    ExpandableMetadataComponent,
+
+
     SediciCertificate,
   ],
 })

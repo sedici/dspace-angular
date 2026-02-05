@@ -12,10 +12,7 @@ import {
   switchMap,
 } from 'rxjs/operators';
 
-import {
-  AsyncPipe,
-  NgIf,
-} from '@angular/common';
+
 import {
   TranslateModule,
   TranslateService,
@@ -39,7 +36,7 @@ import { environment } from '../../../../../src/environments/environment';
 import { AdvancedWorkflowActionComponent } from '../advanced-workflow-action/advanced-workflow-action.component';
 import { WorkflowActionDataService } from 'src/app/core/data/workflow-action-data.service';
 import { ClaimedTaskDataService } from 'src/app/core/tasks/claimed-task-data.service';
-import { ModifyItemOverviewComponent } from '../../../item-page/edit-item-page/modify-item-overview/modify-item-overview.component';
+
 
 
 export const ADVANCED_WORKFLOW_TASK_OPTION_APPROVE_AND_SELECT = "submit_approve_and_select";
@@ -48,7 +45,7 @@ export const ADVANCED_WORKFLOW_ACTION_APPROVE_AND_SELECT = 'editaction';
 @Component({
   selector: 'ds-workflow-approve-and-select',
   templateUrl: './advanced-approve-and-select.component.html',
-  imports: [NgbTooltipModule, ModifyItemOverviewComponent, NgIf, AsyncPipe, TranslateModule],
+  imports: [NgbTooltipModule, TranslateModule],
   standalone: true,
 })
 /**

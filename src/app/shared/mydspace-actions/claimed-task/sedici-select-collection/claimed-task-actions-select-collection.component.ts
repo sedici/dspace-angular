@@ -11,8 +11,7 @@ import {
   ActivatedRoute,
 } from '@angular/router';
 import {
-  AsyncPipe,
-  NgIf,
+
 } from '@angular/common';
 import {
   TranslateModule,
@@ -38,7 +37,7 @@ import { rendersWorkflowTaskOption } from '../switcher/claimed-task-actions-deco
   styleUrls: ['./claimed-task-actions-select-collection.component.scss'],
   templateUrl: './claimed-task-actions-select-collection.component.html',
   standalone: true,
-  imports: [NgbTooltipModule, NgIf, AsyncPipe, TranslateModule],
+  imports: [NgbTooltipModule, TranslateModule],
 })
 /**
  * Component for displaying the edit metadata action on a workflow task item

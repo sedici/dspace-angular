@@ -11,10 +11,7 @@ import {
   switchMap,
 } from 'rxjs/operators';
 
-import {
-  AsyncPipe,
-  NgIf,
-} from '@angular/common';
+
 import {
   TranslateModule,
   TranslateService,
@@ -40,7 +37,7 @@ import { AdvancedWorkflowActionComponent } from '../advanced-workflow-action/adv
 import { WorkflowActionDataService } from 'src/app/core/data/workflow-action-data.service';
 import { ClaimedTaskDataService } from 'src/app/core/tasks/claimed-task-data.service';
 import { AuthorizedCollectionSelectorComponent } from './../../../shared/dso-selector/dso-selector/authorized-collection-selector/authorized-collection-selector.component';
-import { ModifyItemOverviewComponent } from '../../../item-page/edit-item-page/modify-item-overview/modify-item-overview.component';
+
 
 
 export const ADVANCED_WORKFLOW_TASK_OPTION_SELECT_COLLECTION = "submit_selectCollection";
@@ -49,7 +46,7 @@ export const ADVANCED_WORKFLOW_ACTION_SELECT_COLLECTION = 'selectCollection';
 @Component({
   selector: 'ds-workflow-select-collection',
   templateUrl: './workflow-select-collection.component.html',
-  imports: [NgbTooltipModule, ModifyItemOverviewComponent,NgIf, AsyncPipe, TranslateModule, AuthorizedCollectionSelectorComponent],
+  imports: [NgbTooltipModule, TranslateModule, AuthorizedCollectionSelectorComponent],
   standalone: true
 })
 /**

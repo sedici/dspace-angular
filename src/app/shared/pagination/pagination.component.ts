@@ -50,7 +50,7 @@ import {
 import { HostWindowService } from '../host-window.service';
 import { ListableObject } from '../object-collection/shared/listable-object.model';
 import { RSSComponent } from '../rss-feed/rss.component';
-import { EnumKeysPipe } from '../utils/enum-keys-pipe';
+
 import { PaginationComponentOptions } from './pagination-component-options.model';
 
 interface PaginationDetails {
@@ -71,7 +71,7 @@ interface PaginationDetails {
   imports: [
     AsyncPipe,
     BtnDisabledDirective,
-    EnumKeysPipe,
+
     NgbDropdownModule,
     NgbPaginationModule,
     NgbTooltipModule,
