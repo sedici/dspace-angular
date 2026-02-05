@@ -67,9 +67,11 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
     });
 
     this.route.queryParams.subscribe(params => {
-      if (params.query) {
+      const activeUrl = this.router.url;
+      if (params.query && activeUrl.includes('/search')) {
         this.query = params.query; // Asigna el valor de la URL a la variable que usa el [(ngModel)]
-      } else {
+      }
+      else {
         this.query = '';
       }
     });
