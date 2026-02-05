@@ -11154,12 +11154,6 @@
 
   "home.page.search.placeholder": "Busque entre os {{ totalItems }} recursos disponíveis no repositório",
 
-  "home.page.author": "Autores",
-
-  "home.page.publication": "Publicações",
-
-  "home.page.academicUnit": "Unidades Acadêmicas",
-
   "home.page.journals": "Periódicos",
 
   "home.page.events": "Eventos",
@@ -11193,10 +11187,6 @@
   "home.page.growthStatistics": "Estatísticas de Crescimento",
 
   "home.page.allies": "Aliados",
-
-  "home.page.projects": "Projetos",
-
-  "home.page.projects.name": "PREBI-SEDICI",
 
   // "file-download-link.download": "Download ",
   "file-download-link.download": "Baixar ",

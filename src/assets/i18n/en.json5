@@ -7321,12 +7321,6 @@
   "home.page.welcome.text": "<b>The Intellectual Creation Dissemination Service</b>, the central institutional repository of the <b>UNLP</b>, hosts, preserves, disseminates, and gives worldwide visibility to all scientific and intellectual production of the university.",
 
   "home.page.search.placeholder": "Search among the {{ totalItems }} resources available in the repository",
-  
-  "home.page.author": "Authors",
-
-  "home.page.publication": "Publications",
-
-  "home.page.academicUnit": "Academic Units",
 
   "home.page.journals": "Journals",
   
@@ -7362,10 +7356,6 @@
   "home.page.growthStatistics": "Growth Statistics",
 
   "home.page.allies": "Allies",
-
-  "home.page.projects": "Projects",
-
-  "home.page.projects.name": "PREBI-SEDICI",
   
   "file-download-link.download": "Download ",
 
