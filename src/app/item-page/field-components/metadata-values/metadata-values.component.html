@@ -47,6 +47,10 @@
 <!-- Render value as a link to browse index -->
 <ng-template #browselink let-value="value" let-authority="authority">
   <a class="dont-break-out preserve-line-breaks ds-browse-link"
-    [routerLink]="['/browse', browseDefinition.id]"
-    [queryParams]="getQueryParams(value, authority)"role="link" tabindex="0">{{value}}</a>
+    [routerLink]="['/search']"
+    [queryParams]="getQueryParams(value, authority)"
+    role="link" 
+    tabindex="0">
+    {{value}}
+  </a>
 </ng-template>

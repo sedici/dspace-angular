@@ -116,12 +116,15 @@ export class MetadataValuesComponent implements OnChanges {
    * @param value the specific metadata value being linked
    */
   getQueryParams(value, authority) {
-    const queryParams = { value: value, authority: authority };
-    // todo: should compare with type instead?
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
-    if (this.browseDefinition.getRenderType() === VALUE_LIST_BROWSE_DEFINITION.value) {
-      return { value: value };
+    const queryParams = {};
+    const key = `f.${this.browseDefinition.id}`;
+    if (hasValue(authority) && this.browseDefinition.getRenderType() !== VALUE_LIST_BROWSE_DEFINITION.value) {
+      queryParams[key] = `${value},equals`;
+      queryParams['authority'] = authority;
+    } else {
+      queryParams[key] = `${value},equals`;
     }
+    queryParams['spc.page'] = 1;
     return queryParams;
   }
 

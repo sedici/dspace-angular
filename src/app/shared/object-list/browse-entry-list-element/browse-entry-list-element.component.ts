@@ -54,7 +54,7 @@ export class BrowseEntryListElementComponent extends AbstractListableElementComp
   /**
    * Get the query params to access the item page of this browse entry.
    */
-  private getQueryParams(): Observable<Params> {
+  protected getQueryParams(): Observable<Params> { // SECIDI: Se cambia a protected para que pueda ser sobreescrito por el custom
     const pageParamName = this.paginationService.getPageParam(BBM_PAGINATION_ID);
     return this.routeService.getQueryParameterValue(pageParamName).pipe(
       map((currentPage) => {
