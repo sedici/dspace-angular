@@ -1,7 +1,7 @@
 <header id="main-site-header" class="background-image-header"  [ngClass]="{'home-header': (isHomePage$ | async)}">
   <!-- Vista Desktop -->
     <div class="d-none d-md-flex align-items-center" id="main-site-header-container">
-      <div class="left-container navbar-brand" [ngClass]="{ 'padding-logo': (isHomePage$ | async) !== true }">
+      <div class="left-container padding-logo"> 
         <a routerLink="/home">
           <img id="header-logo" [src]="'assets/custom/images/LogoSEDICI.svg'" [attr.alt]="'menu.header.image.logo' | translate"/>
         </a>

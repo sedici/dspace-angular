@@ -15,7 +15,8 @@
     }
 
     @media screen and (max-width: map-get($grid-breakpoints, md)) {
-      padding: 1rem 0rem 8rem 0rem;
+      padding-top: 0rem;
+      padding-bottom: 8rem;
       margin-top: 0px;
     }
   }
@@ -24,7 +25,7 @@
     position: absolute;
     z-index: 100;
     right: 1.5rem;
-    top: 2.5rem;
+    top: 1.5rem;
 
     #navbar-toggler {
       border: none;
