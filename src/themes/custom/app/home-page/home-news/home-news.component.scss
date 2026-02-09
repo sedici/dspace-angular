@@ -55,11 +55,11 @@
 
   .sedici-description {
     padding-top: 3rem;
-    margin: auto;
-    max-width: 80%;
+    max-width: 85%;
+    margin-left: auto;
     color: white;
     flex-direction: column;
-
+    
     .title {
       margin-bottom: 1rem;
       font-size: clamp(2.2rem, 3vw, 3.5rem);
