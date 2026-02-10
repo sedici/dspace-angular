@@ -5588,7 +5588,7 @@
   "mydspace.status.mydspaceWorkspace": "Espacio de trabajo",
 
   // "mydspace.title": "MyDSpace",
-  "mydspace.title": "Mi DSpace",
+  "mydspace.title": "Mis envíos",
 
   // "mydspace.upload.upload-failed": "Error creating new workspace. Please verify the content uploaded before retry.",
   "mydspace.upload.upload-failed": "Error al crear un nuevo espacio de trabajo. Verifique el contenido cargado antes de volver a intentarlo.",
@@ -5645,7 +5645,7 @@
   "nav.account": "Mi cuenta",
 
   // "nav.mydspace": "MyDSpace",
-  "nav.mydspace": "Mi DSpace",
+  "nav.mydspace": "Mis envíos",
 
   // "nav.profile": "Profile",
   "nav.profile": "Perfil",
