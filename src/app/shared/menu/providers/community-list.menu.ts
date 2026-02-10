@@ -11,7 +11,9 @@ import {
   Observable,
   of,
 } from 'rxjs';
+import { map } from 'rxjs/operators';
 
+import { AuthService } from '../../../core/auth/auth.service';
 import { MenuItemType } from '../menu-item-type.model';
 import {
   AbstractMenuProvider,
@@ -20,21 +22,33 @@ import {
 
 /**
  * Menu provider to create the "Communities & Collections" menu section in the public navbar
+ * SEDICI: Only visible to authenticated users
  */
 @Injectable()
 export class CommunityListMenuProvider extends AbstractMenuProvider {
+  constructor(private authService: AuthService) {
+    super();
+  }
+
   public getSections(): Observable<PartialMenuSection[]> {
-    return of([
-      {
-        visible: true,
-        model: {
-          type: MenuItemType.LINK,
-          // text: `menu.section.browse_global_communities_and_collections`,
-          text: `home.page.explore`,
-          link: `/community-list`,
-        },
-        icon: 'diagram-project',
-      },
-    ] as PartialMenuSection[]);
+    return this.authService.isAuthenticated().pipe(
+      map((isAuthenticated: boolean) => {
+        if (!isAuthenticated) {
+          return [];
+        }
+        return [
+          {
+            visible: true,
+            model: {
+              type: MenuItemType.LINK,
+              // text: `menu.section.browse_global_communities_and_collections`,
+              text: `home.page.explore`,
+              link: `/community-list`,
+            },
+            icon: 'diagram-project',
+          },
+        ] as PartialMenuSection[];
+      }),
+    );
   }
 }
