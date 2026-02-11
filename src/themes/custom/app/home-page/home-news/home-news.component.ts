@@ -86,21 +86,21 @@ export class HomeNewsComponent extends BaseComponent {
   cardItems:Array<CardItem> = [
     {
       title: "journals",
-      img: "assets/custom/images/revistas.svg",
+      img: "assets/custom/images/_revistas.svg",
       href: "/handle/10915/51",
     } as CardItem,{
       title: "events",
-      img: "assets/custom/images/eventos.svg",
+      img: "assets/custom/images/_eventos.svg",
       href: "/handle/10915/1038",
     } as CardItem,
     {
       title: "books",
-      img: "assets/custom/images/libros.svg",
+      img: "assets/custom/images/_libros.svg",
       href: "/search?spc.page=1&f.itemtype=Libro,equals&spc.sf=dc.date.accessioned&spc.sd=DESC",
     } as CardItem,
     {
       title: "data",
-      img: "assets/custom/images/datos.svg",
+      img: "assets/custom/images/_datos.svg",
       href: "/search?spc.page=1&f.itemtype=Conjunto%20de%20datos,equals&spc.sf=dc.date.accessioned&spc.sd=DESC",
     } as CardItem,
   ];
