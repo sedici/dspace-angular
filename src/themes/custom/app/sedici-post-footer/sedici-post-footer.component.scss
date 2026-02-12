@@ -1,0 +1,18 @@
+.post-footer-container {
+  background-color: #333;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  align-items: end;
+
+  span {
+    color: white;
+    font-size: 1rem;
+    padding: 0.75rem 0;
+  }
+
+  img {
+    display: block;
+    height: 50px;
+  }
+}

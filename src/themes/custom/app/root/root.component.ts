@@ -16,6 +16,7 @@ import { slideSidebarPadding } from '../../../../app/shared/animations/slide';
 import { ThemedLoadingComponent } from '../../../../app/shared/loading/themed-loading.component';
 import { NotificationsBoardComponent } from '../../../../app/shared/notifications/notifications-board/notifications-board.component';
 import { SystemWideAlertBannerComponent } from '../../../../app/system-wide-alert/alert-banner/system-wide-alert-banner.component';
+import { SediciPostFooterComponent } from '../sedici-post-footer/sedici-post-footer.component';
 
 
 @Component({
@@ -38,6 +39,7 @@ import { SystemWideAlertBannerComponent } from '../../../../app/system-wide-aler
     ThemedHeaderNavbarWrapperComponent,
     ThemedLoadingComponent,
     TranslateModule,
+    SediciPostFooterComponent,
   ],
 })
 export class RootComponent extends BaseComponent {

@@ -1,41 +1,48 @@
 <footer>
   <div class="top-footer">
-    <div class="footer-media-icons">
-      <a href="https://www.instagram.com/sedici_unlp/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-      <a href="https://x.com/sedici_unlp" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
-      <a href="https://www.youtube.com/@sediciUNLP" target="_blank"><i class="fa-brands fa-youtube"></i></a>
-      <a href="https://www.facebook.com/sedici.unlp" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+    <div>
+      <span>SEDICI UNLP</span>
+      <span>Universidad Nacional de La Plata</span>
+      <div class="footer-media-icons">
+        <a href="https://www.instagram.com/sedici_unlp/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://x.com/sedici_unlp" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="https://www.youtube.com/@sediciUNLP" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+        <a href="https://www.facebook.com/sedici.unlp" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+      </div>
     </div>
     @if ((isMobile$ | async) !== true) {
       <div class="footer-links">
         <div class="footer-section">
-          <h5 class="footer-subtitle">Preguntas frecuentes</h5>
-          <a href="https://sedici.gitbook.io/sedici-docs/sobre-sedici/circuitos-de-deposito" target="_blank">Cómo agregar trabajos</a>
-          <a href="https://sedici.gitbook.io/sedici-docs/sobre-sedici/sedici" target="_blank">Qué hacemos en SEDICI</a>
-          <a href="https://sedici.gitbook.io/sedici-docs/preguntas/preguntas-frecuentes" target="_blank">Otras preguntas</a>
+          <h5 class="footer-subtitle">&nbsp;</h5>
+          <a href="https://sedici.gitbook.io/sedici-docs/preguntas/preguntas-frecuentes" target="_blank"><img src="assets/custom/images/footer/comments-question-check.svg" [attr.alt]="'Preguntas frecuentes'"/>Preguntas frecuentes</a>
+          <a href="https://sedici.gitbook.io/sedici-docs" target="_blank"><img src="assets/custom/images/footer/hand-wave.svg" [attr.alt]="'Acerca de'"/>Acerca de</a>
         </div>
         <div class="footer-section">
-          <h5 class="footer-subtitle">Institucional</h5>
-          <a href="https://sedici.gitbook.io/sedici-docs" target="_blank">Acerca de</a>
-          <a href="https://sedici.gitbook.io/sedici-docs/politicas/politicas-de-contenidos" target="_blank">Politicas</a>
-          <a href="https://blog.sedici.unlp.edu.ar/" target="_blank">Blog</a>
+          <h5 class="footer-subtitle">SOBRE SEDICI</h5>
+          <a href="https://sedici.gitbook.io/sedici-docs/sobre-sedici/sedici" target="_blank"><img src="assets/custom/images/footer/book-open.svg" [attr.alt]="'SEDICI'"/>SEDICI</a>
+          <a href="https://sedici.gitbook.io/sedici-docs/sobre-sedici/circuitos-de-deposito" target="_blank"><img src="assets/custom/images/footer/brain-circuit.svg" [attr.alt]="'Circuitos de depósito'"/>Circuitos de depósito</a>
+          <a href="https://sedici.gitbook.io/sedici-docs/sobre-sedici/estadisticas" target="_blank"><img src="assets/custom/images/footer/chart-scatter.svg" [attr.alt]="'Estadísticas'"/>Estadísticas</a>
         </div>
         <div class="footer-section">
-          <h5 class="footer-subtitle">Aliados</h5>
-          <a href="https://repositoriosdigitales.mincyt.gob.ar/vufind/" target="_blank">SNRD</a>
-          <a href="https://www.lareferencia.info/es/" target="_blank">La Referencia</a>
-          <a href="https://coar-repositories.org/" target="_blank">COAR</a>
+          <h5 class="footer-subtitle">POLÍTICAS</h5>
+          <a href="https://sedici.gitbook.io/sedici-docs/politicas/politicas-de-contenidos" target="_blank"><img src="assets/custom/images/footer/landmark.svg" [attr.alt]="'Politicas de contenido'"/>Politicas de contenido</a>
+          <a href="https://sedici.gitbook.io/sedici-docs/politicas/marco-normativo-legal" target="_blank"><img src="assets/custom/images/footer/gavel.svg" [attr.alt]="'Marco normativo/legal'"/>Marco normativo/legal</a>
+          <a href="https://sedici.gitbook.io/sedici-docs/politicas/licencias-de-uso" target="_blank"><img src="assets/custom/images/footer/file-certificate.svg" [attr.alt]="'Licencias de uso'"/>licencias de uso</a>
         </div>
       </div>
     }
   </div>
   <div class="bottom-footer">
     <div class="bottom-left">
-      <!-- <span><b>PREBI - SEDICI UNLP © 2003</b> - Universidad Nacional de La Plata</span> -->
-      <div class="bottom-footer-text-container">
-        <div class="bottom-footer-text"><b>PREBI - SEDICI UNLP © 2003-{{ dateObj | date:'y' }}</b></div>
-        @if ((isMobile$ | async) !== true) { &nbsp;-&nbsp; }
-        <div class="bottom-footer-text">Universidad Nacional de La Plata</div>
+      <a routerLink="/info/feedback">
+        <i class="fa-regular fa-comment-dots"></i> {{ 'footer.link.feedback' | translate }}
+      </a>
+    </div>
+    <div class="bottom-right">
+      <div class="bottom-footer-link-container">
+        <a href="https://repositoriosdigitales.mincyt.gob.ar/vufind/" target="_blank">SNRD</a>
+        <a href="https://www.lareferencia.info/es/" target="_blank">La Referencia</a>
+        <a href="https://coar-repositories.org/" target="_blank">COAR</a>
       </div>
       <div class="bottom-footer-icons">
         <a href="https://creativecommons.org/" target="_blank">
@@ -48,11 +55,6 @@
           <img src="assets/custom/images/footer/DSpace.svg" [attr.alt]="'Dspace'"/>
         </a>
       </div>
-    </div>
-    <div class="bottom-right">
-      <a routerLink="/info/feedback">
-        <i class="fa-regular fa-comment-dots"></i> {{ 'footer.link.feedback' | translate }}
-      </a>
     </div>
   </div>
 </footer>
