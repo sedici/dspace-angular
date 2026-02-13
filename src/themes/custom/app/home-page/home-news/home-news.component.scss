@@ -73,17 +73,22 @@
     }
   }
 
-  .help-section a {
-    color: white;
-    font-style: italic;
-    display: inline-flex;
-    align-items: center;
-    margin-right: 1.5rem;
-    margin-top: 0.5rem;
+  .help-section {
+    display: flex;
 
-    img {
-      margin-right: 0.5rem;
-      vertical-align: middle;
+    a {
+      color: white;
+      font-style: italic;
+      display: inline-flex;
+      align-items: center;
+      margin-right: 1.5rem;
+      margin-top: 0.5rem;
+
+      img {
+        margin-right: 0.5rem;
+        vertical-align: middle;
+        max-height: 16px;
+      }
     }
   }
 
