@@ -1,11 +1,14 @@
 @if ((allOptions$ | async); as allOptions) {
 <nav class="comcol-browse mb-4" aria-label="Browse Community or Collection">
   <div class="d-none d-sm-block">
-    <div class="list-group list-group-horizontal" role="tablist">
+    <div class="tab-header" role="tablist">
       @for (option of allOptions; track option) {
-      <a [attr.aria-current]="(currentOption$ | async)?.id === option.id" class="list-group-item" role="tab"
+      <a [attr.aria-current]="(currentOption$ | async)?.id === option.id" class="tab" role="tab"
         [routerLink]="option.routerLink" [queryParams]="option.params"
         [class.active]="(currentOption$ | async)?.id === option.id" role="tab" tabindex="0">
+        @if (option.label.includes('search') ) {
+          <i class="fa-solid fa-magnifying-glass"></i>
+        }
         {{ option.label | translate }}
       </a>
       }
