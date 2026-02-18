@@ -104,6 +104,7 @@ export class CommunityPageComponent extends BaseComponent {
   }
 
   logo$: Observable<RemoteData<Bitstream>>;
+  color$: Observable<string | null>;
   comlinksToFollow: FollowLinkConfig<Community>[] = [
     followLink('logo'),
     followLink('parentCommunity'),
@@ -120,15 +121,18 @@ export class CommunityPageComponent extends BaseComponent {
       map((community) => getCommunityPageRoute(community.id)),
     );
 
-    this.logo$ = this.communityRD$.pipe(
+    const logoAndColor$ = this.communityRD$.pipe(
       getFirstSucceededRemoteDataPayload(),
-      switchMap((community: Community) => this.getRecursiveLogo(community))
+      switchMap((community: Community) => this.getRecursiveLogoAndColor(community))
     );
+
+    this.logo$ = logoAndColor$.pipe(map(result => result.logo));
+    this.color$ = logoAndColor$.pipe(map(result => result.color));
 
     this.isCommunityAdmin$ = this.authorizationDataService.isAuthorized(FeatureID.IsCommunityAdmin);
   }
 
-  private getRecursiveLogo(community: Community): Observable<RemoteData<Bitstream>> {
+  private getRecursiveLogoAndColor(community: Community): Observable<{logo: RemoteData<Bitstream>, color: string | null}> {
     return this.communityService.findById(
       community.id,
       true,
@@ -141,18 +145,32 @@ export class CommunityPageComponent extends BaseComponent {
           logoRD.state !== 'RequestPending' && logoRD.state !== 'ResponsePending'
         ),
         take(1),
-        switchMap((logoRD: RemoteData<Bitstream>) => {
-          if (logoRD.hasSucceeded && logoRD.payload) {
-            return of(logoRD);
-          } else {
+        switchMap((logoRD: RemoteData<Bitstream>) => {          
+          const colorMetadata = fullCommunity.metadata['sedici.comcol.color'];
+          const hasColor = colorMetadata && colorMetadata.length > 0 && colorMetadata[0].value;
+          const hasLogo = logoRD.hasSucceeded && logoRD.payload;
+          
+          if (hasLogo && hasColor) {
+            return of({ logo: logoRD, color: colorMetadata[0].value });
+          }
+          
+          if (!hasLogo || !hasColor) {
             return fullCommunity.parentCommunity.pipe(
               getFirstSucceededRemoteDataPayload(),
               take(1),
               switchMap((parentCommunity: Community) => {
                 if (parentCommunity) {
-                  return this.getRecursiveLogo(parentCommunity);
+                  return this.getRecursiveLogoAndColor(parentCommunity).pipe(
+                    map((parentResult) => ({
+                      logo: hasLogo ? logoRD : parentResult.logo,
+                      color: hasColor ? colorMetadata[0].value : parentResult.color
+                    }))
+                  );
                 } else {
-                  return of(null);
+                  return of({
+                    logo: hasLogo ? logoRD : null,
+                    color: hasColor ? colorMetadata[0].value : null
+                  });
                 }
               })
             );

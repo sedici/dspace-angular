@@ -70,6 +70,7 @@ export class ComcolPageBrowseByComponent implements OnDestroy, OnInit {
    */
   @Input() id: string;
   @Input() contentType: string;
+  @Input() color: string | null = null;
 
   allOptions$: Observable<ComColPageNavOption[]>;
 

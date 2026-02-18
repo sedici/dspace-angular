@@ -15,3 +15,15 @@
       }
     }
 }
+
+// LISTADO DE ESTILOS MODIFICADOS A RAÍZ DEL COLOR DE LA UNIDAD ACADÉMICA SELECCIONADA
+
+// Flechas de sub-community-list
+::ng-deep .fa-chevron-right, ::ng-deep .fa-chevron-down {
+  color: var(--default-color, rgb(33, 37, 41));
+}
+
+// Badges de cantidad de ítems por autor
+::ng-deep .badge.rounded-pill {
+  background-color: var(--default-color, rgb(73, 80, 87)) !important;
+}

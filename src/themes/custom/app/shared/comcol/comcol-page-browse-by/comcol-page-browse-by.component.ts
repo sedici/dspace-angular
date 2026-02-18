@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -21,6 +21,8 @@ import { ComcolPageBrowseByComponent as BaseComponent } from '../../../../../../
   ],
 })
 export class ComcolPageBrowseByComponent extends BaseComponent {
+  @Input() color: string | null = null;
+
   isDropdownOpen = false;
 
   toggleDropdown(): void {

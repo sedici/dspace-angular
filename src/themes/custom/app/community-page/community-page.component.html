@@ -1,6 +1,6 @@
 <div class="container" *ngVar="(communityRD$ | async) as communityRD">
   @if (communityRD?.hasSucceeded) {
-    <div class="community-page" @fadeInOut>
+    <div class="community-page" @fadeInOut [style.--default-color]="color$ | async">
       @if (communityRD?.payload; as communityPayload) {
         <div>
           <div class="d-flex flex-row pb-4">
@@ -43,7 +43,10 @@
 
           <section class="comcol-page-browse-section">
             <!-- Browse-By Links -->
-            <ds-comcol-page-browse-by [id]="communityPayload.id" [contentType]="communityPayload.type">
+            <ds-comcol-page-browse-by 
+              [id]="communityPayload.id" 
+              [contentType]="communityPayload.type"
+              [color]="color$ | async">
             </ds-comcol-page-browse-by>
             <router-outlet></router-outlet>
           </section>
