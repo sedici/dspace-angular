@@ -1,5 +1,5 @@
 @if (logo) {
   <div class="dso-logo">
-    <img [src]="logo._links.content.href" class="w-100 img-fluid" [attr.alt]="alternateText ? alternateText : null" (error)="errorHandler($event)"/>
+    <img [src]="logo._links.content.href" [attr.alt]="alternateText ? alternateText : null" (error)="errorHandler($event)"/>
   </div>
 }
