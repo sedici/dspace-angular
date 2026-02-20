@@ -1345,7 +1345,7 @@
 
   "collection.page.edit": "Edit this collection",
 
-  "collection.page.handle": "Permanent URI for this collection",
+  "collection.page.handle": "Permanent URI",
 
   "collection.page.license": "License",
 
@@ -1593,7 +1593,7 @@
 
   "community.page.edit": "Edit this community",
 
-  "community.page.handle": "Permanent URI for this community",
+  "community.page.handle": "Permanent URI",
 
   "community.page.license": "License",
 

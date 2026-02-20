@@ -2035,8 +2035,8 @@
   // "collection.page.edit": "Edit this collection",
   "collection.page.edit": "Editar está coleção",
 
-  // "collection.page.handle": "Permanent URI for this collection",
-  "collection.page.handle": "URI permanente para esta coleção",
+  // "collection.page.handle": "Permanent URI",
+  "collection.page.handle": "URI permanente",
 
   // "collection.page.license": "License",
   "collection.page.license": "Licença",
@@ -2413,8 +2413,8 @@
   // "community.page.edit": "Edit this community",
   "community.page.edit": "Editar esta comunidade",
 
-  // "community.page.handle": "Permanent URI for this community",
-  "community.page.handle": "URI permanente desta comunidade",
+  // "community.page.handle": "Permanent URI",
+  "community.page.handle": "URI permanente",
 
   // "community.page.license": "License",
   "community.page.license": "Licença",

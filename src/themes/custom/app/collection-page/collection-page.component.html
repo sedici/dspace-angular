@@ -2,25 +2,20 @@
   <div class="collection-page"
     *ngVar="(collectionRD$ | async) as collectionRD">
     @if (collectionRD?.hasSucceeded) {
-      <div @fadeInOut>
+      <div @fadeInOut [style.--default-color]="color$ | async">
         @if (collectionRD?.payload; as collection) {
           <div>
             <div class="d-flex flex-row pb-4">
-              <header class="comcol-header me-auto">
-                <!-- Collection Name -->
-                <ds-comcol-page-header
-                    [name]="dsoNameService.getName(collection)">
-                </ds-comcol-page-header>
+              <header class="comcol-header">
+                <div class="left-container">
+                  <!-- Collection Name -->
+                  <div class="header-container">
+                    <ds-comcol-page-header
+                        [name]="dsoNameService.getName(collection)">
+                    </ds-comcol-page-header>
+                    <div class="line"></div>
+                  </div>
 
-                <div class="collection-logo-content-container">
-                  <!-- Collection logo -->
-                  @if (logoRD$ | async; as logoRD) {
-                    @if (logoRD?.payload) {
-                      <ds-comcol-page-logo [logo]="logoRD.payload" [alternateText]="'collection.logo' | translate">
-                      </ds-comcol-page-logo>
-                    }
-                  }
-                  
                   <div class="collection-text">
                     <!-- Introductory text -->
                     <ds-comcol-page-content [content]="collection.introductoryText" [hasInnerHtml]="true">
@@ -36,23 +31,31 @@
 
                 <!-- News -->
                 <ds-comcol-page-content
+                    class="comcol-news"
                     [content]="collection.sidebarText"
                     [hasInnerHtml]="true"
                     [title]="'collection.page.news'">
                 </ds-comcol-page-content>
+
+                <!-- Collection logo -->
+                @if (logoRD$ | async; as logoRD) {
+                  @if (logoRD?.payload) {
+                    <div class="logo-container">
+                      <ds-comcol-page-logo [logo]="logoRD.payload" [alternateText]="'collection.logo' | translate">
+                      </ds-comcol-page-logo>
+                    </div>
+                  }
+                }
               </header>
               <ds-dso-edit-menu></ds-dso-edit-menu>
-            </div>
-
-            <div class="pb-4">
-              <img [src]="'assets/custom/images/detallegradiente.png'" alt="Gradiente">
             </div>
 
             <section class="comcol-page-browse-section">
               <!-- Browse-By Links -->
               <ds-comcol-page-browse-by
                 [id]="collection.id"
-                [contentType]="collection.type">
+                [contentType]="collection.type"
+                [color]="color$ | async">
               </ds-comcol-page-browse-by>
               <router-outlet></router-outlet>
             </section>

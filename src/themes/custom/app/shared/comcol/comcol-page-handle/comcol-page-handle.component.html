@@ -1,0 +1,17 @@
+@if (content) {
+  <div class="handle-wrapper">
+    @if (title) {
+      <span class="handle-label">{{ title | translate }}</span>
+    }
+    <a [href]="getHandle()" role="link" tabindex="0" class="handle-value text-break">{{ getHandleId() }}</a>
+    <button
+      class="handle-copy-btn"
+      type="button"
+      (click)="copyHandle()"
+      [title]="copied ? 'URI copiada' : 'Copiar URI'"
+      [attr.aria-label]="copied ? 'URI copiada' : 'Copiar URI'"
+    >
+      <i [class]="copied ? 'fa-solid fa-check' : 'fa fa-copy'" aria-hidden="true"></i>
+    </button>
+  </div>
+}

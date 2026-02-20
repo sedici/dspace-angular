@@ -1,19 +1,71 @@
 @media screen and (min-width: map-get($grid-breakpoints, md))  {
-  .community-logo-content-container {
-    display: flex;
+  .community-text {
+    flex: 1;
+  }
 
-    .community-text {
-      flex: 1;
-    }
-  } 
+  // En desktop se restablecen los órdenes por defecto
+  .logo-container {
+    order: unset;
+  }
+
+  .left-container {
+    order: unset;
+  }
+
+  .comcol-news {
+    order: unset;
+  }
 }
 
-@media screen and (max-width: 768px) {
-    .gradient-image-container {
-      img {
-        max-width: 100%;
-      }
+.comcol-header{
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+
+  // En mobile: columna, logo arriba → título → metadatos
+  @media screen and (max-width: map-get($grid-breakpoints, md))  {
+    flex-direction: column;
+  }
+}
+
+.left-container{
+  flex: 1;
+  margin-right: 14rem;
+
+  @media screen and (max-width: map-get($grid-breakpoints, md))  {
+    margin-right: 0;
+    order: 2; // En mobile: debajo del logo, arriba del news
+  }
+}
+
+.header-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .line{
+      height: 1px;
+      background-color: #80808054;
+      margin-bottom: 0.875rem;
     }
+}
+
+.logo-container{
+  margin-bottom: auto;
+
+  // En mobile: el logo va primero
+  @media screen and (max-width: map-get($grid-breakpoints, md))  {
+    order: 1;
+    margin-bottom: 1rem;
+    align-self: center;
+  }
+}
+
+.comcol-news {
+  // En mobile: el news va al final (después de logo, título y metadatos)
+  @media screen and (max-width: map-get($grid-breakpoints, md))  {
+    order: 3;
+  }
 }
 
 // LISTADO DE ESTILOS MODIFICADOS A RAÍZ DEL COLOR DE LA UNIDAD ACADÉMICA SELECCIONADA

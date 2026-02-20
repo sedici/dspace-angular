@@ -1,0 +1,47 @@
+.handle-wrapper {
+  --handle-color: var(--default-color, var(--sedici-color));
+
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid var(--handle-color);
+  border-radius: 0px;
+  overflow: hidden;
+  font-size: 0.8rem;
+
+  .handle-label {
+    background-color: var(--handle-color);
+    color: #fff;
+    padding: 0 4px;
+    font-weight: 500;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+  }
+
+  .handle-value {
+    background-color: #fff;
+    color: #495057;
+    padding: 0 4px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      color: var(--handle-color);
+    }
+  }
+
+  .handle-copy-btn {
+    background-color: #fff;
+    border: none;
+    border-left: 1px solid var(--handle-color);
+    color: var(--handle-color);
+    padding: 0 4px;
+    display: flex;
+    align-items: center;
+
+    i.fa-check {
+      color: #27ae60;
+    }
+  }
+}

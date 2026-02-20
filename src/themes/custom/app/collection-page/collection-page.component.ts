@@ -87,14 +87,19 @@ export class CollectionPageComponent extends BaseComponent implements OnInit {
   sortConfig: SortOptions;
 
   /**
-   * Whether the current user is a Community admin
+   * Whether the current user is a Collection admin
    */
   isCollectionAdmin$: Observable<boolean>;
 
   /**
-   * Route to the community page
+   * Route to the collection page
    */
   collectionPageRoute$: Observable<string>;
+
+  /**
+   * Color resolved from the parent community hierarchy (sedici.comcol.color metadata)
+   */
+  color$: Observable<string | null>;
 
   constructor(
     public route: ActivatedRoute,
@@ -132,6 +137,11 @@ export class CollectionPageComponent extends BaseComponent implements OnInit {
     this.logoRD$ = this.collectionRD$.pipe(
       getFirstSucceededRemoteDataPayload(),
       switchMap((collection: Collection) => this.getRecursiveLogoFromCollection(collection))
+    );
+
+    this.color$ = this.collectionRD$.pipe(
+      getFirstSucceededRemoteDataPayload(),
+      switchMap((collection: Collection) => this.getColorFromCollection(collection))
     );
 
     this.isCollectionAdmin$ = this.authorizationDataService.isAuthorized(FeatureID.IsCollectionAdmin);
@@ -202,6 +212,68 @@ export class CollectionPageComponent extends BaseComponent implements OnInit {
           }
         })
       ))
+    );
+  }
+
+  /**
+   * Se resuelve el color para una colección leyendo sedici.comcol.color de su
+   * cadena de comunidades padres. Las colecciones no tienen esta metadata
+   * por sí mismas, por lo que siempre comenzamos desde la comunidad padre.
+   */
+  private getColorFromCollection(collection: Collection): Observable<string | null> {
+    return this.collectionService.findById(
+      collection.id,
+      true,
+      false,
+      ...this.collinksToFollow
+    ).pipe(
+      getFirstSucceededRemoteDataPayload(),
+      switchMap((fullCollection: Collection) => fullCollection.parentCommunity.pipe(
+        getFirstSucceededRemoteDataPayload(),
+        take(1),
+        switchMap((parentCommunity: Community) => {
+          if (parentCommunity) {
+            return this.getRecursiveColorFromCommunity(parentCommunity);
+          } else {
+            return of(null);
+          }
+        })
+      ))
+    );
+  }
+
+  /**
+   * Se resuelve la metadata sedici.comcol.color de una comunidad.
+   * Si la comunidad no tiene la metadata, se sube al padre.
+   */
+  private getRecursiveColorFromCommunity(community: Community): Observable<string | null> {
+    return this.communityService.findById(
+      community.id,
+      true,
+      false,
+      ...this.comlinksToFollow
+    ).pipe(
+      getFirstSucceededRemoteDataPayload(),
+      switchMap((fullCommunity: Community) => {
+        const colorMetadata = fullCommunity.metadata['sedici.comcol.color'];
+        const hasColor = colorMetadata && colorMetadata.length > 0 && colorMetadata[0].value;
+
+        if (hasColor) {
+          return of(colorMetadata[0].value);
+        }
+
+        return fullCommunity.parentCommunity.pipe(
+          getFirstSucceededRemoteDataPayload(),
+          take(1),
+          switchMap((parentCommunity: Community) => {
+            if (parentCommunity) {
+              return this.getRecursiveColorFromCommunity(parentCommunity);
+            } else {
+              return of(null);
+            }
+          })
+        );
+      })
     );
   }
 }
