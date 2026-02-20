@@ -1,0 +1,28 @@
+:host {
+  .dropdown-toggle::after {
+    display: none;
+  }
+  .dropdown-item {
+    padding-left: 20px;
+  }
+
+  // Usar :host para encapsular los estilos solo a este componente
+  ::ng-deep ds-object-list ul[data-test="objects"] {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(var(--grid-rows, 7), auto);
+    grid-auto-flow: column;
+    gap: 1rem 2rem;
+    
+    @media screen and (max-width: 768px) {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+      grid-auto-flow: row;
+    }
+    
+    li {
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+  }
+}

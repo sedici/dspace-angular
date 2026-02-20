@@ -6,6 +6,7 @@ import {
   Component,
   Injector,
   OnInit,
+  AfterViewInit,
 } from '@angular/core';
 import {
   TranslateModule,
@@ -35,7 +36,7 @@ import { StartsWithLoaderComponent } from '../../../../../app/shared/starts-with
 
 @Component({
   selector: 'ds-themed-browse-by',
-  styleUrls: ['../../../../../app/shared/browse-by/browse-by.component.scss'],
+  styleUrls: ['./browse-by.component.scss'],
   templateUrl: './browse-by.component.html',
   animations: [
     fadeIn,
@@ -52,10 +53,11 @@ import { StartsWithLoaderComponent } from '../../../../../app/shared/starts-with
     VarDirective,
   ],
 })
-export class BrowseByComponent extends BaseComponent implements OnInit {
+export class BrowseByComponent extends BaseComponent implements OnInit, AfterViewInit {
 
   hasSearched$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private _routeService: RouteService;
+  numberOfColumns = 3;
 
   constructor(
     injector: Injector,
@@ -65,5 +67,36 @@ export class BrowseByComponent extends BaseComponent implements OnInit {
   ) {
     super(injector, paginationService, translateService, routeService);
     this._routeService = routeService;
+  }
+
+  ngOnInit(): void {
+    super.ngOnInit();
+    
+    this.objects$.pipe(
+      filter(objects => objects?.hasSucceeded)
+    ).subscribe((objects) => {
+      if (this.paginationConfig) {
+        const pageSize = this.paginationConfig.pageSize || 20;
+        setTimeout(() => this.updateGridRows(pageSize), 100);
+      }
+    });
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      if (this.paginationConfig) {
+        const pageSize = this.paginationConfig.pageSize || 20;
+        this.updateGridRows(pageSize);
+      }
+    }, 300);
+  }
+
+  private updateGridRows(pageSize: number): void {
+    const rows = Math.ceil(pageSize / this.numberOfColumns);
+    const ulElement = document.querySelector('ul[data-test="objects"]');
+    
+    if (ulElement) {
+      (ulElement as HTMLElement).style.setProperty('--grid-rows', rows.toString());
+    }
   }
 }
