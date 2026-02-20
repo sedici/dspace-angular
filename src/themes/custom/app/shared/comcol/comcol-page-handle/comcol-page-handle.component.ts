@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { ComcolPageHandleComponent as BaseComponent } from '../../../../../../app/shared/comcol/comcol-page-handle/comcol-page-handle.component';
@@ -17,6 +17,10 @@ export class ComcolPageHandleComponent extends BaseComponent {
 
   copied = false;
 
+  constructor(private cdr: ChangeDetectorRef) {
+    super();
+  }
+
   /**
    * Extrae solo el identificador del handle desde la URL completa.
    * Ejemplo: "https://hdl.handle.net/3.3347/10911235/6783" → "3.3347/10911235/6783"
@@ -32,7 +36,13 @@ export class ComcolPageHandleComponent extends BaseComponent {
   copyHandle(): void {
     navigator.clipboard.writeText(this.getHandle()).then(() => {
       this.copied = true;
-      setTimeout(() => { this.copied = false; }, 2000);
+      this.cdr.markForCheck();
+      this.cdr.detectChanges();
+      setTimeout(() => {
+        this.copied = false;
+        this.cdr.markForCheck();
+        this.cdr.detectChanges();
+      }, 2000);
     });
   }
 }
