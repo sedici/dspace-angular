@@ -150,15 +150,15 @@ export class CollectionFormComponent extends ComColFormComponent<Collection> imp
     });
   }
 
-  ngAfterViewInit(): void {
-    const interval = setInterval(() => {
-      const $desc = $('#description');
-      if ($desc.length > 0) {
-        $desc.metadataGenerator();
-        clearInterval(interval);
-      }
-    }, 100);
-  }
+  // ngAfterViewInit(): void {
+  //   const interval = setInterval(() => {
+  //     const $desc = $('#description');
+  //     if ($desc.length > 0) {
+  //       $desc.metadataGenerator();
+  //       clearInterval(interval);
+  //     }
+  //   }, 100);
+  // }
 
 }
 

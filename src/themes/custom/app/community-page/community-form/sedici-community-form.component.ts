@@ -1,24 +1,78 @@
+import { AsyncPipe } from '@angular/common';
+import {
+  Component,
+  Input,
+  OnChanges,
+  SimpleChange,
+  SimpleChanges,
+} from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   DynamicFormControlModel,
+  DynamicFormService,
   DynamicInputModel,
-  DynamicSelectModelConfig,
   DynamicTextAreaModel,
   DynamicFormArrayModel,
 } from '@ng-dynamic-forms/core';
+import {
+  TranslateModule,
+  TranslateService,
+} from '@ngx-translate/core';
 
-import { environment } from '../../../environments/environment';
-
-export const collectionFormEntityTypeSelectionConfig: DynamicSelectModelConfig<string> = {
-  id: 'entityType',
-  name: 'dspace.entity.type',
-  disabled: false,
-};
+import { ObjectCacheService } from 'src/app/core/cache/object-cache.service';
+import { RequestService } from 'src/app/core/data/request.service';
+import { CommunityDataService } from 'src/app/core/data/community-data.service';
+import { AuthService } from 'src/app/core/auth/auth.service';
+import { NotificationsService } from 'src/app/shared/notifications/notifications.service';
+import { environment } from '../../../../../environments/environment';
+import { ComcolPageLogoComponent } from '../../../../../app/shared/comcol/comcol-page-logo/comcol-page-logo.component';
+import { FormComponent } from '../../../../../app/shared/form/form.component';
+import { UploaderComponent } from '../../../../../app/shared/upload/uploader/uploader.component';
+import { VarDirective } from '../../../../../app/shared/utils/var.directive';
+import { CommunityFormComponent } from 'src/app/community-page/community-form/community-form.component';
+//import { DsDynamicOneboxComponent} from '../../../../../app/shared/form/builder/ds-dynamic-form-ui/models/onebox/dynamic-onebox.component';
 
 /**
- * The dynamic form fields used for creating/editing a collection
- * @type {(DynamicInputModel | DynamicTextAreaModel)[]}
+ * Form used for creating and editing communities
  */
-export const collectionFormModels: DynamicFormControlModel[] = [
+@Component({
+  selector: 'sedici-community-form',
+  styleUrls: ['../../../../../app/shared/comcol/comcol-forms/comcol-form/comcol-form.component.scss'],
+  templateUrl: '../../../../../app/shared/comcol/comcol-forms/comcol-form/comcol-form.component.html',
+  imports: [
+    AsyncPipe,
+    ComcolPageLogoComponent,
+    FormComponent,
+    TranslateModule,
+    UploaderComponent,
+    VarDirective,
+  ],
+})
+export class SediciCommunityFormComponent extends CommunityFormComponent implements OnChanges {
+
+  constructor(
+    protected formService: DynamicFormService,
+    protected translate: TranslateService,
+    protected notificationsService: NotificationsService,
+    protected authService: AuthService,
+    protected dsoService: CommunityDataService,
+    protected requestService: RequestService,
+    protected objectCache: ObjectCacheService,
+    protected modalService: NgbModal,
+  ) {
+    super(
+      formService,
+      translate,
+      notificationsService,
+      authService,
+      dsoService,
+      requestService,
+      objectCache,
+      modalService
+    );
+  }
+
+  override formModel: DynamicFormControlModel[] = [
       new DynamicInputModel({
         id: 'title',
         name: 'dc.title',
@@ -122,4 +176,5 @@ export const collectionFormModels: DynamicFormControlModel[] = [
         name: 'dc.description.tableofcontents',
         spellCheck: environment.form.spellCheck,
       }),
-];
+    ];
+}

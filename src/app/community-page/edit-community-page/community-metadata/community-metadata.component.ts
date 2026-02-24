@@ -10,7 +10,8 @@ import { CommunityDataService } from '../../../core/data/community-data.service'
 import { Community } from '../../../core/shared/community.model';
 import { ComcolMetadataComponent } from '../../../shared/comcol/comcol-forms/edit-comcol-page/comcol-metadata/comcol-metadata.component';
 import { NotificationsService } from '../../../shared/notifications/notifications.service';
-import { CommunityFormComponent } from '../../community-form/community-form.component';
+//import { CommunityFormComponent } from '../../community-form/community-form.component';
+import { SediciCommunityFormComponent } from '../../../../themes/custom/app/community-page/community-form/sedici-community-form.component';
 
 /**
  * Component for editing a community's metadata
@@ -20,7 +21,8 @@ import { CommunityFormComponent } from '../../community-form/community-form.comp
   templateUrl: './community-metadata.component.html',
   imports: [
     AsyncPipe,
-    CommunityFormComponent,
+    //CommunityFormComponent,
+    SediciCommunityFormComponent
   ],
 })
 export class CommunityMetadataComponent extends ComcolMetadataComponent<Community> {

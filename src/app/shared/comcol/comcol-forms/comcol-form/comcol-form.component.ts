@@ -17,6 +17,7 @@ import {
   DynamicFormControlModel,
   DynamicFormService,
   DynamicInputModel,
+  DynamicFormArrayModel,
 } from '@ng-dynamic-forms/core';
 import {
   TranslateModule,
@@ -186,9 +187,38 @@ export class ComColFormComponent<T extends Collection | Community> implements On
     if (hasValue(this.formModel)) {
       this.formModel.forEach(
         (fieldModel: DynamicInputModel) => {
-          fieldModel.value = this.dso.firstMetadataValue(fieldModel.name);
-        },
-      );
+          if (fieldModel instanceof DynamicFormArrayModel) {
+            const controlTemplate = fieldModel.groupFactory()[0];
+            const controlId = controlTemplate.id;
+            const metadataName = controlTemplate.name;
+
+            const values = this.dso.allMetadataValues(metadataName);
+
+            fieldModel.clear();
+            if (!values || values.length === 0) {
+              fieldModel.addGroup();
+
+              const group = fieldModel.get(fieldModel.groups.length - 1);
+              const control = group.group.find(c => c.id === controlId) as DynamicInputModel;
+              control.value = undefined;
+            } else {
+
+              values.forEach(value => {
+                fieldModel.addGroup();
+
+                const group = fieldModel.get(fieldModel.groups.length - 1);
+                const control = group.group.find(c => c.id === controlId) as DynamicInputModel;
+
+                if (control) {
+                  control.value = value;
+                }
+              });
+            }
+          } else {
+            fieldModel.value = this.dso.firstMetadataValue(fieldModel.name);
+          }
+
+        });
       this.formGroup = this.formService.createFormGroup(this.formModel);
 
       this.updateFieldTranslations();
@@ -231,14 +261,41 @@ export class ComColFormComponent<T extends Collection | Community> implements On
   onSubmit() {
     const formMetadata = {}  as MetadataMap;
     this.formModel.forEach((fieldModel: DynamicInputModel) => {
-      const value: MetadataValue = {
-        value: fieldModel.value as string,
-        language: null,
-      } as any;
-      if (formMetadata.hasOwnProperty(fieldModel.name)) {
-        formMetadata[fieldModel.name].push(value);
+      if (fieldModel instanceof DynamicFormArrayModel) {
+        const controlTemplate = fieldModel.groupFactory()[0];
+        const metadataName = controlTemplate.name;
+        var n = 0;
+
+        const values: any[] = [];
+
+        fieldModel.groups.forEach(groupModel => {
+          Object.values(groupModel.group).forEach((model: any) => {
+            if (model.value !== null && model.value !== undefined && model.value !== '') {
+              values.push(model.value);
+            }
+          });
+        });
+        values.forEach(value => {
+          const mValue: MetadataValue = {
+            value: value,
+            language: null,
+          } as any;
+          if (formMetadata.hasOwnProperty(fieldModel.name)) {
+            formMetadata[fieldModel.name].push(mValue);
+          } else {
+            formMetadata[fieldModel.name] = [mValue];
+          }
+        });
       } else {
-        formMetadata[fieldModel.name] = [value];
+        const value: MetadataValue = {
+          value: fieldModel.value as string,
+          language: null,
+        } as any;
+        if (formMetadata.hasOwnProperty(fieldModel.name)) {
+          formMetadata[fieldModel.name].push(value);
+        } else {
+          formMetadata[fieldModel.name] = [value];
+        }
       }
     });
 
@@ -252,15 +309,49 @@ export class ComColFormComponent<T extends Collection | Community> implements On
 
     const operations: Operation[] = [];
     this.formModel.forEach((fieldModel: DynamicInputModel) => {
-      if (fieldModel.value !== this.dso.firstMetadataValue(fieldModel.name)) {
-        operations.push({
-          op: 'replace',
-          path: `/metadata/${fieldModel.name}`,
-          value: {
-            value: fieldModel.value,
-            language: null,
-          },
+      if (fieldModel instanceof DynamicFormArrayModel) {
+        const controlTemplate = fieldModel.groupFactory()[0];
+        const metadataName = controlTemplate.name;
+        var n = 0;
+
+        const values: any[] = [];
+
+        fieldModel.groups.forEach(groupModel => {
+          Object.values(groupModel.group).forEach((model: any) => {
+            if (model.value !== null && model.value !== undefined && model.value !== '') {
+              values.push(model.value);
+            }
+          });
         });
+        operations.push({
+            op: 'remove',
+            path: `/metadata/${metadataName}`,
+        });
+
+        values.forEach(value => {
+          console.log(value);
+          operations.push({
+            op: 'add',
+            path: `/metadata/${metadataName}`,
+            value: {
+              value: value,
+              language: null,
+              place: n++,
+            },
+          })
+        });
+      } else {
+        if (fieldModel.value !== this.dso.firstMetadataValue(fieldModel.name)) {
+          console.log(fieldModel.value);
+          operations.push({
+            op: 'replace',
+            path: `/metadata/${fieldModel.name}`,
+            value: {
+              value: fieldModel.value,
+              language: null,
+            },
+          });
+        }
       }
     });
 

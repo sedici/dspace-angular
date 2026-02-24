@@ -115,10 +115,10 @@ export class CommunityFormComponent extends ComColFormComponent<Community> imple
     }
   }
 
-  ngAfterViewInit(): void {
+  //ngAfterViewInit(): void {
     // Ejecuta la función JS después de que el DOM esté listo
-    $('#description').metadataGenerator();
-  }
+    //$('#description').metadataGenerator();
+  //}
 }
 
 declare var $: any;
