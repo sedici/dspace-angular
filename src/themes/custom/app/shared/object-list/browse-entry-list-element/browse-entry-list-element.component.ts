@@ -15,8 +15,8 @@ import { BBM_PAGINATION_ID } from 'src/app/browse-by/browse-by-metadata/browse-b
 import { map } from 'rxjs/operators';
 @Component({
   selector: 'ds-browse-entry-list-element',
-  // styleUrls: ['./browse-entry-list-element.component.scss'],
-  styleUrls: ['../../../../../../app/shared/object-list/browse-entry-list-element/browse-entry-list-element.component.scss'],
+  styleUrls: ['./browse-entry-list-element.component.scss'],
+  // styleUrls: ['../../../../../../app/shared/object-list/browse-entry-list-element/browse-entry-list-element.component.scss'],
   templateUrl: './browse-entry-list-element.component.html',
   //templateUrl: '../../../../../../app/shared/object-list/browse-entry-list-element/browse-entry-list-element.component.html',
   imports: [

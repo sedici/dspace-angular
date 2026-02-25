@@ -1,0 +1,27 @@
+.badge-container{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.span-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  
+  .rounded-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.5rem;
+    height: 1.5rem;
+    padding: 0 0.4rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1;
+    color: #ffffff;
+  }
+}
+
+
+
