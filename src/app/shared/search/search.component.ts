@@ -521,7 +521,11 @@ export class SearchComponent implements OnDestroy, OnInit {
    * @private
    */
   private retrieveSearchResults(searchOptions: PaginatedSearchOptions) {
-    this.resultsRD$.next(null);
+    // console.log('SearchComponent: retrieveSearchResults called', {
+    //   searchOptions,
+    //   useCachedVersionIfAvailable: this.useCachedVersionIfAvailable
+    // });
+    // this.resultsRD$.next(null);
     this.lastSearchOptions = searchOptions;
     const followLinks = [
       followLink<Item>('thumbnail', { isOptional: true }),
@@ -551,6 +555,13 @@ export class SearchComponent implements OnDestroy, OnInit {
       ...followLinks,
     ).pipe(getFirstCompletedRemoteData())
       .subscribe((results: RemoteData<SearchObjects<DSpaceObject>>) => {
+        console.log('SearchComponent: Search results received', {
+          hasSucceeded: results.hasSucceeded,
+          isLoading: results.isLoading,
+          isStale: results.isStale,
+          statusCode: results.statusCode,
+          fromCache: results.lastUpdated // just an indicator
+        });
         if (results.hasSucceeded) {
           if (this.trackStatistics) {
             this.service.trackSearch(searchOptionsWithHidden, results.payload);
