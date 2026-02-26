@@ -1,6 +1,6 @@
 <div class="container" *ngVar="(communityRD$ | async) as communityRD">
   @if (communityRD?.hasSucceeded) {
-    <div class="community-page" @fadeInOut [style.--default-color]="color$ | async">
+    <div class="community-page" @fadeInOut ngSkipHydration [style.--default-color]="color$ | async">
       @if (communityRD?.payload; as communityPayload) {
         <div>
           <div class="d-flex flex-row pb-4 pt-4">
