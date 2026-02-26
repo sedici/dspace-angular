@@ -439,8 +439,7 @@ export class SearchComponent implements OnDestroy, OnInit {
         this.currentSortOptions$.next(newSearchOptions.sort);
         this.sortOptionsList$.next(searchSortOptions);
         this.searchOptions$.next(newSearchOptions);
-        this.initialized$.next(true);
-        // retrieve results
+        // retrieve results (initialized$ will be set to true once results arrive)
         this.retrieveSearchResults(newSearchOptions);
         this.retrieveFilters(newSearchOptions);
       }
@@ -521,11 +520,7 @@ export class SearchComponent implements OnDestroy, OnInit {
    * @private
    */
   private retrieveSearchResults(searchOptions: PaginatedSearchOptions) {
-    // console.log('SearchComponent: retrieveSearchResults called', {
-    //   searchOptions,
-    //   useCachedVersionIfAvailable: this.useCachedVersionIfAvailable
-    // });
-    // this.resultsRD$.next(null);
+    this.resultsRD$.next(null);
     this.lastSearchOptions = searchOptions;
     const followLinks = [
       followLink<Item>('thumbnail', { isOptional: true }),
@@ -538,7 +533,7 @@ export class SearchComponent implements OnDestroy, OnInit {
       followLinks.push(followLink<WorkspaceItem>('supervisionOrders', { isOptional: true }) as any);
     }
 
-    const searchOptionsWithHidden = Object.assign (new PaginatedSearchOptions({}), searchOptions);
+    const searchOptionsWithHidden = Object.assign(new PaginatedSearchOptions({}), searchOptions);
     if (isNotEmpty(this.hiddenQuery)) {
       if (isNotEmpty(searchOptionsWithHidden.query)) {
         searchOptionsWithHidden.query = searchOptionsWithHidden.query + ' AND ' + this.hiddenQuery;
@@ -555,13 +550,6 @@ export class SearchComponent implements OnDestroy, OnInit {
       ...followLinks,
     ).pipe(getFirstCompletedRemoteData())
       .subscribe((results: RemoteData<SearchObjects<DSpaceObject>>) => {
-        console.log('SearchComponent: Search results received', {
-          hasSucceeded: results.hasSucceeded,
-          isLoading: results.isLoading,
-          isStale: results.isStale,
-          statusCode: results.statusCode,
-          fromCache: results.lastUpdated // just an indicator
-        });
         if (results.hasSucceeded) {
           if (this.trackStatistics) {
             this.service.trackSearch(searchOptionsWithHidden, results.payload);
@@ -571,6 +559,7 @@ export class SearchComponent implements OnDestroy, OnInit {
           }
         }
         this.resultsRD$.next(results);
+        this.initialized$.next(true);
       });
   }
 
