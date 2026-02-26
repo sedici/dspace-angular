@@ -79,3 +79,14 @@
 ::ng-deep .rounded-pill {
   background-color: var(--default-color, rgb(73, 80, 87)) !important;
 }
+
+// Animación de entrada compatible con SSR hydration
+// Reemplaza @fadeInOut de Angular que causa destrucción del DOM SSR durante hydration
+.fade-in {
+  animation: fadeIn 300ms ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
