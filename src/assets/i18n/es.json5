@@ -10008,10 +10008,10 @@
   "home.page.featuredOtherCollections": "Colecciones destacadas Externas",
   "home.page.faculties": "Facultades",
   "home.page.undergraduate": "Pregrado",
-  "home.page.researcherHelp": "Ayuda para investigadores",
-  "home.page.depositionObligation": "Obligación de depósito en el repositorio",
-  "home.page.growthStatistics": "Estadísticas de crecimiento",
-  "home.page.allies": "Aliados",
+  "home.page.researcherHelp": "Cómo subir material",
+  "home.page.depositionObligation": "Políticas",
+  "home.page.growthStatistics": "Estadísticas",
+  "home.page.faq": "Preguntas frecuentes",
 
   // Header
   "header.new.item": "Subir material",
