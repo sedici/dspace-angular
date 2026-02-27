@@ -21,8 +21,9 @@ export class VarDirective {
   constructor(private vcRef: ViewContainerRef, private templateRef: TemplateRef<any>) {}
 
   updateView() {
-    this.vcRef.clear();
-    this.vcRef.createEmbeddedView(this.templateRef, this.context);
+    if (this.vcRef.length === 0) {
+      this.vcRef.createEmbeddedView(this.templateRef, this.context);
+    }
   }
 }
 /* eslint-enable @angular-eslint/directive-selector */
