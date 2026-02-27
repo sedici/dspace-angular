@@ -111,7 +111,9 @@ export abstract class AbstractComponentLoaderComponent<T> implements OnInit, OnC
     const component: GenericConstructor<T> = this.getComponent();
 
     const viewContainerRef: ViewContainerRef = this.componentViewContainerRef;
-    viewContainerRef.clear();
+    if (this.compRef) {
+      viewContainerRef.clear();
+    }
 
     this.compRef = viewContainerRef.createComponent(
       component, {

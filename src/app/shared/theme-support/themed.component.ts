@@ -155,9 +155,6 @@ export abstract class ThemedComponent<T extends object> implements AfterViewInit
       this.compRef.destroy();
       this.compRef = null;
     }
-    if (hasValue(this.vcr)) {
-      this.vcr.clear();
-    }
   }
 
   protected connectInputsAndOutputs(): void {
