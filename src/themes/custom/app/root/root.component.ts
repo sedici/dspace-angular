@@ -17,7 +17,7 @@ import { ThemedLoadingComponent } from '../../../../app/shared/loading/themed-lo
 import { NotificationsBoardComponent } from '../../../../app/shared/notifications/notifications-board/notifications-board.component';
 import { SystemWideAlertBannerComponent } from '../../../../app/system-wide-alert/alert-banner/system-wide-alert-banner.component';
 import { SediciPostFooterComponent } from '../sedici-post-footer/sedici-post-footer.component';
-
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'ds-themed-root',
@@ -40,6 +40,7 @@ import { SediciPostFooterComponent } from '../sedici-post-footer/sedici-post-foo
     ThemedLoadingComponent,
     TranslateModule,
     SediciPostFooterComponent,
+    FooterComponent,
   ],
 })
 export class RootComponent extends BaseComponent {
