@@ -1,7 +1,9 @@
 import {
   ChangeDetectorRef,
   Component,
+  Inject,
   Input,
+  PLATFORM_ID,
 } from '@angular/core';
 
 import { ThemeService } from '../theme-support/theme.service';
@@ -26,8 +28,9 @@ export class ThemedLoadingComponent extends ThemedComponent<LoadingComponent> {
   constructor(
     protected cdr: ChangeDetectorRef,
     protected themeService: ThemeService,
+    @Inject(PLATFORM_ID) platformId: object,
   ) {
-    super(cdr, themeService);
+    super(cdr, themeService, platformId);
   }
 
   protected getComponentName(): string {

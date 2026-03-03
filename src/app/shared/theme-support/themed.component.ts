@@ -5,12 +5,15 @@ import {
   ComponentRef,
   ElementRef,
   HostBinding,
+  Inject,
   OnChanges,
   OnDestroy,
+  PLATFORM_ID,
   SimpleChanges,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import {
   BehaviorSubject,
   combineLatest,
@@ -62,10 +65,15 @@ export abstract class ThemedComponent<T extends object> implements AfterViewInit
    */
   @HostBinding('attr.data-used-theme') usedTheme: string;
 
+  // ===== TEST FLAG: skip first render to preserve SSR DOM =====
+  private skipFirstRender: boolean;
+
   constructor(
     protected cdr: ChangeDetectorRef,
     protected themeService: ThemeService,
+    @Inject(PLATFORM_ID) private platformId: object,
   ) {
+    this.skipFirstRender = isPlatformBrowser(this.platformId);
   }
 
   protected abstract getComponentName(): string;
@@ -108,6 +116,14 @@ export abstract class ThemedComponent<T extends object> implements AfterViewInit
   }
 
   protected renderComponentInstance(changes?: SimpleChanges): void {
+    // ===== TEST: skip first render on browser to keep SSR DOM =====
+    if (this.skipFirstRender) {
+      console.log('[ThemedComponent TEST] Skipping first renderComponentInstance to preserve SSR DOM');
+      this.skipFirstRender = false;
+      return;
+    }
+    // ===== END TEST =====
+
     if (hasValue(this.lazyLoadSub)) {
       this.lazyLoadSub.unsubscribe();
     }
