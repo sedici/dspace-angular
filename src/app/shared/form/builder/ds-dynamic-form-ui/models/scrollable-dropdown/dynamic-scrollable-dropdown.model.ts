@@ -2,6 +2,7 @@ import {
   AUTOCOMPLETE_OFF,
   DynamicFormControlLayout,
   serializable,
+
 } from '@ng-dynamic-forms/core';
 
 import { ResourceType } from '../../../../../../core/shared/resource-type';
@@ -27,6 +28,7 @@ export class DynamicScrollableDropdownModel extends DsDynamicInputModel {
   @serializable() maxOptions: number;
   @serializable() readonly type: string = DYNAMIC_FORM_CONTROL_TYPE_SCROLLABLE_DROPDOWN;
   @serializable() displayKey: string;
+  @serializable() authority: string;
   /**
    * Configurable function for display value formatting in input
    */

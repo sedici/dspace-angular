@@ -25,6 +25,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import {
   Observable,
   of,
+  startWith,
 } from 'rxjs';
 import {
   catchError,
@@ -130,8 +131,11 @@ export class DsDynamicScrollableDropdownComponent extends DsDynamicVocabularyCom
       this.loadOptions(true);
     });
 
-
-    this.group.get(this.model.id).valueChanges.pipe(distinctUntilChanged())
+    this.group.get(this.model.id).valueChanges
+      .pipe(
+        startWith(this.group.get(this.model.id).value),
+        distinctUntilChanged()
+      )
       .subscribe((value) => {
         this.setCurrentValue(value);
       });
@@ -315,6 +319,7 @@ export class DsDynamicScrollableDropdownComponent extends DsDynamicVocabularyCom
    */
   setCurrentValue(value: any, init = false): void {
     let result: Observable<string>;
+    console.log('Current value', value);
 
     if (init && !this.useFindAllService) {
       result = this.getInitValueFromModel().pipe(

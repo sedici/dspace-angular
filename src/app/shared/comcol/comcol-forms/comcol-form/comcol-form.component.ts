@@ -64,6 +64,7 @@ import { UploaderOptions } from '../../../upload/uploader/uploader-options.model
 import { followLink } from '../../../utils/follow-link-config.model';
 import { VarDirective } from '../../../utils/var.directive';
 import { ComcolPageLogoComponent } from '../../comcol-page-logo/comcol-page-logo.component';
+import { DynamicScrollableDropdownModel } from 'src/app/shared/form/builder/ds-dynamic-form-ui/models/scrollable-dropdown/dynamic-scrollable-dropdown.model';
 
 /**
  * A form for creating and editing Communities or Collections
@@ -192,7 +193,7 @@ export class ComColFormComponent<T extends Collection | Community> implements On
             const controlId = controlTemplate.id;
             const metadataName = controlTemplate.name;
 
-            const values = this.dso.allMetadataValues(metadataName);
+            const values = this.dso.allMetadata(metadataName);
 
             fieldModel.clear();
             if (!values || values.length === 0) {
@@ -202,17 +203,20 @@ export class ComColFormComponent<T extends Collection | Community> implements On
               const control = group.group.find(c => c.id === controlId) as DynamicInputModel;
               control.value = undefined;
             } else {
-
               values.forEach(value => {
                 fieldModel.addGroup();
+                console.log(value);
 
                 const group = fieldModel.get(fieldModel.groups.length - 1);
-                const control = group.group.find(c => c.id === controlId) as DynamicInputModel;
-
+                const control = group.group.find(c => c.id === controlId)
                 if (control) {
-                  control.value = value;
-                }
-              });
+                  if (control instanceof DynamicScrollableDropdownModel) {
+                    control.value = value.value;
+                    control.authority = value.authority;
+                  } else if (control instanceof DynamicInputModel){
+                    control.value = value.value;
+                  }
+                }});
             }
           } else {
             fieldModel.value = this.dso.firstMetadataValue(fieldModel.name);
@@ -278,7 +282,7 @@ export class ComColFormComponent<T extends Collection | Community> implements On
         values.forEach(value => {
           const mValue: MetadataValue = {
             value: value,
-            language: null,
+            language: 'es',
           } as any;
           if (formMetadata.hasOwnProperty(fieldModel.name)) {
             formMetadata[fieldModel.name].push(mValue);
@@ -286,6 +290,33 @@ export class ComColFormComponent<T extends Collection | Community> implements On
             formMetadata[fieldModel.name] = [mValue];
           }
         });
+      } else if (fieldModel instanceof DynamicScrollableDropdownModel){
+        if (fieldModel.authority == null || fieldModel.authority === '') {
+          const valor = (fieldModel as any)._value;
+          const name = (fieldModel as any).metadataFields[0];
+          const value: MetadataValue = {
+            value: valor.value,
+            language: null,
+            authority: valor.authority,
+          } as any;
+          if (formMetadata.hasOwnProperty(name)) {
+            formMetadata[name].push(value);
+          } else {
+            formMetadata[name] = [value];
+          }
+        } else {
+          const name = (fieldModel as any).metadataFields[0];
+          const value: MetadataValue = {
+            value: fieldModel.value,
+            language: null,
+            authority: fieldModel.authority,
+          } as any;
+          if (formMetadata.hasOwnProperty(name)) {
+            formMetadata[name].push(value);
+          } else {
+            formMetadata[name] = [value];
+          }
+        }
       } else {
         const value: MetadataValue = {
           value: fieldModel.value as string,
@@ -312,37 +343,58 @@ export class ComColFormComponent<T extends Collection | Community> implements On
       if (fieldModel instanceof DynamicFormArrayModel) {
         const controlTemplate = fieldModel.groupFactory()[0];
         const metadataName = controlTemplate.name;
-        var n = 0;
 
-        const values: any[] = [];
-
-        fieldModel.groups.forEach(groupModel => {
-          Object.values(groupModel.group).forEach((model: any) => {
-            if (model.value !== null && model.value !== undefined && model.value !== '') {
-              values.push(model.value);
-            }
-          });
-        });
         operations.push({
             op: 'remove',
             path: `/metadata/${metadataName}`,
         });
 
-        values.forEach(value => {
-          console.log(value);
-          operations.push({
-            op: 'add',
-            path: `/metadata/${metadataName}`,
-            value: {
-              value: value,
-              language: null,
-              place: n++,
-            },
-          })
+        fieldModel.groups.forEach(groupModel => {
+          Object.values(groupModel.group).forEach((model: any) => {
+            if (model.value !== null && model.value !== undefined && model.value !== '') {
+              if (typeof model.value === 'string') {
+                operations.push({
+                  op: 'add',
+                  path: `/metadata/${metadataName}`,
+                  value: {
+                    value: model.value,
+                    language: 'es',
+                    confidence: 600,
+                    authority: model.authority,
+                  },
+                });
+              } else {
+                operations.push({
+                  op: 'add',
+                  path: `/metadata/${metadataName}`,
+                  value: {
+                    value: model.value.value,
+                    language: 'es',
+                    confidence: 600,
+                    authority: model.value.authority,
+                  },
+                })
+              }
+            }
+          });
         });
+      } else if (fieldModel instanceof DynamicScrollableDropdownModel){
+        const valor = (fieldModel as any)._value;
+        const name = (fieldModel as any).metadataFields[0];
+        if (valor.value !== this.dso.firstMetadataValue(name)) {
+          operations.push({
+            op: 'replace',
+            path: `/metadata/${name}`,
+            value: {
+              value: valor.value,
+              language: 'es',
+              confidence: 600,
+              authority: valor.authority,
+            },
+          });
+        }
       } else {
         if (fieldModel.value !== this.dso.firstMetadataValue(fieldModel.name)) {
-          console.log(fieldModel.value);
           operations.push({
             op: 'replace',
             path: `/metadata/${fieldModel.name}`,

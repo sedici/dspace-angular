@@ -30,6 +30,8 @@ import { FormComponent } from '../../../../../app/shared/form/form.component';
 import { UploaderComponent } from '../../../../../app/shared/upload/uploader/uploader.component';
 import { VarDirective } from '../../../../../app/shared/utils/var.directive';
 import { CommunityFormComponent } from 'src/app/community-page/community-form/community-form.component';
+import { DynamicScrollableDropdownModel } from 'src/app/shared/form/builder/ds-dynamic-form-ui/models/scrollable-dropdown/dynamic-scrollable-dropdown.model';
+import { VocabularyOptions } from 'src/app/core/submission/vocabularies/models/vocabulary-options.model';
 //import { DsDynamicOneboxComponent} from '../../../../../app/shared/form/builder/ds-dynamic-form-ui/models/onebox/dynamic-onebox.component';
 
 /**
@@ -72,6 +74,15 @@ export class SediciCommunityFormComponent extends CommunityFormComponent impleme
     );
   }
 
+  public materiaVocabularyOptions: VocabularyOptions = {
+        name: 'Materias_Authority_Provider',
+        closed: false,
+      };
+  public origenVocabularyOptions: VocabularyOptions = {
+        name: 'Rest_Institutions_Authority_Provider',
+        closed: false,
+      };
+
   override formModel: DynamicFormControlModel[] = [
       new DynamicInputModel({
         id: 'title',
@@ -100,13 +111,20 @@ export class SediciCommunityFormComponent extends CommunityFormComponent impleme
         ]
       }),
       new DynamicFormArrayModel({
-        id: 'entidadMultiple',
+        id: 'entidades',
         label: 'Entidades origen',
         groupFactory: () => [
-          new DynamicInputModel({
-            id: 'Origen',
+          new DynamicScrollableDropdownModel({
+            id: 'entidadOrigen',
             name: 'mods.originInfo.place',
-          })
+            vocabularyOptions: this.origenVocabularyOptions,
+            repeatable: true,
+            metadataFields: ['mods.originInfo.place'],
+            submissionId: '',
+            hasSelectableMetadata: false,
+            readOnly: false,
+            disabled: false,
+          }),
         ]
       }),
       new DynamicInputModel({
@@ -140,16 +158,32 @@ export class SediciCommunityFormComponent extends CommunityFormComponent impleme
         id: 'materiaMultiple',
         label: 'Materias',
         groupFactory: () => [
-          new DynamicInputModel({
+          new DynamicScrollableDropdownModel({
             id: 'materia',
             name: 'sedici.subject.materias',
-          })
+            vocabularyOptions: this.materiaVocabularyOptions,
+            repeatable: true,
+            metadataFields: ['sedici.subject.materias'],
+            submissionId: '',
+            hasSelectableMetadata: false,
+            readOnly: false,
+            disabled: false,
+          }),
         ]
       }),
       new DynamicInputModel({
         id: 'editor',
         name: 'dc.contributor.editor',
       }),
+      // new DynamicScrollableDropdownModel({
+      //   id: 'materiasA',
+      //   vocabularyOptions: this.vocabularyOptions,
+      //   repeatable: true,
+      //   metadataFields: ['sedici.subject.materias'],
+      //   submissionId: '',
+      //   hasSelectableMetadata: false,
+      //   readOnly: false,
+      // }),
       new DynamicInputModel({
         id: 'fecha',
         name: 'dc.date.exposure',
