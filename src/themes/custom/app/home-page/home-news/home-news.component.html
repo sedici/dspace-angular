@@ -38,9 +38,22 @@
           <ds-themed-search-form
             [searchPlaceholder]="'home.page.search.placeholder' | translate:{totalItems: totalItems}"></ds-themed-search-form>
           <div class="help-section">
-            <a href="https://sedici.gitbook.io/sedici-docs/sobre-sedici/estadisticas" target="_blank"><img src="assets/custom/images/_stats.svg" [alt]="'Estadísiticas logo'"> {{'home.page.growthStatistics' | translate}}</a>
-            <a href="https://sedici.gitbook.io/sedici-docs/sobre-sedici/circuitos-de-deposito" target="_blank"><img src="assets/custom/images/_help.svg" [alt]="'Ayuda logo'"> {{'home.page.researcherHelp' | translate}}</a>
-            <a href="https://sedici.gitbook.io/sedici-docs/politicas/politicas-de-contenidos" target="_blank"><img src="assets/custom/images/_politica.svg" [alt]="'Politica logo'"> {{'home.page.depositionObligation' | translate}}</a>
+            <a href="https://sedici.gitbook.io/sedici-docs/sobre-sedici/estadisticas" target="_blank">
+              <i class="fa-solid fa-chart-line"></i>
+              <span>{{'home.page.growthStatistics' | translate}}</span>
+            </a>
+            <a href="https://sedici.gitbook.io/sedici-docs/sobre-sedici/circuitos-de-deposito" target="_blank">
+              <i class="fa-solid fa-upload"></i>
+              <span>{{'home.page.researcherHelp' | translate}}</span>
+            </a>
+            <a href="https://sedici.gitbook.io/sedici-docs/politicas/politicas-de-contenidos" target="_blank">
+              <i class="fa-solid fa-scale-balanced"></i>
+              <span>{{'home.page.depositionObligation' | translate}}</span>
+            </a>
+            <a href="https://sedici.gitbook.io/sedici-docs/preguntas/preguntas-frecuentes" target="_blank">
+              <i class="fa-regular fa-circle-question"></i>
+              <span>{{'home.page.faq' | translate}}</span>
+            </a>
           </div>
         </div>
       </div>

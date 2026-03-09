@@ -1,6 +1,4 @@
 .dso-logo {
-  // Caja fija: la imagen se adapta dentro sin distorsionarse.
-  // object-fit: contain maneja automáticamente imágenes horizontales y verticales.
   display: flex;
   align-items: center;
   justify-content: center;
