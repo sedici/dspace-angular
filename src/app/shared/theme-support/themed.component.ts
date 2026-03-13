@@ -138,9 +138,9 @@ export abstract class ThemedComponent<T extends object> implements AfterViewInit
     this.lazyLoadSub = this.lazyLoadObs.subscribe(([simpleChanges, constructor]: [SimpleChanges, GenericConstructor<T>]) => {
       this.destroyComponentInstance();
 
-      const nodes = Array.from(
+      const nodes: Node[] = Array.from(
         this.themedElementContent.nativeElement.childNodes
-      );
+      ) as Node[];
 
       this.compRef = this.vcr.createComponent(constructor, {
         projectableNodes: [nodes],
