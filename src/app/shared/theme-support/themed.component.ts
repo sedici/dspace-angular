@@ -136,6 +136,40 @@ export abstract class ThemedComponent<T extends object> implements AfterViewInit
 
     this.lazyLoadSub = this.lazyLoadObs.subscribe(([simpleChanges, constructor]: [SimpleChanges, GenericConstructor<T>]) => {
       this.destroyComponentInstance();
+
+      // -- INICIO FIX PARPADEO (DOM Snapshot Hack) --
+      let snapshotNode: HTMLElement | null = null;
+      const isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined';
+
+      if (isBrowser && this.themedElementContent?.nativeElement) {
+        const originalNode = this.themedElementContent.nativeElement as HTMLElement;
+        // Obtenemos las dimensiones y posición del elemento SSR si es válido
+        if (typeof originalNode.getBoundingClientRect === 'function') {
+          const rect = originalNode.getBoundingClientRect();
+          if (rect.width > 0 && rect.height > 0) {
+            // Clonamos el nodo entero tal como lo entregó SSR
+            snapshotNode = originalNode.cloneNode(true) as HTMLElement;
+            // Lo posicionamos absolutamente encapsulando su estilo
+            snapshotNode.style.position = 'absolute';
+            snapshotNode.style.top = `${rect.top + window.scrollY}px`;
+            snapshotNode.style.left = `${rect.left + window.scrollX}px`;
+            snapshotNode.style.width = `${rect.width}px`;
+            snapshotNode.style.height = `${rect.height}px`;
+            snapshotNode.style.margin = '0';
+            snapshotNode.style.zIndex = '999999';
+            snapshotNode.style.pointerEvents = 'none'; // Para evitar fallos en clicks del usuario
+            // Usamos la variable nativa de bootstrap para el color de base (o blanco) para ocluir parpadeo posterior
+            snapshotNode.style.backgroundColor = 'var(--bs-body-bg, #ffffff)';
+            snapshotNode.style.overflow = 'hidden';
+            snapshotNode.style.transition = 'opacity 0.2s ease-out';
+            
+            // Lo inyectamos en el body para que flote independientemente de los saltos estructurales debajo
+            document.body.appendChild(snapshotNode);
+          }
+        }
+      }
+      // -- FIN FIX PARPADEO --
+
       this.compRef = this.vcr.createComponent(constructor, {
         projectableNodes: [this.themedElementContent.nativeElement.childNodes],
       });
@@ -146,7 +180,36 @@ export abstract class ThemedComponent<T extends object> implements AfterViewInit
       }
       this.compRef$.next(this.compRef);
       this.cdr.markForCheck();
+
+      // -- INICIO TRACKING DE HIDRATACION Y SSR --
+      if (isBrowser) {
+        const targetNode = this.themedElementContent.nativeElement as HTMLElement;
+        const componentName = this.getComponentName();
+        const hasHydrationMarker = targetNode.hasAttribute('ngh') || targetNode.querySelector('[ngh]') !== null;
+        const domNodesCount = targetNode.childNodes.length;
+        
+        console.warn(`[Hydration Tracker] ThemedComponent: ${componentName}`);
+        console.warn(` - ¿Tenía contenido el SSR original?: ${domNodesCount > 0 ? 'Sí (' + domNodesCount + ' nodos)' : 'No'}`);
+        console.warn(` - ¿Angular intentó/logró hidratarlo antes de que lo destruyamos?: ${hasHydrationMarker ? 'SÍ (Encontramos atributo ngh)' : 'NO'}`);
+        console.warn(` - Acción: Destruyendo el contenedor original ahora...`);
+      }
+      // -- FIN TRACKING --
+
       this.themedElementContent.nativeElement.remove();
+
+      // -- INICIO REMOVER SNAPSHOT --
+      if (snapshotNode && isBrowser) {
+        // Damos a Angular ~100ms extra para asegurarse que el contenido dinámico 
+        // ya terminó sus ciclos internos de pintura (CSS, directivas, pipes).
+        setTimeout(() => {
+          if (snapshotNode && snapshotNode.style) {
+            snapshotNode.style.opacity = '0'; // Disparo visual del rellenado
+          }
+          // Tras el desvanecimiento (que tarda 0.2s por el transition anterior), limpiar todo
+          setTimeout(() => snapshotNode?.parentNode?.removeChild(snapshotNode), 250);
+        }, 100);
+      }
+      // -- FIN REMOVER SNAPSHOT --
     });
   }
 
