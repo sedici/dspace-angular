@@ -84,7 +84,7 @@ export const browserAppConfig: ApplicationConfig = mergeApplicationConfig({
   providers: [
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimations(),
-    provideClientHydration(),
+    provideClientHydration({debug: true}),
     importProvidersFrom(
       // forRoot ensures the providers are only created once
       Angulartics2RouterlessModule.forRoot(),
