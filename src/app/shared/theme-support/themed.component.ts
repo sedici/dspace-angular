@@ -138,20 +138,27 @@ export abstract class ThemedComponent<T extends object> implements AfterViewInit
     this.lazyLoadSub = this.lazyLoadObs.subscribe(([simpleChanges, constructor]: [SimpleChanges, GenericConstructor<T>]) => {
       this.destroyComponentInstance();
 
+      const nodes = Array.from(
+        this.themedElementContent.nativeElement.childNodes
+      );
+
       this.compRef = this.vcr.createComponent(constructor, {
-        projectableNodes: [this.themedElementContent.nativeElement.childNodes],
+        projectableNodes: [nodes],
       });
+
       if (hasValue(simpleChanges)) {
         this.ngOnChanges(simpleChanges);
       } else {
         this.connectInputsAndOutputs();
       }
+
       this.compRef$.next(this.compRef);
-      this.cdr.markForCheck();
 
+      this.cdr.detectChanges();
 
-      this.themedElementContent.nativeElement.remove();
-
+      requestAnimationFrame(() => {
+        this.themedElementContent.nativeElement.remove();
+      });
     });
   }
 
