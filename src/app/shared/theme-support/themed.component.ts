@@ -12,8 +12,8 @@ import {
   SimpleChanges,
   ViewChild,
   ViewContainerRef,
-  isPlatformBrowser,
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import {
   BehaviorSubject,
   combineLatest,
@@ -75,9 +75,9 @@ export abstract class ThemedComponent<T extends object> implements AfterViewInit
   constructor(
     protected cdr: ChangeDetectorRef,
     protected themeService: ThemeService,
-    @Inject(PLATFORM_ID) private platformId: object,
+    @Inject(PLATFORM_ID) private platformId?: object,
   ) {
-    this.isBrowser = isPlatformBrowser(this.platformId);
+    this.isBrowser = isPlatformBrowser(this.platformId ?? PLATFORM_ID);
     this.firstHydrationPending = this.isBrowser && this.hasTransferStateDom();
   }
 
