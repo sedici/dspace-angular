@@ -5,11 +5,14 @@ import {
   ComponentRef,
   ElementRef,
   HostBinding,
+  Inject,
   OnChanges,
   OnDestroy,
+  PLATFORM_ID,
   SimpleChanges,
   ViewChild,
   ViewContainerRef,
+  isPlatformBrowser,
 } from '@angular/core';
 import {
   BehaviorSubject,
@@ -59,6 +62,12 @@ export abstract class ThemedComponent<T extends object> implements AfterViewInit
   protected inAndOutputNames: (keyof T & keyof this)[] = [];
 
   /**
+   * Detectar si estamos en el primer ciclo de hidratación del SSR para evitar destruir el DOM en ese primer paso.
+   */
+  private isBrowser: boolean;
+  private firstHydrationPending: boolean;
+
+  /**
    * A data attribute on the ThemedComponent to indicate which theme the rendered component came from.
    */
   @HostBinding('attr.data-used-theme') usedTheme: string;
@@ -66,7 +75,10 @@ export abstract class ThemedComponent<T extends object> implements AfterViewInit
   constructor(
     protected cdr: ChangeDetectorRef,
     protected themeService: ThemeService,
+    @Inject(PLATFORM_ID) private platformId: object,
   ) {
+    this.isBrowser = isPlatformBrowser(this.platformId);
+    this.firstHydrationPending = this.isBrowser && this.hasTransferStateDom();
   }
 
   protected abstract getComponentName(): string;
@@ -156,10 +168,31 @@ export abstract class ThemedComponent<T extends object> implements AfterViewInit
 
       this.cdr.detectChanges();
 
-      requestAnimationFrame(() => {
-        this.themedElementContent.nativeElement.remove();
-      });
+      console.log("Nodes length: " + nodes.length)
+      // Evitar destruir el DOM del SSR en el primer paso de hidratación.
+      const hasSsrDom = nodes.length > 0;
+      const skipRemovalThisPass = this.firstHydrationPending && hasSsrDom;
+
+      if (!skipRemovalThisPass) {
+        requestAnimationFrame(() => {
+          this.themedElementContent.nativeElement.remove();
+        });
+      }
+
+      // A partir de la segunda vez ya podemos limpiar normalmente
+      this.firstHydrationPending = false;
     });
+  }
+
+  /**
+   * Detecta si el HTML viene del SSR (transfer-state) para marcar el primer ciclo de hidratación.
+   */
+  private hasTransferStateDom(): boolean {
+    if (!isPlatformBrowser(this.platformId)) {
+      return false;
+    }
+    // Señal usada por DSpace en main.browser.ts para TransferState
+    return !!document.querySelector('script#dspace-angular-state');
   }
 
   protected destroyComponentInstance(): void {
