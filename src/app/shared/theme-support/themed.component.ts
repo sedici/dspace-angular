@@ -42,7 +42,6 @@ import { ThemeService } from './theme.service';
   selector: 'ds-themed',
   styleUrls: ['./themed.component.scss'],
   templateUrl: './themed.component.html',
-  host: { 'ngSkipHydration': 'true' },
 })
 export abstract class ThemedComponent<T extends object> implements AfterViewInit, OnDestroy, OnChanges {
   @ViewChild('vcr', { read: ViewContainerRef }) vcr: ViewContainerRef;
@@ -168,10 +167,8 @@ export abstract class ThemedComponent<T extends object> implements AfterViewInit
 
       this.cdr.detectChanges();
 
-      console.log("Nodes length: " + nodes.length)
-      // Evitar destruir el DOM del SSR en el primer paso de hidratación.
-      const hasSsrDom = nodes.length > 0;
-      const skipRemovalThisPass = this.firstHydrationPending && hasSsrDom;
+      // Evitar destruir el DOM del SSR en el primer paso de hidratación: la primera vez no removemos nada.
+      const skipRemovalThisPass = this.firstHydrationPending;
 
       if (!skipRemovalThisPass) {
         requestAnimationFrame(() => {
