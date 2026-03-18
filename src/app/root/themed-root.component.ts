@@ -1,44 +1,49 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
-import { ThemedComponent } from '../shared/theme-support/themed.component';
-import { RootComponent } from './root.component';
+import { slideSidebarPadding } from '../shared/animations/slide';
+import { AsyncPipe, NgClass } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
+import { ThemedAdminSidebarComponent } from '../admin/admin-sidebar/themed-admin-sidebar.component';
+import { ThemedBreadcrumbsComponent } from '../breadcrumbs/themed-breadcrumbs.component';
+import { ThemedFooterComponent } from '../footer/themed-footer.component';
+import { ThemedHeaderNavbarWrapperComponent } from '../header-nav-wrapper/themed-header-navbar-wrapper.component';
+import { ThemedLoadingComponent } from '../shared/loading/themed-loading.component';
+import { NotificationsBoardComponent } from '../shared/notifications/notifications-board/notifications-board.component';
+import { SystemWideAlertBannerComponent } from '../system-wide-alert/alert-banner/system-wide-alert-banner.component';
+
+import { SediciPostFooterComponent } from '../../themes/custom/app/sedici-post-footer/sedici-post-footer.component';
+import { FooterComponent as CustomFooterComponent } from '../../themes/custom/app/footer/footer.component';
+
+import { RootComponent as CustomRootComponent } from '../../themes/custom/app/root/root.component';
+
+/**
+ * Hardcoded proxy for Custom Root to avoid dynamic insertion flickers
+ */
 @Component({
   selector: 'ds-root',
-  templateUrl: '../shared/theme-support/themed.component.html',
+  styleUrls: ['../../themes/custom/app/root/root.component.scss'],
+  templateUrl: '../../themes/custom/app/root/root.component.html',
+  animations: [slideSidebarPadding],
+  standalone: true,
+  imports: [
+    AsyncPipe,
+    NgClass,
+    NotificationsBoardComponent,
+    RouterOutlet,
+    SystemWideAlertBannerComponent,
+    ThemedAdminSidebarComponent,
+    ThemedBreadcrumbsComponent,
+    ThemedFooterComponent,
+    ThemedHeaderNavbarWrapperComponent,
+    ThemedLoadingComponent,
+    TranslateModule,
+    SediciPostFooterComponent,
+    CustomFooterComponent,
+  ],
 })
-export class ThemedRootComponent extends ThemedComponent<RootComponent> {
-  /**
-   * Whether or not the authentication is currently blocking the UI
-   */
+export class ThemedRootComponent extends CustomRootComponent {
   @Input() shouldShowFullscreenLoader: boolean;
-
-  /**
-   * Whether or not the the application is loading;
-   */
   @Input() shouldShowRouteLoader: boolean;
-
-  protected inAndOutputNames: (keyof RootComponent & keyof this)[] = ['shouldShowRouteLoader', 'shouldShowFullscreenLoader'];
-
-  protected getComponentName(): string {
-    return 'RootComponent';
-  }
-
-  protected importThemedComponent(themeName: string): Promise<any> {
-    return import(
-      /* webpackMode: "eager" */
-      `../../themes/${themeName}/app/root/root.component`
-    );
-  }
-
-  protected importUnthemedComponent(): Promise<any> {
-    return import(
-      /* webpackMode: "eager" */
-      `./root.component`
-    );
-  }
-
 }

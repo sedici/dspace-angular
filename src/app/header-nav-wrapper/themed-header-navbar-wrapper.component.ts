@@ -1,25 +1,22 @@
 import { Component } from '@angular/core';
 
-import { ThemedComponent } from '../shared/theme-support/themed.component';
-import { HeaderNavbarWrapperComponent } from './header-navbar-wrapper.component';
+import { AsyncPipe, NgClass } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+
+import { ThemedHeaderComponent } from '../header/themed-header.component';
+import { ThemedNavbarComponent } from '../navbar/themed-navbar.component';
+
+import { HeaderNavbarWrapperComponent as CustomHeaderNavbarWrapperComponent } from '../../themes/custom/app/header-nav-wrapper/header-navbar-wrapper.component';
 
 /**
- * Themed wrapper for {@link HeaderNavbarWrapperComponent}
+ * Hardcoded proxy for Custom Header Navbar Wrapper
  */
 @Component({
   selector: 'ds-header-navbar-wrapper',
-  templateUrl: '../shared/theme-support/themed.component.html',
+  styleUrls: ['../../themes/custom/app/header-nav-wrapper/header-navbar-wrapper.component.scss'],
+  templateUrl: '../../themes/custom/app/header-nav-wrapper/header-navbar-wrapper.component.html',
+  standalone: true,
+  imports: [NgClass, ThemedHeaderComponent, ThemedNavbarComponent, AsyncPipe, TranslateModule],
 })
-export class ThemedHeaderNavbarWrapperComponent extends ThemedComponent<HeaderNavbarWrapperComponent> {
-  protected getComponentName(): string {
-    return 'HeaderNavbarWrapperComponent';
-  }
-
-  protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../themes/${themeName}/app/header-nav-wrapper/header-navbar-wrapper.component`);
-  }
-
-  protected importUnthemedComponent(): Promise<any> {
-    return import('./header-navbar-wrapper.component');
-  }
+export class ThemedHeaderNavbarWrapperComponent extends CustomHeaderNavbarWrapperComponent {
 }

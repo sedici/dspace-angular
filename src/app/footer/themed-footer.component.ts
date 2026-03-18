@@ -1,25 +1,25 @@
 import { Component } from '@angular/core';
 
-import { ThemedComponent } from '../shared/theme-support/themed.component';
-import { FooterComponent } from './footer.component';
+import { AsyncPipe, DatePipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+
+import { FooterComponent as CustomFooterComponent } from '../../themes/custom/app/footer/footer.component';
 
 /**
- * Themed wrapper for FooterComponent
+ * Hardcoded proxy for Custom Footer to avoid dynamic insertion flickers
  */
 @Component({
   selector: 'ds-footer',
-  templateUrl: '../shared/theme-support/themed.component.html',
+  styleUrls: ['../../themes/custom/app/footer/footer.component.scss'],
+  templateUrl: '../../themes/custom/app/footer/footer.component.html',
+  standalone: true,
+  imports: [
+    AsyncPipe,
+    DatePipe,
+    RouterLink,
+    TranslateModule,
+  ],
 })
-export class ThemedFooterComponent extends ThemedComponent<FooterComponent> {
-  protected getComponentName(): string {
-    return 'FooterComponent';
-  }
-
-  protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../themes/${themeName}/app/footer/footer.component`);
-  }
-
-  protected importUnthemedComponent(): Promise<any> {
-    return import('./footer.component');
-  }
+export class ThemedFooterComponent extends CustomFooterComponent {
 }
