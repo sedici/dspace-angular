@@ -28,11 +28,17 @@ export class ThemedRootComponent extends ThemedComponent<RootComponent> {
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../themes/${themeName}/app/root/root.component`);
+    return import(
+      /* webpackMode: "eager" */
+      `../../themes/${themeName}/app/root/root.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {
-    return import(`./root.component`);
+    return import(
+      /* webpackMode: "eager" */
+      `./root.component`
+    );
   }
 
 }
