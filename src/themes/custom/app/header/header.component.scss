@@ -127,6 +127,20 @@
 
   .left-container {
     display: flex;
+    flex-shrink: 0;
+  }
+
+  .center-container {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    padding: 0 1rem;
+
+    ds-themed-search-form {
+      width: 100%;
+      max-width: 46vw;
+    }
   }
 
   .right-container-mobile {
@@ -143,16 +157,15 @@
 
   .right-container {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
-    flex-basis: 100%;
+    flex-shrink: 0;
 
     ds-search-navbar {
       width: 60%;
 
       @media (max-width: 1300px) {
         width: 45%;
-
       }
     }
 

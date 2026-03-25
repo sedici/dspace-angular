@@ -6,10 +6,12 @@
           <img id="header-logo" [src]="'assets/custom/images/LogoSEDICI.svg'" [attr.alt]="'menu.header.image.logo' | translate"/>
         </a>
       </div>
-      <div class="right-container">
+      <div class="center-container">
         @if ((isHomePage$ | async) !== true) {
-          <ds-themed-search-form [searchPlaceholder]="'home.page.search.placeholder' | translate:{totalItems: totalItems}" [variant]="'navbar'" style="width: 57%;"></ds-themed-search-form>
+          <ds-themed-search-form [searchPlaceholder]="'home.page.search.placeholder' | translate:{totalItems: totalItems}" [variant]="'navbar'"></ds-themed-search-form>
         }
+      </div>
+      <div class="right-container">
         <ds-navbar></ds-navbar>
       </div>
     </div>
