@@ -9,8 +9,45 @@
       role="button"
       tabindex="0"
       >
-      <img src="assets/custom/images/facet/{{filter.name}}.png" class="facet-logo">
-      <span class="h4 d-inline-block text-start mt-auto mb-auto filter-name-text">
+      @switch (filter.name) {
+        @case ('itemtype') {
+          <i class="fa-solid fa-tag facet-icon" aria-hidden="true"></i>
+        }
+        @case ('itemsubtype') {
+          <i class="fa-solid fa-tag facet-icon" aria-hidden="true"></i>
+        }
+        @case ('dateIssued') {
+          <i class="fa-regular fa-calendar facet-icon" aria-hidden="true"></i>
+        }
+        @case ('author') {
+          <i class="fa-regular fa-user facet-icon" aria-hidden="true"></i>
+        }
+        @case ('subject') {
+          <i class="fa-solid fa-tags facet-icon" aria-hidden="true"></i>
+        }
+        @case ('discoverable') {
+          <i class="fa-regular fa-eye facet-icon" aria-hidden="true"></i>
+        }
+        @case ('withdrawn') {
+          <i class="fa-solid fa-box-archive facet-icon" aria-hidden="true"></i>
+        }
+        @case ('has_content_in_original_bundle') {
+          <i class="fa-solid fa-file-circle-check facet-icon" aria-hidden="true"></i>
+        }
+        @case ('namedresourcetype') {
+          <i class="fa-solid fa-diagram-project facet-icon" aria-hidden="true"></i>
+        }
+        @case ('location.coll') {
+          <i class="fa-regular fa-folder-open facet-icon" aria-hidden="true"></i>
+        }
+        @case ('submitter') {
+          <i class="fa-regular fa-user facet-icon" aria-hidden="true"></i>
+        }
+        @default {
+          <i class="fa-solid fa-tag facet-icon" aria-hidden="true"></i>
+        }
+      }
+      <span class="h4 d-inline-block filter-name-text">
         {{'search.filters.filter.' + filter.name + '.head'| translate}}
       </span>
       <i class="filter-toggle flex-grow-1 fas p-auto"

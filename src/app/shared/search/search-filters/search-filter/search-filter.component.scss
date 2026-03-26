@@ -6,14 +6,21 @@
   cursor: pointer;
   line-height: 0;
 
-  .facet-logo {
-    max-width: 24px;
-    max-height: 24px;
-    margin: auto .25em auto 0;
+  button.filter-name {
+    display: flex;
+    align-items: center;
+    gap: .25rem;
+  }
+
+  .facet-icon {
+    color: var(--sedici-color);
+    font-size: 1.25rem;
+    margin: 0;
   }
 
   .filter-name-text {
     color: var(--sedici-color);
+    margin: 0;
   }
 
   .search-filter-wrapper {
