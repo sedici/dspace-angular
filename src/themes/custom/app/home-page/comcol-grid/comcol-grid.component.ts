@@ -91,9 +91,39 @@ export class ComcolGridComponent implements OnInit {
 
   coleccionesDestacadasUnlp:Array<ExploracionDestacada> = [
     {
+      title: "Dirección PREBI-SEDICI",
+      img: "assets/custom/images/ComCol/prebi-sedici.svg",
+      href: "handle/10915/25293",
+    } as ExploracionDestacada,
+    {
       title: "Red de Museos de la UNLP",
       img: "assets/custom/images/ComCol/redmuseos.svg",
       href: "handle/10915/27268",
+    } as ExploracionDestacada,
+    {
+      title: "Biblioteca Pública",
+      img: "assets/custom/images/ComCol/biblioteca.png",
+      href: "handle/10915/81791",
+    } as ExploracionDestacada,
+    {
+      title: "Archivo Histórico",
+      img: "assets/custom/images/ComCol/archivo.png",
+      href: "handle/10915/131410",
+    } as ExploracionDestacada,
+    {
+      title: "Presidencia",
+      img: "assets/custom/images/ComCol/UNLP_Logo.png",
+      href: "handle/10915/47",
+    } as ExploracionDestacada,
+    {
+      title: "Editorial de la Universidad Nacional de La Plata (EDULP)",
+      img: "assets/custom/images/ComCol/edulp.png",
+      href: "handle/10915/18248",
+    } as ExploracionDestacada,
+    {
+      title: "Libros de Cátedra",
+      img: "assets/custom/images/ComCol/libros.png",
+      href: "handle/10915/27874",
     } as ExploracionDestacada,
     {
       title: "Radio Universidad Nacional de La Plata",
@@ -104,11 +134,6 @@ export class ComcolGridComponent implements OnInit {
       title: "Dirección General de Educación a Distancia y Tecnologías (EAD)",
       img: "assets/custom/images/ComCol/ead.png",
       href: "handle/10915/21328",
-    } as ExploracionDestacada,
-    {
-      title: "Presidencia",
-      img: "assets/custom/images/ComCol/UNLP_Logo.png",
-      href: "handle/10915/47",
     } as ExploracionDestacada,
   ];
 
@@ -122,6 +147,16 @@ export class ComcolGridComponent implements OnInit {
       title: "Sociedad Argentina de Informática (SADIO)",
       img: "assets/custom/images/ComCol/sadio.jpg",
       href: "handle/10915/38367",
+    } as ExploracionDestacada,
+    {
+      title: "Academia Nacional de Agronomía y Veterinaria (ANAV)",
+      img: "assets/custom/images/ComCol/anav.jpg",
+      href: "handle/10915/27489",
+    } as ExploracionDestacada,
+    {
+      title: "Consorcio Iberoamericano para Educación en Ciencia y Tecnología (ISTEC)",
+      img: "assets/custom/images/ComCol/istec.jpg",
+      href: "handle/10915/72659",
     } as ExploracionDestacada,
   ];
 
