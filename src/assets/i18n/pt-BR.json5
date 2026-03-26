@@ -3025,6 +3025,17 @@
   // "footer.link.coar-notify-support": "COAR Notify",
   "footer.link.coar-notify-support": "COAR Notify",
 
+  "footer.sedici.faq": "Perguntas frequentes",
+  "footer.sedici.about": "Sobre",
+  "footer.sedici.section.about": "SOBRE SEDICI",
+  "footer.sedici.deposit-circuits": "Circuitos de depósito",
+  "footer.sedici.statistics": "Estatísticas",
+  "footer.sedici.section.policies": "POLÍTICAS",
+  "footer.sedici.content-policies": "Políticas de conteúdo",
+  "footer.sedici.legal-framework": "Marco normativo/legal",
+  "footer.sedici.licenses": "Licenças de uso",
+  "footer.sedici.post-footer.description": "Um projeto de <strong>PREBI-SEDICI</strong> - Universidad Nacional de La Plata",
+
   // "forgot-email.form.header": "Forgot Password",
   "forgot-email.form.header": "Esqueci a senha",
 
@@ -4298,6 +4309,8 @@
 
   // "item.page.description": "Description",
   "item.page.description": "Descrição",
+
+  "item.page.print": "Imprimir",  
 
   // "item.page.org-unit": "Organizational Unit",
   // TODO New key - Add a translation
@@ -10969,6 +10982,12 @@
 
   "sedici.item.page.sedici.citation": "Citar",
 
+  // "sedici.item.page.sedici.citation.copy-clipboard": "Copiar a portapapeles",
+  "sedici.item.page.sedici.citation.copy-clipboard": "Copiar para a área de transferência",
+
+  // "sedici.item.page.sedici.citation": "Seleccionar tipo de cita:"
+  "sedici.item.page.sedici.citation.type": "Selecione o tipo de citação",
+
   "sedici.item.page.sedici.share": "Compartilhar",
 
   "sedici.item.page.sedici.copy": "Copiar",
@@ -11174,7 +11193,9 @@
 
   "home.page.production": "Produção UNLP",
 
-  "home.page.featuredCollections": "Coleções em Destaque",
+  "home.page.featuredUnlpCollections": "Coleções em destaque da UNLP",
+
+  "home.page.featuredOtherCollections": "Coleções externas em destaque",
 
   "home.page.faculties": "Faculdades",
 
@@ -11437,5 +11458,5 @@
   // "item.preview.organization.alternateName": "Alternative name",
   "item.preview.organization.alternateName": "Nome alternativo",
 
-
+  "profile": "Perfil"
 }

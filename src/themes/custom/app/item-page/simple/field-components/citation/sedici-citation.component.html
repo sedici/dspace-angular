@@ -6,7 +6,7 @@
 </div>
 <div class="modal-body">
   <div class="citation-type-selector">
-    <label for="citationType">Seleccionar tipo de cita:</label>
+    <label for="citationType">{{'sedici.item.page.sedici.citation.type' | translate}}:</label>
     <select id="citationType" class="form-select" (change)="onCitationTypeChange($event)">
       @for (option of citationOptions; track option) {
         <option [value]="option.value">{{ option.label }}</option>
@@ -20,7 +20,7 @@
   </div>
   <div class="copy-button-wrapper">
     <button type="button" id="copyButton" class="btn-copy" (click)="copyToClipboard(elementContentToCopy)">
-      Copiar al portapapeles <i class="fa fa-copy" aria-hidden="true"></i>
+      {{'sedici.item.page.sedici.citation.copy-clipboard' | translate}} <i class="fa fa-copy" aria-hidden="true"></i>
     </button>
     @if (copySuccess) {
       <span id="copySuccessMessage" class="copy-success-message">✓</span>

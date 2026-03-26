@@ -1979,6 +1979,17 @@
 
   "footer.link.coar-notify-support": "COAR Notify",
 
+  "footer.sedici.faq": "Frequently asked questions",
+  "footer.sedici.about": "About",
+  "footer.sedici.section.about": "ABOUT SEDICI",
+  "footer.sedici.deposit-circuits": "Deposit circuits",
+  "footer.sedici.statistics": "Statistics",
+  "footer.sedici.section.policies": "POLICIES",
+  "footer.sedici.content-policies": "Content policies",
+  "footer.sedici.legal-framework": "Legal framework",
+  "footer.sedici.licenses": "Usage licenses",
+  "footer.sedici.post-footer.description": "A project by <strong>PREBI-SEDICI</strong> - Universidad Nacional de La Plata",
+
   "forgot-email.form.header": "Forgot Password",
 
   "forgot-email.form.info": "Enter the email address associated with the account.",
@@ -2808,6 +2819,8 @@
   "item.page.publication": "Publications",
 
   "item.page.publications": "Publications",
+
+  "item.page.print": "Print",
 
   "item.page.article": "Article",
 
@@ -7138,6 +7151,12 @@
 
   "sedici.item.page.sedici.share": "Share",
 
+  // "sedici.item.page.sedici.citation.copy-clipboard": "Copiar a portapapeles",
+  "sedici.item.page.sedici.citation.copy-clipboard": "Copy to clipboard",
+
+  // "sedici.item.page.sedici.citation": "Seleccionar tipo de cita:",
+  "sedici.item.page.sedici.citation.type": "Select citation type",
+
   // "sedici.item.page.sedici.copy": "Copiar",
   "sedici.item.page.sedici.copy": "Copy",
 
@@ -7343,7 +7362,9 @@
 
   "home.page.production": "UNLP Production",
 
-  "home.page.featuredCollections": "Featured Collections",
+  "home.page.featuredUnlpCollections": "Featured UNLP Collections",
+
+  "home.page.featuredOtherCollections": "Featured External Collections",
 
   "home.page.faculties": "Faculties",
 
@@ -7484,4 +7505,6 @@
   "item.preview.organization.address.addressLocality": "City",
 
   "item.preview.organization.alternateName": "Alternative name",
+
+  "profile": "Profile"
 }

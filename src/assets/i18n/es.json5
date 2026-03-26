@@ -3003,6 +3003,17 @@
   // "footer.link.coar-notify-support": "COAR Notify",
   "footer.link.coar-notify-support": "COAR Notify",
 
+  "footer.sedici.faq": "Preguntas frecuentes",
+  "footer.sedici.about": "Acerca de",
+  "footer.sedici.section.about": "SOBRE SEDICI",
+  "footer.sedici.deposit-circuits": "Circuitos de depósito",
+  "footer.sedici.statistics": "Estadísticas",
+  "footer.sedici.section.policies": "POLÍTICAS",
+  "footer.sedici.content-policies": "Políticas de contenido",
+  "footer.sedici.legal-framework": "Marco normativo/legal",
+  "footer.sedici.licenses": "Licencias de uso",
+  "footer.sedici.post-footer.description": "Un proyecto de <strong>PREBI-SEDICI</strong> - Universidad Nacional de La Plata",
+
   // "forgot-email.form.header": "Forgot Password",
   "forgot-email.form.header": "Olvido de contraseña",
 
@@ -4275,6 +4286,9 @@
   // "item.page.publications": "Publications",
   // TODO New key - Add a translation
   "item.page.publications": "Publications",
+
+  // "item.page.print": "Imprimir",
+  "item.page.print": "Imprimir",
 
   // "item.page.article": "Article",
   // TODO New key - Add a translation
@@ -9918,6 +9932,8 @@
   "sedici.item.page.unknown.author": "Autor desconocido",
   "sedici.item.page.sedici.citation": "Citar",
   "sedici.item.page.sedici.share": "Compartir",
+  "sedici.item.page.sedici.citation.copy-clipboard": "Copiar a portapapeles",
+  "sedici.item.page.sedici.citation.type": "Seleccionar tipo de cita",
   "sedici.item.page.sedici.copy": "Copiar",
   "sedici.item.page.sedici.creator.corporate": "Autor institucional",
   "sedici.item.page.sedici.creator.interprete": "Intérprete",
@@ -9964,6 +9980,8 @@
   "sedici.item.page.sedici.relation.bookTitle": "Título del libro",
   "sedici.item.page.sedici.relation.ciclo": "Ciclo",
   "sedici.item.page.dc.date.accessioned": "Creado el",
+
+
 
   // Tabs
   "sedici.tabs.files": "Archivos",
@@ -11271,5 +11289,5 @@
   // TODO New key - Add a translation
   "item.preview.organization.alternateName": "Alternative name",
 
-
+  "profile": "Perfil"
 }
