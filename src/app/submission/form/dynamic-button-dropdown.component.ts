@@ -1,5 +1,5 @@
 import { Component, ElementRef, Renderer2, ViewChild, AfterViewInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { MetadataConfig } from '../models/metadata-config.model';
 import { FilterInfo, FilterConfig } from '../models/filter-config.model';
 
@@ -8,7 +8,7 @@ import { FilterInfo, FilterConfig } from '../models/filter-config.model';
   templateUrl: './dynamic-button-dropdown.component.html',
   styleUrls: ['./dynamic-button-dropdown.component.scss'],
   standalone: true,
-  imports: [CommonModule]
+  imports: []
 })
 export class DynamicButtonDropdownComponent implements AfterViewInit, OnDestroy {
   @Input() inputID: string;

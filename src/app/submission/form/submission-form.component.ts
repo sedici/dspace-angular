@@ -1,7 +1,4 @@
-import { 
-  CommonModule,
-  NgFor,
-} from '@angular/common';
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectorRef,
   Component,
@@ -76,9 +73,8 @@ import { PdfViewerComponent } from './pdf-viewer.component';
     ThemedSubmissionUploadFilesComponent,
     TranslatePipe,
     FormsModule,
-    NgFor,
-    PdfViewerComponent,
-  ],
+    PdfViewerComponent
+],
 })
 export class SubmissionFormComponent implements OnChanges, OnDestroy, OnInit {
 

@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild, ChangeDetectorRef, NgZone, ComponentRef, AfterViewInit, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
-import { NgIf, NgFor, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PdfJsViewerModule } from "ng2-pdfjs-viewer";
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
@@ -19,15 +19,13 @@ import { FilterInfo, FilterConfig } from '../models/filter-config.model';
   styleUrls: ['./pdf-viewer.component.scss'],
   standalone: true,
   imports: [
-		NgIf,
-		NgFor,
     NgClass,
-		FormsModule,
-		PdfJsViewerModule,
+    FormsModule,
+    PdfJsViewerModule,
     NgbDropdownModule,
     DynamicButtonDropdownComponent,
-    ShortcutsButtonsComponent,
-	],
+    ShortcutsButtonsComponent
+],
 })
 // export class PdfViewerComponent {
 export class PdfViewerComponent implements AfterViewInit {

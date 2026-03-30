@@ -12,92 +12,104 @@
   </ng2-pdfjs-viewer>
 
   <!-- MENÚ DE PREVISUALIZACIÓN Y ACCIONES -->
-  <div *ngIf="isTextSelected" class="selection-menu">
-    <!-- SECCIÓN: TEXTO SELECCIONADO -->
-    <div class="section" *ngIf="!showDynamicInputs">
-      <div class="section-header">
-        <label for="selected-text">Texto seleccionado:</label>
-        <div class="d-flex gap-1">
-          <button 
-            (click)="changeConcatenateText()" 
-            [class.active]="concatenateText"
-            [class.inactive]="!concatenateText"
-            class="filter-toggle-btn">
-            +
-          </button>
-          <button 
-            (click)="changeFilterAutomatically()" 
-            [class.active]="filterAutomatically"
-            [class.inactive]="!filterAutomatically"
-            class="filter-toggle-btn">
-            Modo automático
-          </button>
-        </div>
-      </div>
-      <textarea
-        id="selected-text"
-        [(ngModel)]="selectedText"
-        placeholder="Texto seleccionado"
-        rows="6"
-      ></textarea>
-    </div>
-
-    <!-- Contenedor para los inputs dinámicos -->
-    <div id="inputsContainer" class="inputs-grid" *ngIf="showDynamicInputs"></div>
-
-
-    <div class="selection-submenu">
-      <!-- SECCIÓN: PREVISUALIZACIÓN DEL TEXTO SELECCIONADO -->
-      <div class="row">
-        <div class="field">
-          <select [(ngModel)]="selectedMetadataField" id="metadata-field-select" (ngModelChange)="updateFilterOptions()">
-            <option value="" disabled selected>Seleccionar campo</option>
-            <option *ngFor="let option of metadataOptions" [ngValue]="option.value">
-              {{ option.name }}
-            </option>
-          </select>
-        </div>
-    
-        <!-- SECCIÓN: BOTONES DE FILTROS -->
-        <div class="action-buttons">
-          <button 
-            *ngFor="let filter of filterOptions.slice(0, 8)" 
-            class="filter-btn" 
-            (click)="applyFilter(filter.id)" 
-            [disabled]="showDynamicInputs && filter.id === 'splitByDelimiter'"
-            [title]="filter.description">
-            <i *ngIf="filter.icon; else textLabel" [class]="filter.icon"></i>
-            <ng-template #textLabel>{{ filter.label }}</ng-template>
-          </button>
-
-          <div ngbDropdown class="dropdown" *ngIf="filterOptions.length > 8">
-            <button ngbDropdownToggle class="filter-btn" title="Más opciones">
-              <i class="fa-solid fa-ellipsis-vertical"></i>
-            </button>
-            <div ngbDropdownMenu class="dropdown-menu dropdown-transformer-menu action-buttons">
+  @if (isTextSelected) {
+    <div class="selection-menu">
+      <!-- SECCIÓN: TEXTO SELECCIONADO -->
+      @if (!showDynamicInputs) {
+        <div class="section">
+          <div class="section-header">
+            <label for="selected-text">Texto seleccionado:</label>
+            <div class="d-flex gap-1">
               <button
-                *ngFor="let filter of filterOptions.slice(8)"
-                ngbDropdownItem
-                class="filter-btn"
-                (click)="applyFilter(filter.id)"
-                [title]="filter.description">
-                <i *ngIf="filter.icon; else dropdownTextLabel" [class]="filter.icon"></i>
-                <ng-template #dropdownTextLabel>{{ filter.label }}</ng-template>
+                (click)="changeConcatenateText()"
+                [class.active]="concatenateText"
+                [class.inactive]="!concatenateText"
+                class="filter-toggle-btn">
+                +
+              </button>
+              <button
+                (click)="changeFilterAutomatically()"
+                [class.active]="filterAutomatically"
+                [class.inactive]="!filterAutomatically"
+                class="filter-toggle-btn">
+                Modo automático
               </button>
             </div>
           </div>
+          <textarea
+            id="selected-text"
+            [(ngModel)]="selectedText"
+            placeholder="Texto seleccionado"
+            rows="6"
+          ></textarea>
+        </div>
+      }
+      <!-- Contenedor para los inputs dinámicos -->
+      @if (showDynamicInputs) {
+        <div id="inputsContainer" class="inputs-grid"></div>
+      }
+      <div class="selection-submenu">
+        <!-- SECCIÓN: PREVISUALIZACIÓN DEL TEXTO SELECCIONADO -->
+        <div class="row">
+          <div class="field">
+            <select [(ngModel)]="selectedMetadataField" id="metadata-field-select" (ngModelChange)="updateFilterOptions()">
+              <option value="" disabled selected>Seleccionar campo</option>
+              @for (option of metadataOptions; track option) {
+                <option [ngValue]="option.value">
+                  {{ option.name }}
+                </option>
+              }
+            </select>
+          </div>
+          <!-- SECCIÓN: BOTONES DE FILTROS -->
+          <div class="action-buttons">
+            @for (filter of filterOptions.slice(0, 8); track filter) {
+              <button
+                class="filter-btn"
+                (click)="applyFilter(filter.id)"
+                [disabled]="showDynamicInputs && filter.id === 'splitByDelimiter'"
+                [title]="filter.description">
+                @if (filter.icon) {
+                  <i [class]="filter.icon"></i>
+                } @else {
+                  {{ filter.label }}
+                }
+              </button>
+            }
+            @if (filterOptions.length > 8) {
+              <div ngbDropdown class="dropdown">
+                <button ngbDropdownToggle class="filter-btn" title="Más opciones">
+                  <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+                <div ngbDropdownMenu class="dropdown-menu dropdown-transformer-menu action-buttons">
+                  @for (filter of filterOptions.slice(8); track filter) {
+                    <button
+                      ngbDropdownItem
+                      class="filter-btn"
+                      (click)="applyFilter(filter.id)"
+                      [title]="filter.description">
+                      @if (filter.icon) {
+                        <i [class]="filter.icon"></i>
+                      } @else {
+                        {{ filter.label }}
+                      }
+                    </button>
+                  }
+                </div>
+              </div>
+            }
+          </div>
         </div>
       </div>
+      <!-- SECCIÓN: BOTONES DE ACCIÓN -->
+      <div class="action-buttons">
+        <button (click)="copyToMetadataField()" class="btn btn-primary">
+          Agregar
+        </button>
+        <button (click)="clearTextSelection()" class="btn btn-secondary">
+          Cancelar
+        </button>
+      </div>
     </div>
-    
-    <!-- SECCIÓN: BOTONES DE ACCIÓN -->
-    <div class="action-buttons">
-      <button (click)="copyToMetadataField()" class="btn btn-primary">
-        Agregar
-      </button>
-      <button (click)="clearTextSelection()" class="btn btn-secondary">
-        Cancelar
-      </button>
-    </div>
-  </div>
+  }
 </div>
