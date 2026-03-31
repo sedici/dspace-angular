@@ -70,26 +70,67 @@
   .selection-submenu {
     margin-bottom: 5px;
 
-    .row {
+    .metadata-filter-row {
       display: flex;
-      justify-content: space-between;
-      gap: 15px;
-      margin-left: 0;
-      margin-right: 0;
-    
-      .field {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-    
-        label {
-          margin-bottom: 5px;
-        }
-    
-        select {
+      align-items: center;
+      gap: 10px;
+
+      .metadata-field {
+        flex: 0 0 34%;
+
+        #metadata-field-search {
           width: 100%;
-          height: 100%;
-          padding: 5px;
+          height: 42px;
+          padding: 6px 10px;
+          border: 1px solid #ced4da;
+          border-radius: 4px;
+        }
+      }
+
+      .filter-buttons {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex: 1 1 auto;
+        justify-content: end;
+
+        .filter-btn {
+          min-width: 42px;
+          height: 42px;
+          padding: 5px 10px;
+          font-size: 14px;
+          border: 1px solid #c4c8cc;
+          border-radius: 5px;
+          background-color: #e9e9e9;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .filter-btn:hover {
+          background-color: #e0e0e0;
+        }
+        
+        .dropdown {
+          .dropdown-menu {
+            display: none;
+          }
+
+          .dropdown-menu.show {
+            display: flex;
+            min-width: max-content;
+            border: 1px solid #c4c8cc;
+            border-radius: 5px;
+            padding: 8px;
+            gap: 8px;
+            background-color: #f9f9f9;
+          }
+
+          .dropdown-item.filter-btn {
+            margin: 0;
+            line-height: 1;
+            text-decoration: none;
+          }
         }
       }
     }
@@ -127,17 +168,6 @@
       &.btn-secondary {
         background-color: #6c757d;
         color: #fff;
-      }
-    }
-
-    .dropdown {
-      .dropdown-menu {
-        display: none;
-      }
-      
-      .dropdown-menu.show {
-        display: flex;
-        min-width: max-content;
       }
     }
   }

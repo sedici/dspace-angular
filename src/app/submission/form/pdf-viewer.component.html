@@ -50,19 +50,23 @@
       }
       <div class="selection-submenu">
         <!-- SECCIÓN: PREVISUALIZACIÓN DEL TEXTO SELECCIONADO -->
-        <div class="row">
-          <div class="field">
-            <select [(ngModel)]="selectedMetadataField" id="metadata-field-select" (ngModelChange)="updateFilterOptions()">
-              <option value="" disabled selected>Seleccionar campo</option>
-              @for (option of metadataOptions; track option) {
-                <option [ngValue]="option.value">
-                  {{ option.name }}
-                </option>
-              }
-            </select>
+        <div class="metadata-filter-row">
+          <div class="metadata-field">
+            <input
+              id="metadata-field-search"
+              type="text"
+              class="form-control"
+              [(ngModel)]="metadataSearchTerm"
+              (input)="onMetadataSearchChange()"
+              [ngbTypeahead]="metadataFieldSearch"
+              [placement]="'top-start'"
+              [resultFormatter]="metadataFieldFormatter"
+              [inputFormatter]="metadataFieldFormatter"
+              (selectItem)="onMetadataFieldSelected($event)"
+              placeholder="Seleccionar o buscar campo..." />
           </div>
           <!-- SECCIÓN: BOTONES DE FILTROS -->
-          <div class="action-buttons">
+          <div class="filter-buttons">
             @for (filter of filterOptions.slice(0, 8); track filter) {
               <button
                 class="filter-btn"
@@ -81,7 +85,7 @@
                 <button ngbDropdownToggle class="filter-btn" title="Más opciones">
                   <i class="fa-solid fa-ellipsis-vertical"></i>
                 </button>
-                <div ngbDropdownMenu class="dropdown-menu dropdown-transformer-menu action-buttons">
+                <div ngbDropdownMenu class="dropdown-menu dropdown-transformer-menu">
                   @for (filter of filterOptions.slice(8); track filter) {
                     <button
                       ngbDropdownItem

@@ -2,7 +2,9 @@ import { Component, Input, ViewChild, ChangeDetectorRef, NgZone, ComponentRef, A
 import { NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PdfJsViewerModule } from "ng2-pdfjs-viewer";
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbTypeaheadModule, NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
 import { filterTransformer } from '../../../../zfilterTransformer/filterTransformer.js';
 import { DynamicButtonDropdownComponent } from './dynamic-button-dropdown.component';
@@ -23,6 +25,7 @@ import { FilterInfo, FilterConfig } from '../models/filter-config.model';
     FormsModule,
     PdfJsViewerModule,
     NgbDropdownModule,
+    NgbTypeaheadModule,
     DynamicButtonDropdownComponent,
     ShortcutsButtonsComponent
 ],
@@ -48,6 +51,7 @@ export class PdfViewerComponent implements AfterViewInit {
   // Configuración de metadatos
   metadataFormOptions = [];
   metadataOptions = [];
+  metadataSearchTerm: string = '';
   repeatableMetadata: string[] = MetadataConfig.REPEATABLE_METADATA;
   peopleMetadata: string[] = MetadataConfig.PEOPLE_METADATA;
 
@@ -89,6 +93,69 @@ export class PdfViewerComponent implements AfterViewInit {
     if (this.peopleMetadata.includes(idPart)) {
       this.filterOptions = this.filterOptions.concat(this.peopleMetadataFilter);
     }
+  }
+
+  onMetadataSearchChange(): void {
+    const selectedOption = this.getSelectedMetadataOption();
+    const searchTerm = this.normalizeMetadataSearchText(this.metadataSearchTerm);
+    const selectedName = this.normalizeMetadataSearchText(selectedOption?.name || '');
+
+    if (this.selectedMetadataField && searchTerm !== selectedName) {
+      this.selectedMetadataField = '';
+      this.updateFilterOptions();
+    }
+  }
+
+  private getFilteredMetadataOptions(term: string = this.metadataSearchTerm) {
+    const normalizedTerm = this.normalizeMetadataSearchText(term);
+    if (!normalizedTerm) {
+      return this.metadataOptions;
+    }
+
+    return this.metadataOptions.filter((option: any) => {
+      const name = this.normalizeMetadataSearchText(option?.name || '');
+      return name.includes(normalizedTerm);
+    });
+  }
+
+  metadataFieldFormatter = (option: { name: string }) => {
+    return (typeof option === 'object' && option?.name) ? option.name : (option as unknown as string);
+  };
+
+  metadataFieldSearch = (text$: Observable<string>) => {
+    return text$.pipe(
+      debounceTime(120),
+      distinctUntilChanged(),
+      map((term) => this.getFilteredMetadataOptions(term).slice(0, 25)),
+    );
+  };
+
+  onMetadataFieldSelected(event: NgbTypeaheadSelectItemEvent): void {
+    const option = event.item as any;
+    if (!option) {
+      return;
+    }
+
+    this.selectedMetadataField = option.value;
+    this.metadataSearchTerm = option.name;
+    this.updateFilterOptions();
+  }
+
+  private normalizeMetadataSearchText(value: string): string {
+    return (value || '')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .trim();
+  }
+
+  private getSelectedMetadataOption(): any {
+    return this.metadataOptions.find((option: any) => option.value === this.selectedMetadataField);
+  }
+
+  private syncMetadataSearchTermWithSelection(): void {
+    const selectedOption = this.getSelectedMetadataOption();
+    this.metadataSearchTerm = selectedOption ? selectedOption.name : '';
   }
 
   ngAfterViewInit() {
@@ -182,6 +249,7 @@ export class PdfViewerComponent implements AfterViewInit {
       // Evito el focus en la caja de previsualización de texto y en los campos deplegables
       if (!excludedIds.has(targetId) && !targetId.includes('input-')) {
         this.selectedMetadataField = targetId;
+        this.syncMetadataSearchTermWithSelection();
         this.updateFilterOptions();
         this.changeDetectorRef.detectChanges();
       }
@@ -305,20 +373,53 @@ export class PdfViewerComponent implements AfterViewInit {
     
     const uniqueKey = input.getAttribute('data-unique-key');
     if (!uniqueKey) return;
-    
-    const parent = input.closest('.col') || input.closest('ds-dynamic-form-control-container');
-    if (!parent) return;
-    
-    const existingButton = parent.querySelector(`app-dynamic-button-dropdown[data-field-key="${uniqueKey}"]`);
+
+    const existingButton = document.querySelector(`app-dynamic-button-dropdown[data-field-key="${uniqueKey}"]`);
     if (existingButton) {
       return;
     }
 
-    // Crear contenedor flex si es necesario
-    let container: HTMLElement | null = null;
-    if (parent.classList.contains('col-sm-12')) {
-      container = this.createFlexContainer(input);
+    const rightAddon = input.closest('.right-addon') as HTMLElement | null;
+    if (rightAddon) {
+      const componentRef = this.createButtonComponentt(input);
+      componentRef.location.nativeElement.setAttribute('data-field-key', uniqueKey);
+      this.fieldButtonMap.set(uniqueKey, componentRef);
+      const wrapper = rightAddon.parentElement as HTMLElement | null;
+      if (wrapper) {
+        wrapper.style.display = 'flex';
+        wrapper.style.alignItems = 'center';
+        wrapper.style.gap = '8px';
+        rightAddon.style.flex = '1 1 auto';
+        rightAddon.style.minWidth = '0';
+        wrapper.appendChild(componentRef.location.nativeElement);
+      } else {
+        rightAddon.insertAdjacentElement('afterend', componentRef.location.nativeElement);
+      }
+      return;
     }
+
+    const ngBootstrapInput = input.closest('dynamic-ng-bootstrap-input') as HTMLElement | null;
+    if (ngBootstrapInput) {
+      const componentRef = this.createButtonComponentt(input);
+      componentRef.location.nativeElement.setAttribute('data-field-key', uniqueKey);
+      this.fieldButtonMap.set(uniqueKey, componentRef);
+
+      const wrapper = input.parentElement as HTMLElement | null;
+      if (wrapper) {
+        wrapper.style.display = 'flex';
+        wrapper.style.alignItems = 'center';
+        wrapper.style.gap = '8px';
+        input.style.flex = '1 1 auto';
+        input.style.minWidth = '0';
+        wrapper.appendChild(componentRef.location.nativeElement);
+      } else {
+        ngBootstrapInput.insertAdjacentElement('afterend', componentRef.location.nativeElement);
+      }
+      return;
+    }
+    
+    const parent = input.closest('.col') || input.closest('ds-dynamic-form-control-container');
+    if (!parent) return;
 
     // Crear componente de botón
     const componentRef = this.createButtonComponentt(input);
@@ -329,23 +430,7 @@ export class PdfViewerComponent implements AfterViewInit {
     this.fieldButtonMap.set(uniqueKey, componentRef);
     
     // Insertar en DOM
-    if (container) {
-      container.appendChild(componentRef.location.nativeElement);
-    } else {
-      parent.insertAdjacentElement('afterend', componentRef.location.nativeElement);
-    }
-  }
-
-  private createFlexContainer(input: HTMLElement): HTMLElement {
-    const container = document.createElement('div');
-    container.classList.add('d-flex', 'align-items-center', 'w-100');
-    container.style.gap = '8px';
-    
-    input.classList.add('flex-grow-1');
-    input.parentNode!.insertBefore(container, input);
-    container.appendChild(input);
-    
-    return container;
+    parent.insertAdjacentElement('afterend', componentRef.location.nativeElement);
   }
 
   private createButtonComponentt(input: HTMLElement): ComponentRef<DynamicButtonDropdownComponent> {
@@ -431,6 +516,8 @@ export class PdfViewerComponent implements AfterViewInit {
       name: nameMap[element.id] || element.getAttribute('placeholder') || element.getAttribute('name') || element.id,
       value: element.id
     }));
+
+    this.syncMetadataSearchTermWithSelection();
   }
 
   public pagesLoadedEvent(): void {
@@ -607,6 +694,7 @@ export class PdfViewerComponent implements AfterViewInit {
     this.removeButtons();
     this.clearTextSelection();
     this.selectedMetadataField = '';
+    this.metadataSearchTerm = '';
   }
   
   private processDateMetadata(selectedText: string): string {

@@ -1,3 +1,10 @@
+:host {
+  display: inline-block;
+  width: auto;
+  padding: 0;
+  flex: 0 0 auto;
+}
+
 .dropdown-container {
   position: relative;
   display: inline-block;
@@ -11,6 +18,7 @@
   .dropdown-menu {
     padding: 8px;
     gap: 10px;
+    right: 0;
 
     .dropdown-item {
       cursor: pointer;
