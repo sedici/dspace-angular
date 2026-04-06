@@ -92,12 +92,12 @@ export class ComcolGridComponent implements OnInit {
   coleccionesDestacadasUnlp:Array<ExploracionDestacada> = [
     {
       title: "Dirección PREBI-SEDICI",
-      img: "assets/custom/images/ComCol/prebi-sedici.svg",
+      img: "assets/custom/images/ComCol/Colecciones Destacadas/prebisedici.svg",
       href: "handle/10915/25293",
     } as ExploracionDestacada,
     {
       title: "Red de Museos de la UNLP",
-      img: "assets/custom/images/ComCol/redmuseos.svg",
+      img: "assets/custom/images/ComCol/Colecciones Destacadas/redmuseos.svg",
       href: "handle/10915/27268",
     } as ExploracionDestacada,
     {
@@ -107,17 +107,17 @@ export class ComcolGridComponent implements OnInit {
     } as ExploracionDestacada,
     {
       title: "Archivo Histórico",
-      img: "assets/custom/images/ComCol/archivo.png",
+      img: "assets/custom/images/ComCol/Colecciones Destacadas/Archivo Historico.svg",
       href: "handle/10915/131410",
     } as ExploracionDestacada,
     {
       title: "Presidencia",
-      img: "assets/custom/images/ComCol/UNLP_Logo.png",
+      img: "assets/custom/images/ComCol/Colecciones Destacadas/UNLP_Logo.png",
       href: "handle/10915/47",
     } as ExploracionDestacada,
     {
       title: "Editorial de la Universidad Nacional de La Plata (EDULP)",
-      img: "assets/custom/images/ComCol/edulp.png",
+      img: "assets/custom/images/ComCol/Colecciones Destacadas/Edulp.svg",
       href: "handle/10915/18248",
     } as ExploracionDestacada,
     {
@@ -140,12 +140,12 @@ export class ComcolGridComponent implements OnInit {
   coleccionesDestacadasOtras:Array<ExploracionDestacada> = [
     {
       title: "Red de Universidades con Carreras en Informática (RedUNCI)",
-      img: "assets/custom/images/ComCol/redunci.png",
+      img: "assets/custom/images/ComCol/Colecciones Destacadas/redunci.png",
       href: "handle/10915/18267",
     } as ExploracionDestacada,
     {
       title: "Sociedad Argentina de Informática (SADIO)",
-      img: "assets/custom/images/ComCol/sadio.jpg",
+      img: "assets/custom/images/ComCol/Colecciones Destacadas/sadio.jpg",
       href: "handle/10915/38367",
     } as ExploracionDestacada,
     {
@@ -155,7 +155,7 @@ export class ComcolGridComponent implements OnInit {
     } as ExploracionDestacada,
     {
       title: "Consorcio Iberoamericano para Educación en Ciencia y Tecnología (ISTEC)",
-      img: "assets/custom/images/ComCol/istec.jpg",
+      img: "assets/custom/images/ComCol/Colecciones Destacadas/ISTEC.svg",
       href: "handle/10915/72659",
     } as ExploracionDestacada,
   ];
@@ -163,13 +163,13 @@ export class ComcolGridComponent implements OnInit {
   facultades:Array<ExploracionDestacada> = [
     {
       title: "Facultad de Arquitectura y Urbanismo",
-      img: "assets/custom/images/ComCol/Facultades/FAU.png",
+      img: "assets/custom/images/ComCol/Facultades/FAU.svg",
       href: "/handle/10915/25",
       description: "Arquitectura y Urbanismo",
     } as ExploracionDestacada,
     {
       title: "Facultad de Artes",
-      img: "assets/custom/images/ComCol/Facultades/artes.png",
+      img: "assets/custom/images/ComCol/Facultades/Artes.svg",
       href: "/handle/10915/38",
       description: "Artes",
     } as ExploracionDestacada,
@@ -235,7 +235,7 @@ export class ComcolGridComponent implements OnInit {
     } as ExploracionDestacada,
     {
       title: "Facultad de Ingeniería",
-      img: "assets/custom/images/ComCol/Facultades/ingenieria.png",
+      img: "assets/custom/images/ComCol/Facultades/Ingenieria.svg",
       href: "/handle/10915/2",
       description: "Ingeniería",
     } as ExploracionDestacada,
@@ -253,7 +253,7 @@ export class ComcolGridComponent implements OnInit {
     } as ExploracionDestacada,
     {
       title: "Facultad de Psicología",
-      img: "assets/custom/images/ComCol/Facultades/psicologia.png",
+      img: "assets/custom/images/ComCol/Facultades/Psicología.svg",
       href: "/handle/10915/28",
       description: "Psicología",
     } as ExploracionDestacada,
