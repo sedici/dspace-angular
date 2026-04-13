@@ -319,7 +319,6 @@ export class DsDynamicScrollableDropdownComponent extends DsDynamicVocabularyCom
    */
   setCurrentValue(value: any, init = false): void {
     let result: Observable<string>;
-    console.log('Current value', value);
 
     if (init && !this.useFindAllService) {
       result = this.getInitValueFromModel().pipe(
