@@ -7,7 +7,8 @@
             <ds-submission-upload-files [submissionId]="submissionId"
               [collectionId]="collectionId"
               [uploadFilesOptions]="uploadFilesOptions"
-            (AAA)="AAA($event)"></ds-submission-upload-files>
+              (uploadFilesEvent)="uploadFilesEvent($event)">
+            </ds-submission-upload-files>
             <div class="clearfix"></div>
           </div>
         }

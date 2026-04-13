@@ -340,7 +340,7 @@ export class SubmissionFormComponent implements OnChanges, OnDestroy, OnInit {
     );
   }
 
-  AAA(responsePath: any) {
+  uploadFilesEvent(responsePath: any) {
     const files = responsePath.sections.upload.files;
     const pdfFiles = files.filter(file => file.format.extensions.includes("pdf")); // Filtro los archivos PDF
     const lastFileLoad = files[files.length - 1];

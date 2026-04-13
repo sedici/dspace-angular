@@ -24,13 +24,13 @@ export class ThemedSubmissionUploadFilesComponent extends ThemedComponent<Submis
 
   @Input() uploadFilesOptions: UploaderOptions;
 
-  @Output() AAA = new EventEmitter<any>();
+  @Output() uploadFilesEvent = new EventEmitter<any>();
 
   protected inAndOutputNames: (keyof SubmissionUploadFilesComponent & keyof this)[] = [
     'collectionId',
     'submissionId',
     'uploadFilesOptions',
-    'AAA',
+    'uploadFilesEvent',
   ];
 
   protected getComponentName(): string {

@@ -64,7 +64,7 @@ export class SubmissionUploadFilesComponent implements OnChanges, OnDestroy {
    */
   @Input() uploadFilesOptions: UploaderOptions;
 
-  @Output() AAA = new EventEmitter<any>();
+  @Output() uploadFilesEvent = new EventEmitter<any>();
 
   /**
    * A boolean representing if is possible to active drop zone over the document page
@@ -174,7 +174,7 @@ export class SubmissionUploadFilesComponent implements OnChanges, OnDestroy {
           }
         }),
     );
-    this.AAA.emit(workspaceitem);
+    this.uploadFilesEvent.emit(workspaceitem);
   }
 
   /**
