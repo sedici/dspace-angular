@@ -2,6 +2,34 @@
   display: none;
 }
 
+.content-with-optional-title ::ng-deep .texto_libre {
+  transition: max-height 0.25s ease-in-out;
+  /* When collapsed, limit height (in rem) so long text is truncated */
+  &.collapsed {
+    max-height: 6rem;
+    overflow: hidden;
+    position: relative;
+  }
+  &.collapsed::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2.5rem;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1));
+  }
+}
+
 .content-with-optional-title ::ng-deep .label {
   font-weight: bold;
+}
+
+.content-with-optional-title ::ng-deep .texto-libre-toggle {
+  display: block;
+
+  &:focus {
+    box-shadow: none !important;
+  }
 }
