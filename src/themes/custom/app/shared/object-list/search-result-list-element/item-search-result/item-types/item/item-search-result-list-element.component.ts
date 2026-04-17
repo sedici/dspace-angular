@@ -45,6 +45,9 @@ export class ItemSearchResultListElementComponent extends BaseComponent {
 
   ngOnInit(): void {
     super.ngOnInit();
+    if (this.object && this.dso) {
+      this.dsoTitle = this.dsoNameService.getHitHighlights(this.object, this.dso, false);
+    }
     this.getFirstAvailableAuthors();
   }
 
