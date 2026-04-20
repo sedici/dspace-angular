@@ -85,9 +85,9 @@
             }
           </div>
         </span>
-        @if (dso.firstMetadataValue('dc.description.abstract')) {
+        @if (dsoAbstract) {
           <div class="item-list-abstract">
-            <span [innerHTML]="firstMetadataValue('dc.description.abstract')"></span>
+            <span [innerHTML]="dsoAbstract"></span>
           </div>
         }
         <ds-access-status-badge [object]="dso"></ds-access-status-badge>
