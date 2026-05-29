@@ -1,5 +1,5 @@
 import { Component, Input, Inject, ViewChild, ElementRef } from '@angular/core';
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { NgClass, NgTemplateOutlet, Location } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { Item } from 'src/app/core/shared/item.model';
 import { BitstreamDataService } from 'src/app/core/data/bitstream-data.service';
@@ -137,6 +137,7 @@ export class ContentFilesComponent {
     private authService: AuthService,
     private authorizationService: AuthorizationDataService,
     private sanitizer: DomSanitizer,
+    private location: Location,
   ) {
     this.isMobile$ = this.windowService.isUpTo(WidthCategory.MD);
     this.externalHttp = new HttpClient(handler);
@@ -474,15 +475,24 @@ export class ContentFilesComponent {
         this.checkAndSaveDownloadStatus();
         
         if (!this.isMobile && this.files.length >= 1) {
-          // Seleccionar el primary bitstream si está disponible y tiene un preview
-          const primaryBitstream = this.files.find(file => file.id === this.primaryBitsreamId && this.isPreviewAvailable(file.name));
-          if (primaryBitstream) {
-            this.selectFile(primaryBitstream);
+          // Si hay un fragmento numérico en la URL (ej: #2), intentar seleccionar ese archivo
+          const fragmentIndex = this.getUrlFragmentIndex();
+          if (fragmentIndex !== null && fragmentIndex <= this.files.length) {
+            const fragmentFile = this.files[fragmentIndex - 1];
+            if (fragmentFile && this.isPreviewAvailable(fragmentFile.name)) {
+              this.selectFile(fragmentFile);
+            }
           } else {
-            // Seleccionar el primer archivo con preview disponible
-            const firstPreviewableFile = this.files.find(file => this.isPreviewAvailable(file.name));
-            if (firstPreviewableFile) {
-              this.selectFile(firstPreviewableFile);
+            // Seleccionar el primary bitstream si está disponible y tiene un preview
+            const primaryBitstream = this.files.find(file => file.id === this.primaryBitsreamId && this.isPreviewAvailable(file.name));
+            if (primaryBitstream) {
+              this.selectFile(primaryBitstream);
+            } else {
+              // Seleccionar el primer archivo con preview disponible
+              const firstPreviewableFile = this.files.find(file => this.isPreviewAvailable(file.name));
+              if (firstPreviewableFile) {
+                this.selectFile(firstPreviewableFile);
+              }
             }
           }
         }
@@ -588,8 +598,19 @@ export class ContentFilesComponent {
     return this.files.some(file => this.isPreviewAvailable(file.name) && (file as any).canDownload);
   }
 
+  private getUrlFragmentIndex(): number | null {
+    const path = this.location.path(true);
+    const hashIndex = path.indexOf('#');
+    if (hashIndex < 0) return null;
+    const fragment = path.substring(hashIndex + 1);
+    const index = parseInt(fragment, 10);
+    return isNaN(index) || index < 1 ? null : index;
+  }
+
   handleClick(file: Bitstream | ExternalBitstreamMock, contentTemplate: any, headerTemplate: any) {
     this.selectFile(file);
+    const fileIndex = this.files.indexOf(file) + 1;
+    this.location.replaceState(this.location.path(false) + '#' + fileIndex);
     setTimeout(() => {
       if (this.isMobile) {
         this.openModal(contentTemplate, headerTemplate);

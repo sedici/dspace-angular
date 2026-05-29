@@ -5,7 +5,8 @@
         <div class="row">
           <div class="file-list col-lg-3 col-12">
             @for (file of files; track file) {
-              <div (click)="isPreviewAvailable(file.name) && handleClick(file, contentTemplate, headerTemplate)" 
+              <div [attr.id]="(files.indexOf(file) + 1)"
+                (click)="isPreviewAvailable(file.name) && handleClick(file, contentTemplate, headerTemplate)" 
                 [ngClass]="{'selected-file': file === selectedFile}"
                 [style.cursor]="(!isDownloadable(file) && !file['isExternal']) ? 'not-allowed' : (isPreviewAvailable(file.name) ? 'pointer' : 'default')">
                 @if (isPreviewAvailable(file.name) && (isDownloadable(file) || file['isExternal'])) {
