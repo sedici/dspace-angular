@@ -31,7 +31,11 @@ export class LocaleInterceptor implements HttpInterceptor {
    */
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let newReq: HttpRequest<any>;
-    return this.localeService.getLanguageCodeList(req.url === this.halEndpointService.getRootHref())
+    // SEDICI 9.2: 
+    // return this.localeService.getLanguageCodeList(req.url === this.halEndpointService.getRootHref())
+
+    const ignoreEPersonSettings: boolean = this.shouldIgnoreEPersonSettings(req.url);
+    return this.localeService.getLanguageCodeList(ignoreEPersonSettings)
       .pipe(
         take(1),
         scan((acc: any, value: any) => [...acc, value], []),
@@ -44,5 +48,13 @@ export class LocaleInterceptor implements HttpInterceptor {
           // Pass on the new request instead of the original request.
           return next.handle(newReq);
         }));
+  }
+
+  /**
+   * Avoid recursive EPerson language lookup for requests that are needed to resolve EPerson itself.
+   */
+  private shouldIgnoreEPersonSettings(url: string): boolean {
+    const rootHref = this.halEndpointService.getRootHref();
+    return url === rootHref || url.startsWith(`${rootHref}/eperson/epersons`);
   }
 }

@@ -29,7 +29,6 @@ import { SearchFormComponent } from '../shared/search-form/search-form.component
   // styleUrls: ['../../../../app/header/header.component.scss'],
   templateUrl: 'header.component.html',
   // templateUrl: '../../../../app/header/header.component.html',
-  standalone: true,
   imports: [RouterLink, SearchFormComponent, NgbDropdownModule, ThemedSearchNavbarComponent, ThemedNavbarComponent, TranslateModule, AsyncPipe, NgClass, NgbModule],
 })
 export class HeaderComponent extends BaseComponent implements OnInit {

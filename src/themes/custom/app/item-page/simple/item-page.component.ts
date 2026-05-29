@@ -28,7 +28,7 @@ import { ViewTrackerResolverService } from '../../../../../app/statistics/angula
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeInOut],
   imports: [
-
+    AccessByTokenNotificationComponent,
     AsyncPipe,
     ErrorComponent,
     ItemVersionsComponent,

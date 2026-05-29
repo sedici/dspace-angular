@@ -1,7 +1,7 @@
 import { NgClass, AsyncPipe } from '@angular/common';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgbTooltipModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbTooltip, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router'; // Importar ActivatedRoute
 import { BehaviorSubject, Subscription } from 'rxjs';
@@ -18,13 +18,15 @@ import { DSONameService } from '../../../../../app/core/breadcrumbs/dso-name.ser
 @Component({
   selector: 'ds-themed-search-form',
   styleUrls: ['./search-form.component.scss'],
+  // styleUrls: ['../../../../../app/shared/search-form/search-form.component.scss'],
   templateUrl: './search-form.component.html',
+  // templateUrl: '../../../../../app/shared/search-form/search-form.component.html',
   standalone: true,
   imports: [
     AsyncPipe,
     BrowserOnlyPipe,
     FormsModule,
-    NgbTooltipModule,
+    NgbTooltip,
     TranslateModule,
     NgClass,
 

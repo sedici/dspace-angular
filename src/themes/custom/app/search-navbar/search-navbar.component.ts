@@ -20,7 +20,6 @@ import { ClickOutsideDirective } from '../../../../app/shared/utils/click-outsid
   // styleUrls: ['../../../../app/search-navbar/search-navbar.component.scss'],
   templateUrl: './search-navbar.component.html',
   // templateUrl: '../../../../app/search-navbar/search-navbar.component.html',
-  standalone: true,
   imports: [
 
     ClickOutsideDirective,

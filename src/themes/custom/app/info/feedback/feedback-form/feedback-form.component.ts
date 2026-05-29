@@ -14,7 +14,6 @@ import { FeedbackFormComponent as BaseComponent } from '../../../../../../app/in
   // templateUrl: '../../../../../../app/info/feedback/feedback-form/feedback-form.component.html',
   styleUrls: ['./feedback-form.component.scss'],
   // styleUrls: ['../../../../../../app/info/feedback/feedback-form/feedback-form.component.scss'],
-  standalone: true,
   imports: [
 
     FormsModule,

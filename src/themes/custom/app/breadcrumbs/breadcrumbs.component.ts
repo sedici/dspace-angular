@@ -4,7 +4,7 @@ import {
 } from '@angular/common';
 import { Component, HostListener } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { map } from 'rxjs/operators';
 
@@ -25,7 +25,7 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [
     AsyncPipe,
-    NgbTooltipModule,
+    NgbTooltip,
     NgTemplateOutlet,
     RouterLink,
     TranslateModule,
