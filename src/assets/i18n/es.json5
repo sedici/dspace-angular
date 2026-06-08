@@ -11185,7 +11185,7 @@
   "external-login.confirmation.email-invalid": "Formato de correo electrónico inválido.",
 
   // "external-login.confirm.button.label": "Confirm this email",
-  "external-login.confirm.button.label": "Confirme esta cuenta de correo",ds-submission-form-footer
+  "external-login.confirm.button.label": "Confirme esta cuenta de correo",
 
   // "external-login.confirm-email-sent.header": "Confirmation email sent",
   "external-login.confirm-email-sent.header": "Enviado correo de confirmación",

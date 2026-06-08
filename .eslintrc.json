@@ -16,7 +16,8 @@
     "dspace-angular-html"
   ],
   "ignorePatterns": [
-    "lint/test/fixture"
+    "lint/test/fixture",
+    "src/assets/i18n/**/*.json5"
   ],
   "overrides": [
     {

@@ -247,6 +247,13 @@
   color: #333;
 }
 
+// Ocultar el overlay de carga interno de ng2-pdfjs-viewer ya que
+// el evento onDocumentLoad no se dispara correctamente con blob URLs.
+// Usamos nuestro propio overlay (.loading-overlay) en su lugar.
+::ng-deep ng2-pdfjs-viewer .ng2-pdfjs-loading-overlay {
+  display: none !important;
+}
+
 ul {
   list-style-type: none;
   margin-left: 20px;

@@ -280,7 +280,7 @@
               "cypress/**/*.ts",
               "lint/**/*.ts",
               "src/**/*.html",
-              "src/**/*.json5"
+              "src/**/!(i18n)/*.json5"
             ]
           }
         }

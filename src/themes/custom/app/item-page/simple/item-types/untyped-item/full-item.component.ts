@@ -92,16 +92,21 @@ export class FullItemComponent {
   }
 
   getLanguageValues(fieldName: string): string[] {
-    const language = this.object?.allMetadata([fieldName])[0].value;
+    const language = this.object?.allMetadata([fieldName])?.[0]?.value;
+    if (language === undefined) {
+      return [];
+    }
     let languageString: string;
     if (language === 'es') {
       languageString = 'Español';
     } else if (language === 'en') {
-      languageString = 'Inlgés';
+      languageString = 'Inglés';
     } else if (language === 'pt') {
       languageString = 'Portugués';
     } else if (language === 'de') {
       languageString = 'Alemán';
+    } else {
+      languageString = language;
     }
     return [languageString];
   }

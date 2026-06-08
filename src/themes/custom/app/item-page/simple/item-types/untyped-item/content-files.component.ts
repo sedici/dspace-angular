@@ -92,6 +92,7 @@ export class ContentFilesComponent {
 
   onDocLoaded() {
     this.isLoading = false;
+    this.cdr.detectChanges();
   }
 
   openModal(content: any, headerTemplate: any) {
@@ -233,13 +234,17 @@ export class ContentFilesComponent {
                 // Verificar si el visor PDF está disponible
                 const assignBlobUrl = () => {
                   if (this.pdfViewerOnDemand) {
-                    // Asignar la URL del blob al visor PDF
-                    this.pdfViewerOnDemand._src = objectUrl;
+                    this.pdfViewerOnDemand.pdfSrc = objectUrl;
+                    
+                    // Refrescar el visor
                     this.pdfViewerOnDemand.refresh();
+                    
+                    // Ocultar nuestro overlay: el blob ya está en el visor
                     this.isLoading = false;
+                    this.cdr.detectChanges();
                   } else {
                     console.error('El visor PDF no está disponible.');
-                    setTimeout(assignBlobUrl, 100); // Intentar nuevamente después de 100ms
+                    setTimeout(assignBlobUrl, 100);
                   }
                 };
                 assignBlobUrl();
@@ -247,19 +252,19 @@ export class ContentFilesComponent {
                 console.error('Error al cargar el archivo:', error);
                 if (error.status === 401 || error.status === 403) {
                   this.embargoedFile = true;
-                  this.cdr.detectChanges();
                 }
                 if (error.status === 500) {
                   this.isAssetAvailable = false;
-                  this.cdr.detectChanges();
-                }  
+                }
                 this.isLoading = false;
+                this.cdr.detectChanges();
               });
             } else {
+              // Archivo embargado: no descargable, mostrar mensaje
               this.embargoedFile = true;
+              this.isLoading = false;
+              this.cdr.detectChanges();
             }
-            this.isLoading = false;
-            this.cdr.detectChanges();
           } else {
             setTimeout(() => waitForDownloadable(file), 100);
           }

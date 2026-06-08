@@ -74,11 +74,16 @@
     "@nicky-lenaers/ngx-scroll-to": {
       "@angular/common": "^20.3.12",
       "@angular/core": "^20.3.12"
+    },
+    "mirador": {
+      "react": "^16.8.3",
+      "react-dom": "^16.8.3"
     }
   },
   "dependencies": {
     "@4science_ng-dynamic-forms/core": "^19.1.0",
     "@4science_ng-dynamic-forms/ui-ng-bootstrap": "^19.1.0",
+    "@popperjs/core": "^2.11.8",
     "@angular/animations": "^20.3.21",
     "@angular/cdk": "^20.2.14",
     "@angular/common": "^20.3.21",
@@ -101,6 +106,10 @@
     "@terraformer/wkt": "^2.2.1",
     "altcha": "^2.3.0",
     "angulartics2": "^12.2.0",
+    "@citation-js/core": "^0.7.14",
+    "@citation-js/plugin-bibtex": "^0.7.14",
+    "@citation-js/plugin-csl": "^0.7.14",
+    "angularx-qrcode": "20.0.0",
     "body-parser": "^1.20.4",
     "bootstrap": "^5.3",
     "cerialize": "0.1.18",
@@ -127,6 +136,10 @@
     "jsonschema": "1.5.0",
     "jszip": "^3.10.1",
     "jwt-decode": "^3.1.2",
+    "jquery": "^3.7.1",
+    "jquery-ui": "^1.14.1",
+    "klaro": "^0.7.18",
+    "lareferencia-widget-embed": "^1.1.5",
     "leaflet": "^1.9.4",
     "leaflet-providers": "^2.0.0",
     "leaflet.markercluster": "^1.5.3",
@@ -138,6 +151,7 @@
     "mirador-share-plugin": "^0.16.0",
     "morgan": "^1.10.1",
     "ng2-file-upload": "9.0.0",
+    "ng2-pdfjs-viewer": "^25.0.18",
     "ng2-nouislider": "^2.0.0",
     "ngx-infinite-scroll": "^20.0.0",
     "ngx-matomo-client": "^8.0.0",
