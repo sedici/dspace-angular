@@ -1,4 +1,4 @@
-import { NgClass } from '@angular/common';
+import { NgClass, TitleCasePipe } from '@angular/common';
 import {
   ChangeDetectorRef,
   Component,
@@ -34,6 +34,7 @@ import { isEmpty } from '../../empty.util';
     BtnDisabledDirective,
     FormsModule,
     NgClass,
+    TitleCasePipe,
     TranslateModule,
   ],
 })

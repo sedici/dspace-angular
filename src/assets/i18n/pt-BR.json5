@@ -3172,15 +3172,15 @@
 
   // "form.number-picker.label.Year": "Year",
   // TODO New key - Add a translation
-  "form.number-picker.label.Year": "Year",
+  "form.number-picker.label.Year": "Ano",
 
-  // "form.number-picker.label.Month": "Month",
+  // "form.number-picker.label.Month": "Month",a
   // TODO New key - Add a translation
-  "form.number-picker.label.Month": "Month",
+  "form.number-picker.label.Month": "Mês",
 
   // "form.number-picker.label.Day": "Day",
   // TODO New key - Add a translation
-  "form.number-picker.label.Day": "Day",
+  "form.number-picker.label.Day": "Dia",
 
   // "form.repeatable.sort.tip": "Drop the item in the new position",
   "form.repeatable.sort.tip": "Solte o item na nova posição",
@@ -7533,6 +7533,12 @@
 
   // "sorting.dc.date.issued.DESC": "Date Issued Descending",
   "sorting.dc.date.issued.DESC": "Data de Emissão Descendente",
+
+  // "sorting.dc.date.issued_or_created.ASC": "Date Issued or Created Ascending",
+  "sorting.dc.date.issued_or_created.ASC": "Data de Emissão ou Criação Crescente",
+
+  // "sorting.dc.date.issued_or_created.DESC": "Date Issued or Created Descending",
+  "sorting.dc.date.issued_or_created.DESC": "Data de Emissão ou Criação Descendente",
 
   // "sorting.dc.date.accessioned.ASC": "Accessioned Date Ascending",
   "sorting.dc.date.accessioned.ASC": "Data de Disponibilização Ascendente",

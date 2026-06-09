@@ -3187,15 +3187,15 @@
 
   // "form.number-picker.label.Year": "Year",
   // TODO New key - Add a translation
-  "form.number-picker.label.Year": "Year",
+  "form.number-picker.label.Year": "Año",
 
   // "form.number-picker.label.Month": "Month",
   // TODO New key - Add a translation
-  "form.number-picker.label.Month": "Month",
+  "form.number-picker.label.Month": "Mes",
 
   // "form.number-picker.label.Day": "Day",
   // TODO New key - Add a translation
-  "form.number-picker.label.Day": "Day",
+  "form.number-picker.label.Day": "Día",
 
   // "form.repeatable.sort.tip": "Drop the item in the new position",
   "form.repeatable.sort.tip": "Suelte el ítem en la nueva posición",
@@ -7648,6 +7648,12 @@
 
   // "sorting.dc.date.issued.DESC": "Date Issued Descending",
   "sorting.dc.date.issued.DESC": "Publicación: recientes primeros",
+
+  // "sorting.dc.date.issued_or_created.ASC": "Date Issued Ascending",
+  "sorting.dc.date.issued_or_created.ASC": "Publicación: antiguos primeros",
+
+  // "sorting.dc.date.issued_or_created.DESC": "Date Issued Descending",
+  "sorting.dc.date.issued_or_created.DESC": "Publicación: recientes primeros",
 
   // "sorting.dc.date.accessioned.ASC": "Accessioned Date Ascending",
   "sorting.dc.date.accessioned.ASC": "Ingreso: antiguos primeros",
