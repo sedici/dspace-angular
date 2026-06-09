@@ -31,10 +31,8 @@ export class LocaleInterceptor implements HttpInterceptor {
    */
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let newReq: HttpRequest<any>;
-    // SEDICI 9.2: 
-    // return this.localeService.getLanguageCodeList(req.url === this.halEndpointService.getRootHref())
-
     const ignoreEPersonSettings: boolean = this.shouldIgnoreEPersonSettings(req.url);
+
     return this.localeService.getLanguageCodeList(ignoreEPersonSettings)
       .pipe(
         take(1),

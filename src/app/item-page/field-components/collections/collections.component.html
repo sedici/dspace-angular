@@ -1,6 +1,5 @@
 <ds-metadata-field-wrapper [label]="label | translate">
-  <!-- DSPACE 9.2 -->
-  <ul class="collections">
+  <div class="collections">
     @for (c of this.collections; track c; let last = $last) {
       <li>
         <a [routerLink]="['/collections', c.collection.id]" role="button" tabindex="0">
@@ -11,7 +10,7 @@
         </a>
       </li>
     }
-  </ul>
+  </div>
 
   @if (isLoading$ | async) {
     <div>
@@ -29,16 +28,6 @@
       tabindex="0"
       >
       {{'item.page.collections.load-more' | translate}}
-    <!-- DSPACE 9.2 -->
-  
-  <!-- DSPACE 9.3 
-  <div class="collections">
-    @for (collection of (this.collections$ | async); track collection; let last = $last) {
-      <a [routerLink]="['/collections', collection.id]" role="button" tabindex="0">
-        <span>{{ dsoNameService.getName(collection) }}</span>@if (!last) {
-        <span [innerHTML]="separator"></span>
-      }
-      DSPACE 9.3 -->
     </a>
   }
 </ds-metadata-field-wrapper>
