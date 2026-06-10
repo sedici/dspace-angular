@@ -1,4 +1,3 @@
-import { AsyncPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
@@ -10,7 +9,6 @@ import { HostWindowService, WidthCategory } from 'src/app/shared/host-window.ser
   templateUrl: './sedici-post-footer.component.html',
   standalone: true,
   imports: [
-    AsyncPipe,
     TranslateModule,
   ],
 })

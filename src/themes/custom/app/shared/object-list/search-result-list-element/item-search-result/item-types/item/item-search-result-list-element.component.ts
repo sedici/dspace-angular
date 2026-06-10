@@ -42,9 +42,14 @@ import { ThemedAccessStatusBadgeComponent } from 'src/app/shared/object-collecti
 })
 export class ItemSearchResultListElementComponent extends BaseComponent {
   authors: string[] = [];
+  dsoAbstract: string;
 
   ngOnInit(): void {
     super.ngOnInit();
+    if (this.object && this.dso) {
+      this.dsoTitle = this.dsoNameService.getHitHighlights(this.object, this.dso, false);
+      this.dsoAbstract = this.dsoNameService.firstMetadataValue(this.object, this.dso, 'dc.description.abstract', false);
+    }
     this.getFirstAvailableAuthors();
   }
 

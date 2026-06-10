@@ -1,6 +1,5 @@
 import {
   AsyncPipe,
-  DatePipe,
 } from '@angular/common';
 import { Component, Inject, Optional } from '@angular/core';
 import { RouterLink } from '@angular/router';
@@ -26,7 +25,6 @@ import { FeedbackFormComponent } from '../info/feedback/feedback-form/feedback-f
   standalone: true,
   imports: [
     AsyncPipe,
-    DatePipe,
     RouterLink,
     TranslateModule,
   ],

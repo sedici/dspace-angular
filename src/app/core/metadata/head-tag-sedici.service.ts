@@ -257,7 +257,7 @@ export class HeadTagSEDICIService extends HeadTagService {
         // Use the found link to set the <meta> tag
         this.addMetaTag(
           'citation_pdf_url',
-          new URLCombiner(this.hardRedirectService.getCurrentOrigin(), link).toString(),
+          new URLCombiner(this.hardRedirectService.getBaseUrl(), link).toString(),
         );
       });
     }

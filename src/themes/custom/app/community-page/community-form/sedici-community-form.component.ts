@@ -200,6 +200,10 @@ export class SediciCommunityFormComponent extends CommunityFormComponent impleme
         id: 'frecuencia',
         name: 'sedici.description.frecuencia',
       }),
+      new DynamicInputModel({
+        id: 'ComCol color',
+        name: 'sedici.comcol.color',
+      }),
       new DynamicTextAreaModel({
         id: 'rights',
         name: 'dc.rights',

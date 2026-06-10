@@ -69,13 +69,11 @@ export class SediciFileDownloadLinkComponent
         isNotEmpty(this.bitstream) ? this.bitstream.self : undefined
       );
       this.bitstreamPath$ = observableCombineLatest([
-        this.canDownload$,
         this.canDownloadWithToken$,
         this.canRequestACopy$,
       ]).pipe(
-        map(([canDownload, canDownloadWithToken, canRequestACopy]) =>
-          this.getBitstreamPath(
-            canDownload,
+        map(([canDownloadWithToken, canRequestACopy]) =>
+          this.getBitstreamPathForRequestACopy(
             canDownloadWithToken,
             canRequestACopy
           )

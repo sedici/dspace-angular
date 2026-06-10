@@ -118,7 +118,7 @@ export class UntypedItemComponent extends BaseComponent {
 
   ngOnInit() {
     super.ngOnInit();
-    this.subtype = this.object.metadata['sedici.subtype'][0]?.value;
+    this.subtype = this.object.metadata['sedici.subtype']?.[0]?.value;
     this.itemIdentifiers = setPersistentIdentifiers(this.object, this.identifierOtherMetadataName);
     
     // Calcular el total de autores

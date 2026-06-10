@@ -12,7 +12,6 @@ import { SearchConfigurationService } from '../../../../app/core/shared/search/s
 import { SEARCH_CONFIG_SERVICE } from '../../../../app/my-dspace-page/my-dspace-configuration.service';
 import { ConfigurationSearchPageComponent as BaseComponent } from '../../../../app/search-page/configuration-search-page.component';
 import { pushInOut } from '../../../../app/shared/animations/push';
-import { SearchLabelsComponent } from '../../../../app/shared/search/search-labels/search-labels.component';
 import { ThemedSearchResultsComponent } from '../../../../app/shared/search/search-results/themed-search-results.component';
 import { ThemedSearchSidebarComponent } from '../../../../app/shared/search/search-sidebar/themed-search-sidebar.component';
 import { ThemedSearchFormComponent } from '../../../../app/shared/search-form/themed-search-form.component';
@@ -23,8 +22,8 @@ import { ViewModeSwitchComponent } from '../../../../app/shared/view-mode-switch
   selector: 'ds-themed-configuration-search-page',
   // styleUrls: ['./configuration-search-page.component.scss'],
   styleUrls: ['../../../../app/shared/search/search.component.scss'],
-  // templateUrl: './configuration-search-page.component.html'
-  templateUrl: '../../../../app/shared/search/search.component.html',
+  templateUrl: './configuration-search-page.component.html',
+  // templateUrl: '../../../../app/shared/search/search.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [pushInOut],
   providers: [
@@ -37,7 +36,6 @@ import { ViewModeSwitchComponent } from '../../../../app/shared/view-mode-switch
     AsyncPipe,
     NgTemplateOutlet,
     PageWithSidebarComponent,
-    SearchLabelsComponent,
     ThemedSearchFormComponent,
     ThemedSearchResultsComponent,
     ThemedSearchSidebarComponent,

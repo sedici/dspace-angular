@@ -28,13 +28,12 @@ import { ViewTrackerResolverService } from '../../../../../app/statistics/angula
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeInOut],
   imports: [
-
     AsyncPipe,
     ErrorComponent,
     ItemVersionsComponent,
     ItemVersionsNoticeComponent,
     ListableObjectComponentLoaderComponent,
-    NotifyRequestsStatusComponent,
+    NotifyRequestsStatusComponent,  
     QaEventNotificationComponent,
     ThemedItemAlertsComponent,
     ThemedLoadingComponent,

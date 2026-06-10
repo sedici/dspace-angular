@@ -20,7 +20,6 @@ import { ThemedLangSwitchComponent } from 'src/app/shared/lang-switch/themed-lan
   templateUrl: './navbar.component.html',
   // templateUrl: '../../../../app/navbar/navbar.component.html',
   animations: [slideMobileNav],
-  standalone: true,
   imports: [NgbDropdownModule, NgClass, ThemedUserMenuComponent, NgComponentOutlet, AsyncPipe, TranslateModule, ImpersonateNavbarComponent, ThemedAuthNavMenuComponent, ThemedLangSwitchComponent],
 })
 export class NavbarComponent extends BaseComponent {
