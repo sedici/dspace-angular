@@ -513,7 +513,7 @@ export class PdfViewerComponent implements AfterViewInit {
         return true;
       })
     .map(element => ({
-      name: nameMap[element.id] || element.getAttribute('placeholder') || element.getAttribute('name') || element.id,
+      name: nameMap[element.id] || element.getAttribute('aria-label') || element.getAttribute('placeholder') || element.getAttribute('name') || element.id,
       value: element.id
     }));
 
