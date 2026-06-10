@@ -279,6 +279,7 @@ export const filterTransformer = {
   cleanText: (text, selectedMetadataField = '') => {
     let cleanText = filterTransformer.removeSpacesAtStartAndEnd(text);
     cleanText = filterTransformer.removeDoubleSpaces(cleanText);
+    cleanText = filterTransformer.removeLineBreaks(cleanText);
 
     // Acomodar acentos mal puestos
     cleanText = filterTransformer.fixMisplacedAccents(cleanText);
