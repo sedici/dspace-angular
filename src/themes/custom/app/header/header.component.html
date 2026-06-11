@@ -1,4 +1,6 @@
-<header id="main-site-header" class="background-image-header"  [ngClass]="{'home-header': (isHomePage$ | async)}">
+<header id="main-site-header" class="background-image-header" 
+  [ngClass]="{'home-header': (isHomePage$ | async)}"
+  [ngClass]="{'fixed-header': ((isSubmissionPage$ | async) !== true)}">
   <!-- Vista Desktop -->
     <div class="d-none d-md-flex align-items-center" id="main-site-header-container">
       <div class="left-container padding-logo"> 
