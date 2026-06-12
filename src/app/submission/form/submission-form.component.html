@@ -47,7 +47,7 @@
 
   @if (pdfBlobUrl && isAuthorizedForPdfViewer) {
     <div class="col-7">
-      <div class="position-sticky" style="width: 100%; height: 500px; top: 0; padding-top: 8px;">
+      <div class="submission-pdf-viewer">
         <app-pdf-viewer [pdfUrl]="pdfBlobUrl"></app-pdf-viewer>
       </div>
     </div>

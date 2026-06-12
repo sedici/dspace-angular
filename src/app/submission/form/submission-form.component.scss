@@ -9,6 +9,14 @@
   flex-grow: 1;
 }
 
+.submission-pdf-viewer {
+  position: sticky;
+  width: 100%;
+  height: 500px;
+  top: 0;
+  padding-top: 8px;
+}
+
 .submission-form-footer {
   border-radius: var(--bs-card-border-radius);
   bottom: 0;
