@@ -30,7 +30,7 @@ import { FilterInfo, FilterConfig } from '../models/filter-config.model';
     ShortcutsButtonsComponent
 ],
 })
-// export class PdfViewerComponent {
+
 export class PdfViewerComponent implements AfterViewInit {
 	@Input() pdfUrl: string;
 	@ViewChild('pdfViewerOnDemand') pdfViewerOnDemand;
@@ -637,12 +637,6 @@ export class PdfViewerComponent implements AfterViewInit {
 
   changeConcatenateText(): void {
     this.concatenateText = !this.concatenateText;
-  }
-  
-  private getFormElements(): HTMLElement[] {
-    const textareas = Array.from(document.querySelectorAll('textarea'));
-    const inputs = Array.from(document.querySelectorAll('input'));
-    return [...textareas, ...inputs] as HTMLElement[];
   }
 
   createButtons(rect: DOMRect): void {
