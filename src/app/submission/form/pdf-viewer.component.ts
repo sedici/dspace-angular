@@ -165,10 +165,20 @@ export class PdfViewerComponent implements AfterViewInit {
   }
 
   ngOnDestroy() {
-    this.resetButtonCounters();    
+    this.resetButtonCounters();
+
     if (this.mutationObserver) {
       this.mutationObserver.disconnect();
       this.mutationObserver = null;
+    }
+
+    if (this.patchTimeout1) clearTimeout(this.patchTimeout1);
+    if (this.patchTimeout2) clearTimeout(this.patchTimeout2);
+    if (this.debounceTimer) clearTimeout(this.debounceTimer);
+
+    if (this.originalDispatch) {
+      this.formOperationsService.dispatchOperationsFromChangeEvent = this.originalDispatch;
+      this.originalDispatch = null;
     }
   }
 
@@ -182,19 +192,29 @@ export class PdfViewerComponent implements AfterViewInit {
     });
   }
 
+  private originalDispatch: any = null;
+  private patchTimeout1: any = null;
+  private patchTimeout2: any = null;
   private interceptFormOperationChanges(): void {
-    const originalDispatch = this.formOperationsService.dispatchOperationsFromChangeEvent;
+    if (this.originalDispatch) {
+      return; 
+    }
+
+    this.originalDispatch = this.formOperationsService.dispatchOperationsFromChangeEvent;
+
     this.formOperationsService.dispatchOperationsFromChangeEvent = 
       (pathCombiner: JsonPatchOperationPathCombiner, event: any, previousValue: any, hasStoredValue: boolean) => {
         if (event?.model?.id === 'dc_type' || event?.model?.id === 'sedici_subtype') {
-          setTimeout(() => {
-            this.debounceUpdateButtons();
-            setTimeout(() => {
+          if (this.patchTimeout1) clearTimeout(this.patchTimeout1);
+          if (this.patchTimeout2) clearTimeout(this.patchTimeout2);         
+          this.patchTimeout1 = setTimeout(() => {
+            this.debounceUpdateButtons(); 
+            this.patchTimeout2 = setTimeout(() => {
               this.removeDuplicateButtons();
-            }, 100);
+            }, 200);
           }, 500);
         }
-        return originalDispatch.call(this.formOperationsService, pathCombiner, event, previousValue, hasStoredValue);
+        return this.originalDispatch.call(this.formOperationsService, pathCombiner, event, previousValue, hasStoredValue);
     };
   }
 
