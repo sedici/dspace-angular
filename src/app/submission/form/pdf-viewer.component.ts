@@ -309,11 +309,15 @@ export class PdfViewerComponent implements AfterViewInit {
       }
     });
 
-    const formContainer = document.body;
-    this.mutationObserver.observe(formContainer, {
-      childList: true,
-      subtree: true
-    });
+    const formContainer = document.querySelector('ds-submission-form');
+    if (formContainer) {
+      this.mutationObserver.observe(formContainer, {
+        childList: true,
+        subtree: true
+      });
+    } else {
+      console.warn('No se encontró el contenedor del formulario para MutationObserver.');
+    }
   }
 
   private isFormField(element: Element): boolean {
