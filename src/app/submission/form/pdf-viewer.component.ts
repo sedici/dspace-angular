@@ -770,23 +770,25 @@ export class PdfViewerComponent implements AfterViewInit {
       year = date.year || '';
     }
     
-    const metadataYear = document.getElementById(this.selectedMetadataField) as HTMLTextAreaElement | HTMLInputElement;
-    const metadataMonth = document.getElementById(this.selectedMetadataField.replace(/_year$/, '_month')) as HTMLTextAreaElement | HTMLInputElement;
-    const metadataDay = document.getElementById(this.selectedMetadataField.replace(/_year$/, '_day')) as HTMLTextAreaElement | HTMLInputElement;
+    const metadataYear = document.getElementById(this.selectedMetadataField) as HTMLInputElement | null;
+    const metadataMonth = document.getElementById(this.selectedMetadataField.replace(/_year$/, '_month')) as HTMLInputElement | null;
+    const metadataDay = document.getElementById(this.selectedMetadataField.replace(/_year$/, '_day')) as HTMLInputElement | null;
     
-    if (year) {
+    if (year && metadataYear) {
       this.setMetadataValue(metadataYear, year);
-      if (month) {
+      if (month && metadataMonth) {
         this.setMetadataValue(metadataMonth, month);
-        if (day) {
+        if (day && metadataDay) {
           this.setMetadataValue(metadataDay, day);
-        } else {
+        } else if (metadataDay) {
           metadataDay.value = '';
         }
-      } else {
+      } else if (metadataMonth) {
         metadataMonth.value = '';
-        metadataDay.value = '';
+        if (metadataDay) metadataDay.value = '';
       }
+    } else {
+      console.error('El campo de metadato de año no se encuentra disponible en el DOM.');
     }
   }
   
