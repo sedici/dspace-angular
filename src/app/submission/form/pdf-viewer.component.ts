@@ -66,7 +66,7 @@ export class PdfViewerComponent implements AfterViewInit {
   isDropdownOpen = false;
   applyFilterToSubmissionField: boolean = false;
   private mutationObserver: MutationObserver | null = null;
-  private fieldButtonMap = new Map<string, ComponentRef<DynamicButtonDropdownComponent>>();
+  private fieldButtonMap = new Map<string, { componentRef: ComponentRef<DynamicButtonDropdownComponent>, subscription: any }>();
   private globalIdCounters = new Map<string, number>();
 
   constructor(
@@ -240,8 +240,8 @@ export class PdfViewerComponent implements AfterViewInit {
         
         buttons.forEach(button => {
           if (this.fieldButtonMap.has(fieldKey)) {
-            const componentRef = this.fieldButtonMap.get(fieldKey);
-            if (componentRef && componentRef.location.nativeElement === button) {
+            const mapValue = this.fieldButtonMap.get(fieldKey);
+            if (mapValue && mapValue.componentRef.location.nativeElement === button) {
               notFunctionalButton = button;
               buttonsToRemove.push(button);
             }
@@ -357,8 +357,11 @@ export class PdfViewerComponent implements AfterViewInit {
       const fieldKey = button.getAttribute('data-field-key');
       if (fieldKey && !currentFieldKeys.has(fieldKey)) {        
         if (this.fieldButtonMap.has(fieldKey)) {
-          const componentRef = this.fieldButtonMap.get(fieldKey);
-          componentRef?.destroy();
+          const mapValue = this.fieldButtonMap.get(fieldKey);
+          if (mapValue) {
+            mapValue.subscription.unsubscribe();
+            mapValue.componentRef.destroy();
+          }
           this.fieldButtonMap.delete(fieldKey);
         }
         button.remove();
@@ -369,9 +372,10 @@ export class PdfViewerComponent implements AfterViewInit {
   private removeOrphanedButtons(currentFieldKeys: Set<string>): void {
     const orphanedKeys: string[] = [];
     
-    this.fieldButtonMap.forEach((componentRef, fieldKey) => {
+    this.fieldButtonMap.forEach((value, fieldKey) => {
       if (!currentFieldKeys.has(fieldKey)) {
-        componentRef.destroy();
+        value.subscription.unsubscribe();
+        value.componentRef.destroy();
         orphanedKeys.push(fieldKey);
       }
     });
@@ -407,7 +411,6 @@ export class PdfViewerComponent implements AfterViewInit {
     if (rightAddon) {
       const componentRef = this.createButtonComponentt(input);
       componentRef.location.nativeElement.setAttribute('data-field-key', uniqueKey);
-      this.fieldButtonMap.set(uniqueKey, componentRef);
       const wrapper = rightAddon.parentElement as HTMLElement | null;
       if (wrapper) {
         wrapper.style.display = 'flex';
@@ -426,8 +429,6 @@ export class PdfViewerComponent implements AfterViewInit {
     if (ngBootstrapInput) {
       const componentRef = this.createButtonComponentt(input);
       componentRef.location.nativeElement.setAttribute('data-field-key', uniqueKey);
-      this.fieldButtonMap.set(uniqueKey, componentRef);
-
       const wrapper = input.parentElement as HTMLElement | null;
       if (wrapper) {
         wrapper.style.display = 'flex';
@@ -445,15 +446,8 @@ export class PdfViewerComponent implements AfterViewInit {
     const parent = input.closest('.col') || input.closest('ds-dynamic-form-control-container');
     if (!parent) return;
 
-    // Crear componente de botón
     const componentRef = this.createButtonComponentt(input);
-    
     componentRef.location.nativeElement.setAttribute('data-field-key', uniqueKey);
-    
-    // Guardar en el mapa con la clave única
-    this.fieldButtonMap.set(uniqueKey, componentRef);
-    
-    // Insertar en DOM
     parent.insertAdjacentElement('afterend', componentRef.location.nativeElement);
   }
 
@@ -464,11 +458,16 @@ export class PdfViewerComponent implements AfterViewInit {
     const match = input.id.match(/(dc|sedici|mods|thesis).*/);
     componentRef.instance.inputID = match ? match[0] : input.id;
     
-    componentRef.instance.filterApplied.subscribe((filter: string) => {
+    const sub = componentRef.instance.filterApplied.subscribe((filter: string) => {
       this.applyFilterToSubmissionField = true;
       const newValue = this.applyFilter(filter, (input as HTMLInputElement).value);
       this.setMetadataValue(input as HTMLInputElement, newValue);
     });
+
+    const uniqueKey = input.getAttribute('data-unique-key');
+    if (uniqueKey) {
+      this.fieldButtonMap.set(uniqueKey, { componentRef, subscription: sub });
+    }
     
     return componentRef;
   }
@@ -519,8 +518,11 @@ export class PdfViewerComponent implements AfterViewInit {
     inputs.forEach(input => {
       const uniqueKey = input.getAttribute('data-unique-key');
       if (uniqueKey && this.fieldButtonMap.has(uniqueKey)) {
-        const componentRef = this.fieldButtonMap.get(uniqueKey);
-        componentRef?.destroy();
+        const mapValue = this.fieldButtonMap.get(uniqueKey);
+        if (mapValue) {
+          mapValue.subscription.unsubscribe();
+          mapValue.componentRef.destroy();
+        }
         this.fieldButtonMap.delete(uniqueKey);
       }
     });
