@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, ChangeDetectorRef, NgZone, ComponentRef, AfterViewInit, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
+import { Component, Input, ViewChild, ChangeDetectorRef, NgZone, ComponentRef, AfterViewInit, ViewContainerRef } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PdfJsViewerModule } from "ng2-pdfjs-viewer";
@@ -72,7 +72,6 @@ export class PdfViewerComponent implements AfterViewInit {
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private viewContainerRef: ViewContainerRef,
-    private componentFactoryResolver: ComponentFactoryResolver,
     private ngZone: NgZone,
     private formOperationsService: SectionFormOperationsService
   ) { }
@@ -450,8 +449,7 @@ export class PdfViewerComponent implements AfterViewInit {
   }
 
   private createButtonComponentt(input: HTMLElement): ComponentRef<DynamicButtonDropdownComponent> {
-    const factory = this.componentFactoryResolver.resolveComponentFactory(DynamicButtonDropdownComponent);
-    const componentRef = this.viewContainerRef.createComponent(factory);
+    const componentRef = this.viewContainerRef.createComponent(DynamicButtonDropdownComponent);
 
     const match = input.id.match(/(dc|sedici|mods|thesis).*/);
     componentRef.instance.inputID = match ? match[0] : input.id;
@@ -681,8 +679,7 @@ export class PdfViewerComponent implements AfterViewInit {
   }
   
   private createButtonComponent(): ComponentRef<ShortcutsButtonsComponent> {
-    const factory = this.componentFactoryResolver.resolveComponentFactory(ShortcutsButtonsComponent);
-    return this.viewContainerRef.createComponent(factory);
+    return this.viewContainerRef.createComponent(ShortcutsButtonsComponent);
   }
   
   private configureButtonComponent(componentRef: ComponentRef<ShortcutsButtonsComponent>, rect: DOMRect): void {
