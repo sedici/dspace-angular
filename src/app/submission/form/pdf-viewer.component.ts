@@ -413,11 +413,8 @@ export class PdfViewerComponent implements AfterViewInit {
       componentRef.location.nativeElement.setAttribute('data-field-key', uniqueKey);
       const wrapper = rightAddon.parentElement as HTMLElement | null;
       if (wrapper) {
-        wrapper.style.display = 'flex';
-        wrapper.style.alignItems = 'center';
-        wrapper.style.gap = '8px';
-        rightAddon.style.flex = '1 1 auto';
-        rightAddon.style.minWidth = '0';
+        wrapper.classList.add('pdf-viewer-layout-wrapper');
+        rightAddon.classList.add('pdf-viewer-layout-element');
         wrapper.appendChild(componentRef.location.nativeElement);
       } else {
         rightAddon.insertAdjacentElement('afterend', componentRef.location.nativeElement);
@@ -431,11 +428,8 @@ export class PdfViewerComponent implements AfterViewInit {
       componentRef.location.nativeElement.setAttribute('data-field-key', uniqueKey);
       const wrapper = input.parentElement as HTMLElement | null;
       if (wrapper) {
-        wrapper.style.display = 'flex';
-        wrapper.style.alignItems = 'center';
-        wrapper.style.gap = '8px';
-        input.style.flex = '1 1 auto';
-        input.style.minWidth = '0';
+        wrapper.classList.add('pdf-viewer-layout-wrapper');
+        input.classList.add('pdf-viewer-layout-element');
         wrapper.appendChild(componentRef.location.nativeElement);
       } else {
         ngBootstrapInput.insertAdjacentElement('afterend', componentRef.location.nativeElement);
@@ -924,24 +918,34 @@ export class PdfViewerComponent implements AfterViewInit {
     element.dispatchEvent(changeEvent);
     this.changeDetectorRef.detectChanges();
   }
-  
-  modifiedFieldStyle(element: HTMLTextAreaElement | HTMLInputElement) {
-    element.style.border = '2px solid green';
+
+  modifiedFieldStyle(element: HTMLTextAreaElement | HTMLInputElement): void {
+    if (!element) return;
+
+    element.classList.add('status-modified');
+    
     setTimeout(() => {
-      element.style.border = '';
+      element.classList.remove('status-modified');
     }, 5000);
   }
 
-  modifyPeopleFieldStyle(part: string, element: HTMLTextAreaElement | HTMLInputElement) {
+  modifyPeopleFieldStyle(part: string, element: HTMLTextAreaElement | HTMLInputElement): void {
+    if (!element) return;
+
+    element.classList.remove('people-valid', 'people-warning', 'people-invalid');
+
     if (part.includes(',')) {
       const length = part.split(",").join(" ").trim().split(/\s+/).filter(Boolean).length;
+      
       if (length === 2) {
-        element.style.border = '2px solid green';
+        element.classList.add('people-valid');
       } else if (length > 2 && length <= 4) {
-        element.style.border = '2px solid yellow';
+        element.classList.add('people-warning');
+      } else {
+        element.classList.add('people-invalid');
       }
     } else {
-      element.style.border = '2px solid red';
+      element.classList.add('people-invalid');
     }
   }
 
@@ -972,17 +976,6 @@ export class PdfViewerComponent implements AfterViewInit {
     input.value = part;
     input.id = `input-${index}`;
     input.classList.add('dynamic-input');
-    input.style.width = '90%';
-
-    const style = document.createElement('style');
-    style.textContent = `
-      .dynamic-input:focus-visible {
-        outline: 2px solid lightblue;
-        background: #f0f8ff;
-        border: none !important;
-      }
-    `;
-    document.head.appendChild(style);
 
     const idPart = this.extractIdPart();
     if (this.peopleMetadata.includes(idPart)) {

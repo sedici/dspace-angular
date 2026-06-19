@@ -180,3 +180,39 @@
     font-size: .75rem;
   }
 }
+
+:host {
+  ::ng-deep {
+    .dynamic-input {
+      width: 90%;
+
+      &:focus-visible {
+        outline: 2px solid lightblue;
+        background: #f0f8ff;
+        border: none;
+      }
+    }
+
+    .people-valid { border: 2px solid green; }
+    .people-warning { border: 2px solid yellow; }
+    .people-invalid { border: 2px solid red; }
+  }
+}
+
+::ng-deep {
+  .pdf-viewer-layout-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .pdf-viewer-layout-element {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .status-modified {
+    border: 2px solid green !important;
+    transition: border 0.2s ease-in-out;
+  }  
+}
