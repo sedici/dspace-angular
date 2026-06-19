@@ -180,6 +180,10 @@ export class PdfViewerComponent implements AfterViewInit {
       this.formOperationsService.dispatchOperationsFromChangeEvent = this.originalDispatch;
       this.originalDispatch = null;
     }
+
+    if (this.viewerContainerRef && this.boundTextSelectedHandler) {
+      this.viewerContainerRef.removeEventListener('mouseup', this.boundTextSelectedHandler);
+    }
   }
 
   private resetButtonCounters(): void {
@@ -540,11 +544,18 @@ export class PdfViewerComponent implements AfterViewInit {
     this.syncMetadataSearchTermWithSelection();
   }
 
+  private boundTextSelectedHandler: (event: MouseEvent) => void;
+  private viewerContainerRef: any = null;
   public pagesLoadedEvent(): void {
     this.iframe = this.pdfViewerOnDemand.iframe.nativeElement;
     this.container = this.iframe.contentDocument.body;
     const pdfApp = this.iframe.contentWindow?.PDFViewerApplication;
-    pdfApp.appConfig.viewerContainer.onmouseup = this.onTextSelected.bind(this);
+
+    if (pdfApp?.appConfig?.viewerContainer) {
+      this.viewerContainerRef = pdfApp.appConfig.viewerContainer;
+      this.boundTextSelectedHandler = this.onTextSelected.bind(this);
+      this.viewerContainerRef.addEventListener('mouseup', this.boundTextSelectedHandler);
+    }
   }
 
   onTextSelected(event) {
