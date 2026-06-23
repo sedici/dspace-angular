@@ -187,6 +187,11 @@ export class PdfViewerComponent implements AfterViewInit {
 
   private resetButtonCounters(): void {
     this.globalIdCounters.clear();
+    
+    this.fieldButtonMap.forEach((value) => {
+      if (value.subscription) value.subscription.unsubscribe();
+      if (value.componentRef) value.componentRef.destroy();
+    });
     this.fieldButtonMap.clear();
 
     const elementsWithKeys = document.querySelectorAll('[data-unique-key]');
