@@ -912,23 +912,30 @@ export class PdfViewerComponent implements AfterViewInit {
       return;
     }
     
+    // 1. Simular entrada del usuario (Ganar foco)
     element.focus();
     this.selectedMetadataField = '';
     this.modifiedFieldStyle(element);
     
-    // Actualizar el valor
+    // 2. Asignar el valor extraído del PDF
     element.value = value;
   
-    // Disparar eventos para notificar cambios
+    // 3. Notificar a Angular el cambio de valor
     this.triggerDOMEvents(element);
+    
+    // 4. Forzar la pérdida de foco para que DSpace dispare el auto-salvado y NgRx persista los datos
+    element.blur(); 
+    
     this.removeButtons();
   }
   
   private triggerDOMEvents(element: HTMLTextAreaElement | HTMLInputElement): void {
-    const inputEvent = new Event('input', { bubbles: true });
+    const inputEvent = new Event('input', { bubbles: true, cancelable: true });
     element.dispatchEvent(inputEvent);
-    const changeEvent = new Event('change', { bubbles: true });
+
+    const changeEvent = new Event('change', { bubbles: true, cancelable: true });
     element.dispatchEvent(changeEvent);
+    
     this.changeDetectorRef.detectChanges();
   }
 
