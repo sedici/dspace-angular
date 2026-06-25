@@ -1,10 +1,4 @@
-import {
-  AsyncPipe,
-  NgIf,
-  NgFor,
-
-  NgClass,
-} from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -43,27 +37,20 @@ import { QRCodeComponent } from 'angularx-qrcode';
   styleUrls: ['./sedici-item-certificate.scss'],
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
-
     NgClass,
     DsoEditMenuComponent,
     GenericItemPageFieldComponent,
     ItemPageUriFieldComponent,
-
     AsyncPipe,
     TranslateModule,
-
     BadgeMetadataValuesComponent,
-
     SediciContextBadgeComponent,
     SediciTruncatableGenericItemPageFieldComponent,
     SediciContextComponent,
     NgbModule,
-
     CommonModule,
-    QRCodeComponent,
-  ], // Solo los necesarios si el HTML nuevo necesita alguno en particular
+    QRCodeComponent
+], // Solo los necesarios si el HTML nuevo necesita alguno en particular
 })
 export class SediciCertificate extends UntypedItemComponent implements OnInit {
 

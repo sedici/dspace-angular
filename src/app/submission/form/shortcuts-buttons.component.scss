@@ -1,0 +1,15 @@
+.button-group {
+  position: absolute;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  gap: 0px;
+}
+
+.selection-button {
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  width: 35px;
+  height: 30px;
+}

@@ -43,7 +43,7 @@
 
     </div>
     @if (model.languageCodes && model.languageCodes.length > 0) {
-      <div class="col-2" >
+      <div class="col-2 languageCodesSelector">
         <select
           #language="ngModel"
           [disabled]="model.readOnly"

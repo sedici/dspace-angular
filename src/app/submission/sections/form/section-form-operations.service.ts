@@ -368,7 +368,7 @@ export class SectionFormOperationsService {
    * @param hasStoredValue
    *    representing if field value related to the specified operation has stored value
    */
-  protected dispatchOperationsFromChangeEvent(pathCombiner: JsonPatchOperationPathCombiner,
+  public dispatchOperationsFromChangeEvent(pathCombiner: JsonPatchOperationPathCombiner,
     event: DynamicFormControlEvent,
     previousValue: FormFieldPreviousValueObject,
     hasStoredValue: boolean): void {

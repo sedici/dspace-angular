@@ -1,0 +1,218 @@
+.colapsed-viewer {
+  height: 60vh;
+
+  @media (max-height: 800px) {
+    height: 45vh;
+  }
+}
+
+.expanded-viewer {
+  height: 85vh;
+}
+
+.selection-menu {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  margin-bottom: 5px;
+
+  .section {
+    margin-bottom: 10px;
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 0px;
+    }
+
+    .filter-toggle-btn {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: white;
+  
+      &.active {
+        background-color: #28a745; // Verde para activado
+
+        &:hover {
+          background-color: #259640;
+        }
+      }
+  
+      &.inactive {
+        background-color: #6c757d; // Gris para desactivado
+
+        &:hover {
+          background-color: #4f565c;
+        }
+      }
+    }
+
+    textarea {
+      width: 100%;
+      max-height: 10vh;
+      resize: vertical;
+      padding: 10px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+  }
+
+  .selection-submenu {
+    margin-bottom: 5px;
+
+    .metadata-filter-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      .metadata-field {
+        flex: 0 0 34%;
+
+        #metadata-field-search {
+          width: 100%;
+          height: 42px;
+          padding: 6px 10px;
+          border: 1px solid #ced4da;
+          border-radius: 4px;
+        }
+      }
+
+      .filter-buttons {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex: 1 1 auto;
+        justify-content: end;
+
+        .filter-btn {
+          min-width: 42px;
+          height: 42px;
+          padding: 5px 10px;
+          font-size: 14px;
+          border: 1px solid #c4c8cc;
+          border-radius: 5px;
+          background-color: #e9e9e9;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .filter-btn:hover {
+          background-color: #e0e0e0;
+        }
+        
+        .dropdown {
+          .dropdown-menu {
+            display: none;
+          }
+
+          .dropdown-menu.show {
+            display: flex;
+            min-width: max-content;
+            border: 1px solid #c4c8cc;
+            border-radius: 5px;
+            padding: 8px;
+            gap: 8px;
+            background-color: #f9f9f9;
+          }
+
+          .dropdown-item.filter-btn {
+            margin: 0;
+            line-height: 1;
+            text-decoration: none;
+          }
+        }
+      }
+    }
+  }
+
+  .action-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+
+    .filter-btn {
+      padding: 10px 15px;
+      font-size: 14px;
+      border: none;
+      border-radius: 5px;
+      background-color: #e9e9e9;
+    }
+    
+    .filter-btn:hover {
+      background-color: #e0e0e0;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 10px 15px;
+      font-size: 14px;
+      border: none;
+      border-radius: 5px;
+
+      &.btn-primary {
+        background-color: #007bff;
+        color: #fff;
+      }
+
+      &.btn-secondary {
+        background-color: #6c757d;
+        color: #fff;
+      }
+    }
+  }
+
+  .inputs-grid {
+    display: grid;
+    grid-template-rows: repeat(4, auto); // Define un máximo de 4 filas
+    grid-auto-flow: column;
+    gap: 5px;
+    font-size: .75rem;
+  }
+}
+
+:host {
+  ::ng-deep {
+    .dynamic-input {
+      width: 90%;
+
+      &:focus-visible {
+        outline: 2px solid lightblue;
+        background: #f0f8ff;
+        border: none;
+      }
+    }
+
+    .people-valid { border: 2px solid green; }
+    .people-warning { border: 2px solid yellow; }
+    .people-invalid { border: 2px solid red; }
+  }
+}
+
+::ng-deep {
+  .pdf-viewer-layout-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .pdf-viewer-layout-element {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .status-modified {
+    border: 2px solid green !important;
+    transition: border 0.2s ease-in-out;
+  }  
+}

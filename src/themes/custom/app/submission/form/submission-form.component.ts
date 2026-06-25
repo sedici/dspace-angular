@@ -9,7 +9,7 @@ import { SubmissionFormSectionAddComponent } from '../../../../../app/submission
 import { SubmissionFormComponent as BaseComponent } from '../../../../../app/submission/form/submission-form.component';
 import { ThemedSubmissionUploadFilesComponent } from '../../../../../app/submission/form/submission-upload-files/themed-submission-upload-files.component';
 import { ThemedSubmissionSectionContainerComponent } from '../../../../../app/submission/sections/container/themed-section-container.component';
-
+import { PdfViewerComponent } from 'src/app/submission/form/pdf-viewer.component';
 @Component({
   selector: 'ds-themed-submission-form',
   // styleUrls: ['./submission-form.component.scss'],
@@ -25,6 +25,7 @@ import { ThemedSubmissionSectionContainerComponent } from '../../../../../app/su
     ThemedSubmissionSectionContainerComponent,
     ThemedSubmissionUploadFilesComponent,
     TranslatePipe,
+    PdfViewerComponent,
   ],
 })
 export class SubmissionFormComponent extends BaseComponent {

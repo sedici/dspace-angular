@@ -3,12 +3,6 @@
   #main-site-header {
     padding-top: .5rem;
 
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1021;
-
     &.home-header {
       position: inherit;
     }
@@ -33,6 +27,14 @@
         width: auto;
       }
     }
+  }
+
+  .fixed-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1021;
   }
 
   // Comento hasta saber si cambia el comportamento

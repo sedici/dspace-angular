@@ -5,6 +5,7 @@ import {
   Input,
   OnChanges,
   OnDestroy,
+  OnInit,
   SimpleChanges,
 } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -14,6 +15,7 @@ import {
   of,
   Subscription,
 } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import {
   distinctUntilChanged,
   filter,
@@ -27,6 +29,7 @@ import { SubmissionSectionModel } from '../../core/config/models/config-submissi
 import { Collection } from '../../core/shared/collection.model';
 import { HALEndpointService } from '../../core/shared/hal-endpoint.service';
 import { Item } from '../../core/shared/item.model';
+import { EPerson } from 'src/app/core/eperson/models/eperson.model';
 import { SubmissionObject } from '../../core/submission/models/submission-object.model';
 import { WorkspaceitemSectionsObject } from '../../core/submission/models/workspaceitem-sections.model';
 import {
@@ -50,6 +53,9 @@ import { ThemedSubmissionFormFooterComponent } from './footer/themed-submission-
 import { SubmissionFormSectionAddComponent } from './section-add/submission-form-section-add.component';
 import { ThemedSubmissionUploadFilesComponent } from './submission-upload-files/themed-submission-upload-files.component';
 
+import { FormsModule } from '@angular/forms';
+
+import { PdfViewerComponent } from './pdf-viewer.component';
 /**
  * This component represents the submission form.
  */
@@ -66,9 +72,11 @@ import { ThemedSubmissionUploadFilesComponent } from './submission-upload-files/
     ThemedSubmissionSectionContainerComponent,
     ThemedSubmissionUploadFilesComponent,
     TranslatePipe,
-  ],
+    FormsModule,
+    PdfViewerComponent
+],
 })
-export class SubmissionFormComponent implements OnChanges, OnDestroy {
+export class SubmissionFormComponent implements OnChanges, OnDestroy, OnInit {
 
   /**
    * The collection id this submission belonging to
@@ -156,6 +164,10 @@ export class SubmissionFormComponent implements OnChanges, OnDestroy {
    */
   protected subs: Subscription[] = [];
 
+  public pdfBlobUrl: string | null = null;
+
+  public isAuthorizedForPdfViewer: boolean = false;
+
   /**
    * Initialize instance variables
    *
@@ -166,12 +178,28 @@ export class SubmissionFormComponent implements OnChanges, OnDestroy {
    * @param {SectionsService} sectionsService
    */
   constructor(
+    private http: HttpClient,
     private authService: AuthService,
     private changeDetectorRef: ChangeDetectorRef,
     private halService: HALEndpointService,
     private submissionService: SubmissionService,
     private sectionsService: SectionsService) {
     this.isActive = true;
+  }
+
+  ngOnInit() {
+    let currentUser$ = this.authService.getAuthenticatedUserFromStore();
+      currentUser$.subscribe((eperson: EPerson) => {
+        if (eperson) {
+          this.http.get(eperson._links?.groups?.href).subscribe((responsePath: any) => {
+            const groups = responsePath._embedded?.groups || [];
+            this.isAuthorizedForPdfViewer = groups.some(group => 
+              group.name === 'Administrator' || group.name === 'SeDiCIAdmin'
+            );
+            this.changeDetectorRef.detectChanges();
+          });
+        }
+      });
   }
 
   /**
@@ -227,6 +255,7 @@ export class SubmissionFormComponent implements OnChanges, OnDestroy {
 
       // start auto save
       this.submissionService.startAutoSave(this.submissionId);
+      this.loadSectionData();
     }
   }
 
@@ -309,5 +338,38 @@ export class SubmissionFormComponent implements OnChanges, OnDestroy {
       map((sections: SectionDataObject[]) =>
         sections.filter((section: SectionDataObject) => !isEqual(section.sectionType,SectionsType.Collection))),
     );
+  }
+
+  uploadFilesEvent(responsePath: any) {
+    const files = responsePath.sections.upload.files;
+    const pdfFiles = files.filter(file => file.format.extensions.includes("pdf")); // Filtro los archivos PDF
+    const lastFileLoad = files[files.length - 1];
+
+    // Lo cargo sólo si es el primer archivo PDF
+    if (pdfFiles.length === 1 && lastFileLoad.format.extensions.includes("pdf")) {
+      const fileUrl = lastFileLoad.url;
+      this.http.get(fileUrl, { responseType: 'blob' }).subscribe((blob: Blob) => {
+        this.pdfBlobUrl = URL.createObjectURL(blob);
+        this.changeDetectorRef.detectChanges();
+      });
+    }
+  }
+
+  loadSectionData() {
+    this.submissionService.getSubmissionSections(this.submissionId).subscribe((sections: SectionDataObject[]) => {
+      const uploadSection = sections.find(section => section.sectionType === 'upload');
+      if (uploadSection && uploadSection.data && (uploadSection.data as any).files && (uploadSection.data as any).files.length > 0) {
+        const files = (uploadSection.data as any).files;
+        const primaryUUID = (uploadSection.data as any).primary;
+        const pdfFiles = files.filter(file => file.format.extensions.includes("pdf")); // Filtro los archivos PDF
+        const pdfFile = pdfFiles.find(file => file.uuid === primaryUUID) || pdfFiles[0]; // Filtro el archivo PDF primario o el primero de la lista
+        if (pdfFile) {
+          const fileUrl = pdfFile.url;
+          this.http.get(fileUrl, { responseType: 'blob' }).subscribe((blob: Blob) => {
+            this.pdfBlobUrl = URL.createObjectURL(blob);
+          });
+        }
+      }
+    });
   }
 }

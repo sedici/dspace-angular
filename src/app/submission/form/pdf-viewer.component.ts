@@ -1,0 +1,1140 @@
+import { Component, Input, ViewChild, ChangeDetectorRef, NgZone, ComponentRef, AfterViewInit, ViewContainerRef } from '@angular/core';
+import { NgClass } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { PdfJsViewerModule } from "ng2-pdfjs-viewer";
+import { NgbDropdownModule, NgbTypeaheadModule, NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+
+import { filterTransformer } from '../../../../zfilterTransformer/filterTransformer.js';
+import { DynamicButtonDropdownComponent } from './dynamic-button-dropdown.component';
+import { ShortcutsButtonsComponent } from './shortcuts-buttons.component';
+import { SectionFormOperationsService } from '../sections/form/section-form-operations.service';
+import { JsonPatchOperationPathCombiner } from '../../core/json-patch/builder/json-patch-operation-path-combiner';
+import { DateSplitter, VolumeIssueSplitter } from '../utils/content-splitters';
+import { MetadataConfig } from '../models/metadata-config.model';
+import { FilterInfo, FilterConfig } from '../models/filter-config.model';
+
+@Component({
+  selector: 'app-pdf-viewer',
+  templateUrl: './pdf-viewer.component.html',
+  styleUrls: ['./pdf-viewer.component.scss'],
+  standalone: true,
+  imports: [
+    NgClass,
+    FormsModule,
+    PdfJsViewerModule,
+    NgbDropdownModule,
+    NgbTypeaheadModule,
+    DynamicButtonDropdownComponent,
+    ShortcutsButtonsComponent
+],
+})
+
+export class PdfViewerComponent implements AfterViewInit {
+	@Input() pdfUrl: string;
+	@ViewChild('pdfViewerOnDemand') pdfViewerOnDemand;
+
+  // Propiedades del visor
+  iframe;
+  container;
+  pdfIsLoading = true;
+  private buttonComponents: ComponentRef<ShortcutsButtonsComponent>[] = [];
+
+  // Estado de la selección de texto
+  selectedText: string = '';
+  isTextSelected: boolean = false;
+  selectedMetadataField: string = '';
+  filterAutomatically: boolean = true;
+  concatenateText: boolean = false;
+  
+  // Configuración de metadatos
+  metadataFormOptions = [];
+  metadataOptions = [];
+  metadataSearchTerm: string = '';
+  repeatableMetadata: string[] = MetadataConfig.REPEATABLE_METADATA;
+  peopleMetadata: string[] = MetadataConfig.PEOPLE_METADATA;
+
+  // Configuración de filtros
+  filterOptions: FilterInfo[];
+  private generalMetadataFilter: FilterInfo[] = FilterConfig.GENERAL_METADATA_FILTER;
+  private repeatableMetadataFilter: FilterInfo[] = FilterConfig.REPEATABLE_METADATA_FILTER;
+  private peopleMetadataFilter: FilterInfo[] = FilterConfig.PEOPLE_METADATA_FILTER;
+
+  // Estado de elementos dinámicos
+  showDynamicInputs: boolean = false;
+  isDropdownOpen = false;
+  applyFilterToSubmissionField: boolean = false;
+  private mutationObserver: MutationObserver | null = null;
+  private fieldButtonMap = new Map<string, { componentRef: ComponentRef<DynamicButtonDropdownComponent>, subscription: any }>();
+  private globalIdCounters = new Map<string, number>();
+
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef,
+    private viewContainerRef: ViewContainerRef,
+    private ngZone: NgZone,
+    private formOperationsService: SectionFormOperationsService
+  ) { }
+
+  ngOnInit() {
+    this.updateFilterOptions();
+  }
+  
+  updateFilterOptions(): void {
+    this.filterOptions = [...this.generalMetadataFilter];
+    
+    const idPart = this.extractIdPart();
+    
+    if (this.repeatableMetadata.includes(idPart)) {
+      this.filterOptions = this.filterOptions.concat(this.repeatableMetadataFilter);
+    }
+    
+    if (this.peopleMetadata.includes(idPart)) {
+      this.filterOptions = this.filterOptions.concat(this.peopleMetadataFilter);
+    }
+  }
+
+  onMetadataSearchChange(): void {
+    const selectedOption = this.getSelectedMetadataOption();
+    const searchTerm = this.normalizeMetadataSearchText(this.metadataSearchTerm);
+    const selectedName = this.normalizeMetadataSearchText(selectedOption?.name || '');
+
+    if (this.selectedMetadataField && searchTerm !== selectedName) {
+      this.selectedMetadataField = '';
+      this.updateFilterOptions();
+    }
+  }
+
+  private getFilteredMetadataOptions(term: string = this.metadataSearchTerm) {
+    const normalizedTerm = this.normalizeMetadataSearchText(term);
+    if (!normalizedTerm) {
+      return this.metadataOptions;
+    }
+
+    return this.metadataOptions.filter((option: any) => {
+      const name = this.normalizeMetadataSearchText(option?.name || '');
+      return name.includes(normalizedTerm);
+    });
+  }
+
+  metadataFieldFormatter = (option: { name: string }) => {
+    return (typeof option === 'object' && option?.name) ? option.name : (option as unknown as string);
+  };
+
+  metadataFieldSearch = (text$: Observable<string>) => {
+    return text$.pipe(
+      debounceTime(120),
+      distinctUntilChanged(),
+      map((term) => this.getFilteredMetadataOptions(term).slice(0, 25)),
+    );
+  };
+
+  onMetadataFieldSelected(event: NgbTypeaheadSelectItemEvent): void {
+    const option = event.item as any;
+    if (!option) {
+      return;
+    }
+
+    this.selectedMetadataField = option.value;
+    this.metadataSearchTerm = option.name;
+    this.updateFilterOptions();
+  }
+
+  private normalizeMetadataSearchText(value: string): string {
+    return (value || '')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .trim();
+  }
+
+  private getSelectedMetadataOption(): any {
+    return this.metadataOptions.find((option: any) => option.value === this.selectedMetadataField);
+  }
+
+  private syncMetadataSearchTermWithSelection(): void {
+    const selectedOption = this.getSelectedMetadataOption();
+    this.metadataSearchTerm = selectedOption ? selectedOption.name : '';
+  }
+
+  ngAfterViewInit() {
+    this.syncButtonsWithFields();
+    this.interceptFormOperationChanges();
+    this.setupMutationObserver();
+  }
+
+  ngOnDestroy() {
+    this.resetButtonCounters();
+
+    if (this.mutationObserver) {
+      this.mutationObserver.disconnect();
+      this.mutationObserver = null;
+    }
+
+    if (this.patchTimeout1) clearTimeout(this.patchTimeout1);
+    if (this.patchTimeout2) clearTimeout(this.patchTimeout2);
+    if (this.debounceTimer) clearTimeout(this.debounceTimer);
+
+    if (this.originalDispatch) {
+      this.formOperationsService.dispatchOperationsFromChangeEvent = this.originalDispatch;
+      this.originalDispatch = null;
+    }
+
+    if (this.viewerContainerRef && this.boundTextSelectedHandler) {
+      this.viewerContainerRef.removeEventListener('mouseup', this.boundTextSelectedHandler);
+    }
+  }
+
+  private resetButtonCounters(): void {
+    this.globalIdCounters.clear();
+    
+    this.fieldButtonMap.forEach((value) => {
+      if (value.subscription) value.subscription.unsubscribe();
+      if (value.componentRef) value.componentRef.destroy();
+    });
+    this.fieldButtonMap.clear();
+
+    const elementsWithKeys = document.querySelectorAll('[data-unique-key]');
+    elementsWithKeys.forEach(element => {
+      element.removeAttribute('data-unique-key');
+    });
+  }
+
+  private originalDispatch: any = null;
+  private patchTimeout1: any = null;
+  private patchTimeout2: any = null;
+  private interceptFormOperationChanges(): void {
+    if (this.originalDispatch) {
+      return; 
+    }
+
+    this.originalDispatch = this.formOperationsService.dispatchOperationsFromChangeEvent;
+
+    this.formOperationsService.dispatchOperationsFromChangeEvent = 
+      (pathCombiner: JsonPatchOperationPathCombiner, event: any, previousValue: any, hasStoredValue: boolean) => {
+        if (event?.model?.id === 'dc_type' || event?.model?.id === 'sedici_subtype') {
+          if (this.patchTimeout1) clearTimeout(this.patchTimeout1);
+          if (this.patchTimeout2) clearTimeout(this.patchTimeout2);         
+          this.patchTimeout1 = setTimeout(() => {
+            this.debounceUpdateButtons(); 
+            this.patchTimeout2 = setTimeout(() => {
+              this.removeDuplicateButtons();
+            }, 200);
+          }, 500);
+        }
+        return this.originalDispatch.call(this.formOperationsService, pathCombiner, event, previousValue, hasStoredValue);
+    };
+  }
+
+  private removeDuplicateButtons(): void {
+    const allButtons = document.querySelectorAll('app-dynamic-button-dropdown[data-field-key]');
+    const fieldKeyGroups = new Map<string, Element[]>();
+    
+    allButtons.forEach((button) => {
+      const fieldKey = button.getAttribute('data-field-key');
+      if (fieldKey) {
+        if (!fieldKeyGroups.has(fieldKey)) {
+          fieldKeyGroups.set(fieldKey, []);
+        }
+        fieldKeyGroups.get(fieldKey)!.push(button);
+      }
+    });
+    
+    // Procesar grupos con duplicados
+    fieldKeyGroups.forEach((buttons, fieldKey) => {
+      if (buttons.length > 1) {        
+        let notFunctionalButton: Element | null = null;
+        const buttonsToRemove: Element[] = [];
+        
+        buttons.forEach(button => {
+          if (this.fieldButtonMap.has(fieldKey)) {
+            const mapValue = this.fieldButtonMap.get(fieldKey);
+            if (mapValue && mapValue.componentRef.location.nativeElement === button) {
+              notFunctionalButton = button;
+              buttonsToRemove.push(button);
+            }
+          }
+        });
+        
+        // Si no encontramos el notFuncional en el mapa, mantener el primero
+        if (!notFunctionalButton && buttons.length > 0) {
+          notFunctionalButton = buttons[0];
+          buttonsToRemove.splice(0, 1);
+        }
+        
+        // Eliminar los botones duplicados
+        buttonsToRemove.forEach(button => {
+          button.remove();
+        });
+      }
+    });
+  }
+
+  private addFocusTrackingToInput(element: HTMLElement): void {
+    element.addEventListener('focus', (event) => {
+      const targetId = (event.target as HTMLTextAreaElement | HTMLInputElement).id;
+      const excludedIds = MetadataConfig.EXCLUDED_IDS;
+      // Evito el focus en la caja de previsualización de texto y en los campos deplegables
+      if (!excludedIds.has(targetId) && !targetId.includes('input-')) {
+        this.selectedMetadataField = targetId;
+        this.syncMetadataSearchTermWithSelection();
+        this.updateFilterOptions();
+        this.changeDetectorRef.detectChanges();
+      }
+    });
+  }
+
+  private setupMutationObserver(): void {
+    this.mutationObserver = new MutationObserver((mutations) => {
+      let hasRelevantChanges = false;
+
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'childList') {
+          // Verificar si se agregaron o eliminaron campos de formulario
+          mutation.addedNodes.forEach((node) => {
+            if (node.nodeType === Node.ELEMENT_NODE) {
+              const element = node as Element;
+              if (this.isFormField(element)) {
+                hasRelevantChanges = true;
+              }
+            }
+          });
+          
+          mutation.removedNodes.forEach((node) => {
+            if (node.nodeType === Node.ELEMENT_NODE) {
+              const element = node as Element;
+              if (this.isFormField(element)) {
+                hasRelevantChanges = true;
+                this.cleanupOrphanedButtons(element);
+              }
+            }
+          });
+        }
+      });
+      
+      if (hasRelevantChanges) {
+        this.debounceUpdateButtons();
+      }
+    });
+
+    const formContainer = document.querySelector('ds-submission-form');
+    if (formContainer) {
+      this.mutationObserver.observe(formContainer, {
+        childList: true,
+        subtree: true
+      });
+    } else {
+      console.warn('No se encontró el contenedor del formulario para MutationObserver.');
+    }
+  }
+
+  private isFormField(element: Element): boolean {
+    const tagName = element.tagName.toLowerCase();
+    return tagName === 'ds-dynamic-onebox' || tagName === 'dynamic-ng-bootstrap-textarea' || tagName === 'dynamic-ng-bootstrap-input';
+  }
+
+  private debounceTimer: any;
+  private debounceUpdateButtons(): void {
+    clearTimeout(this.debounceTimer);
+    this.debounceTimer = setTimeout(() => {
+      this.syncButtonsWithFields();
+    }, 100);
+  }
+
+  private syncButtonsWithFields(): void {
+    const currentFields = this.getCurrentFormFields();
+    const currentFieldKeys = new Set(currentFields.map(field => field.getAttribute('data-unique-key')));
+    
+    // 1. Limpiar botones huérfanos desde el DOM ANTES de otras operaciones
+    this.removeOrphanedButtonsFromDOM(currentFieldKeys);
+    
+    // 2. Eliminar botones huérfanos del mapa
+    this.removeOrphanedButtons(currentFieldKeys);
+    
+    // 3. Agregar botones a campos nuevos
+    this.addButtonsToNewFields(currentFields);
+    
+    // 4. Actualizar opciones de metadatos
+    this.updateMetadataOptions(currentFields);
+  }
+
+  private removeOrphanedButtonsFromDOM(currentFieldKeys: Set<string>): void {
+    const allButtonsInDOM = document.querySelectorAll('app-dynamic-button-dropdown[data-field-key]');
+    
+    allButtonsInDOM.forEach((button) => {
+      const fieldKey = button.getAttribute('data-field-key');
+      if (fieldKey && !currentFieldKeys.has(fieldKey)) {        
+        if (this.fieldButtonMap.has(fieldKey)) {
+          const mapValue = this.fieldButtonMap.get(fieldKey);
+          if (mapValue) {
+            mapValue.subscription.unsubscribe();
+            mapValue.componentRef.destroy();
+          }
+          this.fieldButtonMap.delete(fieldKey);
+        }
+        button.remove();
+      }
+    });
+  }
+
+  private removeOrphanedButtons(currentFieldKeys: Set<string>): void {
+    const orphanedKeys: string[] = [];
+    
+    this.fieldButtonMap.forEach((value, fieldKey) => {
+      if (!currentFieldKeys.has(fieldKey)) {
+        value.subscription.unsubscribe();
+        value.componentRef.destroy();
+        orphanedKeys.push(fieldKey);
+      }
+    });
+    
+    orphanedKeys.forEach(key => this.fieldButtonMap.delete(key));
+  }
+
+  private addButtonsToNewFields(currentFields: HTMLElement[]): void {
+    const excludedIds = MetadataConfig.EXCLUDED_IDS_FOR_BUTTONS;
+    currentFields = currentFields
+      .filter(element => !excludedIds.has(element.id))
+
+    currentFields.forEach(field => {
+      const uniqueKey = field.getAttribute('data-unique-key');
+      if (uniqueKey && !this.fieldButtonMap.has(uniqueKey)) {
+        this.createButtonForField(field);
+      }
+    });
+  }
+
+  private createButtonForField(input: HTMLElement): void {
+    if (!input.id) return;
+    
+    const uniqueKey = input.getAttribute('data-unique-key');
+    if (!uniqueKey) return;
+
+    const existingButton = document.querySelector(`app-dynamic-button-dropdown[data-field-key="${uniqueKey}"]`);
+    if (existingButton) {
+      return;
+    }
+
+    const rightAddon = input.closest('.right-addon') as HTMLElement | null;
+    if (rightAddon) {
+      const componentRef = this.createButtonComponentt(input);
+      componentRef.location.nativeElement.setAttribute('data-field-key', uniqueKey);
+      const wrapper = rightAddon.parentElement as HTMLElement | null;
+      if (wrapper) {
+        wrapper.classList.add('pdf-viewer-layout-wrapper');
+        rightAddon.classList.add('pdf-viewer-layout-element');
+        wrapper.appendChild(componentRef.location.nativeElement);
+      } else {
+        rightAddon.insertAdjacentElement('afterend', componentRef.location.nativeElement);
+      }
+      return;
+    }
+
+    const ngBootstrapInput = input.closest('dynamic-ng-bootstrap-input') as HTMLElement | null;
+    if (ngBootstrapInput) {
+      const componentRef = this.createButtonComponentt(input);
+      componentRef.location.nativeElement.setAttribute('data-field-key', uniqueKey);
+      const wrapper = input.parentElement as HTMLElement | null;
+      if (wrapper) {
+        wrapper.classList.add('pdf-viewer-layout-wrapper');
+        input.classList.add('pdf-viewer-layout-element');
+        wrapper.appendChild(componentRef.location.nativeElement);
+      } else {
+        ngBootstrapInput.insertAdjacentElement('afterend', componentRef.location.nativeElement);
+      }
+      return;
+    }
+    
+    const parent = input.closest('.col') || input.closest('ds-dynamic-form-control-container');
+    if (!parent) return;
+
+    const componentRef = this.createButtonComponentt(input);
+    componentRef.location.nativeElement.setAttribute('data-field-key', uniqueKey);
+    parent.insertAdjacentElement('afterend', componentRef.location.nativeElement);
+  }
+
+  private createButtonComponentt(input: HTMLElement): ComponentRef<DynamicButtonDropdownComponent> {
+    const componentRef = this.viewContainerRef.createComponent(DynamicButtonDropdownComponent);
+
+    const match = input.id.match(/(dc|sedici|mods|thesis).*/);
+    componentRef.instance.inputID = match ? match[0] : input.id;
+    
+    const sub = componentRef.instance.filterApplied.subscribe((filter: string) => {
+      this.applyFilterToSubmissionField = true;
+      const newValue = this.applyFilter(filter, (input as HTMLInputElement).value);
+      this.setMetadataValue(input as HTMLInputElement, newValue);
+    });
+
+    const uniqueKey = input.getAttribute('data-unique-key');
+    if (uniqueKey) {
+      this.fieldButtonMap.set(uniqueKey, { componentRef, subscription: sub });
+    }
+    
+    return componentRef;
+  }
+
+  private getCurrentFormFields(): HTMLElement[] {
+    const formContainers = document.querySelectorAll('ds-dynamic-form-control-container');
+    const fields: HTMLElement[] = [];
+    const excludedIds = MetadataConfig.EXCLUDED_IDS;
+
+    formContainers.forEach((container) => {
+      const inputs = Array.from(container.querySelectorAll('input, textarea'))
+      .filter((input): input is HTMLElement => input instanceof HTMLElement)
+      .filter(input => input.id)
+      .filter(input => window.getComputedStyle(input).visibility === 'visible')
+      .filter(input => !excludedIds.has(input.id) && 
+                       !input.id.match(/^primaryBitstream\d+$/) && 
+                       !input.id.match(/^inputFileUploader-ds-drag-and-drop-uploader\d+$/) && 
+                       !input.id.match(/^SL_locer\d+$/) && 
+                       !input.id.match(/^SL_BBL_locer\d+$/) &&
+                       input.id !== 'cc-license-dropdown' &&
+                       !(input.id).includes('input-'))
+
+      inputs.forEach((input) => {
+        if (input.id) {
+          const element = input as HTMLElement;
+          let uniqueKey = element.getAttribute('data-unique-key');
+          if (!uniqueKey) {
+            const currentCount = this.globalIdCounters.get(element.id) || 0;
+            this.globalIdCounters.set(element.id, currentCount + 1);
+            uniqueKey = this.generateUniqueKey(element, currentCount + 1);
+            element.setAttribute('data-unique-key', uniqueKey);
+            this.addFocusTrackingToInput(element);
+          }
+          fields.push(element);
+        }
+      });
+    });
+        
+    return fields;
+  }
+
+  private generateUniqueKey(element: HTMLElement, globalInstanceIndex: number): string {
+    return `${element.id}-instance-${globalInstanceIndex}`;
+  }
+
+  private cleanupOrphanedButtons(removedElement: Element): void {
+    const inputs = removedElement.querySelectorAll('input[data-unique-key], textarea[data-unique-key]');
+    inputs.forEach(input => {
+      const uniqueKey = input.getAttribute('data-unique-key');
+      if (uniqueKey && this.fieldButtonMap.has(uniqueKey)) {
+        const mapValue = this.fieldButtonMap.get(uniqueKey);
+        if (mapValue) {
+          mapValue.subscription.unsubscribe();
+          mapValue.componentRef.destroy();
+        }
+        this.fieldButtonMap.delete(uniqueKey);
+      }
+    });
+  }
+
+  private updateMetadataOptions(elements: HTMLElement[]): void {
+    const uniqueId = new Set();
+    const nameMap = MetadataConfig.NAME_MAP;
+    
+    this.metadataOptions = elements
+    .filter(input => {
+        if (uniqueId.has(input.id)) return false;
+        uniqueId.add(input.id);
+        return true;
+      })
+    .map(element => ({
+      name: nameMap[element.id] || element.getAttribute('aria-label') || element.getAttribute('placeholder') || element.getAttribute('name') || element.id,
+      value: element.id
+    }));
+
+    this.syncMetadataSearchTermWithSelection();
+  }
+
+  private boundTextSelectedHandler: (event: MouseEvent) => void;
+  private viewerContainerRef: any = null;
+  public pagesLoadedEvent(): void {
+    this.iframe = this.pdfViewerOnDemand.iframe.nativeElement;
+    this.container = this.iframe.contentDocument.body;
+    const pdfApp = this.iframe.contentWindow?.PDFViewerApplication;
+
+    if (pdfApp?.appConfig?.viewerContainer) {
+      this.viewerContainerRef = pdfApp.appConfig.viewerContainer;
+      this.boundTextSelectedHandler = this.onTextSelected.bind(this);
+      this.viewerContainerRef.addEventListener('mouseup', this.boundTextSelectedHandler);
+    }
+  }
+
+  onTextSelected(event) {
+    const selection = event.view.getSelection();
+    if (selection && selection.toString().length > 0) {
+      this.handleTextSelection(selection, event);
+    } else {
+      this.clearTextSelection();
+      this.showDynamicInputs = false;
+    }
+    this.changeDetectorRef.detectChanges();
+  }
+  
+  private handleTextSelection(selection: Selection, event: any): void {
+    let selectionToString = selection.toString();
+    if (this.filterAutomatically) {
+      selectionToString = filterTransformer.cleanText(selectionToString, this.extractIdPart());
+      if (this.concatenateText) {
+        selectionToString = this.selectedText + ' ' + selectionToString;
+        this.concatenateText = false;
+      }
+      if (this.selectedMetadataField !== '') {
+        const idPart = this.extractIdPart();
+        if (this.peopleMetadata.includes(idPart)) {
+          const parts = filterTransformer.transformPersons(selectionToString);
+          if (parts.length > 1) {
+            this.showDynamicInputs = true;
+            this.changeDetectorRef.detectChanges();
+            setTimeout(() => {
+              this.createInputs(parts);
+            }, 100);
+            this.selectedText = selectionToString;
+          } else {
+            this.selectedText = parts[0];
+          }
+        } else if (idPart === 'dc_subject') {
+          const parts = filterTransformer.transformKeywords(selectionToString);
+          if (parts.length > 1) {
+            this.showDynamicInputs = true;
+            this.changeDetectorRef.detectChanges();
+            setTimeout(() => {
+              this.createInputs(parts);
+            }, 100);
+            this.selectedText = selectionToString;
+          } else {
+            this.selectedText = parts[0];
+          }
+        } else if (idPart === 'sedici_relation_journalVolumeAndIssue') {
+          this.selectedText = this.processJournalMetadata(selectionToString);
+        } else if (idPart.includes('date')) {
+          this.selectedText = this.processDateMetadata(selectionToString);
+        } else {
+          this.selectedText = selectionToString;
+        }
+      } else {
+        this.selectedText = selectionToString;
+      }
+    } else {
+      if (this.concatenateText) {
+        selectionToString = this.selectedText + ' ' + selectionToString;
+        this.concatenateText = false;
+      }
+      this.selectedText = selectionToString;
+    }
+
+    this.isTextSelected = true;
+    const range = selection.getRangeAt(0);
+    const rect = range.getBoundingClientRect();
+
+    this.centerSelectionInView(rect);
+
+    // Espero a que termine el scroll para crear los botones con la posición final
+    setTimeout(() => {
+      const updatedRect = selection.getRangeAt(0).getBoundingClientRect();
+      this.createButtons(updatedRect);
+    }, 450);
+  }
+
+  /**
+   * Centra la selección de texto en el visor de PDF
+   * @param rect Rectángulo que contiene la selección de texto
+   */
+  private centerSelectionInView(rect: DOMRect): void {
+    if (!this.iframe || !this.iframe.contentWindow) return;
+    
+    const viewerContainer = this.iframe.contentWindow.document.getElementById('viewerContainer');
+    if (!viewerContainer) return;
+    
+    const containerHeight = viewerContainer.clientHeight;
+    const selectionTop = rect.top + viewerContainer.scrollTop - this.iframe.getBoundingClientRect().top;
+    const selectionHeight = rect.height;
+    const targetScrollTop = selectionTop - (containerHeight / 2) + (selectionHeight / 2);
+    
+    viewerContainer.scrollTo({
+      top: targetScrollTop,
+      behavior: 'smooth'
+    });
+  }
+  
+  clearTextSelection(): void {
+    this.selectedText = '';
+    this.isTextSelected = false;
+    this.concatenateText = false;
+    this.removeButtons();
+  }
+
+  changeFilterAutomatically(): void {
+    this.filterAutomatically = !this.filterAutomatically;
+  }
+
+  changeConcatenateText(): void {
+    this.concatenateText = !this.concatenateText;
+  }
+
+  createButtons(rect: DOMRect): void {
+    this.ngZone.run(() => {
+      this.removeButtons();
+      const componentRef = this.createButtonComponent();
+      this.configureButtonComponent(componentRef, rect);
+      this.buttonComponents.push(componentRef);
+      this.changeDetectorRef.detectChanges();
+    });
+  }
+  
+  private createButtonComponent(): ComponentRef<ShortcutsButtonsComponent> {
+    return this.viewContainerRef.createComponent(ShortcutsButtonsComponent);
+  }
+  
+  private configureButtonComponent(componentRef: ComponentRef<ShortcutsButtonsComponent>, rect: DOMRect): void {
+    componentRef.instance.rect = rect;
+    componentRef.instance.onButtonClick = () => {
+      this.copyToMetadataField();
+    };
+  }
+  
+  removeButtons(): void {
+    this.buttonComponents.forEach(componentRef => componentRef.destroy());
+    this.buttonComponents = [];
+  }
+
+  copyToMetadataField() {
+    if (!this.selectedMetadataField) {
+      alert('Selecciona una caja de texto.');
+      return;
+    }
+    
+    const idPart = this.extractIdPart();
+    const text = this.selectedText.trim();
+    
+    if (this.showDynamicInputs) {
+      this.retrieveInputs();
+    } else if (idPart.includes('date')) {
+      this.saveDateMetadata();
+    } else if (this.isRepeatableMetadataName(idPart)) {
+      this.processRepeatableMetadata([text]);
+    } else {
+      this.processStandardMetadata();
+    }
+    
+    this.removeButtons();
+    this.clearTextSelection();
+    this.selectedMetadataField = '';
+    this.metadataSearchTerm = '';
+  }
+  
+  private processDateMetadata(selectedText: string): string {
+    const date = new DateSplitter().split(selectedText);
+    let formattedText = '';
+
+    if (date.year) {
+      if (date.day && date.month) {
+        // Formato completo: "DIA del MES del AÑO"
+        formattedText = `Día: ${date.day}\nMes: ${date.month}\nAño: ${date.year}`;
+      } else if (date.month) {
+        // Solo mes y año: "MES del AÑO"
+        formattedText = `Mes: ${date.month}\nAño: ${date.year}`;
+      } else {
+        // Solo año: "AÑO"
+        formattedText = `Año: ${date.year}`;
+      }
+      return formattedText;
+    } else {
+      alert('No se encontró un formato de fecha válido');
+      return selectedText;
+    }
+  }
+
+  private saveDateMetadata(): void {
+    let day = '';
+    let month = '';
+    let year = '';
+
+    // Extraer año (4 dígitos después de "Año: ")
+    const yearMatch = this.selectedText.match(/Año:\s*(\d{4})/);
+    if (yearMatch) {
+      year = yearMatch[1];
+    }
+
+    // Extraer mes (1-2 dígitos después de "Mes: ")
+    const monthMatch = this.selectedText.match(/Mes:\s*(\d{1,2})/);
+    if (monthMatch) {
+      month = monthMatch[1];
+    }
+
+    // Extraer día (1-2 dígitos después de "Día: ")
+    const dayMatch = this.selectedText.match(/Día:\s*(\d{1,2})/);
+    if (dayMatch) {
+      day = dayMatch[1];
+    }
+
+    // Si no hay ninguno de los tres, usar DateSplitter
+    if (!year && !month && !day) {
+      const date = new DateSplitter().split(this.selectedText.trim());
+      day = date.day || '';
+      month = date.month || '';
+      year = date.year || '';
+    }
+    
+    const metadataYear = document.getElementById(this.selectedMetadataField) as HTMLInputElement | null;
+    const metadataMonth = document.getElementById(this.selectedMetadataField.replace(/_year$/, '_month')) as HTMLInputElement | null;
+    const metadataDay = document.getElementById(this.selectedMetadataField.replace(/_year$/, '_day')) as HTMLInputElement | null;
+    
+    if (year && metadataYear) {
+      this.setMetadataValue(metadataYear, year);
+      if (month && metadataMonth) {
+        this.setMetadataValue(metadataMonth, month);
+        if (day && metadataDay) {
+          this.setMetadataValue(metadataDay, day);
+        } else if (metadataDay) {
+          metadataDay.value = '';
+        }
+      } else if (metadataMonth) {
+        metadataMonth.value = '';
+        if (metadataDay) metadataDay.value = '';
+      }
+    } else {
+      console.error('El campo de metadato de año no se encuentra disponible en el DOM.');
+    }
+  }
+  
+  private processJournalMetadata(selectedText: string): string {
+    const journalData = new VolumeIssueSplitter().split(selectedText);
+    let formattedText = '';
+    
+    if (journalData.volume) {
+      formattedText = journalData.issue 
+        ? `vol. ${journalData.volume}, no. ${journalData.issue}` 
+        : `vol. ${journalData.volume}`;
+    } else if (journalData.year) {
+      formattedText = journalData.issue 
+        ? `año ${journalData.year}, no. ${journalData.issue}` 
+        : `año ${journalData.year}`;
+    } else if (journalData.tomo) {
+      formattedText = journalData.issue 
+        ? `tomo ${journalData.tomo}, no. ${journalData.issue}` 
+        : `tomo ${journalData.tomo}`;
+    } else if (journalData.issue) {
+      formattedText = `no. ${journalData.issue}`;
+    } else {
+      alert('No se encontraron año, volumen, tomo o número');
+      return selectedText;
+    }
+    
+    return formattedText;
+  }
+  
+  private processStandardMetadata(): void {
+    const elements = document.querySelectorAll(`[id*="${this.selectedMetadataField}"]`);
+    const element = Array.from(elements).find(el => 
+      window.getComputedStyle(el).visibility === 'visible' &&
+      el.getAttribute('id').startsWith('label') === false
+    ) as HTMLTextAreaElement | HTMLInputElement;
+    
+    this.setMetadataValue(element, this.selectedText);
+  }
+
+  extractIdPart(): string {
+    const match = this.selectedMetadataField.match(/(dc|sedici|mods|thesis).*/);
+    return match ? match[0] : this.selectedMetadataField;
+  }
+  
+  isRepeatableMetadataName(name: string): boolean {
+    return this.repeatableMetadata.includes(name);
+  }
+  
+  async addMetadataField(selectedMetadataField: string = this.selectedMetadataField): Promise<void> {
+    const selectedInput = document.getElementById(selectedMetadataField);
+    if (!selectedInput) {
+      console.error('Input seleccionado no encontrado.');
+      return;
+    }
+    
+    const metadataContainer = selectedInput.closest('div[id$="_array"]');
+    if (!metadataContainer) {
+      console.error('Contenedor no encontrado.');
+      return;
+    }
+    
+    const addButton = metadataContainer.querySelector('.ds-form-add-more.btn.btn-link') as HTMLElement;
+    if (!addButton) {
+      console.error(`Botón "Añadir más" no encontrado en el contenedor con id ${metadataContainer.id}.`);
+      return;
+    }
+    
+    addButton.click();
+    await new Promise(resolve => setTimeout(resolve, 50));
+  }
+
+  async processRepeatableMetadata(
+    items: string[], 
+    idPart: string = this.extractIdPart(), 
+    selectedMetadataField: string = this.selectedMetadataField
+  ): Promise<void> {
+    for (const item of items) {
+      const elementsWithSameId = this.getVisibleElementsWithId(idPart);
+      let element = this.findEmptyElement(elementsWithSameId);
+      
+      if (!element) {
+        await this.addMetadataField(selectedMetadataField);
+        const newElementsWithSameId = this.getVisibleElementsWithId(idPart);
+        element = newElementsWithSameId[newElementsWithSameId.length - 1] as HTMLTextAreaElement | HTMLInputElement;
+      }
+      
+      this.setMetadataValue(element, item);
+    }
+  }
+  
+  private getVisibleElementsWithId(idPart: string): Array<HTMLTextAreaElement | HTMLInputElement> {
+    return Array.from(document.querySelectorAll(`[id*="${idPart}"]`))
+      .filter(element => {
+        const id = element.getAttribute('id');
+        return id === idPart || id.endsWith(idPart);
+      })
+      .filter(element => window.getComputedStyle(element).visibility === 'visible') as Array<HTMLTextAreaElement | HTMLInputElement>;
+  }
+  
+  private findEmptyElement(elements: Array<HTMLTextAreaElement | HTMLInputElement>): HTMLTextAreaElement | HTMLInputElement | null {
+    let index = 0;
+    let element = elements[index];
+    
+    while (element && element.value) {
+      element = elements[++index];
+    }
+    
+    return element || null;
+  }
+
+  setMetadataValue(element: HTMLTextAreaElement | HTMLInputElement, value: string): void {
+    if (!element || value === '') {
+      alert(`Elemento con ID ${element?.id || 'desconocido'} no encontrado. O valor no válido.`);
+      return;
+    }
+    
+    // 1. Simular entrada del usuario (Ganar foco)
+    element.focus();
+    this.selectedMetadataField = '';
+    this.modifiedFieldStyle(element);
+    
+    // 2. Asignar el valor extraído del PDF
+    element.value = value;
+  
+    // 3. Notificar a Angular el cambio de valor
+    this.triggerDOMEvents(element);
+    
+    // 4. Forzar la pérdida de foco para que DSpace dispare el auto-salvado y NgRx persista los datos
+    element.blur(); 
+    
+    this.removeButtons();
+  }
+  
+  private triggerDOMEvents(element: HTMLTextAreaElement | HTMLInputElement): void {
+    const inputEvent = new Event('input', { bubbles: true, cancelable: true });
+    element.dispatchEvent(inputEvent);
+
+    const changeEvent = new Event('change', { bubbles: true, cancelable: true });
+    element.dispatchEvent(changeEvent);
+    
+    this.changeDetectorRef.detectChanges();
+  }
+
+  modifiedFieldStyle(element: HTMLTextAreaElement | HTMLInputElement): void {
+    if (!element) return;
+
+    element.classList.add('status-modified');
+    
+    setTimeout(() => {
+      element.classList.remove('status-modified');
+    }, 5000);
+  }
+
+  modifyPeopleFieldStyle(part: string, element: HTMLTextAreaElement | HTMLInputElement): void {
+    if (!element) return;
+
+    element.classList.remove('people-valid', 'people-warning', 'people-invalid');
+
+    if (part.includes(',')) {
+      const length = part.split(",").join(" ").trim().split(/\s+/).filter(Boolean).length;
+      
+      if (length === 2) {
+        element.classList.add('people-valid');
+      } else if (length > 2 && length <= 4) {
+        element.classList.add('people-warning');
+      } else {
+        element.classList.add('people-invalid');
+      }
+    } else {
+      element.classList.add('people-invalid');
+    }
+  }
+
+  createInputs(parts: string[]): void {
+    const container = document.getElementById('inputsContainer');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    
+    parts.forEach((part, index) => {
+      const inputGroup = this.createInputGroup(part, index, container);
+      container.appendChild(inputGroup);
+    });
+    
+    let removeAllButton = document.querySelector('.dynamic-remove-all-button');
+    if (!removeAllButton) {
+      removeAllButton = this.createRemoveAllButton(container);
+    }
+    container.insertAdjacentElement('afterend', removeAllButton);
+  }
+  
+  private createInputGroup(part: string, index: number, container: HTMLElement): HTMLElement {
+    const inputGroup = document.createElement('div');
+    inputGroup.classList.add('dynamic-input-group');
+  
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.value = part;
+    input.id = `input-${index}`;
+    input.classList.add('dynamic-input');
+
+    const idPart = this.extractIdPart();
+    if (this.peopleMetadata.includes(idPart)) {
+      this.modifyPeopleFieldStyle(part, input);
+    }
+  
+    const removeButton = document.createElement('button');
+    removeButton.innerText = 'x';
+    removeButton.classList.add('dynamic-remove-button');
+    removeButton.addEventListener('click', () => this.handleRemoveInput(inputGroup, container));
+  
+    inputGroup.appendChild(input);
+    inputGroup.appendChild(removeButton);
+    
+    return inputGroup;
+  }
+  
+  private handleRemoveInput(inputGroup: HTMLElement, container: HTMLElement): void {
+    container.removeChild(inputGroup);
+    const inputs = document.querySelectorAll('.dynamic-input');
+    if (inputs.length === 0) {
+      const removeAllButton = document.querySelector('.dynamic-remove-all-button');
+      if (removeAllButton) removeAllButton.remove();
+      this.showDynamicInputs = false;
+    }
+  }
+  
+  private createRemoveAllButton(container: HTMLElement): HTMLElement {
+    const removeAllButton = document.createElement('button');
+    removeAllButton.innerText = 'Eliminar todos';
+    removeAllButton.classList.add('dynamic-remove-all-button');
+    removeAllButton.addEventListener('click', () => {
+      const inputs = document.querySelectorAll('.dynamic-input-group');
+      inputs.forEach(inputGroup => {
+        container.removeChild(inputGroup);
+      });
+      removeAllButton.remove();
+      this.showDynamicInputs = false;
+    });
+    
+    return removeAllButton;
+  }
+  
+  clearDynamicInputs(): void {
+    this.showDynamicInputs = false;
+    const container = document.getElementById('inputsContainer');
+    if (container) container.innerHTML = '';
+  }
+  
+  async retrieveInputs(): Promise<void> {
+    const inputs = document.querySelectorAll('.dynamic-input');
+    const idPart = this.extractIdPart();
+    const selectedMetadataField = this.selectedMetadataField;
+    
+    for (const input of Array.from(inputs)) {
+      const element = input as HTMLTextAreaElement | HTMLInputElement;
+      await this.processRepeatableMetadata([element.value], idPart, selectedMetadataField);
+    }
+    
+    this.showDynamicInputs = false;
+  }
+
+  applyFilter(filter: string, text: string = this.selectedText): string {
+    if (this.applyFilterToSubmissionField) {
+      this.applyFilterToSubmissionField = false;
+      return this.applyFilterToText(text, filter);
+    } else if (this.showDynamicInputs){
+      this.applyFilterToDynamicInputs(filter);
+    } else {
+      this.selectedText = this.applyFilterToText(text, filter);
+      return this.selectedText;
+    }
+    return '';
+  }
+  
+  private applyFilterToDynamicInputs(filter: string): void {
+    const inputs = document.querySelectorAll('.dynamic-input');
+    inputs.forEach((input) => {
+      const element = input as HTMLTextAreaElement | HTMLInputElement;
+      element.value = this.applyFilterToText(element.value, filter, element);
+      if (element.value === '') {
+        element.parentElement?.remove();
+      }
+    });
+  }
+  
+  applyFilterToText(text: string, filter: string, element?): string {
+    switch (filter) {
+      case 'camelCase':
+        return filterTransformer.toCamelCase(text);
+      case 'upperCase':
+        return filterTransformer.toUpperCase(text);
+      case 'lowerCase':
+        return filterTransformer.toLowerCase(text);
+      case 'capitalize':
+        return filterTransformer.toCapitalize(text);
+      case 'cleanText':
+        return filterTransformer.cleanText(text, this.extractIdPart());
+      case 'splitByDelimiter':
+        return this.handleSplitByDelimiter(text);
+      case 'removeDoubleSpaces':
+        return filterTransformer.removeDoubleSpaces(text);
+      case 'removeSpacesBetweenLetters':
+        return filterTransformer.removeSpacesBetweenLetters(text);
+      case 'removeSpacesAtStartAndEnd':
+        return filterTransformer.removeSpacesAtStartAndEnd(text);
+      case 'removeLineBreaks':
+        return filterTransformer.removeLineBreaks(text);
+      case 'removeTitles':
+        return filterTransformer.removeTitles(text);
+      case 'removeReferences':
+        return filterTransformer.removeReferences(text);
+      case 'reorderPerson':
+        if (element) {
+          return this.handleReorderPerson(text, element);
+        }
+        return this.handleReorderPerson(text);
+      default:
+        return text;
+    }
+  }
+  
+  private handleSplitByDelimiter(text: string): string {
+    const parts = filterTransformer.splitByDelimiter(text);
+    this.showDynamicInputs = true;
+    this.changeDetectorRef.detectChanges();
+    this.createInputs(parts);
+    return text;
+  }
+  
+  private handleReorderPerson(text: string, element?): string {
+    const result = filterTransformer.reorderPerson(text);
+    if (element) {
+      this.modifyPeopleFieldStyle(result, element);
+    }
+    return result;
+  }
+
+  toggleDropdown(): void {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+}

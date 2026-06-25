@@ -1,0 +1,119 @@
+<div [ngClass]="isTextSelected ? 'colapsed-viewer' : 'expanded-viewer'">
+  <!-- VISOR DEL PDF -->
+  <ng2-pdfjs-viewer
+    viewerId="1"
+    #pdfViewerOnDemand
+    [pdfSrc]="pdfUrl"
+    [openFile]="false"
+    zoom="page-width"
+    [download]="false"
+    (onDocumentLoad)="pagesLoadedEvent()"
+    class="pdf-viewer">
+  </ng2-pdfjs-viewer>
+
+  <!-- MENÚ DE PREVISUALIZACIÓN Y ACCIONES -->
+  @if (isTextSelected) {
+    <div class="selection-menu">
+      <!-- SECCIÓN: TEXTO SELECCIONADO -->
+      @if (!showDynamicInputs) {
+        <div class="section">
+          <div class="section-header">
+            <label for="selected-text">Texto seleccionado:</label>
+            <div class="d-flex gap-1">
+              <button
+                (click)="changeConcatenateText()"
+                [class.active]="concatenateText"
+                [class.inactive]="!concatenateText"
+                class="filter-toggle-btn">
+                +
+              </button>
+              <button
+                (click)="changeFilterAutomatically()"
+                [class.active]="filterAutomatically"
+                [class.inactive]="!filterAutomatically"
+                class="filter-toggle-btn">
+                Modo automático
+              </button>
+            </div>
+          </div>
+          <textarea
+            id="selected-text"
+            [(ngModel)]="selectedText"
+            placeholder="Texto seleccionado"
+            rows="6"
+          ></textarea>
+        </div>
+      }
+      <!-- Contenedor para los inputs dinámicos -->
+      @if (showDynamicInputs) {
+        <div id="inputsContainer" class="inputs-grid"></div>
+      }
+      <div class="selection-submenu">
+        <!-- SECCIÓN: PREVISUALIZACIÓN DEL TEXTO SELECCIONADO -->
+        <div class="metadata-filter-row">
+          <div class="metadata-field">
+            <input
+              id="metadata-field-search"
+              type="text"
+              class="form-control"
+              [(ngModel)]="metadataSearchTerm"
+              (input)="onMetadataSearchChange()"
+              [ngbTypeahead]="metadataFieldSearch"
+              [placement]="'top-start'"
+              [resultFormatter]="metadataFieldFormatter"
+              [inputFormatter]="metadataFieldFormatter"
+              (selectItem)="onMetadataFieldSelected($event)"
+              placeholder="Seleccionar o buscar campo..." />
+          </div>
+          <!-- SECCIÓN: BOTONES DE FILTROS -->
+          <div class="filter-buttons">
+            @for (filter of filterOptions.slice(0, 8); track filter) {
+              <button
+                class="filter-btn"
+                (click)="applyFilter(filter.id)"
+                [disabled]="showDynamicInputs && filter.id === 'splitByDelimiter'"
+                [title]="filter.description">
+                @if (filter.icon) {
+                  <i [class]="filter.icon"></i>
+                } @else {
+                  {{ filter.label }}
+                }
+              </button>
+            }
+            @if (filterOptions.length > 8) {
+              <div ngbDropdown class="dropdown">
+                <button ngbDropdownToggle class="filter-btn" title="Más opciones">
+                  <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+                <div ngbDropdownMenu class="dropdown-menu dropdown-transformer-menu">
+                  @for (filter of filterOptions.slice(8); track filter) {
+                    <button
+                      ngbDropdownItem
+                      class="filter-btn"
+                      (click)="applyFilter(filter.id)"
+                      [title]="filter.description">
+                      @if (filter.icon) {
+                        <i [class]="filter.icon"></i>
+                      } @else {
+                        {{ filter.label }}
+                      }
+                    </button>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+      <!-- SECCIÓN: BOTONES DE ACCIÓN -->
+      <div class="action-buttons">
+        <button (click)="copyToMetadataField()" class="btn btn-primary">
+          Agregar
+        </button>
+        <button (click)="clearTextSelection()" class="btn btn-secondary">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  }
+</div>

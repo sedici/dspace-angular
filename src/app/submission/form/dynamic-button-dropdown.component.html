@@ -1,0 +1,17 @@
+<div class="dropdown-container">
+  <button class="btn btn-secondary" title="Opciones" aria-label="Opciones" (click)="toggleDropdown($event)">
+    <span><i class="fa-solid fa-wand-magic-sparkles"></i></span>
+  </button>
+
+  <div #dropdown class="dropdown-menu">
+    @for (option of options; track option) {
+      <div (click)="applyFilter(option.id)" class="dropdown-item" [title]="option.description">
+        @if (option.icon) {
+          <i [class]="option.icon"></i>
+        } @else {
+          <span>{{ option.label }}</span>
+        }
+      </div>
+    }
+  </div>
+</div>

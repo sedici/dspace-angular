@@ -1,9 +1,4 @@
-import {
-  AsyncPipe,
-  isPlatformServer,
-  NgIf,
-
-} from '@angular/common';
+import { AsyncPipe, isPlatformServer } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -75,18 +70,13 @@ import { SediciCertificate } from '../sedici-item-certificate/sedici-item-certif
   standalone: true,
   imports: [
     VarDirective,
-
-
     ItemVersionsComponent,
     ErrorComponent,
     ThemedLoadingComponent,
     TranslateModule,
     AsyncPipe,
-    NgIf,
-
-
-    SediciCertificate,
-  ],
+    SediciCertificate
+],
 })
 export class PrintableCertificate implements OnInit, OnDestroy {
 

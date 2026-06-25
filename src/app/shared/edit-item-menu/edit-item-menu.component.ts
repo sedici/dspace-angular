@@ -1,9 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit, Input } from '@angular/core';
-import {
-  AsyncPipe,
-
-  NgIf,
-} from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {
   Router,
   RouterModule,
@@ -40,7 +36,7 @@ import { AuthService } from 'src/app/core/auth/auth.service';
   styleUrls: ['./edit-item-menu.component.scss'],
   templateUrl: './edit-item-menu.component.html',
   standalone: true,
-  imports: [NgIf, TranslateModule, RouterModule, AsyncPipe, NgbDropdownModule],
+  imports: [TranslateModule, RouterModule, AsyncPipe, NgbDropdownModule],
 })
 export class EditItemMenuComponent implements OnInit, OnDestroy {
 

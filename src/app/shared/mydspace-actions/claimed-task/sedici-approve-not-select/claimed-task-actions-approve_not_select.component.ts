@@ -1,7 +1,4 @@
-import {
-  AsyncPipe,
-  NgIf,
-} from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {
   Component,
   Injector,
@@ -33,7 +30,7 @@ export const WORKFLOW_TASK_OPTION_APPROVE_NOT_SELECT = 'submit_approve_not_selec
   styleUrls: ['./claimed-task-actions-approve_not_select.component.scss'],
   templateUrl: './claimed-task-actions-approve_not_select.component.html',
   standalone: true,
-  imports: [NgbTooltipModule, NgIf, AsyncPipe, TranslateModule],
+  imports: [NgbTooltipModule, AsyncPipe, TranslateModule],
 })
 /**
  * Component for displaying and processing the approve action on a workflow task item

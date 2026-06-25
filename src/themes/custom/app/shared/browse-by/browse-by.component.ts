@@ -1,7 +1,4 @@
-import {
-  AsyncPipe,
-  CommonModule,
-} from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import {
   Component,
   Injector,
