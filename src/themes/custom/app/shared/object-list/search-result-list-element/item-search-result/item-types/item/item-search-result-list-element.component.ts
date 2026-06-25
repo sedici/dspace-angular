@@ -54,7 +54,7 @@ export class ItemSearchResultListElementComponent extends BaseComponent {
   }
 
   getYear(): string | null {
-    const dateValue = this.firstMetadataValue('dc.date.issued') || this.firstMetadataValue('dc.date.created') || this.firstMetadataValue('dc.date.available') || this.firstMetadataValue('dc.date.exposure');
+    const dateValue = this.firstMetadataValue('dc.date.issued', false) || this.firstMetadataValue('dc.date.created', false) || this.firstMetadataValue('dc.date.available', false) || this.firstMetadataValue('dc.date.exposure', false);
     if (!dateValue) {
       return null;
     }
@@ -78,15 +78,15 @@ export class ItemSearchResultListElementComponent extends BaseComponent {
   getFirstAvailableAuthors(): void {
     const creators = this.dso.allMetadata(['sedici.creator.person', 'sedici.creator.interprete']);
     if (creators.length > 0) {
-      this.authors = this.allMetadataValues(['sedici.creator.person', 'sedici.creator.interprete']);
+      this.authors = this.allMetadataValues(['sedici.creator.person', 'sedici.creator.interprete'], false);
     } else {
       const compilers = this.dso.allMetadata(['sedici.contributor.compiler']);
       if (compilers.length > 0) {
-        this.authors = this.allMetadataValues(['sedici.contributor.compiler']);
+        this.authors = this.allMetadataValues(['sedici.contributor.compiler'], false);
       } else {
         const editors = this.dso.allMetadata(['sedici.contributor.editor']);
         if (editors.length > 0) {
-          this.authors = this.allMetadataValues(['sedici.contributor.editor']);
+          this.authors = this.allMetadataValues(['sedici.contributor.editor'], false);
         }
       }
     }  

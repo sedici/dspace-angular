@@ -32,7 +32,7 @@
             <span [innerHTML]="dsoTitle"></span>
             @if (dso.firstMetadataValue('sedici.title.subtitle')) {
               <span class="subtitle">
-                . {{ firstMetadataValue('sedici.title.subtitle') }}
+                . <span [innerHTML]="firstMetadataValue('sedici.title.subtitle', false)"></span>
               </span>
             }
           </a>
